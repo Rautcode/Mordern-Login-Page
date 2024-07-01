@@ -15,4 +15,8 @@ A modern and responsive login and registration page built using HTML, CSS, and J
 - CSS (with Flexbox and Grid Layout)
 - JavaScript
 
+## SCREENSHORT 
+![Preview](screenshot.png)
+
+
 
