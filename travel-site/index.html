@@ -153,12 +153,22 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 .pola figcaption{font:600 1.3rem var(--hand);color:var(--ink);text-align:center;margin-top:8px}
 .pola.a{left:0;top:0;transform:rotate(-5deg)}.pola.b{right:0;top:170px;transform:rotate(4deg);z-index:2}
 .pola::before{content:"";position:absolute;top:-12px;left:50%;width:84px;height:24px;margin-left:-42px;background:rgba(212,163,89,.55);transform:rotate(-3deg)}
-.pola img{display:block;width:100%;aspect-ratio:1/.85;object-fit:cover}
+.pola img{display:block;width:100%;height:auto;aspect-ratio:1/.85;object-fit:cover}
 .stats{display:flex;gap:30px;flex-wrap:wrap;margin-top:26px}
 .stat b{display:block;font:400 2.6rem var(--serif);color:var(--terra-d);line-height:1}
 .stat span{font-size:.85rem;color:var(--muted)}
 @media(max-width:860px){.notes{grid-template-columns:1fr;gap:30px}.polas{min-height:360px;order:2}}
 
+/* from the road */
+.road{padding:20px 0 40px}
+.reel{display:flex;gap:30px;overflow-x:auto;scroll-snap-type:x proximity;padding:46px max(16px,calc((100% - 1180px)/2)) 60px;margin-top:6px;scrollbar-color:var(--terra) transparent}
+.snap{flex:none;scroll-snap-align:center;margin:0;background:#fff;padding:12px 12px 14px;box-shadow:0 14px 28px -14px rgba(31,36,33,.55);position:relative}
+.snap:nth-child(odd){transform:rotate(-1.4deg)}.snap:nth-child(even){transform:rotate(1.2deg)}
+.snap::before{content:"";position:absolute;top:-11px;left:50%;width:70px;height:22px;margin-left:-35px;background:rgba(212,163,89,.55);transform:rotate(-2deg);z-index:1}
+.snap img,.snap video{display:block;height:340px;width:auto;background:#ddd}
+.snap video.l{aspect-ratio:4/3}.snap video.p{aspect-ratio:3/4}
+.snap figcaption{font:600 1.2rem var(--hand);text-align:center;margin-top:8px;color:var(--ink);width:0;min-width:100%}
+@media(max-width:560px){.snap img,.snap video{height:300px}}
 /* sample day ticket */
 .sample{background:var(--paper-2)}
 .split{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center}
@@ -193,7 +203,7 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 .card[hidden]{display:none}
 .card .art{position:relative}
 .card .art svg{display:block;width:100%;aspect-ratio:16/10}
-.card .art img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
+.card .art img{height:auto;display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
 .postmark{position:absolute;right:10px;top:10px;background:var(--card);border:2.5px dotted var(--terra-d);padding:4px 10px;font:500 .78rem var(--mono);color:var(--terra-d);text-align:center;line-height:1.25;transform:rotate(3deg)}
 .postmark b{display:block;font-size:1.05rem}
 .body{padding:16px 8px 0;display:flex;flex-direction:column;gap:11px;flex:1}
@@ -525,9 +535,8 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
 <section id="about" aria-labelledby="about-h">
   <div class="wrap notes">
     <div class="polas reveal" aria-hidden="false">
-      <!-- To use a real photo: replace the <svg> in a <figure> with <img src="your.jpg" alt="..." width="600" height="510" loading="lazy"> -->
-      <figure class="pola a"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a Rajasthan fort at sunset"><use href="#s-raj"/></svg><figcaption>Jaisalmer, golden hour</figcaption></figure>
-      <figure class="pola b"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a Goan church and beach shack at sunset"><use href="#s-goa"/></svg><figcaption>Goa, the off-season way</figcaption></figure>
+      <figure class="pola a"><img src="img/trip-crew-700.webp" alt="A group of travellers standing with their motorbikes on a forest road" width="700" height="595" loading="lazy" decoding="async"><figcaption>The crew, mid-ride</figcaption></figure>
+      <figure class="pola b"><img src="img/trip-sunset-700.webp" alt="People silhouetted against the sea as the sun sets" width="700" height="595" loading="lazy" decoding="async"><figcaption>Sunset at the sea's edge</figcaption></figure>
     </div>
     <div class="reveal">
       <span class="kicker">Field notes</span>
@@ -541,6 +550,25 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
         <div class="stat"><b>4</b><span>signature routes, walked</span></div>
       </div>
     </div>
+  </div>
+</section>
+
+<!-- ============ FROM THE ROAD ============ -->
+<section class="road" id="road" aria-labelledby="road-h">
+  <div class="wrap reveal">
+    <span class="kicker">From the road</span>
+    <h2 id="road-h" style="margin-top:10px">Not stock photos. Our own trips.</h2>
+    <p class="lead">Photos and clips from the routes we plan, taken on the road. Scroll sideways.</p>
+  </div>
+  <div class="reel" tabindex="0" role="region" aria-label="Photos and video clips from our trips. Scroll sideways to see more.">
+    <figure class="snap"><video class="l" muted loop playsinline preload="none" poster="img/poster-waterfall.webp" width="640" height="480" aria-label="Clip: the group pausing at a waterfall"><source src="video/waterfall.webm" type="video/webm"><source src="video/waterfall.mp4" type="video/mp4"></video><figcaption>Waterfall stop, whole crew</figcaption></figure>
+    <figure class="snap"><img src="img/reel-statue-600.webp" alt="A large grey stone statue of Shiva seated with a trident against a cloudy sky" width="600" height="800" loading="lazy" decoding="async"><figcaption>Shiva above the sea</figcaption></figure>
+    <figure class="snap"><video class="p" muted loop playsinline preload="none" poster="img/poster-houseboat.webp" width="480" height="640" aria-label="Clip: a houseboat on still water"><source src="video/houseboat.webm" type="video/webm"><source src="video/houseboat.mp4" type="video/mp4"></video><figcaption>Houseboat on still water</figcaption></figure>
+    <figure class="snap"><img src="img/reel-temple-600.webp" alt="Two red laterite temples around a paved courtyard" width="600" height="800" loading="lazy" decoding="async"><figcaption>Roop Narayan Mandir</figcaption></figure>
+    <figure class="snap"><video class="p" muted loop playsinline preload="none" poster="img/poster-hills.webp" width="480" height="640" aria-label="Clip: green hills and clouds from a hilltop"><source src="video/hills.webm" type="video/webm"><source src="video/hills.mp4" type="video/mp4"></video><figcaption>Hilltop, green all round</figcaption></figure>
+    <figure class="snap"><img src="img/reel-sea-600.webp" alt="The sun low over a glittering sea" width="600" height="800" loading="lazy" decoding="async"><figcaption>Sea light</figcaption></figure>
+    <figure class="snap"><img src="img/reel-plane-600.webp" alt="An aircraft on the tarmac at night beside boarding stairs" width="600" height="800" loading="lazy" decoding="async"><figcaption>Night flight, boarding</figcaption></figure>
+    <figure class="snap"><video class="p" muted loop playsinline preload="none" poster="img/poster-mist.webp" width="480" height="640" aria-label="Clip: mist rolling over forested hills"><source src="video/mist.webm" type="video/webm"><source src="video/mist.mp4" type="video/mp4"></video><figcaption>Mist over the hills</figcaption></figure>
   </div>
 </section>
 
@@ -596,21 +624,21 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
           <p class="price"><b>Blueprint ₹799</b> | Custom Group Execution from ₹11,499/person</p>
           <div class="acts"><button class="btn btn-primary" data-trip="rajasthan">Plan this trip</button><button class="btn btn-ghost" data-route="rajasthan">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="rajasthan">Just want the PDF? Get the blueprint · ₹799</button></div></article>
       <article class="card reveal" data-id="gokarna" data-cats="weekend multi">
-        <div class="art" data-photo="gokarna"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: Hampi boulders, a temple tower and a Gokarna beach with a coracle"><use href="#s-hampi"/></svg><div class="postmark">Blueprint<b>₹699</b></div></div>
+        <div class="art" data-photo="gokarna"><img src="img/trip-gokarna-800.webp" srcset="img/trip-gokarna-480.webp 480w, img/trip-gokarna-800.webp 800w" sizes="(max-width:700px) 100vw, 360px" alt="Stone steps leading down a narrow gap in the hillside to the sea" width="800" height="500" loading="lazy" decoding="async"><div class="postmark">Blueprint<b>₹699</b></div></div>
         <div class="body"><h3>Gokarna → Murudeshwar → Hampi trip from Pune</h3>
           <div class="meta"><span>5 DAYS / 4 NIGHTS</span><span>EX-PUNE</span><span>10–16 PEOPLE</span></div>
           <ul class="hl"><li>Overnight AC Tempo Traveller from Pune/PCMC</li><li>Kudle &amp; Om Beach trek</li><li>Murudeshwar temple viewpoint</li><li>Hampi boulder sunrise &amp; coracle ride</li></ul>
           <p class="price"><b>Blueprint ₹699</b> | Weekend Group Batch ₹10,499/person</p>
           <div class="acts"><button class="btn btn-primary" data-trip="gokarna">Plan this trip</button><button class="btn btn-ghost" data-route="gokarna">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="gokarna">Just want the PDF? Get the blueprint · ₹699</button></div></article>
       <article class="card reveal" data-id="kerala" data-cats="multi">
-        <div class="art" data-photo="kerala"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: a Kerala houseboat on calm backwaters among palms"><use href="#s-kerala"/></svg><div class="postmark">Blueprint<b>₹699</b></div></div>
+        <div class="art" data-photo="kerala"><img src="img/trip-kerala-800.webp" srcset="img/trip-kerala-480.webp 480w, img/trip-kerala-800.webp 800w" sizes="(max-width:700px) 100vw, 360px" alt="Coconut palms along a river bank under heavy monsoon clouds, with two birds in flight" width="800" height="500" loading="lazy" decoding="async"><div class="postmark">Blueprint<b>₹699</b></div></div>
         <div class="body"><h3>Kerala temple &amp; nature circuit from Pune</h3>
           <div class="meta"><span>3 DAYS / 2 NIGHTS</span><span>4–12 PEOPLE</span></div>
           <ul class="hl"><li>Red-eye flight optimisation (PNQ–COK)</li><li>Padmanabhaswamy Temple dress-code &amp; entry briefing</li><li>Azhimala cliff, Jatayu Earth Center, Alleppey &amp; Munnar</li></ul>
           <p class="price"><b>Blueprint ₹699</b> | Custom Package from ₹9,999/person</p>
           <div class="acts"><button class="btn btn-primary" data-trip="kerala">Plan this trip</button><button class="btn btn-ghost" data-route="kerala">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="kerala">Just want the PDF? Get the blueprint · ₹699</button></div></article>
       <article class="card reveal" data-id="goa" data-cats="weekend">
-        <div class="art" data-photo="goa"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: Goan church, beach shack and sunset over the sea"><use href="#s-goa"/></svg><div class="postmark">Blueprint<b>₹699</b></div></div>
+        <div class="art" data-photo="goa"><img src="img/trip-goa-800.webp" srcset="img/trip-goa-480.webp 480w, img/trip-goa-800.webp 800w" sizes="(max-width:700px) 100vw, 360px" alt="View over a sandy beach and calm sea from a hilltop" width="800" height="500" loading="lazy" decoding="async"><div class="postmark">Blueprint<b>₹699</b></div></div>
         <div class="body"><h3>Goa hidden gems &amp; classics trip from Pune</h3>
           <div class="meta"><span>4 DAYS / 3 NIGHTS</span><span>EX-PUNE</span><span>6–16 PEOPLE</span></div>
           <ul class="hl"><li>North Goa sundowners, Arambol sweet water lake</li><li>South Goa Cola Lagoon &amp; Butterfly Beach</li><li>Fontainhas Latin Quarter walk</li><li>Curated shack &amp; cafe list</li></ul>
@@ -858,6 +886,11 @@ const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.
   $$("[data-count]", x.target).forEach(c => { if (reduce) return; const to = +c.dataset.count, t0 = performance.now(); const f = n => { const p = Math.min((n - t0) / 1200, 1); c.textContent = Math.round(to * (1 - (1 - p) ** 3)) + c.dataset.suffix; if (p < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); });
 }), { threshold: .12 }) : null;
 $$(".reveal").forEach(r => io ? io.observe(r) : r.classList.add("in"));
+
+// trip clips: play only while on screen; never autoplay for reduced-motion users
+{ const vids = $$(".snap video");
+  if (reduce) vids.forEach(v => v.controls = true);
+  else if ("IntersectionObserver" in window) { const vio = new IntersectionObserver(es => es.forEach(e => { const v = e.target; if (e.isIntersecting) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause(); }), { threshold: .6 }); vids.forEach(v => vio.observe(v)); } }
 
 // running-late demo
 $("#late").onclick = e => { const on = e.currentTarget.getAttribute("aria-pressed") !== "true"; e.currentTarget.setAttribute("aria-pressed", on); $("#ticket").classList.toggle("is-late", on); $("#late-note").hidden = !on; $("#late-label").textContent = on ? "Back on schedule" : "We're running 90 minutes late"; track("sample_cutlist_toggle"); };
