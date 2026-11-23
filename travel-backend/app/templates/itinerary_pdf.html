@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>{{ it.title }}</title>
+<style>
+  @page { size: A4; margin: 16mm 14mm 20mm; background: #FAF7F2;
+    @bottom-center { content: "{{ brand }}  ·  Page " counter(page) " of " counter(pages);
+      font: 8pt 'DejaVu Sans', 'Liberation Sans', sans-serif; color: #8a7f6d; } }
+  body { font: 10pt/1.5 'Liberation Sans', 'DejaVu Sans', sans-serif; color: #1E1E1E; }
+  h1, h2, h3 { font-family: 'DejaVu Serif', Georgia, serif; color: #1B3B2B; margin: 0; }
+  .cover { background: #1B3B2B; color: #fff; padding: 22mm 14mm; border-radius: 6mm; margin-bottom: 8mm; }
+  .cover h1 { color: #fff; font-size: 26pt; line-height: 1.15; }
+  .cover .tag { color: #D4A359; font-size: 9pt; letter-spacing: .12em; text-transform: uppercase; }
+  .cover p { color: #e9e4d8; margin: 4mm 0 0; }
+  .meta { margin-top: 6mm; font-size: 9pt; color: #D4A359; }
+  .summary { margin: 0 0 6mm; }
+  .day { page-break-inside: avoid; margin: 0 0 7mm; background: #fff; border: .3mm solid #e4dccd; border-radius: 4mm; overflow: hidden; }
+  .day-h { background: #C85A32; color: #fff; padding: 3mm 5mm; }
+  .day-h h2 { color: #fff; font-size: 13pt; }
+  .day-h small { font-size: 8pt; opacity: .9; letter-spacing: .08em; text-transform: uppercase; }
+  .pad { padding: 3mm 5mm 4mm; }
+  .leg { background: #e8f0ea; border-left: 1.2mm solid #1B3B2B; padding: 2mm 3mm; margin: 2mm 0; font-size: 9pt; }
+  table.sched { width: 100%; border-collapse: collapse; margin-top: 2mm; }
+  table.sched td { padding: 1.4mm 0; vertical-align: top; border-bottom: .2mm dotted #d9cfbd; }
+  td.t { width: 15mm; font-weight: bold; color: #1B3B2B; }
+  .eat { background: #A94724; color: #fff; font-size: 7pt; font-weight: bold; padding: .3mm 1.6mm; border-radius: 1mm; letter-spacing: .06em; }
+  .stop { background: #1E1E1E; color: #fff; font-size: 7pt; font-weight: bold; padding: .3mm 1.6mm; border-radius: 1mm; letter-spacing: .06em; }
+  .note { color: #6b6558; font-size: 8.5pt; }
+  .cut { background: #fff3ec; border: .3mm solid #f0c9b6; border-radius: 2mm; padding: 2mm 3mm; margin-top: 3mm; font-size: 9pt; }
+  .cut ol { margin: 1mm 0 0; padding-left: 5mm; }
+  .locked { padding: 3mm 5mm; color: #6b6558; font-style: italic; }
+  .banner { background: #fff3ec; border: .4mm dashed #C85A32; border-radius: 3mm; padding: 4mm 5mm; margin: 0 0 6mm; color: #A94724; font-weight: bold; }
+  .box { background: #fff; border: .3mm solid #e4dccd; border-radius: 3mm; padding: 3mm 5mm; margin-bottom: 5mm; page-break-inside: avoid; }
+  .box ul { margin: 1mm 0 0; padding-left: 5mm; }
+  .disc { font-size: 8pt; color: #6b6558; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="tag">{{ brand }} · Ground-Tested Itinerary</div>
+  <h1>{{ it.title }}</h1>
+  <p>{{ it.summary }}</p>
+  <div class="meta">Prepared for {{ lead.name }} · {{ lead.group_size }} travellers · {{ lead.departure_city }} · {{ lead.travel_dates }} · {{ it.duration_days }} days</div>
+</div>
+
+{% if preview %}
+<div class="banner">PREVIEW: Day 1 is shown in full. Complete the payment to unlock the full day-by-day blueprint, food map and priority cut-lists.</div>
+{% endif %}
+
+{% for day in it.days %}
+<div class="day">
+  <div class="day-h"><small>Day {{ day.day_number }}</small><h2>{{ day.title }}</h2></div>
+  {% if preview and not loop.first %}
+    <div class="locked">Unlocked after payment.</div>
+  {% else %}
+  <div class="pad">
+    {% for leg in day.transit %}
+      <div class="leg"><b>{{ leg.mode|upper }}{% if leg.number %} {{ leg.number }}{% endif %}</b>: {{ leg.origin }} → {{ leg.destination }}
+        · Dep {{ leg.depart }} · Arr {{ leg.arrive }}{% if leg.notes %}<br><span class="note">{{ leg.notes }}</span>{% endif %}</div>
+    {% endfor %}
+    <table class="sched">
+      {% for s in day.schedule %}
+      <tr>
+        <td class="t">{{ s.time }}</td>
+        <td>
+          {% if s.kind == 'eat' %}<span class="eat">EAT</span> {% endif %}
+          {% if s.hard_deadline %}<span class="stop">HARD STOP</span> {% endif %}
+          {{ s.activity }}
+          {% if s.notes %}<br><span class="note">{{ s.notes }}</span>{% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+    {% if day.cut_list %}
+    <div class="cut"><b>Priority cut-list</b> (drop in this order if you run late)
+      <ol>{% for c in day.cut_list %}<li>{{ c }}</li>{% endfor %}</ol></div>
+    {% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endfor %}
+
+{% if not preview %}
+  {% if it.packing %}
+  <div class="box"><h3>Packing checklist</h3><ul>{% for p in it.packing %}<li>{{ p }}</li>{% endfor %}</ul></div>
+  {% endif %}
+  {% if it.budget_notes %}<div class="box"><h3>Budget notes</h3><p>{{ it.budget_notes }}</p></div>{% endif %}
+{% endif %}
+
+<p class="disc">{% for d in it.disclaimers %}{{ d }} {% endfor %}Timings and prices marked "confirm before travel" must be re-verified before booking.</p>
+</body>
+</html>
