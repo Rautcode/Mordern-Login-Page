@@ -90,6 +90,10 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 
 /* header */
 .hdr{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .25s,box-shadow .25s}
+.ann{background:var(--forest);color:#F5EEE1;text-align:center;font-size:.82rem;font-weight:600;padding:7px 12px;line-height:1.3}.ann a{color:var(--gold);margin-left:8px;white-space:nowrap}
+.hdr.solid .ann{display:none}
+.tel{font-weight:700;font-size:.92rem;text-decoration:none;color:var(--forest);white-space:nowrap}.tel:hover{color:var(--terra-d)}
+@media(max-width:1100px){.tel{display:none}}
 .hdr.solid{background:rgba(245,238,225,.94);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:70px;gap:16px}
 .logo{display:flex;align-items:center;gap:10px;font:400 1.35rem var(--serif);color:var(--forest);text-decoration:none}
@@ -100,7 +104,7 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 .icon-btn{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--forest);background:transparent;color:var(--forest);cursor:pointer}
 #burger{display:none}
 @media(max-width:940px){
-  .links{display:none;position:absolute;top:70px;left:0;right:0;flex-direction:column;gap:0;background:var(--paper);border-bottom:1px solid var(--line);padding:6px 16px 14px}
+  .links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;gap:0;background:var(--paper);border-bottom:1px solid var(--line);padding:6px 16px 14px}
   .links.open{display:flex}.links a{padding:14px 0;border-bottom:1px dashed var(--line)}
   #burger{display:grid}.nav-cta .btn{padding:10px 16px;min-height:44px;white-space:nowrap}
 }
@@ -110,7 +114,7 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 .hero{padding:0;min-height:max(640px,min(100svh,920px));display:flex;flex-direction:column;overflow:hidden;background:linear-gradient(#F8E3BF,#F2B98A 70%,#E9945F);isolation:isolate}
 .scene{position:absolute;inset:0;z-index:-1}
 .scene svg{width:100%;height:100%;display:block}
-.hero-in{padding:100px 0 clamp(190px,17vw,250px);position:relative}
+.hero-in{padding:136px 0 clamp(190px,17vw,250px);position:relative}
 .stamp-line{display:inline-flex;align-items:center;gap:10px;font:500 .78rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--forest);border:1.5px dashed var(--forest);padding:6px 14px;border-radius:6px;background:rgba(255,252,246,.5)}
 .hero h1{font-size:clamp(2.1rem,4.1vw,3.6rem);max-width:22ch;margin:18px 0 16px;text-wrap:balance}
 .hero p.sub{font-size:1.1rem;color:#33402f;max-width:52ch}
@@ -119,6 +123,7 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
 .chip{font:700 .9rem var(--sans);padding:9px 16px;border-radius:999px;border:1.5px solid var(--forest);background:rgba(255,252,246,.72);color:var(--forest);cursor:pointer;transition:.15s}
 .chip:hover{background:var(--forest);color:#fff;transform:translateY(-2px) rotate(-1.5deg)}
+.proof{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:18px;font:500 .78rem var(--mono);letter-spacing:.04em;color:var(--forest)}.proof b{color:var(--terra-d)}
 .cloud{animation:drift 90s linear infinite}.cloud.b{animation-duration:130s;animation-delay:-40s}
 .van{animation:drive 46s linear infinite}
 .sun-glow{animation:glow 6s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
@@ -128,7 +133,7 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 
 @media(max-width:760px){
   .hero{min-height:0}
-  .hero-in{padding:104px 0 8px}
+  .hero-in{padding:140px 0 8px}
   .scene{position:relative;inset:auto;order:2;height:clamp(250px,72vw,340px);margin-top:6px}
   .birds{display:none}
 }
@@ -197,6 +202,8 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 .hl{list-style:none;padding:0;display:grid;gap:5px;font-size:.93rem}
 .hl li{padding-left:22px;position:relative}
 .hl li::before{content:"";position:absolute;left:0;top:.55em;width:11px;height:2px;background:var(--terra)}
+.acts{display:grid;grid-template-columns:1fr 1fr;gap:8px}.acts .btn{padding:12px 10px;font-size:.9rem}
+.linkbtn{background:none;border:0;color:var(--terra-d);text-decoration:underline;font:600 .86rem var(--sans);cursor:pointer;text-align:left;padding:6px 0;min-height:44px}
 .price{margin-top:auto;padding-top:12px;border-top:2px dashed var(--line);font-size:.9rem}.price b{color:var(--terra-d)}
 
 /* comparison */
@@ -253,6 +260,16 @@ label,legend{font:700 .84rem var(--sans);color:var(--forest);display:block;margi
 input[type=text],input[type=tel],select{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font:inherit;color:var(--ink);min-height:48px}
 input:focus,select:focus{border-color:var(--forest);outline:3px solid rgba(212,163,89,.55);outline-offset:0}
 input[aria-invalid=true],select[aria-invalid=true]{border-color:#B3261E}
+.step{border:0;padding:0;margin:0;min-width:0}.step legend{font:400 1.45rem var(--serif);color:var(--forest);margin-bottom:16px;padding:0}
+.lbl{font:700 .84rem var(--sans);color:var(--forest);display:block;margin-bottom:8px}
+.pick{display:flex;flex-wrap:wrap;gap:8px}.pk{position:relative;margin:0}
+.pk input{position:absolute;opacity:0;inset:0;width:100%;height:100%;cursor:pointer}
+.pk span{display:block;padding:11px 18px;border:1.5px solid var(--line);border-radius:999px;background:#fff;font:700 .92rem var(--sans);color:var(--ink);min-height:46px;display:flex;align-items:center;transition:.15s}
+.pk:hover span{border-color:var(--forest)}.pk input:checked+span{background:var(--forest);color:#fff;border-color:var(--forest)}
+.pk input:focus-visible+span{outline:3px solid var(--gold);outline-offset:2px}
+.progress{margin-bottom:22px}.progress .bar{display:block;height:6px;background:var(--paper-2);border-radius:99px;overflow:hidden}.progress .bar i{display:block;height:100%;width:33.4%;background:var(--terra);border-radius:99px;transition:width .35s}
+.progress b{display:block;margin-top:8px;font:500 .74rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.stepnav{display:flex;gap:10px;margin-top:22px}.stepnav .btn-primary{flex:1}
 fieldset{border:0;padding:0;min-width:0}
 .radios{display:grid;gap:8px}
 .radio{display:flex;gap:10px;align-items:center;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;font-weight:600;font-size:.92rem;margin:0;color:var(--ink);min-height:48px}
@@ -312,7 +329,7 @@ footer ul{list-style:none;padding:0;display:grid;gap:9px}footer a{text-decoratio
 .fab a{width:60px;height:60px;border-radius:50%;background:#0F7A41;color:#fff;display:grid;place-items:center;box-shadow:0 10px 24px rgba(0,0,0,.35);animation:pulse 2.6s infinite}
 .fab a .i{width:28px;height:28px}
 .fab .tip{position:absolute;right:72px;top:50%;transform:translateY(-50%);background:var(--ink);color:#fff;padding:7px 12px;border-radius:8px;font-size:.8rem;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
-.fab:hover .tip,.fab a:focus-visible+.tip{opacity:1}
+.fab:hover .tip,.fab.open .tip,.fab a:focus-visible+.tip{opacity:1}
 @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(15,122,65,.55)}70%{box-shadow:0 0 0 18px rgba(15,122,65,0)}100%{box-shadow:0 0 0 0 rgba(15,122,65,0)}}
 .mbar{display:none}
 @media(max-width:720px){
@@ -425,6 +442,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
 </svg>
 
 <header class="hdr" id="hdr">
+  <div class="ann"><span>Free Day 1 preview of your itinerary &middot; custom quote in 24 hours</span> <a href="#planner">Start planning →</a></div>
   <div class="wrap nav">
     <a href="#top" class="logo" aria-label="[BRAND_NAME] home">
       <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="none" stroke="#1B3B2B" stroke-width="2.5"/><path d="M20 7l5 13-5 13-5-13z" fill="#C85A32"/><path d="M20 7l5 13h-10z" fill="#1B3B2B"/><circle cx="20" cy="20" r="2" fill="#F5EEE1"/></svg>
@@ -434,6 +452,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
       <a href="#routes">Proven Routes</a><a href="#how">How It Works</a><a href="#pricing">Pricing Tiers</a><a href="#planner">Custom Planner</a><a href="#faq">FAQ</a>
     </nav>
     <div class="nav-cta">
+      <a class="tel" id="tel" hidden></a>
       <a class="icon-btn wa-link" data-wa aria-label="Chat on WhatsApp" target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg></a>
       <a href="#planner" class="btn btn-primary">Plan My Trip</a>
       <button class="icon-btn" id="burger" aria-label="Menu" aria-expanded="false" aria-controls="links"><svg class="i"><use href="#i-menu"/></svg></button>
@@ -489,6 +508,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
         <button class="chip" data-dest="Goa">Goa</button><button class="chip" data-dest="Hampi–Gokarna">Hampi–Gokarna</button>
       </div>
     </div>
+    <p class="proof"><span>★ Trusted by <b>500+</b> travellers</span><span><b>80K+</b> Instagram community</span></p>
   </div>
 </section>
 
@@ -574,28 +594,28 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
           <div class="meta"><span>6 DAYS / 5 NIGHTS</span><span>8–16 PEOPLE</span></div>
           <ul class="hl"><li>3 chained overnight/intercity train legs + Tempo Traveller desert circuit</li><li>Amer &amp; Mehrangarh closing-time strategy</li><li>Sam Sand Dunes sunset</li><li>15+ local food stops</li></ul>
           <p class="price"><b>Blueprint ₹799</b> | Custom Group Execution from ₹11,499/person</p>
-          <button class="btn btn-ghost" data-route="rajasthan">View Route &amp; Inclusions</button></div></article>
+          <div class="acts"><button class="btn btn-primary" data-trip="rajasthan">Plan this trip</button><button class="btn btn-ghost" data-route="rajasthan">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="rajasthan">Just want the PDF? Get the blueprint · ₹799</button></div></article>
       <article class="card reveal" data-id="gokarna" data-cats="weekend multi">
         <div class="art" data-photo="gokarna"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: Hampi boulders, a temple tower and a Gokarna beach with a coracle"><use href="#s-hampi"/></svg><div class="postmark">Blueprint<b>₹699</b></div></div>
         <div class="body"><h3>Gokarna → Murudeshwar → Hampi trip from Pune</h3>
           <div class="meta"><span>5 DAYS / 4 NIGHTS</span><span>EX-PUNE</span><span>10–16 PEOPLE</span></div>
           <ul class="hl"><li>Overnight AC Tempo Traveller from Pune/PCMC</li><li>Kudle &amp; Om Beach trek</li><li>Murudeshwar temple viewpoint</li><li>Hampi boulder sunrise &amp; coracle ride</li></ul>
           <p class="price"><b>Blueprint ₹699</b> | Weekend Group Batch ₹10,499/person</p>
-          <button class="btn btn-ghost" data-route="gokarna">View Route &amp; Inclusions</button></div></article>
+          <div class="acts"><button class="btn btn-primary" data-trip="gokarna">Plan this trip</button><button class="btn btn-ghost" data-route="gokarna">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="gokarna">Just want the PDF? Get the blueprint · ₹699</button></div></article>
       <article class="card reveal" data-id="kerala" data-cats="multi">
         <div class="art" data-photo="kerala"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: a Kerala houseboat on calm backwaters among palms"><use href="#s-kerala"/></svg><div class="postmark">Blueprint<b>₹699</b></div></div>
         <div class="body"><h3>Kerala temple &amp; nature circuit from Pune</h3>
           <div class="meta"><span>3 DAYS / 2 NIGHTS</span><span>4–12 PEOPLE</span></div>
           <ul class="hl"><li>Red-eye flight optimisation (PNQ–COK)</li><li>Padmanabhaswamy Temple dress-code &amp; entry briefing</li><li>Azhimala cliff, Jatayu Earth Center, Alleppey &amp; Munnar</li></ul>
           <p class="price"><b>Blueprint ₹699</b> | Custom Package from ₹9,999/person</p>
-          <button class="btn btn-ghost" data-route="kerala">View Route &amp; Inclusions</button></div></article>
+          <div class="acts"><button class="btn btn-primary" data-trip="kerala">Plan this trip</button><button class="btn btn-ghost" data-route="kerala">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="kerala">Just want the PDF? Get the blueprint · ₹699</button></div></article>
       <article class="card reveal" data-id="goa" data-cats="weekend">
         <div class="art" data-photo="goa"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: Goan church, beach shack and sunset over the sea"><use href="#s-goa"/></svg><div class="postmark">Blueprint<b>₹699</b></div></div>
         <div class="body"><h3>Goa hidden gems &amp; classics trip from Pune</h3>
           <div class="meta"><span>4 DAYS / 3 NIGHTS</span><span>EX-PUNE</span><span>6–16 PEOPLE</span></div>
           <ul class="hl"><li>North Goa sundowners, Arambol sweet water lake</li><li>South Goa Cola Lagoon &amp; Butterfly Beach</li><li>Fontainhas Latin Quarter walk</li><li>Curated shack &amp; cafe list</li></ul>
           <p class="price"><b>Blueprint ₹699</b> | Group Package from ₹8,499/person</p>
-          <button class="btn btn-ghost" data-route="goa">View Route &amp; Inclusions</button></div></article>
+          <div class="acts"><button class="btn btn-primary" data-trip="goa">Plan this trip</button><button class="btn btn-ghost" data-route="goa">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="goa">Just want the PDF? Get the blueprint · ₹699</button></div></article>
     </div>
     <p class="note" id="no-trips" hidden style="margin-top:20px">Only one North India route is live so far. More are on the way. <a href="#planner">Tell us where you want to go</a>.</p>
   </div>
@@ -662,22 +682,42 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
     <div class="pl">
       <div>
         <form id="form" novalidate>
-          <div class="fields">
-            <div><label for="name">Full name</label><input id="name" name="name" type="text" maxlength="60" autocomplete="name" required><div class="err" data-for="name"></div></div>
-            <div><label for="phone">WhatsApp number</label><input id="phone" name="phone" type="tel" inputmode="tel" maxlength="16" placeholder="98XXXXXXXX" autocomplete="tel" required><div class="err" data-for="phone"></div></div>
-            <div><label for="dest">Destination</label><select id="dest" name="dest" required><option value="">Select…</option><option>Rajasthan</option><option>Kerala</option><option>Goa</option><option>Hampi–Gokarna</option><option>Konkan</option><option>Himachal/Uttarakhand</option><option>Other</option></select><div class="err" data-for="dest"></div></div>
-            <div><label for="from">Departure city</label><input id="from" name="from" type="text" maxlength="40" list="cities" placeholder="e.g. Pune" required><datalist id="cities"><option>Pune</option><option>Mumbai</option><option>Bengaluru</option><option>Delhi</option></datalist><div class="err" data-for="from"></div></div>
-            <div><label for="when">Travel month / dates</label><input id="when" name="when" type="text" maxlength="40" placeholder="e.g. 12–17 Dec" required><div class="err" data-for="when"></div></div>
-            <div><label for="group">Group size</label><select id="group" name="group" required><option value="">Select…</option><option value="1-2">1–2</option><option value="3-6">3–6</option><option value="7-12">7–12</option><option value="13+">13+</option></select><div class="err" data-for="group"></div></div>
-            <fieldset class="full"><legend>Service needed</legend><div class="radios">
+          <div class="progress" aria-live="polite"><span class="bar"><i id="bar"></i></span><b id="step-label">Step 1 of 3 · Where &amp; when</b></div>
+
+          <fieldset class="step" data-step="1">
+            <legend>Where are you headed?</legend>
+            <div class="pick" role="radiogroup" aria-label="Destination"><label class="pk"><input type="radio" name="dest" value="Rajasthan"><span>Rajasthan</span></label><label class="pk"><input type="radio" name="dest" value="Kerala"><span>Kerala</span></label><label class="pk"><input type="radio" name="dest" value="Goa"><span>Goa</span></label><label class="pk"><input type="radio" name="dest" value="Hampi–Gokarna"><span>Hampi–Gokarna</span></label><label class="pk"><input type="radio" name="dest" value="Konkan"><span>Konkan</span></label><label class="pk"><input type="radio" name="dest" value="Himachal/Uttarakhand"><span>Himachal / Uttarakhand</span></label><label class="pk"><input type="radio" name="dest" value="Other"><span>Other</span></label></div><div class="err" data-for="dest"></div>
+            <div class="fields" style="margin-top:18px">
+              <div><label for="from">Departure city</label><input id="from" name="from" type="text" maxlength="40" list="cities" placeholder="e.g. Pune" autocomplete="off"><datalist id="cities"><option>Pune</option><option>Mumbai</option><option>Bengaluru</option><option>Delhi</option></datalist><div class="err" data-for="from"></div></div>
+              <div><label for="when">Travel month / dates</label><input id="when" name="when" type="text" maxlength="40" placeholder="e.g. 12–17 Dec" autocomplete="off"><div class="err" data-for="when"></div></div>
+            </div>
+          </fieldset>
+
+          <fieldset class="step" data-step="2" hidden>
+            <legend>Who's going, and what do you need?</legend>
+            <label class="lbl">Group size</label>
+            <div class="pick" role="radiogroup" aria-label="Group size"><label class="pk"><input type="radio" name="group" value="1-2"><span>1–2</span></label><label class="pk"><input type="radio" name="group" value="3-6"><span>3–6</span></label><label class="pk"><input type="radio" name="group" value="7-12"><span>7–12</span></label><label class="pk"><input type="radio" name="group" value="13+"><span>13+</span></label></div><div class="err" data-for="group"></div>
+            <label class="lbl" style="margin-top:18px">What do you need?</label>
+            <div class="radios">
               <label class="radio"><input type="radio" name="service" value="blueprint">Ready Blueprint (₹699)</label>
               <label class="radio"><input type="radio" name="service" value="custom" checked>Custom PDF Plan (₹2,499)</label>
-              <label class="radio"><input type="radio" name="service" value="complete">Complete All-Inclusive Package</label></div></fieldset>
-            <div class="full"><label for="budget">Approximate budget per person</label><select id="budget" name="budget" required><option value="">Select…</option><option value="5-10">₹5k–₹10k</option><option value="10-18">₹10k–₹18k</option><option value="18+">₹18k+</option></select><div class="err" data-for="budget"></div></div>
-            <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
-            <div class="full"><label class="consent" for="consent"><input type="checkbox" id="consent" required><span>I agree to be contacted on WhatsApp about this trip. <button type="button" data-open="privacy">How we use your details</button></span></label><div class="err" data-for="consent"></div></div>
-          </div>
-          <button class="btn btn-primary btn-block" style="margin-top:20px" type="submit" id="submit">Get my quote</button>
+              <label class="radio"><input type="radio" name="service" value="complete">Complete All-Inclusive Package</label></div>
+            <label class="lbl" style="margin-top:18px">Approximate budget per person</label>
+            <div class="pick" role="radiogroup" aria-label="Budget per person"><label class="pk"><input type="radio" name="budget" value="5-10"><span>₹5k–₹10k</span></label><label class="pk"><input type="radio" name="budget" value="10-18"><span>₹10k–₹18k</span></label><label class="pk"><input type="radio" name="budget" value="18+"><span>₹18k+</span></label></div><div class="err" data-for="budget"></div>
+          </fieldset>
+
+          <fieldset class="step" data-step="3" hidden>
+            <legend>Where should we send it?</legend>
+            <div class="fields">
+              <div><label for="name">Full name</label><input id="name" name="name" type="text" maxlength="60" autocomplete="name"><div class="err" data-for="name"></div></div>
+              <div><label for="phone">WhatsApp number</label><input id="phone" name="phone" type="tel" inputmode="tel" maxlength="16" placeholder="98XXXXXXXX" autocomplete="tel"><div class="err" data-for="phone"></div></div>
+              <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+              <div class="full"><label class="consent" for="consent"><input type="checkbox" id="consent"><span>I agree to be contacted on WhatsApp about this trip. <button type="button" data-open="privacy">How we use your details</button></span></label><div class="err" data-for="consent"></div></div>
+            </div>
+            <p class="note" style="margin-top:10px">No spam, no calls. We reply on WhatsApp within 24 hours.</p>
+          </fieldset>
+
+          <div class="stepnav"><button type="button" class="btn btn-ghost" id="back" hidden>Back</button><button class="btn btn-primary" type="submit" id="submit">Next</button></div>
           <noscript><p class="note" style="margin-top:12px">This form needs JavaScript. <a data-wa href="#">Message us on WhatsApp</a> instead.</p></noscript>
         </form>
 
@@ -792,6 +832,8 @@ const reduce = matchMedia("(prefers-reduced-motion:reduce)").matches;
 $$("[data-wa]").forEach(a => a.href = waLink("Hi! I'd like help planning a trip."));
 $("#ig").href = $("#ig2").href = `https://instagram.com/${CFG.instagram}`;
 $("#yr").textContent = new Date().getFullYear();
+if (!/X/i.test(CFG.whatsapp)) { const t = $("#tel"); t.href = "tel:+" + CFG.whatsapp; t.textContent = "+" + CFG.whatsapp.replace(/^(\d{2})(\d{5})(\d+)$/, "$1 $2 $3"); t.hidden = false; }
+{ const fab = $(".fab"); setTimeout(() => fab.classList.add("open"), 3500); setTimeout(() => fab.classList.remove("open"), 11000); }
 const burger = $("#burger"), links = $("#links");
 burger.onclick = () => burger.setAttribute("aria-expanded", links.classList.toggle("open"));
 links.onclick = e => { if (e.target.closest("a")) { links.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); } };
@@ -857,9 +899,11 @@ function plan(service, dest) {
   if (dest) form.elements.dest.value = dest;
   showForm(); updateEst();
   $("#planner").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
-  setTimeout(() => $("#name").focus({ preventScroll: true }), 600);
+  if (matchMedia("(hover:hover)").matches) setTimeout(() => $("#from").focus({ preventScroll: true }), 600);
 }
 $$("[data-plan]").forEach(b => b.onclick = () => plan(b.dataset.plan));
+$$("[data-trip]").forEach(b => b.onclick = () => { track("plan_trip_click", { route: b.dataset.trip }); plan("custom", TRIPS[b.dataset.trip].dest); });
+$$("[data-bp]").forEach(b => b.onclick = () => { track("blueprint_click", { route: b.dataset.bp }); plan("blueprint", TRIPS[b.dataset.bp].dest); });
 $$("[data-dest]").forEach(b => b.onclick = () => plan(null, b.dataset.dest));
 
 const inr = n => "₹" + n.toLocaleString("en-IN");
@@ -877,7 +921,23 @@ function updateEst() {
   if (g && b) { const lo = b[0] * g[0], hi = g[1] && b[1] ? b[1] * g[1] : null; trip = ` Indicative trip spend for your group: ${hi ? `${inr(lo)} – ${inr(hi)}` : `${inr(lo)}+`}.`; }
   sub.textContent = (svc === "custom" ? "Planning fee, delivered in 24 hours with 1 free revision." : "50% advance to confirm bookings.") + trip;
 }
-form.addEventListener("input", updateEst); updateEst();
+form.addEventListener("input", updateEst);
+
+// ===== 3-step form: fewer fields per screen, tap-chips, saved draft =====
+const STEPS = [null, ["dest", "from", "when"], ["group", "budget"], ["name", "phone", "consent"]];
+const STEP_LABEL = ["", "Where & when", "Who's going", "Where to send it"];
+let step = 1;
+function gotoStep(n) {
+  step = n; $$(".step", form).forEach(f => f.hidden = +f.dataset.step !== n);
+  $("#bar").style.width = (n / 3 * 100) + "%"; $("#step-label").textContent = `Step ${n} of 3 · ${STEP_LABEL[n]}`;
+  $("#back").hidden = n === 1; $("#submit").textContent = n === 3 ? "Get my quote" : "Next";
+}
+$("#back").onclick = () => gotoStep(step - 1);
+const focusField = k => { const i = form.elements[k]; (i.setAttribute ? i : i[0]).focus(); };
+const DRAFT = ["dest", "from", "when", "group", "budget", "service", "name"]; // never the phone number
+const saveDraft = () => { try { const d = {}; DRAFT.forEach(k => d[k] = form.elements[k].value); sessionStorage.setItem("draft", JSON.stringify(d)); } catch {} };
+try { const d = JSON.parse(sessionStorage.getItem("draft") || "null"); if (d) DRAFT.forEach(k => { if (typeof d[k] === "string" && d[k]) form.elements[k].value = d[k]; }); } catch {}
+form.addEventListener("input", saveDraft); updateEst();
 
 const clean = s => s.replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim();
 function validate() {
@@ -893,7 +953,6 @@ function validate() {
   if (!f.consent.checked) e.consent = "Please tick to continue.";
   return { v, e };
 }
-const FIELD = { name: "name", phone: "phone", dest: "dest", from: "from", when: "when", group: "group", budget: "budget", consent: "consent" };
 
 async function api(path, body) {
   const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 20000);
@@ -909,9 +968,11 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 let busy = false;
 form.addEventListener("submit", async ev => {
   ev.preventDefault(); if (busy) return;
-  const { v, e } = validate();
-  $$(".err", form).forEach(x => { x.textContent = e[x.dataset.for] || ""; const i = form.elements[FIELD[x.dataset.for]]; i && i.setAttribute("aria-invalid", !!e[x.dataset.for]); });
-  const first = Object.keys(e)[0]; if (first) { form.elements[FIELD[first]].focus(); return; }
+  const { v, e } = validate(), keys = STEPS[step];
+  $$(".err", form).forEach(x => { if (!keys.includes(x.dataset.for)) return; x.textContent = e[x.dataset.for] || ""; const i = form.elements[x.dataset.for]; if (i && i.setAttribute) i.setAttribute("aria-invalid", !!e[x.dataset.for]); });
+  const bad = keys.find(k => e[k]); if (bad) { focusField(bad); return; }
+  if (step < 3) { track("form_step", { step }); gotoStep(step + 1); return; }
+  const early = [1, 2].find(n => STEPS[n].some(k => e[k])); if (early) { gotoStep(early); return; }
 
   busy = true; const btn = $("#submit"); btn.disabled = true; btn.textContent = "Sending…";
   let leadId = null, note = "";
@@ -925,9 +986,9 @@ form.addEventListener("submit", async ev => {
   $("#c-wa").href = waLink(["Hi! I'd like an instant quote.", "", ...rows.map(([k, val]) => `*${k}:* ${val}`), "", `Rough estimate: ${$("#est-main").textContent}`, leadId ? `Ref: ${leadId.slice(0, 8)}` : ""].join("\n").trim());
   buildNext(leadId, v, note);
   form.hidden = true; $("#confirm").hidden = false; $("#confirm").focus(); $("#confirm").scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
-  btn.disabled = false; btn.textContent = "Get my quote"; busy = false;
+  btn.disabled = false; btn.textContent = "Get my quote"; busy = false; try { sessionStorage.clear(); } catch {}
 });
-const showForm = () => { form.hidden = false; $("#confirm").hidden = true; };
+const showForm = () => { form.hidden = false; $("#confirm").hidden = true; gotoStep(1); };
 $("#c-edit").onclick = showForm;
 
 // ===== post-lead funnel: free preview -> pay =====
