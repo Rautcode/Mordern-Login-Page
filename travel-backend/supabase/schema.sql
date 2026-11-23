@@ -7,11 +7,11 @@ create table if not exists leads (
   name                 text not null,
   phone                text not null,              -- normalised "91XXXXXXXXXX"
   destination          text not null,
-  departure_city       text not null,
-  travel_dates         text not null,
-  group_size           text not null,
+  departure_city       text,
+  travel_dates         text,
+  group_size           text,
   service              text not null check (service in ('blueprint','custom','complete')),
-  budget               text not null,
+  budget               text,
   status               text not null default 'new' check (status in
                          ('new','generating','preview_ready','needs_manual','failed','quoted','paid','delivered','lost')),
   preview_pdf_path     text,
@@ -51,6 +51,10 @@ create table if not exists payments (
 -- One live link per lead+kind: stops double-click duplicate links at the DB level.
 create unique index if not exists payments_one_active
   on payments (lead_id, kind) where status in ('pending','created');
+
+-- Existing database? run once:
+--   alter table leads alter column departure_city drop not null, alter column travel_dates drop not null,
+--     alter column group_size drop not null, alter column budget drop not null;
 
 alter table leads        enable row level security;
 alter table itineraries  enable row level security;

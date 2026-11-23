@@ -67,8 +67,8 @@ def fmt_new_lead(lead: dict) -> str:
     return (
         "<b>New lead</b>\n"
         f"{esc(lead['name'])} · {esc(lead['phone'])}\n"
-        f"{esc(lead['destination'])} from {esc(lead['departure_city'])}\n"
-        f"Dates: {esc(lead['travel_dates'])} · Group: {esc(lead['group_size'])} · Budget/pp (₹k): {esc(lead['budget'])}\n"
+        f"{esc(lead['destination'])} from {esc(lead.get('departure_city') or '-')}\n"
+        f"Dates: {esc(lead.get('travel_dates') or '-')} · Group: {esc(lead.get('group_size') or '-')} · Budget/pp (₹k): {esc(lead.get('budget') or '-')}\n"
         f"Service: {esc(lead['service'])}\n"
         f'<a href="{esc(customer_wa_link(lead["phone"], hello))}">Reply on WhatsApp</a>\n'
         f"<code>{esc(lead['id'])}</code>"

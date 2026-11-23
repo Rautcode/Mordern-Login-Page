@@ -134,6 +134,17 @@ def test_full_flow_idempotent_and_guarded(env):
     assert c.get(f"/api/leads/{lid}/status").json()["download_url"]
 
 
+def test_quick_blueprint_checkout_with_minimal_lead(env):
+    c = env.c
+    r = c.post("/api/leads", json={"name": "Asha", "phone": "9876543210", "destination": "Goa", "service": "blueprint"})
+    assert r.status_code == 201, r.text
+    lid = r.json()["lead_id"]
+    assert any("New lead" in a and "Asha" in a for a in env.alerts)            # alert copes with the missing fields
+    p = c.post("/api/create-payment-link", json={"lead_id": lid, "kind": "blueprint", "blueprint_id": "goa"})
+    assert p.status_code == 200 and p.json()["amount_inr"] == 699
+    assert c.post("/api/leads", json={"name": "Asha", "phone": "9876543210", "destination": "Goa", "service": "custom"}).status_code == 422
+
+
 def test_underpayment_is_not_marked_paid(env):
     c = env.c
     lid = c.post("/api/leads", json={**LEAD, "service": "blueprint"}).json()["lead_id"]

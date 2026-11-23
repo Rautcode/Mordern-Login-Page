@@ -4,7 +4,7 @@ from enum import Enum
 from typing import Annotated, Literal
 from uuid import UUID
 
-from pydantic import BaseModel, Field, StringConstraints, field_validator
+from pydantic import BaseModel, Field, StringConstraints, field_validator, model_validator
 
 _CTRL = re.compile(r"[\x00-\x1f\x7f]")
 Text60 = Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=60)]
@@ -32,17 +32,17 @@ class LeadCreate(BaseModel):
     name: Text60
     phone: str = Field(max_length=20)
     destination: Destination
-    departure_city: Text60
-    travel_dates: Text60
-    group_size: GroupSize
+    departure_city: Text60 | None = None  # optional only for blueprint purchases (see validator below)
+    travel_dates: Text60 | None = None
+    group_size: GroupSize | None = None
     service: Service
-    budget: Budget
+    budget: Budget | None = None
     website: str = Field(default="", max_length=200)  # honeypot: hidden field bots fill, humans don't
 
     @field_validator("name", "departure_city", "travel_dates")
     @classmethod
-    def _no_control_chars(cls, v: str) -> str:
-        return _CTRL.sub(" ", v).strip()
+    def _no_control_chars(cls, v: str | None) -> str | None:
+        return _CTRL.sub(" ", v).strip() if v else v
 
     @field_validator("phone")
     @classmethod
@@ -51,6 +51,16 @@ class LeadCreate(BaseModel):
         if not m:
             raise ValueError("Enter a valid 10-digit Indian mobile number")
         return "91" + m.group(1)
+
+
+    @model_validator(mode="after")
+    def _full_brief_unless_blueprint(self):
+        # A ₹699 impulse buy should not need an 8-field form; custom plans and packages still do.
+        if self.service != "blueprint":
+            missing = [f for f in ("departure_city", "travel_dates", "group_size", "budget") if not getattr(self, f)]
+            if missing:
+                raise ValueError("Missing: " + ", ".join(missing))
+        return self
 
 
 class LeadCreated(BaseModel):

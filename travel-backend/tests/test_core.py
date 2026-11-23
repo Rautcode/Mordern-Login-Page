@@ -46,6 +46,15 @@ def test_phone_normalisation_and_validation():
         LeadCreate(phone="9876543210", **{**ok, "destination": "Mars"})
 
 
+def test_blueprint_lead_needs_only_contact_and_destination():
+    ok = LeadCreate(name="A", phone="9876543210", destination="Goa", service="blueprint")
+    assert ok.departure_city is None and ok.phone == "919876543210"
+    with pytest.raises(ValidationError):                      # custom plans still need the full brief
+        LeadCreate(name="A", phone="9876543210", destination="Goa", service="custom")
+    with pytest.raises(ValidationError):
+        LeadCreate(name="A", phone="9876543210", destination="Goa", service="complete", departure_city="Pune")
+
+
 def test_webhook_signature_and_endpoint_rejects_forgery():
     body = b'{"event":"payment_link.paid"}'
     good = hmac.new(b"whsec_test", body, hashlib.sha256).hexdigest()

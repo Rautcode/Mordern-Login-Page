@@ -64,7 +64,7 @@
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;scroll-padding-top:84px;overflow-x:clip}
 body{font:17px/1.65 var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow-x:hidden;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .035 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
 img,svg{max-width:100%}
 a{color:inherit}
 h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.12;color:var(--forest)}
@@ -83,6 +83,12 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 /* buttons */
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 24px;border-radius:999px;border:2px solid transparent;font:700 .98rem var(--sans);cursor:pointer;text-decoration:none;transition:transform .15s,background .2s,box-shadow .2s;min-height:48px}
 .btn:hover{transform:translateY(-2px)}
+.btn:active{transform:scale(.97)}
+@media(hover:hover) and (prefers-reduced-motion:no-preference){
+  .pola,.snap{transition:transform .4s cubic-bezier(.2,.7,.1,1),box-shadow .4s}
+  .pola.a:hover{transform:rotate(-1deg) translateY(-4px)}.pola.b:hover{transform:rotate(1deg) translateY(-4px)}
+  .snap:hover{transform:rotate(0) translateY(-5px)}
+}
 .btn-primary{background:var(--terra-d);color:#fff;box-shadow:0 10px 22px -10px var(--terra-d)}.btn-primary:hover{background:var(--terra)}
 .btn-ghost{border-color:var(--forest);color:var(--forest);background:transparent}.btn-ghost:hover{background:var(--forest);color:#fff}
 .btn-wa{background:#0F7A41;color:#fff}.btn-wa:hover{background:#0c6535}
@@ -190,6 +196,9 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 #late-note{margin-top:12px;font:600 1.25rem var(--hand);color:var(--terra-d)}
 .toggle{margin-top:14px;display:inline-flex;gap:10px;align-items:center;font:700 .92rem var(--sans);padding:10px 16px;border-radius:999px;border:2px solid var(--forest);background:#fff;color:var(--forest);cursor:pointer;min-height:44px}
 .toggle[aria-pressed=true]{background:var(--forest);color:#fff}
+.daytabs{display:flex;gap:6px 22px;flex-wrap:wrap;margin-bottom:14px}
+.daytab{background:none;border:0;border-bottom:3px solid transparent;padding:8px 2px;font:500 .8rem var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);cursor:pointer;min-height:44px}
+.daytab[aria-selected=true]{color:var(--forest);border-bottom-color:var(--terra)}
 .disclaimer{font-size:.78rem;color:var(--muted);margin-top:10px}
 
 /* routes: postcards */
@@ -200,6 +209,7 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 .card{background:var(--card);padding:12px 12px 20px;box-shadow:0 14px 28px -16px rgba(31,36,33,.5);border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .25s}
 .card:nth-child(odd){transform:rotate(-.7deg)}.card:nth-child(even){transform:rotate(.6deg)}
 .card:hover{transform:rotate(0) translateY(-6px)}
+@media(max-width:560px){.card:nth-child(odd),.card:nth-child(even){transform:none}}  /* calmer on small phones */
 .card[hidden]{display:none}
 .card .art{position:relative}
 .card .art svg{display:block;width:100%;aspect-ratio:16/10}
@@ -349,6 +359,12 @@ footer ul{list-style:none;padding:0;display:grid;gap:9px}footer a{text-decoratio
   section{padding:66px 0}
 }
 
+/* slide-over sheet */
+dialog.sheet{margin:0 0 0 auto;height:100dvh;max-height:none;max-width:none;width:min(480px,100%);animation:slidein .4s cubic-bezier(.2,.7,.1,1)}
+@keyframes slidein{from{transform:translateX(40px);opacity:0}}
+.dw-prev{width:100%;height:auto;filter:blur(3px);border:1px solid var(--line)}
+@media(max-width:700px){dialog.sheet{margin:auto 0 0;width:100%;height:auto;max-height:92dvh;animation-name:slideup}@keyframes slideup{from{transform:translateY(40px);opacity:0}}}
+@media(prefers-reduced-motion:reduce){dialog.sheet{animation:none}}
 /* dialogs */
 dialog{border:0;padding:0;width:min(680px,calc(100% - 24px));max-height:calc(100dvh - 32px);background:var(--paper);color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.45)}
 dialog::backdrop{background:rgba(10,20,15,.68)}
@@ -570,6 +586,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
     <figure class="snap"><img src="img/reel-plane-600.webp" alt="An aircraft on the tarmac at night beside boarding stairs" width="600" height="800" loading="lazy" decoding="async"><figcaption>Night flight, boarding</figcaption></figure>
     <figure class="snap"><video class="p" muted loop playsinline preload="none" poster="img/poster-mist.webp" width="480" height="640" aria-label="Clip: mist rolling over forested hills"><source src="video/mist.webm" type="video/webm"><source src="video/mist.mp4" type="video/mp4"></video><figcaption>Mist over the hills</figcaption></figure>
   </div>
+  <div class="wrap ig reveal"><span class="hand">See more on Instagram →</span><a class="btn btn-ghost" id="ig" target="_blank" rel="noopener"><svg class="i"><use href="#i-insta"/></svg>@[INSTAGRAM_HANDLE]</a></div>
 </section>
 
 <!-- ============ SAMPLE DAY ============ -->
@@ -584,10 +601,10 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
       <button class="toggle" id="late" aria-pressed="false"><span id="late-label">We're running 90 minutes late</span></button>
       <p id="late-note" hidden>Drop the two photo stops. Keep Amer Fort and dinner.</p>
     </div>
-    <div class="ticket-wrap reveal"><article class="ticket" id="ticket" aria-label="Sample day plan">
-      <div class="t-head"><div><small>Day 1 · Jaipur</small><h3>Amer Fort &amp; the old city</h3></div><small>Illustrative<br>sample</small></div>
-      <div class="leg"><svg class="i"><use href="#i-train"/></svg><div><b>Transit leg:</b> Pune → Jaipur, overnight train. Exact number &amp; timings are in your PDF.</div></div>
-      <ul class="sched">
+    <div class="ticket-wrap reveal"><div class="daytabs" role="tablist" aria-label="Sample days"><button class="daytab" role="tab" aria-selected="true" data-day="0">Rajasthan · Day 1</button><button class="daytab" role="tab" aria-selected="false" data-day="1">Kerala · Day 1</button><button class="daytab" role="tab" aria-selected="false" data-day="2">Goa · Day 3</button></div><article class="ticket" id="ticket" aria-label="Sample day plan">
+      <div class="t-head"><div><small id="t-day">Day 1 · Jaipur</small><h3 id="t-title">Amer Fort &amp; the old city</h3></div><small>Illustrative<br>sample</small></div>
+      <div class="leg"><svg class="i"><use href="#i-train"/></svg><div id="t-leg"><b>Transit leg:</b> Pune → Jaipur, overnight train. Exact number &amp; timings are in your PDF.</div></div>
+      <ul class="sched" id="t-sched">
         <li><time>11:30</time><span class="what">Hotel check-in near Bani Park</span></li>
         <li><time>12:30</time><span><span class="tag eat">EAT</span><span class="what">Dal-baati-churma thali, local favourite</span></span></li>
         <li><time>14:30</time><span class="what">Amer Fort entry; Sheesh Mahal first</span></li>
@@ -770,16 +787,10 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
 </section>
 
 <!-- ============ PROOF ============ -->
-<section id="proof" aria-labelledby="proof-h">
+<section id="proof" aria-labelledby="proof-h" hidden>
   <div class="wrap">
     <div class="reveal"><span class="kicker">What travellers say</span><h2 id="proof-h">Groups that stopped arguing in WhatsApp polls.</h2></div>
-    <!-- SAMPLE reviews: replace with real, consented reviews and delete class "sample" from each. Do not publish invented reviews. -->
-    <div class="quotes">
-      <figure class="quote sample reveal"><blockquote>“14 guys, three train legs, zero panic. The cut-list saved Mehrangarh when we lost an hour on the road. Nobody had to plan a thing.”</blockquote><figcaption>Rohan K.<span>14-person Rajasthan trip · Pune</span></figcaption></figure>
-      <figure class="quote sample reveal"><blockquote>“We had parents and friends together. The temple dress-code briefing and the red-eye flight plan were exactly what we'd have missed.”</blockquote><figcaption>Sneha M.<span>11-person Kerala group · Mumbai</span></figcaption></figure>
-      <figure class="quote sample reveal"><blockquote>“Left Hinjawadi Friday night, back Monday morning for stand-up. Tempo Traveller, stays and food list all sorted. The team wants the next batch.”</blockquote><figcaption>Vikram D.<span>IT team weekend batch · Hinjawadi</span></figcaption></figure>
-    </div>
-    <div class="ig reveal"><span class="hand">See the routes in real life →</span><a class="btn btn-ghost" id="ig" target="_blank" rel="noopener"><svg class="i"><use href="#i-insta"/></svg>@[INSTAGRAM_HANDLE]</a></div>
+    <div class="grid quotes" id="quotes"></div>
   </div>
 </section>
 
@@ -817,7 +828,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
 </footer>
 
 <div class="fab"><a data-wa target="_blank" rel="noopener" aria-label="Chat with Trip Planner on WhatsApp"><svg class="i"><use href="#i-chat"/></svg></a><span class="tip">Chat with Trip Planner</span></div>
-<div class="mbar"><a class="btn btn-wa" data-wa target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg>WhatsApp</a><a class="btn btn-primary" href="#planner">Plan My Trip</a></div>
+<div class="mbar"><a class="btn btn-wa" data-wa target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg>WhatsApp</a><a class="btn btn-primary" id="mbar-plan" href="#planner">Plan My Trip</a></div>
 
 <dialog id="d-route" aria-labelledby="dr-t">
   <div class="dh"><h3 id="dr-t"></h3><button data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
@@ -827,6 +838,26 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
     <div class="cols"><div><h4>Blueprint includes</h4><ul id="dr-inc"></ul></div><div><h4>Group execution</h4><ul id="dr-exe"></ul></div></div>
     <p class="note">Outline is a summary; the PDF carries the full time-stamped schedule.</p>
     <button class="btn btn-primary" id="dr-cta">Plan this route</button>
+  </div>
+</dialog>
+
+<dialog id="d-dw" class="sheet" aria-labelledby="dw-t">
+  <div class="dh"><h3 id="dw-t"></h3><button data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="db">
+    <p><b id="dw-price" style="font:400 2rem var(--serif);color:var(--terra-d)"></b> <span class="note">one-time PDF · instant download after payment</span></p>
+    <div id="dw-prev"></div>
+    <div><h4 style="font:500 .78rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--terra-d);margin-bottom:8px">What's inside</h4><ul id="dw-inc" style="padding-left:18px;display:grid;gap:6px"></ul></div>
+    <form id="dwform" novalidate>
+      <div class="fields">
+        <div class="full"><label for="dw-name">Full name</label><input id="dw-name" type="text" maxlength="60" autocomplete="name"></div>
+        <div class="full"><label for="dw-phone">WhatsApp number</label><input id="dw-phone" type="tel" inputmode="tel" maxlength="16" placeholder="98XXXXXXXX" autocomplete="tel"></div>
+        <div class="hp" aria-hidden="true"><label for="dw-hp">Leave this empty</label><input id="dw-hp" type="text" tabindex="-1" autocomplete="off"></div>
+        <div class="full"><label class="consent" for="dw-consent"><input type="checkbox" id="dw-consent"><span>I agree to be contacted on WhatsApp about this order. <button type="button" data-open="privacy">How we use your details</button></span></label></div>
+      </div>
+      <p class="err" id="dw-status" role="status" style="margin-top:10px"></p>
+      <button class="btn btn-primary btn-block" type="submit" id="dw-pay" style="margin-top:8px">Pay now</button>
+    </form>
+    <p class="note">Want something tailored to your dates and group? <a href="#planner" data-close>Plan a custom trip</a> instead.</p>
   </div>
 </dialog>
 
@@ -848,7 +879,8 @@ const CFG = Object.assign({
   instagram: "[INSTAGRAM_HANDLE]",
   apiBase: "",                       // e.g. "https://api.yourdomain.com". Empty = WhatsApp-only mode (no backend)
   pollMs: 4000, pollMax: 45,
-  photos: {}                         // optional real photos: { rajasthan: "img/jaipur.jpg", ... }
+  photos: {},                        // optional real photos: { rajasthan: "img/jaipur.jpg", ... }
+  reviews: []                        // real reviews only: [{ quote: "...", name: "Rohan K.", meta: "14-person Rajasthan trip · Pune" }]
 }, window.SITE_CONFIG || {});
 
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -877,7 +909,7 @@ for (const [id, src] of Object.entries(CFG.photos)) {
 // hero parallax (skipped for reduced motion)
 if (!reduce) {
   const layers = $$("[data-p]"), hero = $(".hero"); let tick = false;
-  addEventListener("scroll", () => { if (tick) return; tick = true; requestAnimationFrame(() => { const y = Math.min(scrollY, hero.offsetHeight); layers.forEach(l => l.style.transform = `translateY(${y * l.dataset.p * -1}px)`); tick = false; }); }, { passive: true });
+  addEventListener("scroll", () => { if (tick) return; tick = true; requestAnimationFrame(() => { const y = Math.min(scrollY, hero.offsetHeight); const small = matchMedia("(max-width:767px)").matches; layers.forEach(l => l.style.transform = small ? "" : `translateY(${y * l.dataset.p * -1}px)`); tick = false; }); }, { passive: true });
 }
 
 // reveal + count-up
@@ -892,6 +924,36 @@ $$(".reveal").forEach(r => io ? io.observe(r) : r.classList.add("in"));
   if (reduce) vids.forEach(v => v.controls = true);
   else if ("IntersectionObserver" in window) { const vio = new IntersectionObserver(es => es.forEach(e => { const v = e.target; if (e.isIntersecting) { v.preload = "auto"; v.play().catch(() => {}); } else v.pause(); }), { threshold: .6 }); vids.forEach(v => vio.observe(v)); } }
 
+// reviews appear only when real ones are supplied (SITE_CONFIG.reviews); nothing invented ships by default
+{ const rv = Array.isArray(CFG.reviews) ? CFG.reviews.slice(0, 6) : [];
+  if (rv.length) {
+    $("#quotes").replaceChildren(...rv.map(r => { const f = document.createElement("figure"); f.className = "card quote reveal in";
+      const q = document.createElement("blockquote"); q.textContent = "“" + r.quote + "”";
+      const c = document.createElement("figcaption"); c.textContent = r.name; const m = document.createElement("span"); m.textContent = r.meta || ""; c.append(m);
+      f.append(q, c); return f; }));
+    $("#proof").hidden = false; } }
+
+// sample-day switcher (all illustrative; swap in real blueprint days when you have them)
+const DAYS = [
+  { day: "Day 1 · Jaipur", title: "Amer Fort & the old city", leg: "Pune → Jaipur, overnight train. Exact number & timings are in your PDF.", note: "Drop the two photo stops. Keep Amer Fort and dinner.",
+    rows: [["11:30", "Hotel check-in near Bani Park"], ["12:30", "Dal-baati-churma thali, local favourite", "eat"], ["14:30", "Amer Fort entry; Sheesh Mahal first"], ["17:00", "Fort closes ~17:30. Be at the exit by 17:15", "stop", "Closing times are verified before every trip"], ["17:45", "Jal Mahal photo stop", "cut"], ["18:30", "Hawa Mahal lane walk", "cut"], ["19:45", "Dinner + kulhad chai in the old bazaar", "eat"]] },
+  { day: "Day 1 · Thiruvananthapuram", title: "Padmanabhaswamy & the old city", leg: "Pune → Kochi, red-eye flight. Exact flight & timings are in your PDF.", note: "Drop the beach and the market walk. Keep darshan and dinner.",
+    rows: [["06:30", "Land in Kochi; drive south"], ["09:30", "Appam and stew breakfast", "eat"], ["11:30", "Hotel check-in; change into temple dress (mundu / saree)"], ["16:00", "Padmanabhaswamy darshan. Join the queue 45 min before the window closes", "stop", "Darshan windows and dress code are checked for your dates"], ["17:30", "Beach sunset stop", "cut"], ["18:30", "Old-city market walk", "cut"], ["20:00", "Kerala meals dinner", "eat"]] },
+  { day: "Day 3 · South Goa", title: "Cola Lagoon & Butterfly Beach", leg: "Tempo Traveller, North → South Goa. Buffer built in; drive times are in your PDF.", note: "Drop the beach hop and the sunset cafe. Keep Butterfly Beach and dinner.",
+    rows: [["08:30", "Local breakfast stop", "eat"], ["10:00", "Cola Lagoon"], ["12:30", "Shack lunch from the curated South Goa list", "eat"], ["14:30", "Boat across to Butterfly Beach"], ["16:30", "Last boat back depends on the tide. Be at the jetty by 16:15", "stop", "Boat windows are confirmed before you go"], ["17:15", "Extra beach hop", "cut"], ["18:00", "Sunset cafe stop", "cut"], ["19:30", "Dinner near the hotel", "eat"]] }
+];
+function renderDay(i) {
+  const d = DAYS[i], mk = (t, c, x) => Object.assign(document.createElement(t), { className: c || "", textContent: x || "" });
+  $$(".daytab").forEach(b => b.setAttribute("aria-selected", +b.dataset.day === i));
+  $("#t-day").textContent = d.day; $("#t-title").textContent = d.title; $("#late-note").textContent = d.note;
+  $("#t-leg").replaceChildren(mk("b", "", "Transit leg: "), d.leg);
+  $("#t-sched").replaceChildren(...d.rows.map(([time, what, kind, small]) => {
+    const li = document.createElement("li"), body = document.createElement("span"); li.append(mk("time", "", time));
+    if (kind === "eat") body.append(mk("span", "tag eat", "EAT")); if (kind === "stop") body.append(mk("span", "tag stop", "HARD STOP")); if (kind === "cut") { body.append(mk("span", "tag cut", "CUT")); li.dataset.cut = ""; }
+    body.append(mk("span", "what", what)); if (small) body.append(mk("small", "", small)); li.append(body); return li; }));
+}
+$$(".daytab").forEach(b => b.onclick = () => { renderDay(+b.dataset.day); track("sample_day", { day: b.dataset.day }); });
+
 // running-late demo
 $("#late").onclick = e => { const on = e.currentTarget.getAttribute("aria-pressed") !== "true"; e.currentTarget.setAttribute("aria-pressed", on); $("#ticket").classList.toggle("is-late", on); $("#late-note").hidden = !on; $("#late-label").textContent = on ? "Back on schedule" : "We're running 90 minutes late"; track("sample_cutlist_toggle"); };
 
@@ -899,10 +961,10 @@ $("#late").onclick = e => { const on = e.currentTarget.getAttribute("aria-presse
 const INC = ["Instant PDF download", "Exact train/flight numbers & timings", "Hotel area recommendations", "Food master list ('EAT' tags)", "Packing checklist"];
 const EXE = ["Stays + Tempo Traveller/cab booking", "Verified local ground coordinator", "Final inclusions confirmed in your quote", "50% advance to confirm"];
 const TRIPS = {
-  rajasthan: { title: "Jaipur → Jaisalmer → Jodhpur (6D/5N)", dest: "Rajasthan", sum: "Blueprint ₹799 · Custom Group Execution from ₹11,499/person", days: ["Day 1: Jaipur: Amer Fort + old city", "Day 2: Jaipur → Jaisalmer (train leg)", "Day 3: Jaisalmer fort + Sam Sand Dunes sunset", "Day 4: Jaisalmer → Jodhpur (train leg)", "Day 5: Jodhpur: Mehrangarh + blue city food walk", "Day 6: Departure"] },
-  gokarna: { title: "Gokarna → Murudeshwar → Hampi (5D/4N, Ex-Pune)", dest: "Hampi–Gokarna", sum: "Blueprint ₹699 · Weekend Group Batch ₹10,499/person", days: ["Day 1: Overnight drive from Pune/PCMC", "Day 2: Gokarna: Kudle & Om Beach trek", "Day 3: Murudeshwar viewpoint → Hampi", "Day 4: Hampi boulder sunrise + coracle ride", "Day 5: Return to Pune"] },
-  kerala: { title: "Kerala Temple & Nature Circuit (3D/2N)", dest: "Kerala", sum: "Blueprint ₹699 · Custom Package from ₹9,999/person", days: ["Day 1: PNQ–COK red-eye → Padmanabhaswamy Temple", "Day 2: Azhimala cliff + Jatayu Earth Center", "Day 3: Alleppey / Munnar leg → departure"] },
-  goa: { title: "Goa Hidden Gems & Classics (4D/3N, Ex-Pune)", dest: "Goa", sum: "Blueprint ₹699 · Group Package from ₹8,499/person", days: ["Day 1: Pune → North Goa, sundowners", "Day 2: Arambol + sweet water lake", "Day 3: South Goa: Cola Lagoon & Butterfly Beach", "Day 4: Fontainhas walk → return"] }
+  rajasthan: { title: "Jaipur → Jaisalmer → Jodhpur (6D/5N)", dest: "Rajasthan", bp: "rajasthan", price: 799, sum: "Blueprint ₹799 · Custom Group Execution from ₹11,499/person", days: ["Day 1: Jaipur: Amer Fort + old city", "Day 2: Jaipur → Jaisalmer (train leg)", "Day 3: Jaisalmer fort + Sam Sand Dunes sunset", "Day 4: Jaisalmer → Jodhpur (train leg)", "Day 5: Jodhpur: Mehrangarh + blue city food walk", "Day 6: Departure"] },
+  gokarna: { title: "Gokarna → Murudeshwar → Hampi (5D/4N, Ex-Pune)", dest: "Hampi–Gokarna", bp: "hampi-gokarna", price: 699, sum: "Blueprint ₹699 · Weekend Group Batch ₹10,499/person", days: ["Day 1: Overnight drive from Pune/PCMC", "Day 2: Gokarna: Kudle & Om Beach trek", "Day 3: Murudeshwar viewpoint → Hampi", "Day 4: Hampi boulder sunrise + coracle ride", "Day 5: Return to Pune"] },
+  kerala: { title: "Kerala Temple & Nature Circuit (3D/2N)", dest: "Kerala", bp: "kerala", price: 699, sum: "Blueprint ₹699 · Custom Package from ₹9,999/person", days: ["Day 1: PNQ–COK red-eye → Padmanabhaswamy Temple", "Day 2: Azhimala cliff + Jatayu Earth Center", "Day 3: Alleppey / Munnar leg → departure"] },
+  goa: { title: "Goa Hidden Gems & Classics (4D/3N, Ex-Pune)", dest: "Goa", bp: "goa", price: 699, sum: "Blueprint ₹699 · Group Package from ₹8,499/person", days: ["Day 1: Pune → North Goa, sundowners", "Day 2: Arambol + sweet water lake", "Day 3: South Goa: Cola Lagoon & Butterfly Beach", "Day 4: Fontainhas walk → return"] }
 };
 const BP_ID = { "Rajasthan": "rajasthan", "Kerala": "kerala", "Goa": "goa", "Hampi–Gokarna": "hampi-gokarna" }; // must match backend BLUEPRINTS keys
 const HAS_KB = new Set(Object.keys(BP_ID));
@@ -928,6 +990,7 @@ $$("[data-route]").forEach(b => b.onclick = () => {
 // ===== planner =====
 const form = $("#form");
 function plan(service, dest) {
+  engaged = true;
   if (service) form.elements.service.value = service;
   if (dest) form.elements.dest.value = dest;
   showForm(); updateEst();
@@ -936,14 +999,20 @@ function plan(service, dest) {
 }
 $$("[data-plan]").forEach(b => b.onclick = () => plan(b.dataset.plan));
 $$("[data-trip]").forEach(b => b.onclick = () => { track("plan_trip_click", { route: b.dataset.trip }); plan("custom", TRIPS[b.dataset.trip].dest); });
-$$("[data-bp]").forEach(b => b.onclick = () => { track("blueprint_click", { route: b.dataset.bp }); plan("blueprint", TRIPS[b.dataset.bp].dest); });
+$$("[data-bp]").forEach(b => b.onclick = () => { track("blueprint_click", { route: b.dataset.bp }); openBlueprint(b.dataset.bp); });
 $$("[data-dest]").forEach(b => b.onclick = () => plan(null, b.dataset.dest));
 
 const inr = n => "₹" + n.toLocaleString("en-IN");
 const G = { "1-2": [1, 2], "3-6": [3, 6], "7-12": [7, 12], "13+": [13, null] }, B = { "5-10": [5000, 10000], "10-18": [10000, 18000], "18+": [18000, null] };
 const SVC = { blueprint: "Ready Blueprint (₹699)", custom: "Custom PDF Plan (₹2,499)", complete: "Complete All-Inclusive Package" };
 const BUDGET = { "5-10": "₹5k–₹10k", "10-18": "₹10k–₹18k", "18+": "₹18k+" };
-function updateEst() {
+let engaged = false;  // becomes true once the visitor touches the planner; then the bar shows their live estimate
+function syncBar() {
+  const est = $("#est-main").textContent.replace(/\s/g, ""), bar = $("#mbar-plan");
+  bar.textContent = engaged ? `${est.startsWith("₹") ? "Est. " + est : "Quote"} · Resume →` : "Plan My Trip";
+}
+function updateEst() { _updateEst(); syncBar(); }
+function _updateEst() {
   const v = form.elements, svc = v.service.value, g = G[v.group.value], b = B[v.budget.value];
   $("#bp-from").textContent = v.from.value.trim().slice(0, 14) || "Pune"; $("#bp-to").textContent = v.dest.value || "Anywhere";
   $("#bp-group").textContent = v.group.value || "—"; $("#bp-svc").textContent = { blueprint: "Blueprint", custom: "Custom plan", complete: "Full package" }[svc];
@@ -954,7 +1023,7 @@ function updateEst() {
   if (g && b) { const lo = b[0] * g[0], hi = g[1] && b[1] ? b[1] * g[1] : null; trip = ` Indicative trip spend for your group: ${hi ? `${inr(lo)} – ${inr(hi)}` : `${inr(lo)}+`}.`; }
   sub.textContent = (svc === "custom" ? "Planning fee, delivered in 24 hours with 1 free revision." : "50% advance to confirm bookings.") + trip;
 }
-form.addEventListener("input", updateEst);
+form.addEventListener("input", () => { engaged = true; updateEst(); });
 
 // ===== 3-step form: fewer fields per screen, tap-chips, saved draft =====
 const STEPS = [null, ["dest", "from", "when"], ["group", "budget"], ["name", "phone", "consent"]];
@@ -1055,6 +1124,29 @@ function buildNext(leadId, v, note) {
     });
   }
 }
+
+// ===== blueprint slide-over: honest contents + two-field checkout =====
+let dwTrip = null;
+function openBlueprint(id) {
+  const t = dwTrip = TRIPS[id];
+  $("#dw-t").textContent = `${t.dest} blueprint`; $("#dw-price").textContent = `₹${t.price}`; $("#dw-pay").textContent = `Pay ₹${t.price} · secure checkout`;
+  $("#dw-inc").replaceChildren(...INC.map(x => Object.assign(document.createElement("li"), { textContent: x }))); $("#dw-status").textContent = "";
+  const pv = $("#dw-prev"), im = new Image(); pv.replaceChildren(); im.onload = () => { im.className = "dw-prev"; im.alt = "Blurred preview of the blueprint PDF layout"; pv.append(im); }; im.src = "img/blueprint-preview.webp"; // shows only if you add a real page-1 preview
+  $("#d-dw").showModal(); track("blueprint_open", { route: id });
+}
+$("#dwform").addEventListener("submit", async ev => {
+  ev.preventDefault(); const t = dwTrip, st = $("#dw-status"), btn = $("#dw-pay"), say = x => { st.textContent = x; };
+  const name = clean($("#dw-name").value), m = $("#dw-phone").value.replace(/[\s\-()]/g, "").match(/^(?:\+?91|0)?([6-9]\d{9})$/);
+  if (name.length < 2) return say("Please enter your name."); if (!m) return say("Enter a valid 10-digit Indian WhatsApp number."); if (!$("#dw-consent").checked) return say("Please tick to continue.");
+  const phone = "91" + m[1], msg = `Hi! I'd like the ${t.dest} blueprint (₹${t.price}).\n*Name:* ${name}\n*WhatsApp:* ${phone}`;
+  if (!CFG.apiBase) { window.open(waLink(msg), "_blank", "noopener"); return; }   // WhatsApp-only mode
+  btn.disabled = true; say("Opening secure checkout…");
+  try {
+    const lead = await api("/api/leads", { name, phone, destination: t.dest, service: "blueprint", website: $("#dw-hp").value });
+    const r = await api("/api/create-payment-link", { lead_id: lead.lead_id, kind: "blueprint", blueprint_id: t.bp });
+    track("begin_checkout", { kind: "blueprint" }); location.assign(r.payment_url);
+  } catch { btn.disabled = false; st.replaceChildren("We couldn't open checkout. ", Object.assign(document.createElement("a"), { href: waLink(msg), target: "_blank", rel: "noopener", textContent: "Order on WhatsApp instead →" })); }
+});
 </script>
 </body>
 </html>
