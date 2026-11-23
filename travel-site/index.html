@@ -165,6 +165,27 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 .stat span{font-size:.85rem;color:var(--muted)}
 @media(max-width:860px){.notes{grid-template-columns:1fr;gap:30px}.polas{min-height:360px;order:2}}
 
+/* peek inside */
+.peekgrid{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center}
+@media(max-width:900px){.peekgrid{grid-template-columns:1fr;gap:36px}}
+.inside{list-style:none;padding:0;display:grid;gap:10px;margin:22px 0 14px}
+.inside li{padding-left:28px;position:relative}.inside li::before{content:"✓";position:absolute;left:0;color:var(--terra-d);font-weight:700}
+.pages{display:flex;justify-content:center;align-items:flex-start;padding:26px 0 10px}
+.pg{margin:0;background:#fff;padding:8px 8px 12px;box-shadow:0 16px 32px -14px rgba(31,36,33,.55);position:relative;width:min(300px,46%)}
+.pg img{display:block;width:100%;height:auto}
+.pg figcaption{font:600 1.15rem var(--hand);text-align:center;margin-top:6px;color:var(--ink)}
+.pg.a{transform:rotate(-3deg);z-index:1}.pg.b{transform:rotate(2.5deg);margin-left:-36px;margin-top:34px}
+.pg::before{content:"";position:absolute;top:-11px;left:50%;width:70px;height:22px;margin-left:-35px;background:rgba(212,163,89,.55);transform:rotate(-2deg);z-index:2}
+/* fit + intel + assurances */
+.fit{margin-top:56px;background:var(--card);border:1px solid var(--line);padding:clamp(22px,4vw,36px);border-radius:var(--r)}
+.fitcols{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin:18px 0 14px}@media(max-width:700px){.fitcols{grid-template-columns:1fr}}
+.fit h4{font:500 .74rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--terra-d);margin-bottom:10px}
+.fit ul{list-style:none;padding:0;display:grid;gap:8px;font-size:.95rem}.fit li{padding-left:22px;position:relative}.fit li::before{content:"–";position:absolute;left:4px;color:var(--terra-d)}
+.intel{font-size:.9rem;background:#EAF1E8;border-left:3px solid var(--forest);padding:9px 12px;border-radius:0 10px 10px 0;line-height:1.45}
+.intel b{display:block;font:500 .66rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--forest);margin-bottom:2px}
+.assure{list-style:none;padding:0;display:flex;flex-wrap:wrap;gap:10px 34px;justify-content:center;margin-top:40px;font-size:.95rem}
+.assure li{padding-left:26px;position:relative}.assure li::before{content:"✓";position:absolute;left:0;color:var(--terra-d);font-weight:700}.assure b{color:var(--forest)}
+.nextsteps{padding-left:20px;margin:0 0 22px;display:grid;gap:6px;font-size:.92rem;color:var(--muted)}.nextsteps b{color:var(--ink)}
 /* from the road */
 .road{padding:20px 0 40px}
 .reel{display:flex;gap:30px;overflow-x:auto;scroll-snap-type:x proximity;padding:46px max(16px,calc((100% - 1180px)/2)) 60px;margin-top:6px;scrollbar-color:var(--terra) transparent}
@@ -638,6 +659,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
         <div class="body"><h3>Rajasthan tour from Pune: Jaipur → Jaisalmer → Jodhpur</h3>
           <div class="meta"><span>6 DAYS / 5 NIGHTS</span><span>8–16 PEOPLE</span></div>
           <ul class="hl"><li>3 chained overnight/intercity train legs + Tempo Traveller desert circuit</li><li>Amer &amp; Mehrangarh closing-time strategy</li><li>Sam Sand Dunes sunset</li><li>15+ local food stops</li></ul>
+          <p class="intel"><b>Ground-tested</b>We plan Amer and Mehrangarh around closing times, not around the map.</p>
           <p class="price"><b>Blueprint ₹799</b> | Custom Group Execution from ₹11,499/person</p>
           <div class="acts"><button class="btn btn-primary" data-trip="rajasthan">Plan this trip</button><button class="btn btn-ghost" data-route="rajasthan">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="rajasthan">Just want the PDF? Get the blueprint · ₹799</button></div></article>
       <article class="card reveal" data-id="gokarna" data-cats="weekend multi">
@@ -645,6 +667,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
         <div class="body"><h3>Gokarna → Murudeshwar → Hampi trip from Pune</h3>
           <div class="meta"><span>5 DAYS / 4 NIGHTS</span><span>EX-PUNE</span><span>10–16 PEOPLE</span></div>
           <ul class="hl"><li>Overnight AC Tempo Traveller from Pune/PCMC</li><li>Kudle &amp; Om Beach trek</li><li>Murudeshwar temple viewpoint</li><li>Hampi boulder sunrise &amp; coracle ride</li></ul>
+          <p class="intel"><b>Ground-tested</b>The Kudle to Om Beach trek is timed to finish before dusk, with a footwear and water checklist.</p>
           <p class="price"><b>Blueprint ₹699</b> | Weekend Group Batch ₹10,499/person</p>
           <div class="acts"><button class="btn btn-primary" data-trip="gokarna">Plan this trip</button><button class="btn btn-ghost" data-route="gokarna">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="gokarna">Just want the PDF? Get the blueprint · ₹699</button></div></article>
       <article class="card reveal" data-id="kerala" data-cats="multi">
@@ -652,6 +675,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
         <div class="body"><h3>Kerala temple &amp; nature circuit from Pune</h3>
           <div class="meta"><span>3 DAYS / 2 NIGHTS</span><span>4–12 PEOPLE</span></div>
           <ul class="hl"><li>Red-eye flight optimisation (PNQ–COK)</li><li>Padmanabhaswamy Temple dress-code &amp; entry briefing</li><li>Azhimala cliff, Jatayu Earth Center, Alleppey &amp; Munnar</li></ul>
+          <p class="intel"><b>Ground-tested</b>Padmanabhaswamy has a strict dress code. You're briefed before you pack.</p>
           <p class="price"><b>Blueprint ₹699</b> | Custom Package from ₹9,999/person</p>
           <div class="acts"><button class="btn btn-primary" data-trip="kerala">Plan this trip</button><button class="btn btn-ghost" data-route="kerala">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="kerala">Just want the PDF? Get the blueprint · ₹699</button></div></article>
       <article class="card reveal" data-id="goa" data-cats="weekend">
@@ -659,6 +683,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
         <div class="body"><h3>Goa hidden gems &amp; classics trip from Pune</h3>
           <div class="meta"><span>4 DAYS / 3 NIGHTS</span><span>EX-PUNE</span><span>6–16 PEOPLE</span></div>
           <ul class="hl"><li>North Goa sundowners, Arambol sweet water lake</li><li>South Goa Cola Lagoon &amp; Butterfly Beach</li><li>Fontainhas Latin Quarter walk</li><li>Curated shack &amp; cafe list</li></ul>
+          <p class="intel"><b>Ground-tested</b>South Goa drives run longer than maps suggest, so every transfer carries a buffer.</p>
           <p class="price"><b>Blueprint ₹699</b> | Group Package from ₹8,499/person</p>
           <div class="acts"><button class="btn btn-primary" data-trip="goa">Plan this trip</button><button class="btn btn-ghost" data-route="goa">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="goa">Just want the PDF? Get the blueprint · ₹699</button></div></article>
     </div>
@@ -684,11 +709,49 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
         <tr><th scope="row">Execution, when you want it</th><td>Take it or leave it.</td><td>Buy the PDF and book yourself, or we handle hotels, Tempo Travellers and vetted North India ground teams.</td></tr>
       </tbody>
     </table>
+    <div class="fit reveal">
+      <h3>Is this right for you?</h3>
+      <div class="fitcols">
+        <div><h4>A good fit if</h4><ul>
+          <li>You want a route that has been walked and timed, not a list of places</li>
+          <li>You're organising a group and need every day to run on schedule</li>
+          <li>You'd rather follow a planned route than build one from reviews</li></ul></div>
+        <div><h4>Probably not if</h4><ul>
+          <li>You want the cheapest hotel-and-bus bundle at a fixed price</li>
+          <li>You'd rather browse a catalogue and compare package deals</li>
+          <li>You don't want to follow a planned timetable</li></ul></div>
+      </div>
+      <p class="note">With the Blueprint and Custom Plan, we plan and you book. With Full Trip Execution, we book it too.</p>
+    </div>
     <ol class="steps reveal">
       <li><div class="n">1</div><h3>Tell us the trip</h3><p>Destination, dates, group size and budget. Under a minute.</p></li>
       <li><div class="n">2</div><h3>Get your preview</h3><p>See Day 1 of your plan free, then your full quote within 24 hours.</p></li>
       <li><div class="n">3</div><h3>Go. Or we run it.</h3><p>Book it yourself with the blueprint, or hand us the whole trip.</p></li>
     </ol>
+  </div>
+</section>
+
+<!-- ============ PEEK INSIDE ============ -->
+<section class="peek" id="peek" aria-labelledby="peek-h">
+  <div class="wrap peekgrid">
+    <div class="reveal">
+      <span class="kicker">Peek inside the playbook</span>
+      <h2 id="peek-h">This is the PDF you'll hold.</h2>
+      <p class="lead">Print it for the road or keep it on your phone. Every page follows the same format, so your group always knows what happens next.</p>
+      <ul class="inside">
+        <li>Time-stamped schedule for every day</li>
+        <li>Train, flight and road legs, with exact numbers and timings</li>
+        <li>EAT tags: where to have breakfast, street food and dinner</li>
+        <li>HARD STOP markers for closing times you can't argue with</li>
+        <li>A cut-list: what to drop, in order, if you run late</li>
+        <li>Packing checklist and per-person budget notes</li>
+      </ul>
+      <p class="note">Sample pages from our PDF template. Numbers and times shown are placeholders.</p>
+    </div>
+    <div class="pages reveal">
+      <figure class="pg a"><img src="img/peek-1.webp" alt="Sample PDF page one: cover, then Day 1 with a time-stamped schedule, EAT tags, a hard stop and a priority cut-list" width="760" height="1075" loading="lazy" decoding="async"><figcaption>Page 1: schedule, EAT tags, cut-list</figcaption></figure>
+      <figure class="pg b"><img src="img/peek-2.webp" alt="Sample PDF page two: packing checklist and budget notes" width="760" height="1075" loading="lazy" decoding="async"><figcaption>Page 2: packing and budget</figcaption></figure>
+    </div>
   </div>
 </section>
 
@@ -714,6 +777,12 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
         <ul><li>Everything in the Custom Itinerary tier</li><li>Complete booking of stays, Tempo Travellers/cabs and verified local ground coordinators across Maharashtra, Goa, Karnataka, Rajasthan, Kerala, Himachal and Uttarakhand</li></ul>
         <button class="btn btn-ghost btn-block" data-plan="complete">Get Group Package Quote</button></div></article>
     </div>
+    <ul class="assure reveal" aria-label="Before you pay">
+      <li><b>See Day 1 free</b> before you pay for a custom plan</li>
+      <li><b>24 hours</b> from your details to your plan</li>
+      <li><b>1 free revision</b> included</li>
+      <li id="refund" hidden></li>
+    </ul>
   </div>
 </section>
 
@@ -769,6 +838,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
         <div class="confirm" id="confirm" hidden aria-live="polite" tabindex="-1">
           <h3>Got it, <span id="c-name"></span>. One tap to finish.</h3>
           <dl id="c-list"></dl>
+          <ol class="nextsteps"><li><b>Tap the WhatsApp button</b> so we get your details instantly.</li><li><b>See Day 1 free</b> if your route is covered.</li><li><b>Get your firm quote within 24 hours.</b> Pay only to unlock the full plan.</li></ol>
           <a class="btn btn-wa btn-block" id="c-wa" target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg>Send details on WhatsApp for instant quote</a>
           <div class="next" id="next" hidden></div>
           <button class="btn btn-ghost btn-block" id="c-edit" style="margin-top:12px" type="button">Edit details</button>
@@ -837,7 +907,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
     <div><h4 style="color:var(--forest);margin-bottom:8px">Route outline</h4><ul class="sched" id="dr-days"></ul></div>
     <div class="cols"><div><h4>Blueprint includes</h4><ul id="dr-inc"></ul></div><div><h4>Group execution</h4><ul id="dr-exe"></ul></div></div>
     <p class="note">Outline is a summary; the PDF carries the full time-stamped schedule.</p>
-    <button class="btn btn-primary" id="dr-cta">Plan this route</button>
+    <div class="acts"><button class="btn btn-primary" id="dr-cta">Plan this route</button><button class="btn btn-ghost" id="dr-share">Share with your group</button></div>
   </div>
 </dialog>
 
@@ -880,6 +950,8 @@ const CFG = Object.assign({
   apiBase: "",                       // e.g. "https://api.yourdomain.com". Empty = WhatsApp-only mode (no backend)
   pollMs: 4000, pollMax: 45,
   photos: {},                        // optional real photos: { rajasthan: "img/jaipur.jpg", ... }
+  siteUrl: "",                       // your public address, used in the share-with-group message (defaults to this page)
+  refundPolicy: "",                  // e.g. "Delivered within 48 hours, or refunded." Shown under pricing only if you set it (decide the terms first)
   reviews: []                        // real reviews only: [{ quote: "...", name: "Rohan K.", meta: "14-person Rajasthan trip · Pune" }]
 }, window.SITE_CONFIG || {});
 
@@ -954,6 +1026,18 @@ function renderDay(i) {
 }
 $$(".daytab").forEach(b => b.onclick = () => { renderDay(+b.dataset.day); track("sample_day", { day: b.dataset.day }); });
 
+// ===== share with your group: one tap gives the group organiser a ready-to-paste pitch =====
+const siteLink = () => (CFG.siteUrl || location.href.split("#")[0]) + "#routes";
+const tripPitch = t => [`*${t.dest} trip from Pune*`, t.title, `${t.people} people · group package from ₹${t.from.toLocaleString("en-IN")} per person`, `Blueprint PDF ₹${t.price}`, "", siteLink()].join("\n");
+const planPitch = v => [`*${v.destination} trip from ${v.departure_city}*`, `${v.travel_dates} · ${v.group_size} people`, `Budget ${BUDGET[v.budget]} per person`, "Planned minute by minute: exact timings, food stops and a cut-list.", "", siteLink()].join("\n");
+async function shareText(text) {
+  track("share_click");
+  if (navigator.share) { try { await navigator.share({ text }); return; } catch (e) { if (e.name === "AbortError") return; } }
+  window.open("https://wa.me/?text=" + encodeURIComponent(text), "_blank", "noopener");   // no number: WhatsApp opens its contact picker
+}
+
+if (CFG.refundPolicy) { const r = $("#refund"); r.textContent = String(CFG.refundPolicy).slice(0, 140); r.hidden = false; }
+
 // running-late demo
 $("#late").onclick = e => { const on = e.currentTarget.getAttribute("aria-pressed") !== "true"; e.currentTarget.setAttribute("aria-pressed", on); $("#ticket").classList.toggle("is-late", on); $("#late-note").hidden = !on; $("#late-label").textContent = on ? "Back on schedule" : "We're running 90 minutes late"; track("sample_cutlist_toggle"); };
 
@@ -961,10 +1045,10 @@ $("#late").onclick = e => { const on = e.currentTarget.getAttribute("aria-presse
 const INC = ["Instant PDF download", "Exact train/flight numbers & timings", "Hotel area recommendations", "Food master list ('EAT' tags)", "Packing checklist"];
 const EXE = ["Stays + Tempo Traveller/cab booking", "Verified local ground coordinator", "Final inclusions confirmed in your quote", "50% advance to confirm"];
 const TRIPS = {
-  rajasthan: { title: "Jaipur → Jaisalmer → Jodhpur (6D/5N)", dest: "Rajasthan", bp: "rajasthan", price: 799, sum: "Blueprint ₹799 · Custom Group Execution from ₹11,499/person", days: ["Day 1: Jaipur: Amer Fort + old city", "Day 2: Jaipur → Jaisalmer (train leg)", "Day 3: Jaisalmer fort + Sam Sand Dunes sunset", "Day 4: Jaisalmer → Jodhpur (train leg)", "Day 5: Jodhpur: Mehrangarh + blue city food walk", "Day 6: Departure"] },
-  gokarna: { title: "Gokarna → Murudeshwar → Hampi (5D/4N, Ex-Pune)", dest: "Hampi–Gokarna", bp: "hampi-gokarna", price: 699, sum: "Blueprint ₹699 · Weekend Group Batch ₹10,499/person", days: ["Day 1: Overnight drive from Pune/PCMC", "Day 2: Gokarna: Kudle & Om Beach trek", "Day 3: Murudeshwar viewpoint → Hampi", "Day 4: Hampi boulder sunrise + coracle ride", "Day 5: Return to Pune"] },
-  kerala: { title: "Kerala Temple & Nature Circuit (3D/2N)", dest: "Kerala", bp: "kerala", price: 699, sum: "Blueprint ₹699 · Custom Package from ₹9,999/person", days: ["Day 1: PNQ–COK red-eye → Padmanabhaswamy Temple", "Day 2: Azhimala cliff + Jatayu Earth Center", "Day 3: Alleppey / Munnar leg → departure"] },
-  goa: { title: "Goa Hidden Gems & Classics (4D/3N, Ex-Pune)", dest: "Goa", bp: "goa", price: 699, sum: "Blueprint ₹699 · Group Package from ₹8,499/person", days: ["Day 1: Pune → North Goa, sundowners", "Day 2: Arambol + sweet water lake", "Day 3: South Goa: Cola Lagoon & Butterfly Beach", "Day 4: Fontainhas walk → return"] }
+  rajasthan: { title: "Jaipur → Jaisalmer → Jodhpur (6D/5N)", dest: "Rajasthan", people: "8–16", from: 11499, bp: "rajasthan", price: 799, sum: "Blueprint ₹799 · Custom Group Execution from ₹11,499/person", days: ["Day 1: Jaipur: Amer Fort + old city", "Day 2: Jaipur → Jaisalmer (train leg)", "Day 3: Jaisalmer fort + Sam Sand Dunes sunset", "Day 4: Jaisalmer → Jodhpur (train leg)", "Day 5: Jodhpur: Mehrangarh + blue city food walk", "Day 6: Departure"] },
+  gokarna: { title: "Gokarna → Murudeshwar → Hampi (5D/4N, Ex-Pune)", dest: "Hampi–Gokarna", people: "10–16", from: 10499, bp: "hampi-gokarna", price: 699, sum: "Blueprint ₹699 · Weekend Group Batch ₹10,499/person", days: ["Day 1: Overnight drive from Pune/PCMC", "Day 2: Gokarna: Kudle & Om Beach trek", "Day 3: Murudeshwar viewpoint → Hampi", "Day 4: Hampi boulder sunrise + coracle ride", "Day 5: Return to Pune"] },
+  kerala: { title: "Kerala Temple & Nature Circuit (3D/2N)", dest: "Kerala", people: "4–12", from: 9999, bp: "kerala", price: 699, sum: "Blueprint ₹699 · Custom Package from ₹9,999/person", days: ["Day 1: PNQ–COK red-eye → Padmanabhaswamy Temple", "Day 2: Azhimala cliff + Jatayu Earth Center", "Day 3: Alleppey / Munnar leg → departure"] },
+  goa: { title: "Goa Hidden Gems & Classics (4D/3N, Ex-Pune)", dest: "Goa", people: "6–16", from: 8499, bp: "goa", price: 699, sum: "Blueprint ₹699 · Group Package from ₹8,499/person", days: ["Day 1: Pune → North Goa, sundowners", "Day 2: Arambol + sweet water lake", "Day 3: South Goa: Cola Lagoon & Butterfly Beach", "Day 4: Fontainhas walk → return"] }
 };
 const BP_ID = { "Rajasthan": "rajasthan", "Kerala": "kerala", "Goa": "goa", "Hampi–Gokarna": "hampi-gokarna" }; // must match backend BLUEPRINTS keys
 const HAS_KB = new Set(Object.keys(BP_ID));
@@ -984,6 +1068,7 @@ $$("[data-route]").forEach(b => b.onclick = () => {
   const fill = (id, arr) => $(id).replaceChildren(...arr.map(x => Object.assign(document.createElement("li"), { textContent: x })));
   fill("#dr-days", t.days); fill("#dr-inc", INC); fill("#dr-exe", EXE);
   $("#dr-cta").onclick = () => { $("#d-route").close(); plan("custom", t.dest); };
+  $("#dr-share").onclick = () => shareText(tripPitch(t));
   $("#d-route").showModal(); track("view_route", { route: b.dataset.route });
 });
 
@@ -1115,7 +1200,7 @@ function buildNext(leadId, v, note) {
         if (r.status === "needs_manual") { say("We'll plan this one by hand and WhatsApp you shortly."); return; }
         for (let i = 0; i < CFG.pollMax; i++) {
           const s = await api(`/api/leads/${leadId}/status`);
-          if (s.preview_url) { say("Your preview is ready."); track("preview_ready"); link("Open preview PDF (Day 1)", s.preview_url); if (v.service === "custom") btn("Unlock the full plan · ₹2,499", "btn-primary", e => pay("custom_plan")(e.currentTarget)); return; }
+          if (s.preview_url) { say("Your preview is ready."); track("preview_ready"); link("Open preview PDF (Day 1)", s.preview_url); btn("Share with your group", "btn-ghost", () => shareText(planPitch(v))); if (v.service === "custom") btn("Unlock the full plan · ₹2,499", "btn-primary", e => pay("custom_plan")(e.currentTarget)); return; }
           if (s.status === "failed" || s.status === "needs_manual") { say("We'll finish this plan by hand and WhatsApp you shortly."); return; }
           await sleep(CFG.pollMs);
         }
