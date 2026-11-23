@@ -93,7 +93,7 @@ def _itin(number: str, mode="train") -> ItineraryJSON:
 def test_hallucination_guard():
     rag_loader.load_all()
     allowed = rag_loader.allowed_identifiers(rag_loader.get_context("Rajasthan"))
-    assert {"12955", "12468", "20495"} <= allowed
+    assert {"12955", "12468", "20495", "12939"} <= allowed
     assert ai_planner.find_unverified(_itin("12955"), allowed) == []
     assert ai_planner.find_unverified(_itin(""), allowed) == []    # unknown -> empty is allowed
     assert ai_planner.find_unverified(_itin("99999"), allowed)     # invented -> flagged
@@ -105,3 +105,12 @@ def test_pdf_renders_and_escapes_markup():
     for preview in (True, False):
         pdf = asyncio.run(pdf_generator.render_pdf(_itin("12955"), lead, preview))
         assert pdf.startswith(b"%PDF") and len(pdf) > 2000
+
+
+def test_knowledge_base_holds_no_private_phone_numbers():
+    """The KB is committed to git and fed to an LLM. Vendor/driver numbers belong only in the delivered PDF."""
+    import re
+    rag_loader.load_all()
+    for dest in ("Rajasthan", "Kerala", "Goa", "Hampi–Gokarna"):
+        kb = rag_loader.get_context(dest)
+        assert not re.search(r"(?:\+?91[\s-]?)?[6-9]\d{4}[\s-]?\d{5}\b", kb), f"phone-like number in {dest} knowledge base"
