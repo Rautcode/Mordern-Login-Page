@@ -1,234 +1,437 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-IN">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ground-Tested Trips. Zero Guesswork. | Custom Trip Planner, Pune</title>
-<meta name="description" content="Time-stamped itineraries with exact train & flight legs, local food maps and group departures from Pune. Planned by a former tour guide.">
+<script>document.documentElement.classList.add('js')</script>
+
+<!-- ============ SEO. Replace [BRAND_NAME], YOUR-DOMAIN.com, +91XXXXXXXXXX, [INSTAGRAM_HANDLE] with a find-and-replace ============ -->
+<title>Pune Group Trip Planner: Rajasthan, Kerala, Goa | [BRAND_NAME]</title>
+<meta name="description" content="Custom group trip planner in Pune. Time-stamped itineraries with exact train & flight legs, closing-time deadlines and food maps. Quote in 24 hours.">
+<link rel="canonical" href="https://YOUR-DOMAIN.com/">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#F5EEE1">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="en_IN">
+<meta property="og:site_name" content="[BRAND_NAME]">
+<meta property="og:title" content="Ground-Tested Trips. Zero Guesswork. Group trip planner in Pune">
+<meta property="og:description" content="Minute-by-minute itineraries with exact train & flight legs, hard deadlines and local food maps, planned by a former tour guide.">
+<meta property="og:url" content="https://YOUR-DOMAIN.com/">
+<meta property="og:image" content="https://YOUR-DOMAIN.com/og-image.png">
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Illustrated Rajasthan fort and dunes at sunrise with a Tempo Traveller on the road">
+<meta name="twitter:card" content="summary_large_image">
+
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"TravelAgency","name":"[BRAND_NAME]","url":"https://YOUR-DOMAIN.com/",
+ "slogan":"Ground-Tested Trips. Zero Guesswork.","image":"https://YOUR-DOMAIN.com/og-image.png","telephone":"+91XXXXXXXXXX",
+ "description":"Online-first custom trip planner and curated group travel organiser based in Pune and Pimpri-Chinchwad, India.",
+ "address":{"@type":"PostalAddress","addressLocality":"Pune","addressRegion":"Maharashtra","addressCountry":"IN"},
+ "areaServed":[{"@type":"City","name":"Pune"},{"@type":"City","name":"Pimpri-Chinchwad"},{"@type":"State","name":"Maharashtra"}],
+ "sameAs":["https://www.instagram.com/[INSTAGRAM_HANDLE]"],
+ "knowsAbout":["Rajasthan group tours","Kerala tour planning","Goa trips from Pune","Hampi and Gokarna trips","Tempo Traveller group travel"]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ItemList","name":"Proven group trip blueprints from Pune","itemListElement":[
+ {"@type":"ListItem","position":1,"item":{"@type":"TouristTrip","name":"Jaipur, Jaisalmer and Jodhpur trip from Pune (6 days)","touristType":"Group","offers":{"@type":"Offer","priceCurrency":"INR","price":"799","url":"https://YOUR-DOMAIN.com/#routes"}}},
+ {"@type":"ListItem","position":2,"item":{"@type":"TouristTrip","name":"Gokarna, Murudeshwar and Hampi trip from Pune (5 days)","touristType":"Group","offers":{"@type":"Offer","priceCurrency":"INR","price":"699","url":"https://YOUR-DOMAIN.com/#routes"}}},
+ {"@type":"ListItem","position":3,"item":{"@type":"TouristTrip","name":"Kerala temple and nature circuit (3 days)","touristType":"Group","offers":{"@type":"Offer","priceCurrency":"INR","price":"699","url":"https://YOUR-DOMAIN.com/#routes"}}},
+ {"@type":"ListItem","position":4,"item":{"@type":"TouristTrip","name":"Goa hidden gems trip from Pune (4 days)","touristType":"Group","offers":{"@type":"Offer","priceCurrency":"INR","price":"699","url":"https://YOUR-DOMAIN.com/#routes"}}}]}
+</script>
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
+ {"@type":"Question","name":"Do you book trains and flights, or just give us the exact train and flight numbers?","acceptedAnswer":{"@type":"Answer","text":"The Blueprint and Custom Plan tiers give you exact train and flight numbers, timings and connections so you can book on IRCTC or your airline. With a Full Trip Execution package we handle the bookings; the scope is confirmed in your written quote."}},
+ {"@type":"Question","name":"How fast will I receive my custom itinerary?","acceptedAnswer":{"@type":"Answer","text":"Within 24 hours of confirmed details, with one free revision included. Very large or multi-city groups may need a quick call first and we tell you upfront."}},
+ {"@type":"Question","name":"Can you organise a Tempo Traveller and hotels for a 10 to 16 person group from Pune?","acceptedAnswer":{"@type":"Answer","text":"Yes. Pune and PCMC pickups, Tempo Travellers and group-friendly stays are our core use case, with the per-person split shown before you commit."}},
+ {"@type":"Question","name":"How do payments and advances work for full packages?","acceptedAnswer":{"@type":"Answer","text":"Full packages run on a 50% advance to lock bookings. The balance schedule and every line item are itemised in your quote, with no hidden agency markups."}},
+ {"@type":"Question","name":"Do you cover North India destinations like Manali, Kasol and Rishikesh?","acceptedAnswer":{"@type":"Answer","text":"Yes. We work with vetted local ground teams across Himachal, Uttarakhand and Rajasthan. Choose Himachal/Uttarakhand in the planner and we will route it."}},
+ {"@type":"Question","name":"How much does a group trip from Pune cost?","acceptedAnswer":{"@type":"Answer","text":"Group packages start from Rs 8,499 per person for Goa, Rs 9,999 for Kerala, Rs 10,499 for Gokarna-Hampi and Rs 11,499 for Rajasthan. Final prices depend on dates, group size and stay type and are confirmed in your quote."}},
+ {"@type":"Question","name":"What do I get in the free preview versus the paid Custom Plan?","acceptedAnswer":{"@type":"Answer","text":"The free preview shows Day 1 of your itinerary in full so you can judge the quality. The Rs 2,499 Custom Plan unlocks every day, the food map and the priority cut-lists."}}]}
+</script>
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Figtree:wght@400;600;700&family=IBM+Plex+Mono:wght@500&family=Young+Serif&display=swap" rel="stylesheet">
+
 <style>
 :root{
-  --forest:#1B3B2B; --forest-2:#27533c; --terra:#C85A32; --terra-d:#A94724; --sand:#FAF7F2; --sand-2:#F1EBDF;
-  --ink:#1E1E1E; --muted:#5b5b57; --gold:#D4A359; --line:#e4dccd; --white:#fff;
-  --serif:'Fraunces',Georgia,'Times New Roman',serif; --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
-  --r:20px; --shadow:0 10px 30px -12px rgba(27,59,43,.25);
+  --paper:#F5EEE1; --paper-2:#EDE2CC; --card:#FFFCF6; --ink:#1F2421; --muted:#5E5A50;
+  --forest:#1B3B2B; --forest-2:#2C5A41; --terra:#C85A32; --terra-d:#A8431F; --gold:#D4A359; --sea:#2F6F73; --line:#DDD0B6;
+  --serif:'Young Serif',Georgia,serif; --hand:'Caveat','Segoe Script',cursive; --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace; --sans:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
 }
 *{box-sizing:border-box;margin:0}
-html{scroll-behavior:smooth;scroll-padding-top:76px}
-body{font:16px/1.6 var(--sans);color:var(--ink);background:var(--sand);-webkit-font-smoothing:antialiased}
-img{max-width:100%;display:block}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth;scroll-padding-top:84px;overflow-x:clip}
+body{font:17px/1.65 var(--sans);color:var(--ink);background:var(--paper);-webkit-font-smoothing:antialiased;overflow-x:hidden;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .4 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+img,svg{max-width:100%}
 a{color:inherit}
-h1,h2,h3{font-family:var(--serif);line-height:1.15;color:var(--forest)}
-h1{font-size:clamp(2.1rem,6vw,3.8rem)} h2{font-size:clamp(1.7rem,4vw,2.6rem)} h3{font-size:1.25rem}
-.wrap{width:min(1160px,100% - 32px);margin-inline:auto}
-section{padding:72px 0}
-.eyebrow{display:inline-block;font-size:.8rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--terra-d)}
-.lead{color:var(--muted);max-width:60ch;margin-top:10px}
-.sec-head{margin-bottom:36px}
-svg.i{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+h1,h2,h3{font-family:var(--serif);font-weight:400;line-height:1.12;color:var(--forest)}
+h2{font-size:clamp(1.9rem,4.4vw,3rem)} h3{font-size:1.3rem}
+p{max-width:62ch}
+.wrap{width:min(1180px,100% - 32px);margin-inline:auto}
+section{position:relative;padding:88px 0}
+.mono{font-family:var(--mono);font-weight:500}
+.hand{font-family:var(--hand);font-weight:600;color:var(--terra-d);font-size:1.45rem;line-height:1.1}
+.kicker{font:500 .78rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--terra-d)}
+.lead{color:var(--muted);margin-top:14px}
+svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.2em}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:-999px;top:8px;background:var(--forest);color:#fff;padding:10px 16px;z-index:100;border-radius:8px}.skip:focus{left:8px}
 
 /* buttons */
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 22px;border-radius:999px;border:2px solid transparent;font:600 .95rem var(--sans);cursor:pointer;text-decoration:none;transition:transform .15s,background .2s,box-shadow .2s}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;padding:14px 24px;border-radius:999px;border:2px solid transparent;font:700 .98rem var(--sans);cursor:pointer;text-decoration:none;transition:transform .15s,background .2s,box-shadow .2s;min-height:48px}
 .btn:hover{transform:translateY(-2px)}
-.nav-cta .btn{white-space:nowrap}
-.btn-primary{background:var(--terra-d);color:#fff;box-shadow:0 8px 20px -8px var(--terra-d)}
-.btn-primary:hover{background:var(--terra)}
-.btn-ghost{border-color:var(--forest);color:var(--forest);background:transparent}
-.btn-ghost:hover{background:var(--forest);color:#fff}
-.btn-wa{background:#128C4A;color:#fff}
+.btn-primary{background:var(--terra-d);color:#fff;box-shadow:0 10px 22px -10px var(--terra-d)}.btn-primary:hover{background:var(--terra)}
+.btn-ghost{border-color:var(--forest);color:var(--forest);background:transparent}.btn-ghost:hover{background:var(--forest);color:#fff}
+.btn-wa{background:#0F7A41;color:#fff}.btn-wa:hover{background:#0c6535}
 .btn-block{width:100%}
-:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
 
-/* nav */
-header{position:sticky;top:0;z-index:50;background:rgba(250,247,242,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
-.nav{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
-.logo{font:700 1.3rem var(--serif);color:var(--forest);text-decoration:none}
-.logo span{color:var(--terra)}
+/* header */
+.hdr{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .25s,box-shadow .25s}
+.hdr.solid{background:rgba(245,238,225,.94);backdrop-filter:blur(10px);box-shadow:0 1px 0 var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:70px;gap:16px}
+.logo{display:flex;align-items:center;gap:10px;font:400 1.35rem var(--serif);color:var(--forest);text-decoration:none}
+.logo svg{width:34px;height:34px}
 .links{display:flex;gap:26px}
-.links a{text-decoration:none;font-weight:500;font-size:.93rem;color:var(--ink)}
-.links a:hover{color:var(--terra-d)}
+.links a{text-decoration:none;font-weight:600;font-size:.94rem;color:var(--forest)}.links a:hover{color:var(--terra-d)}
 .nav-cta{display:flex;align-items:center;gap:10px}
-.icon-btn{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;border:1px solid var(--line);background:#fff;color:#128C4A;cursor:pointer}
-#burger{display:none;color:var(--forest)}
-@media(max-width:920px){
-  .links{display:none;position:absolute;top:68px;left:0;right:0;flex-direction:column;gap:0;background:var(--sand);border-bottom:1px solid var(--line);padding:8px 16px 16px}
-  .links.open{display:flex} .links a{padding:12px 0;border-bottom:1px solid var(--line)}
-  #burger{display:grid} .nav-cta .btn{padding:10px 16px}
+.icon-btn{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:1.5px solid var(--forest);background:transparent;color:var(--forest);cursor:pointer}
+#burger{display:none}
+@media(max-width:940px){
+  .links{display:none;position:absolute;top:70px;left:0;right:0;flex-direction:column;gap:0;background:var(--paper);border-bottom:1px solid var(--line);padding:6px 16px 14px}
+  .links.open{display:flex}.links a{padding:14px 0;border-bottom:1px dashed var(--line)}
+  #burger{display:grid}.nav-cta .btn{padding:10px 16px;min-height:44px;white-space:nowrap}
 }
-@media(max-width:420px){.nav-cta .wa-link{display:none}}
+@media(max-width:480px){.nav-cta .wa-link{display:none}.logo{font-size:1.1rem;gap:7px}.logo svg{width:28px;height:28px}.nav-cta{gap:8px}.nav-cta .btn{font-size:.85rem;padding:8px 14px}}
 
-/* hero */
-.hero{position:relative;color:#fff;background:linear-gradient(135deg,var(--forest),#0f2419);overflow:hidden;padding:84px 0 56px}
-.hero .bg{position:absolute;inset:0;object-fit:cover;width:100%;height:100%;opacity:.28}
-.hero .wrap{position:relative}
-.hero h1{color:#fff;max-width:18ch;margin:18px 0}
-.badge{display:inline-flex;gap:8px;align-items:center;background:rgba(212,163,89,.18);border:1px solid var(--gold);color:#f3dfb8;border-radius:999px;padding:7px 14px;font-size:.82rem;font-weight:500}
-.hero p.sub{max-width:62ch;font-size:1.08rem;color:#e9e4d8}
-.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
-.hero .btn-ghost{border-color:#fff;color:#fff}.hero .btn-ghost:hover{background:#fff;color:var(--forest)}
-.trust{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:52px}
-.trust div{display:flex;gap:10px;align-items:center;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);padding:12px 14px;border-radius:14px;font-size:.88rem;font-weight:500}
-.trust .i{color:var(--gold)}
-@media(max-width:820px){.trust{grid-template-columns:1fr 1fr}}
-@media(max-width:480px){.trust{grid-template-columns:1fr}}
+/* hero: the scenery is the design */
+.hero{padding:0;min-height:max(640px,min(100svh,920px));display:flex;flex-direction:column;overflow:hidden;background:linear-gradient(#F8E3BF,#F2B98A 70%,#E9945F);isolation:isolate}
+.scene{position:absolute;inset:0;z-index:-1}
+.scene svg{width:100%;height:100%;display:block}
+.hero-in{padding:100px 0 clamp(190px,17vw,250px);position:relative}
+.stamp-line{display:inline-flex;align-items:center;gap:10px;font:500 .78rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--forest);border:1.5px dashed var(--forest);padding:6px 14px;border-radius:6px;background:rgba(255,252,246,.5)}
+.hero h1{font-size:clamp(2.1rem,4.1vw,3.6rem);max-width:22ch;margin:18px 0 16px;text-wrap:balance}
+.hero p.sub{font-size:1.1rem;color:#33402f;max-width:52ch}
+.cta-row{display:flex;flex-wrap:wrap;gap:12px;margin-top:26px}
+.where{margin-top:24px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.chip{font:700 .9rem var(--sans);padding:9px 16px;border-radius:999px;border:1.5px solid var(--forest);background:rgba(255,252,246,.72);color:var(--forest);cursor:pointer;transition:.15s}
+.chip:hover{background:var(--forest);color:#fff;transform:translateY(-2px) rotate(-1.5deg)}
+.cloud{animation:drift 90s linear infinite}.cloud.b{animation-duration:130s;animation-delay:-40s}
+.van{animation:drive 46s linear infinite}
+.sun-glow{animation:glow 6s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+@keyframes drift{from{transform:translateX(-260px)}to{transform:translateX(1700px)}}
+@keyframes drive{from{transform:translateX(-220px)}to{transform:translateX(1700px)}}
+@keyframes glow{50%{opacity:.55;transform:scale(1.06)}}
 
-/* tabs + cards */
-.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:28px}
-.tab{padding:9px 18px;border-radius:999px;border:1px solid var(--line);background:#fff;font:500 .9rem var(--sans);cursor:pointer;color:var(--ink)}
+@media(max-width:760px){
+  .hero{min-height:0}
+  .hero-in{padding:104px 0 8px}
+  .scene{position:relative;inset:auto;order:2;height:clamp(250px,72vw,340px);margin-top:6px}
+  .birds{display:none}
+}
+/* trust strip */
+.strip{padding:0;margin-top:-1px;background:var(--forest);color:#F5EEE1}
+.strip ul{list-style:none;padding:20px 0;margin:0;display:grid;grid-template-columns:repeat(4,1fr);gap:14px 22px}
+.strip li{display:flex;gap:12px;align-items:center;font-size:.92rem;font-weight:600;line-height:1.3}
+.strip .i{color:var(--gold);width:1.7em;height:1.7em}
+@media(max-width:860px){.strip ul{grid-template-columns:1fr 1fr}}
+@media(max-width:480px){.strip ul{grid-template-columns:1fr}}
+
+/* founder / field notes */
+.notes{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center}
+.polas{position:relative;min-height:470px}
+.pola{position:absolute;background:#fff;padding:12px 12px 16px;box-shadow:0 14px 30px -12px rgba(31,36,33,.45);width:min(300px,64%)}
+.pola svg{display:block;width:100%;aspect-ratio:1/.85;background:#ddd}
+.pola figcaption{font:600 1.3rem var(--hand);color:var(--ink);text-align:center;margin-top:8px}
+.pola.a{left:0;top:0;transform:rotate(-5deg)}.pola.b{right:0;top:170px;transform:rotate(4deg);z-index:2}
+.pola::before{content:"";position:absolute;top:-12px;left:50%;width:84px;height:24px;margin-left:-42px;background:rgba(212,163,89,.55);transform:rotate(-3deg)}
+.pola img{display:block;width:100%;aspect-ratio:1/.85;object-fit:cover}
+.stats{display:flex;gap:30px;flex-wrap:wrap;margin-top:26px}
+.stat b{display:block;font:400 2.6rem var(--serif);color:var(--terra-d);line-height:1}
+.stat span{font-size:.85rem;color:var(--muted)}
+@media(max-width:860px){.notes{grid-template-columns:1fr;gap:30px}.polas{min-height:360px;order:2}}
+
+/* sample day ticket */
+.sample{background:var(--paper-2)}
+.split{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center}
+@media(max-width:900px){.split{grid-template-columns:1fr;gap:34px}}
+.ticket-wrap{filter:drop-shadow(0 18px 24px rgba(31,36,33,.22))}
+.ticket{background:var(--card);padding:26px 26px 22px;
+  -webkit-mask:radial-gradient(circle 11px at 0 91px,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% 91px,#0000 98%,#000) right/51% 100% no-repeat;
+  mask:radial-gradient(circle 11px at 0 91px,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% 91px,#0000 98%,#000) right/51% 100% no-repeat}
+.t-head{display:flex;justify-content:space-between;gap:12px;border-bottom:2px dashed var(--line);padding-bottom:16px;margin-bottom:6px}
+.t-head h3{font-size:1.15rem}.t-head small{font:500 .72rem var(--mono);color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
+.leg{display:flex;gap:10px;background:#E6EFE6;border-left:4px solid var(--forest);padding:10px 12px;margin:12px 0 6px;font-size:.88rem}
+.sched{list-style:none;padding:0}
+.sched li{display:grid;grid-template-columns:62px 1fr;gap:10px;padding:9px 0;border-bottom:1px dotted var(--line);transition:opacity .3s}
+.sched time{font:500 .92rem var(--mono);color:var(--forest)}
+.tag{font:500 .66rem var(--mono);letter-spacing:.08em;padding:2px 7px;border-radius:4px;margin-right:6px;color:#fff;vertical-align:1px}
+.tag.eat{background:var(--terra-d)}.tag.stop{background:var(--ink)}.tag.cut{background:var(--muted);display:none}
+.sched small{display:block;color:var(--muted);font-size:.8rem}
+.is-late [data-cut]{opacity:.5}.is-late [data-cut] .what{text-decoration:line-through}.is-late [data-cut] .tag.cut{display:inline-block}
+#late-note{margin-top:12px;font:600 1.25rem var(--hand);color:var(--terra-d)}
+.toggle{margin-top:14px;display:inline-flex;gap:10px;align-items:center;font:700 .92rem var(--sans);padding:10px 16px;border-radius:999px;border:2px solid var(--forest);background:#fff;color:var(--forest);cursor:pointer;min-height:44px}
+.toggle[aria-pressed=true]{background:var(--forest);color:#fff}
+.disclaimer{font-size:.78rem;color:var(--muted);margin-top:10px}
+
+/* routes: postcards */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin:26px 0 34px}
+.tab{padding:10px 18px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);font:700 .9rem var(--sans);cursor:pointer;color:var(--ink);min-height:44px}
 .tab[aria-selected=true]{background:var(--forest);color:#fff;border-color:var(--forest)}
-.grid{display:grid;gap:22px}
-.trips{grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr))}
-.card{background:#fff;border-radius:var(--r);border:1px solid var(--line);overflow:hidden;box-shadow:var(--shadow);display:flex;flex-direction:column}
-.ph{position:relative;aspect-ratio:16/10;background:linear-gradient(135deg,var(--g1,#27533c),var(--g2,#C85A32))}
-.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.ph .tag{position:absolute;left:12px;top:12px;background:rgba(255,255,255,.94);color:var(--forest);font-size:.75rem;font-weight:600;padding:5px 11px;border-radius:999px}
-.card .body{padding:20px;display:flex;flex-direction:column;gap:12px;flex:1}
-.meta{display:flex;gap:14px;flex-wrap:wrap;font-size:.85rem;color:var(--muted)}
-.meta span{display:inline-flex;gap:5px;align-items:center}
-.hl{list-style:none;padding:0;display:grid;gap:6px;font-size:.92rem;color:#3a3a37}
-.hl li{display:flex;gap:8px}.hl .i{color:var(--forest-2);margin-top:3px}
-.price{margin-top:auto;padding-top:12px;border-top:1px dashed var(--line);font-size:.9rem}
-.price b{color:var(--terra-d)}
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:34px 26px}
+.card{background:var(--card);padding:12px 12px 20px;box-shadow:0 14px 28px -16px rgba(31,36,33,.5);border:1px solid var(--line);display:flex;flex-direction:column;transition:transform .25s}
+.card:nth-child(odd){transform:rotate(-.7deg)}.card:nth-child(even){transform:rotate(.6deg)}
+.card:hover{transform:rotate(0) translateY(-6px)}
 .card[hidden]{display:none}
+.card .art{position:relative}
+.card .art svg{display:block;width:100%;aspect-ratio:16/10}
+.card .art img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover}
+.postmark{position:absolute;right:10px;top:10px;background:var(--card);border:2.5px dotted var(--terra-d);padding:4px 10px;font:500 .78rem var(--mono);color:var(--terra-d);text-align:center;line-height:1.25;transform:rotate(3deg)}
+.postmark b{display:block;font-size:1.05rem}
+.body{padding:16px 8px 0;display:flex;flex-direction:column;gap:11px;flex:1}
+.body h3{font-size:1.25rem}
+.meta{font:500 .78rem var(--mono);color:var(--muted);letter-spacing:.04em;display:flex;gap:6px 14px;flex-wrap:wrap}
+.hl{list-style:none;padding:0;display:grid;gap:5px;font-size:.93rem}
+.hl li{padding-left:22px;position:relative}
+.hl li::before{content:"";position:absolute;left:0;top:.55em;width:11px;height:2px;background:var(--terra)}
+.price{margin-top:auto;padding-top:12px;border-top:2px dashed var(--line);font-size:.9rem}.price b{color:var(--terra-d)}
 
-/* why */
-.why{background:var(--sand-2)}
-.why .grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr))}
-.why .card{padding:24px;gap:10px;box-shadow:none}
-.ico{width:48px;height:48px;border-radius:14px;background:var(--forest);color:var(--gold);display:grid;place-items:center}
+/* comparison */
+.versus{background:var(--paper-2)}
+table.vs{width:100%;border-collapse:separate;border-spacing:0;margin-top:34px;background:var(--card);box-shadow:0 14px 28px -18px rgba(31,36,33,.5)}
+.vs th,.vs td{padding:18px 20px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);font-size:.97rem}
+.vs thead th{font:500 .78rem var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+.vs thead th:last-child{color:#fff;background:var(--forest)}
+.vs tbody th{font:400 1.12rem var(--serif);color:var(--forest);width:26%}
+.vs td:nth-child(2){color:var(--muted)}
+.vs td:last-child{background:#F0F4EC;font-weight:600}
+.vs tr:last-child>*{border-bottom:0}
+@media(max-width:760px){
+  .vs,.vs tbody,.vs tr,.vs th,.vs td{display:block}.vs thead{display:none}
+  .vs tbody th{width:auto;background:var(--forest);color:#fff;padding:12px 16px}
+  .vs td{padding:12px 16px}.vs td:nth-child(2)::before{content:"Typical package: ";font-weight:700}.vs td:last-child::before{content:"With us: ";font-weight:700;color:var(--forest)}
+}
 
-/* pricing */
-.pricing{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));align-items:stretch}
-.tier{padding:28px;gap:14px;position:relative}
-.tier.pop{border:2px solid var(--terra);transform:translateY(-6px)}
-.pop-badge{position:absolute;top:-14px;left:28px;background:var(--terra-d);color:#fff;font-size:.75rem;font-weight:600;padding:5px 12px;border-radius:999px}
-.amt{font:700 2rem var(--serif);color:var(--forest)}
-.amt small{display:block;font:500 .85rem var(--sans);color:var(--muted)}
-.tier ul{list-style:none;padding:0;display:grid;gap:9px;font-size:.93rem;flex:1}
-.tier li{display:flex;gap:8px}.tier li .i{color:var(--forest-2);margin-top:3px}
+/* steps */
+.steps{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:30px;margin-top:40px;position:relative;counter-reset:s}
+.steps::before{content:"";position:absolute;left:8%;right:8%;top:34px;border-top:3px dashed var(--gold)}
+.steps li{position:relative;text-align:center;padding:0 12px}
+.steps .n{width:70px;height:70px;border-radius:50%;background:var(--forest);color:var(--gold);font:400 1.9rem var(--serif);display:grid;place-items:center;margin:0 auto 14px;position:relative;box-shadow:0 0 0 8px var(--paper)}
+.steps p{margin:6px auto 0;color:var(--muted);font-size:.95rem}
+@media(max-width:760px){.steps{grid-template-columns:1fr}.steps::before{display:none}}
+
+/* pricing: tickets */
+.tickets{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:26px;margin-top:40px;align-items:stretch}
+.tk{filter:drop-shadow(0 14px 18px rgba(31,36,33,.18));display:flex}
+.tk>div{background:var(--card);padding:28px 26px 26px;display:flex;flex-direction:column;gap:14px;width:100%;position:relative;
+  -webkit-mask:radial-gradient(circle 12px at 0 172px,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 12px at 100% 172px,#0000 98%,#000) right/51% 100% no-repeat;
+  mask:radial-gradient(circle 12px at 0 172px,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 12px at 100% 172px,#0000 98%,#000) right/51% 100% no-repeat}
+.tk.pop>div{background:var(--forest);color:#F5EEE1}.tk.pop h3,.tk.pop .amt{color:#fff}
+.tk h3{font-size:1.2rem;min-height:2.6em}
+.amt{font:400 2.1rem var(--serif);color:var(--forest);line-height:1;padding-bottom:22px;border-bottom:2px dashed var(--line)}
+.tk.pop .amt{border-color:rgba(255,255,255,.3)}
+.amt small{display:block;font:500 .75rem var(--mono);color:var(--muted);margin-top:8px;letter-spacing:.06em}.tk.pop .amt small{color:var(--gold)}
+.tk ul{list-style:none;padding:0;display:grid;gap:9px;font-size:.93rem;flex:1}
+.tk li{padding-left:24px;position:relative}.tk li::before{content:"✓";position:absolute;left:0;color:var(--terra-d);font-weight:700}.tk.pop li::before{color:var(--gold)}
+.seal{position:absolute;top:-6px;right:14px;background:var(--gold);color:var(--ink);font:500 .72rem var(--mono);padding:6px 12px;transform:rotate(5deg);letter-spacing:.08em}
 
 /* planner */
-.planner{background:var(--forest);color:#fff}
-.planner h2{color:#fff}.planner .lead{color:#d8d3c6}
-.pl-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:28px;align-items:start}
-@media(max-width:900px){.pl-grid{grid-template-columns:1fr}}
-form,.confirm{background:var(--sand);color:var(--ink);padding:28px;border-radius:var(--r)}
-.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.fields .full{grid-column:1/-1}
-@media(max-width:560px){.fields{grid-template-columns:1fr}}
-label,legend{font-size:.85rem;font-weight:600;color:var(--forest);display:block;margin-bottom:6px;padding:0}
-input[type=text],input[type=tel],select{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;font:inherit;color:var(--ink)}
-input:focus,select:focus{border-color:var(--forest);outline:none;box-shadow:0 0 0 3px rgba(212,163,89,.45)}
-input:user-invalid,select:user-invalid{border-color:#b3261e}
+.planner{background:var(--forest);color:#F5EEE1;padding-top:110px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420' fill='none' stroke='%23ffffff' stroke-opacity='.07'%3E%3Cpath d='M-20 80C80 20 160 120 260 60S400 40 450 90M-20 160C90 100 170 200 270 140S410 120 450 170M-20 240C100 180 180 280 280 220S420 200 450 250M-20 320C110 260 190 360 290 300S430 280 450 330'/%3E%3C/svg%3E")}
+.planner h2{color:#fff}.planner .lead{color:#cfd8cf}.planner .kicker{color:var(--gold)}
+.edge.tall{height:120px;overflow:visible}
+.edge{position:absolute;left:0;right:0;top:-1px;transform:translateY(-99%);width:100%;height:70px;display:block}
+.pl{display:grid;grid-template-columns:1.2fr 1fr;gap:34px;align-items:start;margin-top:36px}
+@media(max-width:940px){.pl{grid-template-columns:1fr}}
+form,.confirm{background:var(--card);color:var(--ink);padding:30px;box-shadow:0 22px 40px -20px #000}
+.fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}.fields .full{grid-column:1/-1}
+@media(max-width:560px){.fields{grid-template-columns:1fr}form,.confirm{padding:22px 18px}}
+label,legend{font:700 .84rem var(--sans);color:var(--forest);display:block;margin-bottom:6px;padding:0}
+input[type=text],input[type=tel],select{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font:inherit;color:var(--ink);min-height:48px}
+input:focus,select:focus{border-color:var(--forest);outline:3px solid rgba(212,163,89,.55);outline-offset:0}
+input[aria-invalid=true],select[aria-invalid=true]{border-color:#B3261E}
 fieldset{border:0;padding:0;min-width:0}
 .radios{display:grid;gap:8px}
-.radio{display:flex;gap:10px;align-items:center;padding:12px 14px;border:1.5px solid var(--line);border-radius:12px;background:#fff;cursor:pointer;font-weight:500;font-size:.92rem;margin:0;color:var(--ink)}
-.radio:has(input:checked){border-color:var(--forest);background:#eef4ef}
-.radio input{accent-color:var(--forest)}
-.err{color:#b3261e;font-size:.82rem;margin-top:4px;min-height:1em}
-.est{background:#fff;border:1.5px dashed var(--gold);color:var(--ink);border-radius:var(--r);padding:24px;position:sticky;top:90px}
-.est h3{margin-bottom:8px}
-.est .big{font:700 1.7rem var(--serif);color:var(--terra-d);margin:6px 0}
-.est small{color:var(--muted);display:block;margin-top:10px}
-.confirm dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:16px 0 22px;font-size:.93rem}
-.confirm dt{color:var(--muted)}.confirm dd{font-weight:600;word-break:break-word}
+.radio{display:flex;gap:10px;align-items:center;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;cursor:pointer;font-weight:600;font-size:.92rem;margin:0;color:var(--ink);min-height:48px}
+.radio:has(input:checked){border-color:var(--forest);background:#EAF1E8}.radio input{accent-color:var(--forest);width:18px;height:18px}
+.err{color:#B3261E;font-size:.8rem;min-height:1.1em;margin-top:3px}
+.consent{display:flex;gap:10px;align-items:flex-start;font-size:.82rem;color:var(--muted);margin-top:4px}.consent input{margin-top:4px;accent-color:var(--forest);width:18px;height:18px;flex:none}
+.consent button{background:none;border:0;padding:0;font:inherit;color:var(--terra-d);text-decoration:underline;cursor:pointer}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.bp{position:sticky;top:90px;filter:drop-shadow(0 18px 20px rgba(0,0,0,.35))}
+.bp>div{background:var(--card);color:var(--ink);padding:24px;
+  -webkit-mask:radial-gradient(circle 11px at 0 81px,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% 81px,#0000 98%,#000) right/51% 100% no-repeat;
+  mask:radial-gradient(circle 11px at 0 81px,#0000 98%,#000) left/51% 100% no-repeat,radial-gradient(circle 11px at 100% 81px,#0000 98%,#000) right/51% 100% no-repeat}
+.bp .route{display:flex;justify-content:space-between;align-items:center;gap:8px;font:400 1.5rem var(--serif);color:var(--forest);padding-bottom:22px;border-bottom:2px dashed var(--line)}
+.bp .route span:nth-child(2){flex:1;border-top:2px dotted var(--terra);position:relative;min-width:30px}
+.bp .route span:nth-child(2)::after{content:"➤";position:absolute;right:-4px;top:-13px;color:var(--terra-d);font-size:.9rem}
+.bp .route span:first-child,.bp .route span:last-child{max-width:42%;overflow-wrap:anywhere}
+.bp dl{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+.bp dt{font:500 .68rem var(--mono);color:var(--muted);letter-spacing:.12em;text-transform:uppercase}.bp dd{font-weight:700;font-size:.98rem}
+.bp .big{font:400 2rem var(--serif);color:var(--terra-d);line-height:1.1;margin-top:18px}
+.bp small{display:block;color:var(--muted);font-size:.78rem;margin-top:10px;line-height:1.4}
 .confirm[hidden],form[hidden]{display:none}
+.confirm dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:16px 0 20px;font-size:.93rem}.confirm dt{color:var(--muted)}.confirm dd{font-weight:700;overflow-wrap:anywhere}
+.next{margin-top:22px;padding-top:20px;border-top:2px dashed var(--line);display:grid;gap:10px}
+.next p.status{font-weight:600;color:var(--forest)}
+.spin{display:inline-block;width:14px;height:14px;border:3px solid var(--line);border-top-color:var(--terra-d);border-radius:50%;animation:sp 1s linear infinite;vertical-align:-2px;margin-right:8px}
+@keyframes sp{to{transform:rotate(360deg)}}
 
-/* proof */
-.quotes{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
-.quote{padding:26px;gap:14px}
-.stars{color:var(--gold);display:flex;gap:2px}.stars .i{fill:var(--gold)}
-.who{font-weight:600;color:var(--forest);font-size:.9rem}.who span{display:block;font-weight:400;color:var(--muted)}
-.faq{max-width:820px;margin:44px auto 0;display:grid;gap:12px}
-details{background:#fff;border:1px solid var(--line);border-radius:16px;padding:0 20px}
-summary{cursor:pointer;list-style:none;padding:18px 0;font-weight:600;color:var(--forest);display:flex;justify-content:space-between;gap:16px;align-items:center}
-summary::-webkit-details-marker{display:none}
-summary .i{transition:transform .2s}details[open] summary .i{transform:rotate(180deg)}
-details p{padding:0 0 18px;color:#3d3d3a}
+/* reviews */
+.quotes{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:30px;margin-top:38px}
+.quote{background:var(--card);padding:28px 24px;border:1px solid var(--line);box-shadow:0 12px 24px -16px rgba(31,36,33,.5);position:relative;display:flex;flex-direction:column;gap:14px}
+.quote:nth-child(2){transform:rotate(1deg)}.quote:nth-child(1){transform:rotate(-.8deg)}
+.quote blockquote{font-size:1.04rem}
+.quote figcaption{font-weight:700;color:var(--forest);font-size:.92rem;margin-top:auto}.quote figcaption span{display:block;font-weight:400;color:var(--muted)}
+.quote.sample::after{content:"SAMPLE · replace with a real review";position:absolute;top:-11px;left:16px;background:var(--ink);color:#fff;font:500 .66rem var(--mono);letter-spacing:.06em;padding:4px 9px}
+.ig{margin-top:34px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+
+/* faq */
+.faq{max-width:840px;margin:36px auto 0;display:grid;gap:12px}
+details{background:var(--card);border:1px solid var(--line);padding:0 22px}
+summary{cursor:pointer;list-style:none;padding:18px 0;font:400 1.12rem var(--serif);color:var(--forest);display:flex;justify-content:space-between;gap:16px;align-items:center;min-height:56px}
+summary::-webkit-details-marker{display:none}summary::after{content:"+";font:400 1.6rem var(--mono);color:var(--terra-d);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details p{padding:0 0 20px;color:#3d3d37}
 
 /* footer */
-footer{background:#10241a;color:#cfd6d0;padding:56px 0 90px;font-size:.92rem}
-footer .logo{color:#fff}
-.f-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:32px}
-@media(max-width:720px){.f-grid{grid-template-columns:1fr}}
-footer h4{color:#fff;margin-bottom:10px;font-size:.95rem}
-footer ul{list-style:none;padding:0;display:grid;gap:8px}
-footer a{text-decoration:none}footer a:hover{color:var(--gold)}
-.udyam{display:inline-block;margin-top:14px;border:1px dashed var(--gold);color:var(--gold);padding:6px 12px;border-radius:10px;font-size:.8rem}
-.copy{margin-top:36px;padding-top:18px;border-top:1px solid rgba(255,255,255,.12);font-size:.82rem;color:#8fa096}
+footer{position:relative;background:#10241A;color:#CFD8CF;padding:70px 0 110px;margin-top:70px;font-size:.93rem}
+.f-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:34px}
+@media(max-width:760px){.f-grid{grid-template-columns:1fr}}
+footer .logo{color:#fff}footer h4{font:500 .78rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+footer ul{list-style:none;padding:0;display:grid;gap:9px}footer a{text-decoration:none}footer a:hover{color:var(--gold)}
+.udyam{display:inline-block;margin-top:16px;border:1.5px dashed var(--gold);color:var(--gold);padding:7px 14px;font:500 .74rem var(--mono);letter-spacing:.04em}
+.copy{margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);font-size:.8rem;color:#8EA196;display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between}
+.copy button{background:none;border:0;color:inherit;font:inherit;text-decoration:underline;cursor:pointer;padding:0}
 
-/* floating WA */
+/* floating + mobile bar */
 .fab{position:fixed;right:18px;bottom:18px;z-index:60}
-.fab a{width:58px;height:58px;border-radius:50%;background:#128C4A;color:#fff;display:grid;place-items:center;box-shadow:0 8px 24px rgba(0,0,0,.3);animation:pulse 2.4s infinite}
+.fab a{width:60px;height:60px;border-radius:50%;background:#0F7A41;color:#fff;display:grid;place-items:center;box-shadow:0 10px 24px rgba(0,0,0,.35);animation:pulse 2.6s infinite}
 .fab a .i{width:28px;height:28px}
-.fab .tip{position:absolute;right:70px;top:50%;transform:translateY(-50%);background:var(--ink);color:#fff;padding:7px 12px;border-radius:10px;font-size:.8rem;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
+.fab .tip{position:absolute;right:72px;top:50%;transform:translateY(-50%);background:var(--ink);color:#fff;padding:7px 12px;border-radius:8px;font-size:.8rem;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity .2s}
 .fab:hover .tip,.fab a:focus-visible+.tip{opacity:1}
-@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(18,140,74,.55)}70%{box-shadow:0 0 0 18px rgba(18,140,74,0)}100%{box-shadow:0 0 0 0 rgba(18,140,74,0)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(15,122,65,.55)}70%{box-shadow:0 0 0 18px rgba(15,122,65,0)}100%{box-shadow:0 0 0 0 rgba(15,122,65,0)}}
+.mbar{display:none}
+@media(max-width:720px){
+  .fab{display:none}
+  .mbar{display:grid;grid-template-columns:1fr 1.3fr;gap:10px;position:fixed;left:0;right:0;bottom:0;z-index:60;padding:10px 12px calc(10px + env(safe-area-inset-bottom));background:rgba(245,238,225,.97);border-top:1px solid var(--line);backdrop-filter:blur(8px)}
+  .mbar .btn{padding:12px 10px}
+  section{padding:66px 0}
+}
 
 /* dialogs */
-dialog{border:0;border-radius:var(--r);padding:0;width:min(720px,calc(100% - 24px));max-height:calc(100dvh - 32px);background:var(--sand);color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.4)}
-dialog::backdrop{background:rgba(10,20,15,.65)}
-.dlg-head{position:sticky;top:0;background:var(--forest);color:#fff;padding:18px 22px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.dlg-head h3{color:#fff}
-.dlg-head button{background:none;border:0;color:#fff;cursor:pointer;width:36px;height:36px;display:grid;place-items:center}
-.dlg-body{padding:22px;display:grid;gap:16px}
-.leg{display:flex;gap:12px;align-items:center;background:#e8f0ea;border-left:4px solid var(--forest);padding:12px 14px;border-radius:10px;font-size:.92rem}
-.sched{list-style:none;padding:0;display:grid;gap:0;border-left:2px solid var(--gold);margin-left:6px}
-.sched li{position:relative;padding:8px 0 8px 22px;display:flex;gap:12px;font-size:.93rem}
-.sched li::before{content:"";position:absolute;left:-7px;top:15px;width:12px;height:12px;border-radius:50%;background:var(--gold)}
-.sched time{font-weight:700;color:var(--forest);min-width:64px}
-.eat{background:var(--terra-d);color:#fff;font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:6px;margin-right:6px;letter-spacing:.05em}
-.cut{background:#fff3ec;border:1px solid #f0c9b6;border-radius:12px;padding:14px 16px;font-size:.92rem}
-.cut ol{padding-left:20px;margin-top:6px}
-.note{font-size:.8rem;color:var(--muted)}
-.tabs-in{display:flex;gap:6px;flex-wrap:wrap}
-.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-@media(max-width:560px){.cols{grid-template-columns:1fr}}
-.cols ul{padding-left:18px;font-size:.92rem;display:grid;gap:6px}
-.cols h4{color:var(--forest);margin-bottom:6px}
+dialog{border:0;padding:0;width:min(680px,calc(100% - 24px));max-height:calc(100dvh - 32px);background:var(--paper);color:var(--ink);box-shadow:0 30px 80px rgba(0,0,0,.45)}
+dialog::backdrop{background:rgba(10,20,15,.68)}
+.dh{position:sticky;top:0;background:var(--forest);color:#fff;padding:16px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;z-index:2}
+.dh h3{color:#fff;font-size:1.15rem}.dh button{background:none;border:0;color:#fff;cursor:pointer;width:44px;height:44px;display:grid;place-items:center}
+.db{padding:22px;display:grid;gap:16px}
+.db .sched{border-left:2px solid var(--gold);margin-left:6px}.db .sched li{display:block;padding:7px 0 7px 18px;position:relative}.db .sched li::before{content:"";position:absolute;left:-7px;top:15px;width:12px;height:12px;border-radius:50%;background:var(--gold)}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:16px}@media(max-width:560px){.cols{grid-template-columns:1fr}}
+.cols ul{padding-left:18px;font-size:.92rem;display:grid;gap:6px}.cols h4{color:var(--forest);margin-bottom:6px}
+.note{font-size:.82rem;color:var(--muted)}
 
 /* reveal */
-.reveal{opacity:0;transform:translateY(22px);transition:opacity .6s ease,transform .6s ease}
-.reveal.in{opacity:1;transform:none}
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.js .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
-  html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.fab a{animation:none}.btn{transition:none}
+  html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none;transition:none}
+  .cloud,.van,.sun-glow,.fab a,.spin{animation:none}.btn,.chip,.card{transition:none}
 }
 </style>
 </head>
-<body>
 
-<!-- Icon sprite (Lucide-style paths, inline so there is no CDN dependency) -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
-  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
-  <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 12h16M4 6h16M4 18h16"/></symbol>
-  <symbol id="i-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
-  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
-  <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></symbol>
-  <symbol id="i-eat" viewBox="0 0 24 24"><path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2M7 2v20M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/></symbol>
-  <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
-  <symbol id="i-train" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M8 21l2-4M16 21l-2-4"/><circle cx="9" cy="14" r=".6"/><circle cx="15" cy="14" r=".6"/></symbol>
-  <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
-  <symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></symbol>
-  <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
-  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z"/></symbol>
-  <symbol id="i-insta" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></symbol>
-  <symbol id="i-file" viewBox="0 0 24 24"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4M10 9H8M16 13H8M16 17H8"/></symbol>
-  <symbol id="i-cut" viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/></symbol>
-  <symbol id="i-bus" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="14" rx="2"/><path d="M4 11h16M7 21v-4M17 21v-4"/></symbol>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ============ Reusable illustration library (hand-built SVG; no image requests) ============ -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <linearGradient id="g-dusk" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F9DDB0"/><stop offset="1" stop-color="#EE9A68"/></linearGradient>
+    <linearGradient id="g-seasky" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C6E4E1"/><stop offset="1" stop-color="#F8E7C6"/></linearGradient>
+    <linearGradient id="g-green" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CFE7D8"/><stop offset="1" stop-color="#F6EDC8"/></linearGradient>
+    <linearGradient id="g-sunset" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E4707A"/><stop offset="1" stop-color="#FAD093"/></linearGradient>
+    <linearGradient id="g-goasea" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F3A97C"/><stop offset="1" stop-color="#A94B68"/></linearGradient>
+    <linearGradient id="g-water" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#58A39D"/><stop offset="1" stop-color="#2F6F73"/></linearGradient>
+    <radialGradient id="g-halo"><stop offset="0" stop-color="#FFF3D1" stop-opacity=".95"/><stop offset="1" stop-color="#FFE0A0" stop-opacity="0"/></radialGradient>
+    <!-- palm: set colour with style="color:#..." on the <use> -->
+    <g id="palm"><path d="M0 0C-5 -36 3 -72 12 -100" stroke="currentColor" stroke-width="6" fill="none" stroke-linecap="round"/>
+      <g transform="translate(12 -100)" fill="currentColor">
+        <path d="M0 0q24 -20 58 -6q-30 -2 -58 6z" transform="rotate(-150)"/><path d="M0 0q24 -20 58 -6q-30 -2 -58 6z" transform="rotate(-115)"/>
+        <path d="M0 0q24 -20 58 -6q-30 -2 -58 6z" transform="rotate(-75)"/><path d="M0 0q24 -20 58 -6q-30 -2 -58 6z" transform="rotate(-35)"/>
+        <path d="M0 0q24 -20 58 -6q-30 -2 -58 6z" transform="rotate(5)"/><path d="M0 0q24 -20 58 -6q-30 -2 -58 6z" transform="rotate(35)"/>
+        <path d="M0 0q24 -20 58 -6q-30 -2 -58 6z" transform="rotate(-190)"/></g></g>
+
+    <symbol id="s-raj" viewBox="0 0 400 260"><rect width="400" height="260" fill="url(#g-dusk)"/>
+      <circle cx="292" cy="118" r="62" fill="url(#g-halo)"/><circle cx="292" cy="118" r="26" fill="#FFF0C8"/>
+      <path d="M0 172C60 150 120 166 190 150S320 142 400 160V260H0Z" fill="#E9A06B"/>
+      <g fill="#8E3F20"><path d="M196 166V136 h6v-5h6v5h6v-5h6v5h6v-5h6v5h6v-5h6v5h6v-5h6v5h6v-5h6v5h6v-5h6v5h6v-5h6v5 V166Z"/>
+        <rect x="203" y="118" width="14" height="18"/><path d="M201 119Q210 98 219 119Z"/>
+        <rect x="255" y="100" width="22" height="36"/><path d="M252 101Q266 74 280 101Z"/><rect x="265" y="64" width="2" height="12"/>
+        <rect x="307" y="120" width="14" height="16"/><path d="M305 121Q314 102 323 121Z"/></g>
+      <rect x="262" y="112" width="5" height="9" fill="#F7C873"/><rect x="270" y="112" width="5" height="9" fill="#F7C873"/>
+      <path d="M0 202C80 176 150 206 230 191S350 176 400 196V260H0Z" fill="#C9703F"/>
+      <path d="M0 236C100 216 200 246 400 226V260H0Z" fill="#A8512B"/>
+      <g fill="#6E2F18"><path d="M60 220q4 -14 10 -14l2 -8 3 8q5 0 6 14z"/><circle cx="76" cy="196" r="2.5"/></g></symbol>
+
+    <symbol id="s-hampi" viewBox="0 0 400 260"><rect width="400" height="260" fill="url(#g-seasky)"/>
+      <circle cx="330" cy="70" r="22" fill="#FFF0C8" opacity=".9"/>
+      <path d="M0 170C60 140 110 160 170 150S300 136 400 160V260H0Z" fill="#CDAA84"/>
+      <g fill="#9B6B4F"><path d="M70 160h38l-3 -12h-32z"/><path d="M76 148h26l-3 -10h-20z"/><path d="M82 138h14l-2 -9h-10z"/><path d="M86 129h6l-1 -8h-4z"/><circle cx="89" cy="119" r="2.5"/></g>
+      <path d="M150 192H400V260H150Z" fill="url(#g-water)"/>
+      <g stroke="#E8F4F1" stroke-width="2" fill="none" stroke-linecap="round" opacity=".8"><path d="M200 208q10 -6 20 0t20 0t20 0"/><path d="M290 224q10 -6 20 0t20 0t20 0"/><path d="M226 240q10 -6 20 0t20 0"/></g>
+      <path d="M168 238C260 226 330 238 400 230V260H168Z" fill="#F0D9A8"/>
+      <ellipse cx="318" cy="205" rx="15" ry="5.5" fill="#6B4A32"/><ellipse cx="318" cy="203" rx="11" ry="2.5" fill="#8A6244"/>
+      <path d="M0 200C10 150 70 138 100 176C125 150 180 164 172 208V260H0Z" fill="#8A6246"/>
+      <path d="M52 220C62 186 118 180 142 214V260H52Z" fill="#A57A57"/>
+      <path d="M18 196q12 -30 40 -26" stroke="#B88E69" stroke-width="3" fill="none" stroke-linecap="round" opacity=".7"/>
+      <path d="M0 238C40 226 90 234 130 244V260H0Z" fill="#6E4A33"/></symbol>
+
+    <symbol id="s-kerala" viewBox="0 0 400 260"><rect width="400" height="260" fill="url(#g-green)"/>
+      <path d="M0 150C50 120 110 140 170 124S300 112 400 140V190H0Z" fill="#8DBA96"/>
+      <path d="M0 168C70 142 140 164 210 148S340 142 400 160V190H0Z" fill="#5E9873"/>
+      <rect y="176" width="400" height="84" fill="url(#g-water)"/>
+      <g stroke="#CFEAE4" stroke-width="2" stroke-linecap="round" opacity=".55"><path d="M30 196h40M120 210h60M250 200h50M320 224h50M60 234h50M200 238h60"/></g>
+      <path d="M0 176C30 166 60 170 90 180V190H0Z" fill="#3E6B45"/><path d="M310 182C340 168 380 170 400 178V190H310Z" fill="#3E6B45"/>
+      <g style="color:#1E4A32"><use href="#palm" transform="translate(40 184) scale(.9)"/><use href="#palm" transform="translate(358 186) scale(1)"/><use href="#palm" transform="translate(330 186) scale(.7)"/></g>
+      <g><path d="M148 196h104q8 0 10 8v10H138v-10q2 -8 10 -8z" fill="#5B3A24"/><path d="M152 196Q200 160 252 196Z" fill="#CDA55E"/>
+        <path d="M168 190v6M188 183v13M208 183v13M228 190v6" stroke="#8A6C32" stroke-width="2"/><rect x="164" y="203" width="14" height="6" fill="#F7E2B4"/><rect x="188" y="203" width="14" height="6" fill="#F7E2B4"/><rect x="212" y="203" width="14" height="6" fill="#F7E2B4"/></g>
+      <g opacity=".28" transform="translate(0 428) scale(1 -1)"><path d="M148 196h104q8 0 10 8v10H138v-10q2 -8 10 -8z" fill="#5B3A24"/><path d="M152 196Q200 160 252 196Z" fill="#CDA55E"/></g></symbol>
+
+    <symbol id="s-goa" viewBox="0 0 400 260"><rect width="400" height="260" fill="url(#g-sunset)"/>
+      <circle cx="200" cy="158" r="56" fill="url(#g-halo)"/><circle cx="200" cy="160" r="30" fill="#FFEBBD"/>
+      <rect y="164" width="400" height="96" fill="url(#g-goasea)"/>
+      <g fill="#FFE7B0" opacity=".85"><rect x="186" y="172" width="28" height="3" rx="1.5"/><rect x="190" y="180" width="20" height="3" rx="1.5"/><rect x="193" y="189" width="14" height="3" rx="1.5"/><rect x="195" y="198" width="10" height="3" rx="1.5"/></g>
+      <path d="M0 228C110 214 260 234 400 218V260H0Z" fill="#E7C28C"/>
+      <path d="M0 214C30 182 100 176 140 206V232H0Z" fill="#6B4A52"/>
+      <g><path d="M58 156 82 134 106 156Z" fill="#FBF3E6"/><rect x="60" y="156" width="44" height="40" fill="#FBF3E6"/><rect x="76" y="118" width="12" height="18" fill="#FBF3E6"/><path d="M74 119 82 108 90 119Z" fill="#FBF3E6"/><path d="M80 178v-12a6 6 0 0 1 12 0v12z" fill="#A8431F"/><path d="M82 102v-9M78 97h8" stroke="#FBF3E6" stroke-width="2"/></g>
+      <g style="color:#5A2F3A"><use href="#palm" transform="translate(318 222) scale(.95)"/></g>
+      <g><path d="M262 222h52l-7 -22h-38z" fill="#8A5A35"/><path d="M258 202h60l-8 -16h-44z" fill="#6E4527"/><path d="M270 222v-16M306 222v-16" stroke="#4E3320" stroke-width="2"/>
+        <g fill="#FFD47A"><circle cx="266" cy="200" r="2.4"/><circle cx="278" cy="203" r="2.4"/><circle cx="290" cy="204" r="2.4"/><circle cx="302" cy="203" r="2.4"/><circle cx="313" cy="200" r="2.4"/></g></g></symbol>
+
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+    <symbol id="i-menu" viewBox="0 0 24 24"><path d="M4 12h16M4 6h16M4 18h16"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+    <symbol id="i-train" viewBox="0 0 24 24"><rect x="5" y="3" width="14" height="14" rx="3"/><path d="M5 11h14M8 21l2-4M16 21l-2-4"/><circle cx="9" cy="14" r=".6"/><circle cx="15" cy="14" r=".6"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2"/><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4"/></symbol>
+    <symbol id="i-chat" viewBox="0 0 24 24"><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></symbol>
+    <symbol id="i-insta" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><path d="M17.5 6.5h.01"/></symbol>
+    <symbol id="i-clockfast" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  </defs>
 </svg>
 
-<header>
+<header class="hdr" id="hdr">
   <div class="wrap nav">
-    <a href="#top" class="logo" data-brand>[BRAND_NAME]</a>
+    <a href="#top" class="logo" aria-label="[BRAND_NAME] home">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" fill="none" stroke="#1B3B2B" stroke-width="2.5"/><path d="M20 7l5 13-5 13-5-13z" fill="#C85A32"/><path d="M20 7l5 13h-10z" fill="#1B3B2B"/><circle cx="20" cy="20" r="2" fill="#F5EEE1"/></svg>
+      [BRAND_NAME]
+    </a>
     <nav class="links" id="links" aria-label="Primary">
-      <a href="#routes">Proven Routes</a>
-      <a href="#how">How It Works</a>
-      <a href="#pricing">Pricing Tiers</a>
-      <a href="#planner">Custom Planner</a>
-      <a href="#faq">FAQ</a>
+      <a href="#routes">Proven Routes</a><a href="#how">How It Works</a><a href="#pricing">Pricing Tiers</a><a href="#planner">Custom Planner</a><a href="#faq">FAQ</a>
     </nav>
     <div class="nav-cta">
       <a class="icon-btn wa-link" data-wa aria-label="Chat on WhatsApp" target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg></a>
@@ -238,34 +441,125 @@ dialog::backdrop{background:rgba(10,20,15,.65)}
   </div>
 </header>
 
-<main id="top">
-<!-- HERO -->
-<section class="hero">
-  <img class="bg" alt="" src="https://images.unsplash.com/photo-1524492412937-b28074a5d7da?auto=format&fit=crop&w=1600&q=60" onerror="this.remove()">
-  <div class="wrap">
-    <span class="badge"><svg class="i"><use href="#i-star"/></svg>Trusted by 500+ Travelers &amp; 80K+ Community on Instagram</span>
-    <h1>Stop Wasting 15 Hours Planning Group Trips. Get a Ground-Tested Blueprint.</h1>
-    <p class="sub">Time-stamped itineraries with exact train &amp; flight connections, local food maps, and verified stays—crafted by a former tour guide in Pune for friend groups, families, and weekend explorers.</p>
+<main id="main">
+<!-- ============ HERO ============ -->
+<section class="hero" id="top" aria-labelledby="h1">
+  <div class="scene" aria-hidden="true">
+    <svg viewBox="0 0 1440 760" preserveAspectRatio="xMaxYMax slice" focusable="false">
+      <g data-p=".02"><circle class="sun-glow" cx="1010" cy="330" r="230" fill="url(#g-halo)"/><circle cx="1010" cy="330" r="74" fill="#FFF0C6"/></g>
+      <g data-p=".03" fill="#FFF8E6" opacity=".7">
+        <g class="cloud"><ellipse cx="200" cy="150" rx="90" ry="16"/><ellipse cx="250" cy="138" rx="60" ry="14"/></g>
+        <g class="cloud b"><ellipse cx="700" cy="230" rx="110" ry="14"/><ellipse cx="760" cy="218" rx="70" ry="13"/></g>
+      </g>
+      <g class="birds" data-p=".04" fill="none" stroke="#5B3A24" stroke-width="3" stroke-linecap="round" opacity=".55"><path d="M1190 200q9 -9 18 0q9 -9 18 0"/><path d="M1245 170q8 -8 16 0q8 -8 16 0"/><path d="M1150 160q7 -7 14 0q7 -7 14 0"/></g>
+      <path data-p=".05" d="M0 480C120 440 230 462 340 430S560 396 700 424S980 456 1100 414S1330 392 1440 430V760H0Z" fill="#F0B88C" opacity=".85"/>
+      <g data-p=".08">
+        <path d="M820 540C930 458 1090 446 1190 468S1370 512 1440 530V760H820Z" fill="#B4552F"/>
+        <g fill="#7A3319"><path d="M990 488V430 h14v-9h14v9h14v-9h14v9h14v-9h14v9h14v-9h14v9h14v-9h14v9h14v-9h14v9h14v-9h14v9h14v-9h14v9h14v-9h14v9 V488Z"/>
+          <rect x="1005" y="384" width="32" height="46"/><path d="M1001 386Q1021 346 1041 386Z"/>
+          <rect x="1110" y="344" width="46" height="86"/><path d="M1104 346Q1133 288 1162 346Z"/><rect x="1131" y="270" width="3" height="22"/>
+          <rect x="1210" y="388" width="32" height="42"/><path d="M1206 390Q1226 352 1246 390Z"/></g>
+        <g fill="#F7C873"><rect x="1126" y="372" width="7" height="14"/><rect x="1138" y="372" width="7" height="14"/><rect x="1020" y="404" width="6" height="11"/></g>
+      </g>
+      <path data-p=".12" d="M0 556C150 500 300 548 470 522S770 470 910 512S1210 566 1440 508V760H0Z" fill="#D98A5B"/>
+      <path data-p=".16" d="M0 626C200 586 380 620 560 598S910 566 1110 606S1340 630 1440 600V760H0Z" fill="#2C5A41"/>
+      <g data-p=".2"><path d="M0 686C240 654 520 692 800 668S1250 662 1440 682V760H0Z" fill="#1B3B2B"/>
+        <g style="color:#10281C"><use href="#palm" transform="translate(70 716) scale(1.45)"/><use href="#palm" transform="translate(150 722) scale(.95)"/><use href="#palm" transform="translate(1370 712) scale(1.7)"/></g>
+        <rect y="722" width="1440" height="38" fill="#10241A"/>
+        <path d="M0 742H1440" stroke="#D4A359" stroke-width="3" stroke-dasharray="26 22" opacity=".8"/>
+        <g class="van" transform="translate(0 0)"><g transform="translate(0 692)">
+          <rect x="0" y="0" width="104" height="38" rx="8" fill="#FAF7F2"/><rect x="62" y="-8" width="40" height="12" rx="4" fill="#FAF7F2"/>
+          <g fill="#7FA9AB"><rect x="8" y="7" width="16" height="12" rx="2"/><rect x="28" y="7" width="16" height="12" rx="2"/><rect x="48" y="7" width="16" height="12" rx="2"/><rect x="70" y="7" width="26" height="12" rx="2"/></g>
+          <rect x="0" y="24" width="104" height="5" fill="#C85A32"/><circle cx="24" cy="40" r="8" fill="#1F2421"/><circle cx="82" cy="40" r="8" fill="#1F2421"/><circle cx="24" cy="40" r="3" fill="#bbb"/><circle cx="82" cy="40" r="3" fill="#bbb"/></g></g>
+      </g>
+    </svg>
+  </div>
+  <div class="wrap hero-in">
+    <span class="stamp-line">Custom trip planner · Pune &amp; PCMC</span>
+    <h1 id="h1">Group trips from Pune, planned minute by minute by a former tour guide.</h1>
+    <p class="sub">Time-stamped itineraries with exact train &amp; flight connections, local food maps and verified stays, for friend groups, families and weekend explorers.</p>
     <div class="cta-row">
       <a href="#planner" class="btn btn-primary">Get a Custom Itinerary</a>
-      <button class="btn btn-ghost" data-open="sample"><svg class="i"><use href="#i-file"/></svg>View Sample PDF Blueprint</button>
+      <a href="#sample" class="btn btn-ghost">View Sample Blueprint</a>
     </div>
-    <div class="trust">
-      <div><svg class="i"><use href="#i-shield"/></svg>100% Ground-Tested Routes</div>
-      <div><svg class="i"><use href="#i-train"/></svg>Exact Train, Flight &amp; Road Timings</div>
-      <div><svg class="i"><use href="#i-clock"/></svg>24-Hour Custom Quote Turnaround</div>
-      <div><svg class="i"><use href="#i-wallet"/></svg>Zero Hidden Agency Markups</div>
+    <div class="where">
+      <span class="hand">Where to?</span>
+      <div class="chips" role="group" aria-label="Pick a destination to start">
+        <button class="chip" data-dest="Rajasthan">Rajasthan</button><button class="chip" data-dest="Kerala">Kerala</button>
+        <button class="chip" data-dest="Goa">Goa</button><button class="chip" data-dest="Hampi–Gokarna">Hampi–Gokarna</button>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ROUTES -->
-<section id="routes">
+<section class="strip" aria-label="Why trust us">
+  <div class="wrap"><ul>
+    <li><svg class="i"><use href="#i-shield"/></svg>100% ground-tested routes</li>
+    <li><svg class="i"><use href="#i-train"/></svg>Exact train, flight &amp; road timings</li>
+    <li><svg class="i"><use href="#i-clock"/></svg>24-hour custom quote turnaround</li>
+    <li><svg class="i"><use href="#i-wallet"/></svg>Zero hidden agency markups</li>
+  </ul></div>
+</section>
+
+<!-- ============ FOUNDER ============ -->
+<section id="about" aria-labelledby="about-h">
+  <div class="wrap notes">
+    <div class="polas reveal" aria-hidden="false">
+      <!-- To use a real photo: replace the <svg> in a <figure> with <img src="your.jpg" alt="..." width="600" height="510" loading="lazy"> -->
+      <figure class="pola a"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a Rajasthan fort at sunset"><use href="#s-raj"/></svg><figcaption>Jaisalmer, golden hour</figcaption></figure>
+      <figure class="pola b"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration of a Goan church and beach shack at sunset"><use href="#s-goa"/></svg><figcaption>Goa, the off-season way</figcaption></figure>
+    </div>
+    <div class="reveal">
+      <span class="kicker">Field notes</span>
+      <h2 id="about-h">I used to be the one holding the flag.</h2>
+      <p class="lead">Hi, I'm [FOUNDER_NAME]. I started out as a tour guide, then spent years running group trips out of Pune. I've seen what ruins them: the fort that shuts at 5, the train you can't miss, the lunch spot that takes 90 minutes.</p>
+      <p class="lead">So every plan here is built the way a guide thinks: exact timings, hard deadlines, and a cut-list for when the group runs late. No filler, no tourist traps, no guesswork.</p>
+      <p class="hand" style="margin-top:14px">&mdash; [FOUNDER_NAME], Pune</p>
+      <div class="stats">
+        <div class="stat"><b data-count="500" data-suffix="+">500+</b><span>travellers planned for</span></div>
+        <div class="stat"><b data-count="80" data-suffix="K+">80K+</b><span>Instagram community</span></div>
+        <div class="stat"><b>4</b><span>signature routes, walked</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SAMPLE DAY ============ -->
+<section class="sample" id="sample" aria-labelledby="sample-h">
+  <svg class="edge" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70V34C180 6 360 60 560 36S960 0 1160 30 1360 50 1440 28V70Z" fill="#EDE2CC"/></svg>
+  <div class="wrap split">
+    <div class="reveal">
+      <span class="kicker">The difference, in one day</span>
+      <h2 id="sample-h">This is what “minute by minute” looks like.</h2>
+      <p class="lead">Every itinerary is a working document: the real train leg, the closing-time deadline you can't argue with, where to eat, and what to drop if the day slips.</p>
+      <p class="lead">Try it. Tap the button and watch the cut-list do its job.</p>
+      <button class="toggle" id="late" aria-pressed="false"><span id="late-label">We're running 90 minutes late</span></button>
+      <p id="late-note" hidden>Drop the two photo stops. Keep Amer Fort and dinner.</p>
+    </div>
+    <div class="ticket-wrap reveal"><article class="ticket" id="ticket" aria-label="Sample day plan">
+      <div class="t-head"><div><small>Day 1 · Jaipur</small><h3>Amer Fort &amp; the old city</h3></div><small>Illustrative<br>sample</small></div>
+      <div class="leg"><svg class="i"><use href="#i-train"/></svg><div><b>Transit leg:</b> Pune → Jaipur, overnight train. Exact number &amp; timings are in your PDF.</div></div>
+      <ul class="sched">
+        <li><time>11:30</time><span class="what">Hotel check-in near Bani Park</span></li>
+        <li><time>12:30</time><span><span class="tag eat">EAT</span><span class="what">Dal-baati-churma thali, local favourite</span></span></li>
+        <li><time>14:30</time><span class="what">Amer Fort entry; Sheesh Mahal first</span></li>
+        <li><time>17:00</time><span><span class="tag stop">HARD STOP</span><span class="what">Fort closes ~17:30. Be at the exit by 17:15</span><small>Closing times are verified before every trip</small></span></li>
+        <li data-cut><time>17:45</time><span><span class="tag cut">CUT</span><span class="what">Jal Mahal photo stop</span></span></li>
+        <li data-cut><time>18:30</time><span><span class="tag cut">CUT</span><span class="what">Hawa Mahal lane walk</span></span></li>
+        <li><time>19:45</time><span><span class="tag eat">EAT</span><span class="what">Dinner + kulhad chai in the old bazaar</span></span></li>
+      </ul>
+      <p class="disclaimer">Sample for illustration. Real itineraries use verified times for your exact dates.</p>
+    </article></div>
+  </div>
+</section>
+
+<!-- ============ ROUTES ============ -->
+<section id="routes" aria-labelledby="routes-h">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Proven Blueprints &amp; Group Departures</span>
-      <h2>Routes we've already walked, timed and fixed.</h2>
-      <p class="lead">Buy the blueprint and book yourself, or let us run the whole trip.</p>
+    <div class="reveal">
+      <span class="kicker">Proven blueprints &amp; group departures</span>
+      <h2 id="routes-h">Routes we've already walked, timed and fixed.</h2>
+      <p class="lead">Buy the blueprint and book it yourself, or let us run the whole trip.</p>
     </div>
     <div class="tabs" role="tablist" aria-label="Filter trips">
       <button class="tab" role="tab" aria-selected="true" data-f="all">All Trips</button>
@@ -273,348 +567,400 @@ dialog::backdrop{background:rgba(10,20,15,.65)}
       <button class="tab" role="tab" aria-selected="false" data-f="multi">Multi-City Classics</button>
       <button class="tab" role="tab" aria-selected="false" data-f="north">North India Packages</button>
     </div>
-    <div class="grid trips" id="trips" role="tabpanel"></div>
+    <div class="cards" id="trips" role="tabpanel">
+      <article class="card reveal" data-id="rajasthan" data-cats="multi north">
+        <div class="art" data-photo="rajasthan"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: Rajasthan fort above golden dunes at dusk"><use href="#s-raj"/></svg><div class="postmark">Blueprint<b>₹799</b></div></div>
+        <div class="body"><h3>Rajasthan tour from Pune: Jaipur → Jaisalmer → Jodhpur</h3>
+          <div class="meta"><span>6 DAYS / 5 NIGHTS</span><span>8–16 PEOPLE</span></div>
+          <ul class="hl"><li>3 chained overnight/intercity train legs + Tempo Traveller desert circuit</li><li>Amer &amp; Mehrangarh closing-time strategy</li><li>Sam Sand Dunes sunset</li><li>15+ local food stops</li></ul>
+          <p class="price"><b>Blueprint ₹799</b> | Custom Group Execution from ₹11,499/person</p>
+          <button class="btn btn-ghost" data-route="rajasthan">View Route &amp; Inclusions</button></div></article>
+      <article class="card reveal" data-id="gokarna" data-cats="weekend multi">
+        <div class="art" data-photo="gokarna"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: Hampi boulders, a temple tower and a Gokarna beach with a coracle"><use href="#s-hampi"/></svg><div class="postmark">Blueprint<b>₹699</b></div></div>
+        <div class="body"><h3>Gokarna → Murudeshwar → Hampi trip from Pune</h3>
+          <div class="meta"><span>5 DAYS / 4 NIGHTS</span><span>EX-PUNE</span><span>10–16 PEOPLE</span></div>
+          <ul class="hl"><li>Overnight AC Tempo Traveller from Pune/PCMC</li><li>Kudle &amp; Om Beach trek</li><li>Murudeshwar temple viewpoint</li><li>Hampi boulder sunrise &amp; coracle ride</li></ul>
+          <p class="price"><b>Blueprint ₹699</b> | Weekend Group Batch ₹10,499/person</p>
+          <button class="btn btn-ghost" data-route="gokarna">View Route &amp; Inclusions</button></div></article>
+      <article class="card reveal" data-id="kerala" data-cats="multi">
+        <div class="art" data-photo="kerala"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: a Kerala houseboat on calm backwaters among palms"><use href="#s-kerala"/></svg><div class="postmark">Blueprint<b>₹699</b></div></div>
+        <div class="body"><h3>Kerala temple &amp; nature circuit from Pune</h3>
+          <div class="meta"><span>3 DAYS / 2 NIGHTS</span><span>4–12 PEOPLE</span></div>
+          <ul class="hl"><li>Red-eye flight optimisation (PNQ–COK)</li><li>Padmanabhaswamy Temple dress-code &amp; entry briefing</li><li>Azhimala cliff, Jatayu Earth Center, Alleppey &amp; Munnar</li></ul>
+          <p class="price"><b>Blueprint ₹699</b> | Custom Package from ₹9,999/person</p>
+          <button class="btn btn-ghost" data-route="kerala">View Route &amp; Inclusions</button></div></article>
+      <article class="card reveal" data-id="goa" data-cats="weekend">
+        <div class="art" data-photo="goa"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: Goan church, beach shack and sunset over the sea"><use href="#s-goa"/></svg><div class="postmark">Blueprint<b>₹699</b></div></div>
+        <div class="body"><h3>Goa hidden gems &amp; classics trip from Pune</h3>
+          <div class="meta"><span>4 DAYS / 3 NIGHTS</span><span>EX-PUNE</span><span>6–16 PEOPLE</span></div>
+          <ul class="hl"><li>North Goa sundowners, Arambol sweet water lake</li><li>South Goa Cola Lagoon &amp; Butterfly Beach</li><li>Fontainhas Latin Quarter walk</li><li>Curated shack &amp; cafe list</li></ul>
+          <p class="price"><b>Blueprint ₹699</b> | Group Package from ₹8,499/person</p>
+          <button class="btn btn-ghost" data-route="goa">View Route &amp; Inclusions</button></div></article>
+    </div>
+    <p class="note" id="no-trips" hidden style="margin-top:20px">Only one North India route is live so far. More are on the way. <a href="#planner">Tell us where you want to go</a>.</p>
   </div>
 </section>
 
-<!-- WHY -->
-<section class="why" id="how">
+<!-- ============ VERSUS ============ -->
+<section class="versus" id="how" aria-labelledby="how-h">
+  <svg class="edge" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70V30C220 64 420 8 660 34S1100 62 1440 24V70Z" fill="#EDE2CC"/></svg>
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">How It Works</span>
-      <h2>Why Our Itineraries Are Different</h2>
-      <p class="lead">What generic Google searches and slow travel agents don't give you.</p>
+    <div class="reveal">
+      <span class="kicker">How it works</span>
+      <h2 id="how-h">Why our itineraries are different</h2>
+      <p class="lead">What a generic Google search or a cookie-cutter package leaves out.</p>
     </div>
-    <div class="grid">
-      <article class="card reveal"><div class="ico"><svg class="i"><use href="#i-cut"/></svg></div><h3>Hard Deadlines &amp; Cut-Lists</h3><p>We factor in exact monument closing hours, highway drive buffers, and a fallback cut-list if your group runs behind schedule.</p></article>
-      <article class="card reveal"><div class="ico"><svg class="i"><use href="#i-eat"/></svg></div><h3>Curated 'EAT' Food Maps</h3><p>No tourist-trap restaurants—every day includes time-slotted local breakfast, street food, and dinner spots matched to your route.</p></article>
-      <article class="card reveal"><div class="ico"><svg class="i"><use href="#i-wallet"/></svg></div><h3>Transparent Group Split-Ready Budgets</h3><p>Clear per-person cost breakdowns for stays, Tempo Travellers, entry tickets, and buffers before you book a single ticket.</p></article>
-      <article class="card reveal"><div class="ico"><svg class="i"><use href="#i-users"/></svg></div><h3>End-to-End Execution When You Want It</h3><p>Want to book yourself? Buy the PDF blueprint. Want us to handle hotels, Tempo Travellers, and vetted North India ground teams? We execute the whole trip.</p></article>
-    </div>
+    <table class="vs reveal">
+      <thead><tr><th scope="col">The detail</th><th scope="col">Typical package</th><th scope="col">With us</th></tr></thead>
+      <tbody>
+        <tr><th scope="row">Hard deadlines &amp; cut-lists</th><td>“Fort visit” with no closing time or fallback.</td><td>Exact monument closing hours, highway buffers, and a cut-list if the group runs behind.</td></tr>
+        <tr><th scope="row">Curated ‘EAT’ food maps</th><td>Whatever restaurant the bus stops at.</td><td>Time-slotted local breakfast, street food and dinner, matched to your route.</td></tr>
+        <tr><th scope="row">Split-ready budgets</th><td>One lump sum, no breakdown.</td><td>Per-person costs for stays, Tempo Travellers, tickets and buffers, before you book anything.</td></tr>
+        <tr><th scope="row">Execution, when you want it</th><td>Take it or leave it.</td><td>Buy the PDF and book yourself, or we handle hotels, Tempo Travellers and vetted North India ground teams.</td></tr>
+      </tbody>
+    </table>
+    <ol class="steps reveal">
+      <li><div class="n">1</div><h3>Tell us the trip</h3><p>Destination, dates, group size and budget. Under a minute.</p></li>
+      <li><div class="n">2</div><h3>Get your preview</h3><p>See Day 1 of your plan free, then your full quote within 24 hours.</p></li>
+      <li><div class="n">3</div><h3>Go. Or we run it.</h3><p>Book it yourself with the blueprint, or hand us the whole trip.</p></li>
+    </ol>
   </div>
 </section>
 
-<!-- PRICING -->
-<section id="pricing">
+<!-- ============ PRICING ============ -->
+<section id="pricing" aria-labelledby="pricing-h">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Pricing Tiers</span>
-      <h2>Pay for exactly the help you need.</h2>
-    </div>
-    <div class="grid pricing">
-      <article class="card tier reveal">
+    <div class="reveal"><span class="kicker">Pricing tiers</span><h2 id="pricing-h">Pay for exactly the help you need.</h2></div>
+    <div class="tickets">
+      <article class="tk reveal"><div>
         <h3>Ready-Made Proven Blueprint</h3>
-        <div class="amt">₹699 – ₹999<small>one-time</small></div>
-        <ul>
-          <li><svg class="i"><use href="#i-check"/></svg>Instant PDF download of our tested Rajasthan, Kerala, Goa, or Hampi–Gokarna routes.</li>
-          <li><svg class="i"><use href="#i-check"/></svg>Exact train/flight numbers, hotel area recommendations, food master list, and packing checklist.</li>
-        </ul>
-        <button class="btn btn-ghost btn-block" data-plan="blueprint">Buy Ready Blueprint</button>
-      </article>
-      <article class="card tier pop reveal">
-        <span class="pop-badge">Most Popular</span>
+        <div class="amt">₹699 – ₹999<small>ONE-TIME</small></div>
+        <ul><li>Instant PDF download of our tested Rajasthan, Kerala, Goa, or Hampi–Gokarna routes</li><li>Exact train/flight numbers, hotel area recommendations, food master list, packing checklist</li></ul>
+        <button class="btn btn-ghost btn-block" data-plan="blueprint">Buy Ready Blueprint</button></div></article>
+      <article class="tk pop reveal"><div>
+        <span class="seal">MOST POPULAR</span>
         <h3>Custom Day-by-Day Itinerary</h3>
-        <div class="amt">₹2,499<small>per trip</small></div>
-        <ul>
-          <li><svg class="i"><use href="#i-check"/></svg>Tailored to your exact dates, departure city, group size, and budget.</li>
-          <li><svg class="i"><use href="#i-check"/></svg>Time-stamped daily schedule, transit connections, custom 'EAT' food map, and priority cut-list.</li>
-          <li><svg class="i"><use href="#i-check"/></svg>Delivered in 24 hours + 1 free revision.</li>
-        </ul>
-        <button class="btn btn-primary btn-block" data-plan="custom">Request Custom Plan</button>
-      </article>
-      <article class="card tier reveal">
+        <div class="amt">₹2,499<small>PER TRIP</small></div>
+        <ul><li>Tailored to your exact dates, departure city, group size and budget</li><li>Time-stamped daily schedule, transit connections, custom ‘EAT’ food map, priority cut-list</li><li>Delivered in 24 hours + 1 free revision</li></ul>
+        <button class="btn btn-primary btn-block" data-plan="custom">Request Custom Plan</button></div></article>
+      <article class="tk reveal"><div>
         <h3>Full Trip Execution / Group Package</h3>
-        <div class="amt">Custom Quote<small>50% advance</small></div>
-        <ul>
-          <li><svg class="i"><use href="#i-check"/></svg>Everything in the Custom Itinerary tier.</li>
-          <li><svg class="i"><use href="#i-check"/></svg>Complete booking of stays, Tempo Travellers/cabs, and verified local ground coordinators across Maharashtra, Goa, Karnataka, Rajasthan, Kerala, Himachal, and Uttarakhand.</li>
-        </ul>
-        <button class="btn btn-ghost btn-block" data-plan="complete">Get Group Package Quote</button>
-      </article>
+        <div class="amt">Custom Quote<small>50% ADVANCE</small></div>
+        <ul><li>Everything in the Custom Itinerary tier</li><li>Complete booking of stays, Tempo Travellers/cabs and verified local ground coordinators across Maharashtra, Goa, Karnataka, Rajasthan, Kerala, Himachal and Uttarakhand</li></ul>
+        <button class="btn btn-ghost btn-block" data-plan="complete">Get Group Package Quote</button></div></article>
     </div>
   </div>
 </section>
 
-<!-- PLANNER -->
-<section class="planner" id="planner">
+<!-- ============ PLANNER / LEAD CAPTURE ============ -->
+<section class="planner" id="planner" aria-labelledby="planner-h">
+  <svg class="edge" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 70V40C200 4 420 66 700 34S1180 6 1440 38V70Z" fill="#1B3B2B"/></svg>
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow" style="color:var(--gold)">Custom Trip Planner</span>
-      <h2>Tell us the trip. Get a quote on WhatsApp.</h2>
-      <p class="lead">Takes under a minute. You'll see a rough estimate instantly; the exact quote follows within 24 hours.</p>
-    </div>
-    <div class="pl-grid">
+    <span class="kicker">Custom trip planner</span>
+    <h2 id="planner-h">Stop wasting 15 hours planning group trips.</h2>
+    <p class="lead">Tell us the trip. See a rough estimate instantly, get a free preview of your plan, and a firm quote within 24 hours.</p>
+    <div class="pl">
       <div>
         <form id="form" novalidate>
           <div class="fields">
-            <div><label for="name">Full Name</label><input id="name" name="name" type="text" maxlength="60" autocomplete="name" required><div class="err" data-for="name"></div></div>
-            <div><label for="phone">WhatsApp Number</label><input id="phone" name="phone" type="tel" inputmode="tel" maxlength="16" placeholder="98XXXXXXXX" autocomplete="tel" required><div class="err" data-for="phone"></div></div>
-            <div><label for="dest">Destination</label>
-              <select id="dest" name="dest" required>
-                <option value="">Select…</option><option>Rajasthan</option><option>Kerala</option><option>Goa</option><option>Hampi–Gokarna</option><option>Konkan</option><option>Himachal/Uttarakhand</option><option>Other</option>
-              </select><div class="err" data-for="dest"></div></div>
-            <div><label for="from">Departure City</label><input id="from" name="from" type="text" maxlength="40" list="cities" placeholder="e.g., Pune" required>
-              <datalist id="cities"><option>Pune</option><option>Mumbai</option><option>Bengaluru</option><option>Delhi</option></datalist><div class="err" data-for="from"></div></div>
-            <div><label for="when">Travel Month / Dates</label><input id="when" name="when" type="text" maxlength="40" placeholder="e.g., 12–17 Dec" required><div class="err" data-for="when"></div></div>
-            <div><label for="group">Group Size</label>
-              <select id="group" name="group" required><option value="">Select…</option><option value="1-2">1–2</option><option value="3-6">3–6</option><option value="7-12">7–12</option><option value="13+">13+</option></select><div class="err" data-for="group"></div></div>
-            <fieldset class="full"><legend>Service Needed</legend>
-              <div class="radios">
-                <label class="radio"><input type="radio" name="service" value="blueprint" required>Ready Blueprint (₹699)</label>
-                <label class="radio"><input type="radio" name="service" value="custom" checked>Custom PDF Plan (₹2,499)</label>
-                <label class="radio"><input type="radio" name="service" value="complete">Complete All-Inclusive Package</label>
-              </div></fieldset>
-            <div class="full"><label for="budget">Approximate Budget per Person</label>
-              <select id="budget" name="budget" required><option value="">Select…</option><option value="5-10">₹5k–₹10k</option><option value="10-18">₹10k–₹18k</option><option value="18+">₹18k+</option></select><div class="err" data-for="budget"></div></div>
+            <div><label for="name">Full name</label><input id="name" name="name" type="text" maxlength="60" autocomplete="name" required><div class="err" data-for="name"></div></div>
+            <div><label for="phone">WhatsApp number</label><input id="phone" name="phone" type="tel" inputmode="tel" maxlength="16" placeholder="98XXXXXXXX" autocomplete="tel" required><div class="err" data-for="phone"></div></div>
+            <div><label for="dest">Destination</label><select id="dest" name="dest" required><option value="">Select…</option><option>Rajasthan</option><option>Kerala</option><option>Goa</option><option>Hampi–Gokarna</option><option>Konkan</option><option>Himachal/Uttarakhand</option><option>Other</option></select><div class="err" data-for="dest"></div></div>
+            <div><label for="from">Departure city</label><input id="from" name="from" type="text" maxlength="40" list="cities" placeholder="e.g. Pune" required><datalist id="cities"><option>Pune</option><option>Mumbai</option><option>Bengaluru</option><option>Delhi</option></datalist><div class="err" data-for="from"></div></div>
+            <div><label for="when">Travel month / dates</label><input id="when" name="when" type="text" maxlength="40" placeholder="e.g. 12–17 Dec" required><div class="err" data-for="when"></div></div>
+            <div><label for="group">Group size</label><select id="group" name="group" required><option value="">Select…</option><option value="1-2">1–2</option><option value="3-6">3–6</option><option value="7-12">7–12</option><option value="13+">13+</option></select><div class="err" data-for="group"></div></div>
+            <fieldset class="full"><legend>Service needed</legend><div class="radios">
+              <label class="radio"><input type="radio" name="service" value="blueprint">Ready Blueprint (₹699)</label>
+              <label class="radio"><input type="radio" name="service" value="custom" checked>Custom PDF Plan (₹2,499)</label>
+              <label class="radio"><input type="radio" name="service" value="complete">Complete All-Inclusive Package</label></div></fieldset>
+            <div class="full"><label for="budget">Approximate budget per person</label><select id="budget" name="budget" required><option value="">Select…</option><option value="5-10">₹5k–₹10k</option><option value="10-18">₹10k–₹18k</option><option value="18+">₹18k+</option></select><div class="err" data-for="budget"></div></div>
+            <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+            <div class="full"><label class="consent" for="consent"><input type="checkbox" id="consent" required><span>I agree to be contacted on WhatsApp about this trip. <button type="button" data-open="privacy">How we use your details</button></span></label><div class="err" data-for="consent"></div></div>
           </div>
-          <button class="btn btn-primary btn-block" style="margin-top:22px" type="submit">Get My Quote</button>
+          <button class="btn btn-primary btn-block" style="margin-top:20px" type="submit" id="submit">Get my quote</button>
+          <noscript><p class="note" style="margin-top:12px">This form needs JavaScript. <a data-wa href="#">Message us on WhatsApp</a> instead.</p></noscript>
         </form>
-        <div class="confirm" id="confirm" hidden aria-live="polite">
+
+        <div class="confirm" id="confirm" hidden aria-live="polite" tabindex="-1">
           <h3>Got it, <span id="c-name"></span>. One tap to finish.</h3>
           <dl id="c-list"></dl>
-          <a class="btn btn-wa btn-block" id="c-wa" target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg>Send Details on WhatsApp for Instant Quote</a>
-          <button class="btn btn-ghost btn-block" id="c-edit" style="margin-top:10px" type="button">Edit details</button>
+          <a class="btn btn-wa btn-block" id="c-wa" target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg>Send details on WhatsApp for instant quote</a>
+          <div class="next" id="next" hidden></div>
+          <button class="btn btn-ghost btn-block" id="c-edit" style="margin-top:12px" type="button">Edit details</button>
         </div>
       </div>
-      <aside class="est" aria-live="polite">
-        <h3>Rough estimate</h3>
-        <div class="big" id="est-main">Pick a service to begin</div>
-        <p id="est-sub" style="font-size:.92rem"></p>
-        <small>Indicative only. Fares, season and group size move real prices; your WhatsApp quote is the number that counts.</small>
-      </aside>
+
+      <aside class="bp" aria-live="polite"><div>
+        <div class="route"><span id="bp-from">Pune</span><span></span><span id="bp-to">Anywhere</span></div>
+        <dl><div><dt>Group</dt><dd id="bp-group">&mdash;</dd></div><div><dt>Service</dt><dd id="bp-svc">Custom plan</dd></div></dl>
+        <div class="big" id="est-main">₹2,499</div>
+        <p id="est-sub" style="font-size:.9rem;margin-top:6px"></p>
+        <small>Indicative only. Fares, season and group size move real prices. Your quote is the number that counts.</small>
+      </div></aside>
     </div>
   </div>
 </section>
 
-<!-- PROOF + FAQ -->
-<section id="faq">
+<!-- ============ PROOF ============ -->
+<section id="proof" aria-labelledby="proof-h">
   <div class="wrap">
-    <div class="sec-head reveal">
-      <span class="eyebrow">Social Proof</span>
-      <h2>Groups that stopped arguing in WhatsApp polls.</h2>
+    <div class="reveal"><span class="kicker">What travellers say</span><h2 id="proof-h">Groups that stopped arguing in WhatsApp polls.</h2></div>
+    <!-- SAMPLE reviews: replace with real, consented reviews and delete class "sample" from each. Do not publish invented reviews. -->
+    <div class="quotes">
+      <figure class="quote sample reveal"><blockquote>“14 guys, three train legs, zero panic. The cut-list saved Mehrangarh when we lost an hour on the road. Nobody had to plan a thing.”</blockquote><figcaption>Rohan K.<span>14-person Rajasthan trip · Pune</span></figcaption></figure>
+      <figure class="quote sample reveal"><blockquote>“We had parents and friends together. The temple dress-code briefing and the red-eye flight plan were exactly what we'd have missed.”</blockquote><figcaption>Sneha M.<span>11-person Kerala group · Mumbai</span></figcaption></figure>
+      <figure class="quote sample reveal"><blockquote>“Left Hinjawadi Friday night, back Monday morning for stand-up. Tempo Traveller, stays and food list all sorted. The team wants the next batch.”</blockquote><figcaption>Vikram D.<span>IT team weekend batch · Hinjawadi</span></figcaption></figure>
     </div>
-    <!-- SAMPLE TESTIMONIALS: placeholders. Replace with real, consented reviews before going live. -->
-    <div class="grid quotes">
-      <figure class="card quote reveal"><div class="stars"><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg></div><blockquote>“14 guys, 3 train legs, zero panic. The cut-list saved Mehrangarh when we lost an hour at Jaisalmer. Nobody had to plan a thing.”</blockquote><figcaption class="who">Rohan K.<span>14-person Rajasthan boys trip · Pune</span></figcaption></figure>
-      <figure class="card quote reveal"><div class="stars"><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg></div><blockquote>“Our Kerala group had parents and friends together. The temple dress-code briefing and the red-eye flight plan were exactly what we'd have missed.”</blockquote><figcaption class="who">Sneha &amp; Aditi M.<span>11-person Kerala family/friends group · Mumbai</span></figcaption></figure>
-      <figure class="card quote reveal"><div class="stars"><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg><svg class="i"><use href="#i-star"/></svg></div><blockquote>“Left Hinjawadi Friday night, back Monday morning for stand-up. Tempo Traveller, stays and the food list were sorted. Our team is asking for the next batch.”</blockquote><figcaption class="who">Vikram D.<span>IT team weekend batch · Hinjawadi, Pune</span></figcaption></figure>
-    </div>
+    <div class="ig reveal"><span class="hand">See the routes in real life →</span><a class="btn btn-ghost" id="ig" target="_blank" rel="noopener"><svg class="i"><use href="#i-insta"/></svg>@[INSTAGRAM_HANDLE]</a></div>
+  </div>
+</section>
 
-    <div class="faq" aria-label="Frequently asked questions">
-      <details name="faq" class="reveal"><summary>Do you book trains and flights, or just give us the exact train/flight numbers?<svg class="i"><use href="#i-down"/></svg></summary><p>Blueprint and Custom Plan tiers give you exact train/flight numbers, timings and connections so you can book on IRCTC or your airline of choice. With a Full Trip Execution package, we handle the bookings for you; the scope is confirmed in your written quote.</p></details>
-      <details name="faq" class="reveal"><summary>How fast will I receive my custom itinerary after submitting the form?<svg class="i"><use href="#i-down"/></svg></summary><p>Within 24 hours of your confirmed details, with one free revision included. Very large or multi-city groups may need a quick call first, and we'll tell you upfront.</p></details>
-      <details name="faq" class="reveal"><summary>Can you organize a Tempo Traveller and hotels for a 10–16 person group from Pune?<svg class="i"><use href="#i-down"/></svg></summary><p>Yes. Pune/PCMC pickups, Tempo Travellers and group-friendly stays are our core use case, with the per-person split shown before you commit.</p></details>
-      <details name="faq" class="reveal"><summary>How do payments and advances work for full packages?<svg class="i"><use href="#i-down"/></svg></summary><p>Full packages run on a 50% advance to lock bookings, with the balance due before departure. Everything is itemised in your quote, with no hidden agency markups.</p></details>
-      <details name="faq" class="reveal"><summary>Do you cover North India destinations like Manali, Kasol, and Rishikesh?<svg class="i"><use href="#i-down"/></svg></summary><p>Yes. We work with vetted local ground teams across Himachal and Uttarakhand, as well as Rajasthan. Pick “Himachal/Uttarakhand” in the planner and we'll route it.</p></details>
+<!-- ============ FAQ ============ -->
+<section id="faq" aria-labelledby="faq-h" style="padding-top:20px">
+  <div class="wrap">
+    <div class="reveal" style="text-align:center"><span class="kicker">Questions</span><h2 id="faq-h">Everything people ask before booking</h2></div>
+    <div class="faq">
+      <details name="faq"><summary>Do you book trains and flights, or just give us the exact train/flight numbers?</summary><p>The Blueprint and Custom Plan tiers give you exact train and flight numbers, timings and connections so you can book on IRCTC or your airline. With a Full Trip Execution package we handle the bookings; the scope is confirmed in your written quote.</p></details>
+      <details name="faq"><summary>How fast will I receive my custom itinerary after submitting the form?</summary><p>Within 24 hours of confirmed details, with one free revision included. Very large or multi-city groups may need a quick call first, and we tell you upfront.</p></details>
+      <details name="faq"><summary>Can you organise a Tempo Traveller and hotels for a 10–16 person group from Pune?</summary><p>Yes. Pune and PCMC pickups, Tempo Travellers and group-friendly stays are our core use case, with the per-person split shown before you commit.</p></details>
+      <details name="faq"><summary>How do payments and advances work for full packages?</summary><p>Full packages run on a 50% advance to lock bookings. The balance schedule and every line item are itemised in your quote, with no hidden agency markups.</p></details>
+      <details name="faq"><summary>Do you cover North India destinations like Manali, Kasol, and Rishikesh?</summary><p>Yes. We work with vetted local ground teams across Himachal, Uttarakhand and Rajasthan. Choose “Himachal/Uttarakhand” in the planner and we'll route it.</p></details>
+      <details name="faq"><summary>How much does a group trip from Pune cost?</summary><p>Group packages start from ₹8,499 per person for Goa, ₹9,999 for Kerala, ₹10,499 for Gokarna–Hampi and ₹11,499 for Rajasthan. Final prices depend on dates, group size and stay type, and are confirmed in your quote.</p></details>
+      <details name="faq"><summary>What do I get in the free preview versus the paid Custom Plan?</summary><p>The free preview shows Day 1 of your itinerary in full so you can judge the quality. The ₹2,499 Custom Plan unlocks every day, the food map and the priority cut-lists.</p></details>
     </div>
   </div>
 </section>
 </main>
 
 <footer>
+  <svg class="edge tall" viewBox="0 0 1440 120" preserveAspectRatio="none" aria-hidden="true"><path d="M0 120V70C160 40 300 78 480 58S800 22 980 56 1300 80 1440 50V120Z" fill="#10241A"/><g style="color:#10241A"><use href="#palm" transform="translate(210 78) scale(.62)"/><use href="#palm" transform="translate(250 84) scale(.4)"/><use href="#palm" transform="translate(1210 66) scale(.7)"/></g></svg>
   <div class="wrap">
     <div class="f-grid">
       <div>
-        <a href="#top" class="logo" data-brand>[BRAND_NAME]</a>
-        <p style="margin-top:10px;max-width:42ch">Ground-Tested Trips. Zero Guesswork. Online-first trip architecture by a former tour guide and group trip planner.</p>
-        <p style="margin-top:8px">Operating online from Pune / PCMC, Maharashtra.</p>
-        <span class="udyam">Udyam MSME Registered · [UDYAM_REG_NO]</span>
+        <a href="#top" class="logo">[BRAND_NAME]</a>
+        <p style="margin-top:12px;max-width:42ch">Ground-Tested Trips. Zero Guesswork. Online-first trip planning for group travel from Pune and PCMC, Maharashtra.</p>
+        <span class="udyam">UDYAM MSME REGISTERED · [UDYAM_REG_NO]</span>
       </div>
-      <div><h4>Quick links</h4><ul><li><a href="#routes">Proven Routes</a></li><li><a href="#how">How It Works</a></li><li><a href="#pricing">Pricing Tiers</a></li><li><a href="#planner">Custom Planner</a></li><li><a href="#faq">FAQ</a></li></ul></div>
-      <div><h4>Connect</h4><ul>
-        <li><a id="ig" target="_blank" rel="noopener"><svg class="i"><use href="#i-insta"/></svg> @<span data-ig>[INSTAGRAM_HANDLE]</span></a></li>
-        <li><a data-wa target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg> WhatsApp us</a></li></ul></div>
+      <div><h4>Trips from Pune</h4><ul><li><a href="#routes">Rajasthan tour from Pune</a></li><li><a href="#routes">Kerala 3-day trip</a></li><li><a href="#routes">Goa trip from Pune</a></li><li><a href="#routes">Gokarna &amp; Hampi trip</a></li><li><a href="#pricing">Pricing</a></li></ul></div>
+      <div><h4>Connect</h4><ul><li><a id="ig2" target="_blank" rel="noopener">Instagram @[INSTAGRAM_HANDLE]</a></li><li><a data-wa target="_blank" rel="noopener">WhatsApp us</a></li><li><a href="#faq">FAQ</a></li></ul></div>
     </div>
-    <p class="copy">© <span id="yr"></span> <span data-brand>[BRAND_NAME]</span>. Prices shown are indicative and confirmed in your written quote.</p>
+    <div class="copy"><span>© <span id="yr"></span> [BRAND_NAME]. Prices are indicative and confirmed in your written quote.</span><button data-open="privacy">Privacy</button></div>
   </div>
 </footer>
 
 <div class="fab"><a data-wa target="_blank" rel="noopener" aria-label="Chat with Trip Planner on WhatsApp"><svg class="i"><use href="#i-chat"/></svg></a><span class="tip">Chat with Trip Planner</span></div>
-
-<!-- Dialogs -->
-<dialog id="d-sample" aria-labelledby="ds-t">
-  <div class="dlg-head"><h3 id="ds-t">Sample PDF Blueprint · Day 1, Jaipur</h3><button data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
-  <div class="dlg-body">
-    <div class="leg"><svg class="i"><use href="#i-train"/></svg><div><b>Transit leg:</b> Pune → Jaipur · Train [no. / name] · Dep 16:35 → Arr 11:20 (+1)<br><span class="note">Exact train number and platform buffer given in the real PDF.</span></div></div>
-    <ul class="sched">
-      <li><time>11:30</time><span>Hotel check-in near Bani Park (early-access request sent in advance)</span></li>
-      <li><time>12:30</time><span><span class="eat">EAT</span>Lunch: dal-baati-churma at a local thali spot</span></li>
-      <li><time>14:30</time><span>Amer Fort entry, audio-guide queue, Sheesh Mahal first</span></li>
-      <li><time>17:00</time><span>Hard stop: monument closing deadline. Exit gate by 17:15</span></li>
-      <li><time>17:45</time><span>Jal Mahal photo stop, then Hawa Mahal lane for sunset light</span></li>
-      <li><time>19:45</time><span><span class="eat">EAT</span>Dinner + kulhad chai, old city bazaar walk</span></li>
-      <li><time>22:30</time><span>Back at hotel; alarm set for 06:30 departure to Jaisalmer leg</span></li>
-    </ul>
-    <div class="cut"><b><svg class="i" style="vertical-align:-3px"><use href="#i-cut"/></svg> Priority Cut-List</b> (if the group runs late, drop in this order)
-      <ol><li>Jal Mahal photo stop</li><li>Hawa Mahal lane walk (view from the café instead)</li><li>Bazaar walk (keep dinner)</li></ol></div>
-    <p class="note">Illustrative sample. Timings, train details and venues are placeholders; every real blueprint is built and verified for your exact dates.</p>
-    <button class="btn btn-primary" data-plan="custom" data-close>Get this for my trip</button>
-  </div>
-</dialog>
+<div class="mbar"><a class="btn btn-wa" data-wa target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg>WhatsApp</a><a class="btn btn-primary" href="#planner">Plan My Trip</a></div>
 
 <dialog id="d-route" aria-labelledby="dr-t">
-  <div class="dlg-head"><h3 id="dr-t"></h3><button data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
-  <div class="dlg-body">
+  <div class="dh"><h3 id="dr-t"></h3><button data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="db">
     <p id="dr-sum"></p>
     <div><h4 style="color:var(--forest);margin-bottom:8px">Route outline</h4><ul class="sched" id="dr-days"></ul></div>
-    <div class="cols">
-      <div><h4>Blueprint includes</h4><ul id="dr-inc"></ul></div>
-      <div><h4>Group execution</h4><ul id="dr-exe"></ul></div>
-    </div>
+    <div class="cols"><div><h4>Blueprint includes</h4><ul id="dr-inc"></ul></div><div><h4>Group execution</h4><ul id="dr-exe"></ul></div></div>
     <p class="note">Outline is a summary; the PDF carries the full time-stamped schedule.</p>
     <button class="btn btn-primary" id="dr-cta">Plan this route</button>
   </div>
 </dialog>
 
+<dialog id="d-privacy" aria-labelledby="pv-t">
+  <div class="dh"><h3 id="pv-t">How we use your details</h3><button data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
+  <div class="db">
+    <p><b>What we collect:</b> your name, WhatsApp number, trip preferences (destination, dates, group size, budget).</p>
+    <p><b>Why:</b> to prepare your itinerary and quote and to contact you on WhatsApp about it. We don't sell your data or send unrelated marketing.</p>
+    <p><b>Who sees it:</b> our team and the service providers we use to store and process requests (database, payments, messaging).</p>
+    <p><b>Your choices:</b> ask us on WhatsApp to correct or delete your details at any time.</p>
+    <p class="note">Draft notice. Have it reviewed against India's Digital Personal Data Protection Act, 2023 before launch.</p>
+  </div>
+</dialog>
+
 <script>
-// ===== CONFIG: replace these three values =====
-const CONFIG = {
-  brand: "[BRAND_NAME]",
-  whatsapp: "91XXXXXXXXXX",      // country code + number, digits only (e.g. 919876543210)
-  instagram: "[INSTAGRAM_HANDLE]"
-};
+// ===== Runtime config. To override without editing this file, define window.SITE_CONFIG = {...} in an earlier script tag =====
+const CFG = Object.assign({
+  whatsapp: "91XXXXXXXXXX",          // digits only, country code first
+  instagram: "[INSTAGRAM_HANDLE]",
+  apiBase: "",                       // e.g. "https://api.yourdomain.com". Empty = WhatsApp-only mode (no backend)
+  pollMs: 4000, pollMax: 45,
+  photos: {}                         // optional real photos: { rajasthan: "img/jaipur.jpg", ... }
+}, window.SITE_CONFIG || {});
 
-const INC = ["Instant PDF download", "Exact train/flight numbers & timings", "Hotel area recommendations", "Food master list ('EAT' tags)", "Packing checklist"];
-const EXE = ["Stays + Tempo Traveller/cab booking", "Verified local ground coordinator", "Final inclusions confirmed in your quote", "50% advance to confirm"];
-const TRIPS = [
-  { id:"jaipur", title:"Jaipur → Jaisalmer → Jodhpur", dur:"6 Days / 5 Nights", group:"8–16 people", cats:["multi","north"], dest:"Rajasthan", tag:"Rajasthan",
-    g:["#C85A32","#D4A359"], img:"photo-1477587458883-47145ed94245",
-    hl:["3 chained overnight/intercity train legs + Tempo Traveller desert circuit","Amer & Mehrangarh closing-time strategy","Sam Sand Dunes sunset","15+ local food stops"],
-    price:["Blueprint ₹799","Custom Group Execution from ₹11,499/person"],
-    days:["Day 1: Jaipur: Amer Fort + old city","Day 2: Jaipur → Jaisalmer (train leg)","Day 3: Jaisalmer fort + Sam Sand Dunes sunset","Day 4: Jaisalmer → Jodhpur (train leg)","Day 5: Jodhpur: Mehrangarh + blue city food walk","Day 6: Departure"] },
-  { id:"gokarna", title:"Gokarna → Murudeshwar → Hampi", dur:"5 Days / 4 Nights · Ex-Pune", group:"10–16 people", cats:["weekend","multi"], dest:"Hampi–Gokarna", tag:"Ex-Pune Batch",
-    g:["#1B3B2B","#4a8a6a"], img:"photo-1590050752117-238cb0fb12b1",
-    hl:["Overnight AC Tempo Traveller from Pune/PCMC","Kudle & Om Beach trek","Murudeshwar temple viewpoint","Hampi boulder sunrise & coracle ride"],
-    price:["Blueprint ₹699","Weekend Group Batch ₹10,499/person"],
-    days:["Day 1: Overnight drive from Pune/PCMC","Day 2: Gokarna: Kudle & Om Beach trek","Day 3: Murudeshwar temple viewpoint → Hampi","Day 4: Hampi boulder sunrise + coracle ride","Day 5: Return to Pune"] },
-  { id:"kerala", title:"Kerala Temple & Nature Circuit", dur:"3 Days / 2 Nights", group:"4–12 people", cats:["multi"], dest:"Kerala", tag:"Fly Out",
-    g:["#27533c","#8bb89c"], img:"photo-1602216056096-3b40cc0c9944",
-    hl:["Red-eye flight optimization (PNQ–COK)","Padmanabhaswamy Temple dress-code & entry briefing","Azhimala cliff & Jatayu Earth Center","Alleppey & Munnar"],
-    price:["Blueprint ₹699","Custom Package from ₹9,999/person"],
-    days:["Day 1: PNQ–COK red-eye → Trivandrum area temples","Day 2: Azhimala cliff + Jatayu Earth Center","Day 3: Alleppey / Munnar leg → departure"] },
-  { id:"goa", title:"Goa Hidden Gems & Classics", dur:"4 Days / 3 Nights · Ex-Pune", group:"6–16 people", cats:["weekend"], dest:"Goa", tag:"Ex-Pune Batch",
-    g:["#b9482a","#e9b872"], img:"photo-1512343879784-a960bf40e7f2",
-    hl:["North Goa sundowners","Arambol sweet water lake","South Goa Cola Lagoon & Butterfly Beach","Fontainhas Latin Quarter walk + curated shack & cafe list"],
-    price:["Blueprint ₹699","Group Package from ₹8,499/person"],
-    days:["Day 1: Pune → North Goa, sundowners","Day 2: Arambol + sweet water lake","Day 3: South Goa: Cola Lagoon & Butterfly Beach","Day 4: Fontainhas walk → return"] }
-];
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const track = (name, data = {}) => { try { window.gtag && gtag("event", name, data); } catch {} };
+const waLink = text => `https://wa.me/${CFG.whatsapp}` + (text ? `?text=${encodeURIComponent(text)}` : "");
+const reduce = matchMedia("(prefers-reduced-motion:reduce)").matches;
 
-const $ = (s, r=document) => r.querySelector(s), $$ = (s, r=document) => [...r.querySelectorAll(s)];
-const ic = n => { const s=document.createElementNS("http://www.w3.org/2000/svg","svg"); s.setAttribute("class","i"); s.innerHTML=`<use href="#i-${n}"/>`; return s; };
-const el = (t, props={}, ...kids) => { const e=Object.assign(document.createElement(t), props); e.append(...kids); return e; };
-const waLink = text => `https://wa.me/${CONFIG.whatsapp}` + (text ? `?text=${encodeURIComponent(text)}` : "");
-
-// ===== branding / links =====
-$$("[data-brand]").forEach(e => e.textContent = CONFIG.brand);
-$$("[data-ig]").forEach(e => e.textContent = CONFIG.instagram);
-$("#ig").href = `https://instagram.com/${CONFIG.instagram}`;
+// ===== static wiring =====
 $$("[data-wa]").forEach(a => a.href = waLink("Hi! I'd like help planning a trip."));
+$("#ig").href = $("#ig2").href = `https://instagram.com/${CFG.instagram}`;
 $("#yr").textContent = new Date().getFullYear();
-
-// ===== nav =====
 const burger = $("#burger"), links = $("#links");
 burger.onclick = () => burger.setAttribute("aria-expanded", links.classList.toggle("open"));
-links.onclick = e => { if (e.target.closest("a")) { links.classList.remove("open"); burger.setAttribute("aria-expanded","false"); } };
+links.onclick = e => { if (e.target.closest("a")) { links.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); } };
+const hdr = $("#hdr"); const onScroll = () => hdr.classList.toggle("solid", scrollY > 40); onScroll(); addEventListener("scroll", onScroll, { passive: true });
 
-// ===== trip cards =====
-const tripsEl = $("#trips");
-TRIPS.forEach(t => {
-  const ph = el("div", {className:"ph"}, el("span",{className:"tag",textContent:t.tag}));
-  ph.style.setProperty("--g1", t.g[0]); ph.style.setProperty("--g2", t.g[1]);
-  const img = el("img", {alt:`${t.title} placeholder photo`, loading:"lazy", src:`https://images.unsplash.com/${t.img}?auto=format&fit=crop&w=800&q=70`});
-  img.onerror = () => img.remove();   // gradient shows if a photo fails
-  ph.prepend(img);
-  const hl = el("ul",{className:"hl"}, ...t.hl.map(h => el("li",{}, ic("check"), h)));
-  const btn = el("button",{className:"btn btn-ghost",textContent:"View Route & Inclusions"}); btn.onclick = () => openRoute(t);
-  const card = el("article",{className:"card reveal"}, ph,
-    el("div",{className:"body"}, el("h3",{textContent:t.title}),
-      el("div",{className:"meta"}, el("span",{},ic("clock"),t.dur), el("span",{},ic("users"),t.group)),
-      hl, el("p",{className:"price"}, el("b",{textContent:t.price[0]}), " | ", t.price[1]), btn));
-  card.dataset.cats = t.cats.join(" ");
-  tripsEl.append(card);
-});
+// real photos (optional) replace the illustration for that card
+for (const [id, src] of Object.entries(CFG.photos)) {
+  const art = $(`[data-photo="${id}"]`); if (!art || !/^[\w./-]+$/.test(src)) continue;
+  const img = Object.assign(document.createElement("img"), { src, alt: art.querySelector("svg")?.getAttribute("aria-label") || "", loading: "lazy", width: 640, height: 400 });
+  img.onload = () => art.querySelector("svg")?.replaceWith(img); // keep the illustration if the photo 404s
+}
+
+// hero parallax (skipped for reduced motion)
+if (!reduce) {
+  const layers = $$("[data-p]"), hero = $(".hero"); let tick = false;
+  addEventListener("scroll", () => { if (tick) return; tick = true; requestAnimationFrame(() => { const y = Math.min(scrollY, hero.offsetHeight); layers.forEach(l => l.style.transform = `translateY(${y * l.dataset.p * -1}px)`); tick = false; }); }, { passive: true });
+}
+
+// reveal + count-up
+const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(x => {
+  if (!x.isIntersecting) return; x.target.classList.add("in"); io.unobserve(x.target);
+  $$("[data-count]", x.target).forEach(c => { if (reduce) return; const to = +c.dataset.count, t0 = performance.now(); const f = n => { const p = Math.min((n - t0) / 1200, 1); c.textContent = Math.round(to * (1 - (1 - p) ** 3)) + c.dataset.suffix; if (p < 1) requestAnimationFrame(f); }; requestAnimationFrame(f); });
+}), { threshold: .12 }) : null;
+$$(".reveal").forEach(r => io ? io.observe(r) : r.classList.add("in"));
+
+// running-late demo
+$("#late").onclick = e => { const on = e.currentTarget.getAttribute("aria-pressed") !== "true"; e.currentTarget.setAttribute("aria-pressed", on); $("#ticket").classList.toggle("is-late", on); $("#late-note").hidden = !on; $("#late-label").textContent = on ? "Back on schedule" : "We're running 90 minutes late"; track("sample_cutlist_toggle"); };
+
+// ===== route data (modal) =====
+const INC = ["Instant PDF download", "Exact train/flight numbers & timings", "Hotel area recommendations", "Food master list ('EAT' tags)", "Packing checklist"];
+const EXE = ["Stays + Tempo Traveller/cab booking", "Verified local ground coordinator", "Final inclusions confirmed in your quote", "50% advance to confirm"];
+const TRIPS = {
+  rajasthan: { title: "Jaipur → Jaisalmer → Jodhpur (6D/5N)", dest: "Rajasthan", sum: "Blueprint ₹799 · Custom Group Execution from ₹11,499/person", days: ["Day 1: Jaipur: Amer Fort + old city", "Day 2: Jaipur → Jaisalmer (train leg)", "Day 3: Jaisalmer fort + Sam Sand Dunes sunset", "Day 4: Jaisalmer → Jodhpur (train leg)", "Day 5: Jodhpur: Mehrangarh + blue city food walk", "Day 6: Departure"] },
+  gokarna: { title: "Gokarna → Murudeshwar → Hampi (5D/4N, Ex-Pune)", dest: "Hampi–Gokarna", sum: "Blueprint ₹699 · Weekend Group Batch ₹10,499/person", days: ["Day 1: Overnight drive from Pune/PCMC", "Day 2: Gokarna: Kudle & Om Beach trek", "Day 3: Murudeshwar viewpoint → Hampi", "Day 4: Hampi boulder sunrise + coracle ride", "Day 5: Return to Pune"] },
+  kerala: { title: "Kerala Temple & Nature Circuit (3D/2N)", dest: "Kerala", sum: "Blueprint ₹699 · Custom Package from ₹9,999/person", days: ["Day 1: PNQ–COK red-eye → Padmanabhaswamy Temple", "Day 2: Azhimala cliff + Jatayu Earth Center", "Day 3: Alleppey / Munnar leg → departure"] },
+  goa: { title: "Goa Hidden Gems & Classics (4D/3N, Ex-Pune)", dest: "Goa", sum: "Blueprint ₹699 · Group Package from ₹8,499/person", days: ["Day 1: Pune → North Goa, sundowners", "Day 2: Arambol + sweet water lake", "Day 3: South Goa: Cola Lagoon & Butterfly Beach", "Day 4: Fontainhas walk → return"] }
+};
+const BP_ID = { "Rajasthan": "rajasthan", "Kerala": "kerala", "Goa": "goa", "Hampi–Gokarna": "hampi-gokarna" }; // must match backend BLUEPRINTS keys
+const HAS_KB = new Set(Object.keys(BP_ID));
+
+// filters
 $$(".tab").forEach(tab => tab.onclick = () => {
   $$(".tab").forEach(x => x.setAttribute("aria-selected", x === tab));
-  $$("#trips .card").forEach(c => c.hidden = tab.dataset.f !== "all" && !c.dataset.cats.split(" ").includes(tab.dataset.f));
+  let shown = 0; $$("#trips .card").forEach(c => { const ok = tab.dataset.f === "all" || c.dataset.cats.split(" ").includes(tab.dataset.f); c.hidden = !ok; shown += ok; });
+  $("#no-trips").hidden = !(tab.dataset.f === "north");
 });
 
-// ===== dialogs =====
-const dialogs = $$("dialog");
-dialogs.forEach(d => d.addEventListener("click", e => { if (e.target === d || e.target.closest("[data-close]")) d.close(); }));
-$$("[data-open=sample]").forEach(b => b.onclick = () => $("#d-sample").showModal());
-function openRoute(t) {
-  $("#dr-t").textContent = `${t.title} (${t.dur})`;
-  $("#dr-sum").textContent = `${t.price[0]} · ${t.price[1]}`;
-  const fill = (id, arr) => $(id).replaceChildren(...arr.map(x => el("li",{textContent:x})));
+// dialogs
+$$("dialog").forEach(d => d.addEventListener("click", e => { if (e.target === d || e.target.closest("[data-close]")) d.close(); }));
+$$("[data-open=privacy]").forEach(b => b.onclick = () => $("#d-privacy").showModal());
+$$("[data-route]").forEach(b => b.onclick = () => {
+  const t = TRIPS[b.dataset.route]; $("#dr-t").textContent = t.title; $("#dr-sum").textContent = t.sum;
+  const fill = (id, arr) => $(id).replaceChildren(...arr.map(x => Object.assign(document.createElement("li"), { textContent: x })));
   fill("#dr-days", t.days); fill("#dr-inc", INC); fill("#dr-exe", EXE);
   $("#dr-cta").onclick = () => { $("#d-route").close(); plan("custom", t.dest); };
-  $("#d-route").showModal();
-}
+  $("#d-route").showModal(); track("view_route", { route: b.dataset.route });
+});
 
-// ===== pricing buttons -> planner =====
-function plan(service, dest) {
-  if (service) $(`input[name=service][value=${service}]`).checked = true;
-  if (dest) $("#dest").value = dest;
-  showForm(); updateEst();
-  $("#planner").scrollIntoView({behavior: matchMedia("(prefers-reduced-motion:reduce)").matches ? "auto" : "smooth"});
-  setTimeout(() => $("#name").focus({preventScroll:true}), 500);
-}
-$$("[data-plan]").forEach(b => b.addEventListener("click", () => plan(b.dataset.plan)));
-
-// ===== estimate =====
-const inr = n => "₹" + n.toLocaleString("en-IN");
-const G = {"1-2":[1,2], "3-6":[3,6], "7-12":[7,12], "13+":[13,null]};
-const B = {"5-10":[5000,10000], "10-18":[10000,18000], "18+":[18000,null]};
+// ===== planner =====
 const form = $("#form");
+function plan(service, dest) {
+  if (service) form.elements.service.value = service;
+  if (dest) form.elements.dest.value = dest;
+  showForm(); updateEst();
+  $("#planner").scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+  setTimeout(() => $("#name").focus({ preventScroll: true }), 600);
+}
+$$("[data-plan]").forEach(b => b.onclick = () => plan(b.dataset.plan));
+$$("[data-dest]").forEach(b => b.onclick = () => plan(null, b.dataset.dest));
+
+const inr = n => "₹" + n.toLocaleString("en-IN");
+const G = { "1-2": [1, 2], "3-6": [3, 6], "7-12": [7, 12], "13+": [13, null] }, B = { "5-10": [5000, 10000], "10-18": [10000, 18000], "18+": [18000, null] };
+const SVC = { blueprint: "Ready Blueprint (₹699)", custom: "Custom PDF Plan (₹2,499)", complete: "Complete All-Inclusive Package" };
+const BUDGET = { "5-10": "₹5k–₹10k", "10-18": "₹10k–₹18k", "18+": "₹18k+" };
 function updateEst() {
-  const svc = form.service.value, g = G[form.group.value], b = B[form.budget.value];
+  const v = form.elements, svc = v.service.value, g = G[v.group.value], b = B[v.budget.value];
+  $("#bp-from").textContent = v.from.value.trim().slice(0, 14) || "Pune"; $("#bp-to").textContent = v.dest.value || "Anywhere";
+  $("#bp-group").textContent = v.group.value || "—"; $("#bp-svc").textContent = { blueprint: "Blueprint", custom: "Custom plan", complete: "Full package" }[svc];
   const main = $("#est-main"), sub = $("#est-sub");
-  if (svc === "blueprint") { main.textContent = "₹699 – ₹999"; sub.textContent = "One-time PDF download of a ready-made route. Trip cost is separate and yours to book."; return; }
-  const fee = svc === "custom" ? "₹2,499 planning fee, 24-hour delivery + 1 free revision." : "Custom quote, 50% advance to confirm bookings.";
-  let trip = "";
-  if (g && b) {
-    const lo = b[0] * g[0], hi = g[1] && b[1] ? b[1] * g[1] : null;
-    trip = ` Indicative trip spend for your group: ${hi ? `${inr(lo)} – ${inr(hi)}` : `${inr(lo)}+`}.`;
-  } else trip = " Add group size and budget for a trip-cost range.";
-  main.textContent = svc === "custom" ? "₹2,499" : "Custom Quote";
-  sub.textContent = fee + trip;
+  if (svc === "blueprint") { main.textContent = "₹699 – ₹999"; sub.textContent = "One-time PDF of a ready-made route. Trip cost is separate and yours to book."; return; }
+  main.textContent = svc === "custom" ? "₹2,499" : "Custom quote";
+  let trip = " Add group size and budget for a trip-cost range.";
+  if (g && b) { const lo = b[0] * g[0], hi = g[1] && b[1] ? b[1] * g[1] : null; trip = ` Indicative trip spend for your group: ${hi ? `${inr(lo)} – ${inr(hi)}` : `${inr(lo)}+`}.`; }
+  sub.textContent = (svc === "custom" ? "Planning fee, delivered in 24 hours with 1 free revision." : "50% advance to confirm bookings.") + trip;
 }
 form.addEventListener("input", updateEst); updateEst();
 
-// ===== validation + submit =====
-const LABEL = {blueprint:"Ready Blueprint (₹699)", custom:"Custom PDF Plan (₹2,499)", complete:"Complete All-Inclusive Package"};
-const BUDGET = {"5-10":"₹5k–₹10k", "10-18":"₹10k–₹18k", "18+":"₹18k+"};
 const clean = s => s.replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim();
-function validate(f) {
-  const v = {name:clean(f.name.value), phone:f.phone.value.replace(/[\s\-()]/g,""), dest:f.dest.value, from:clean(f.from.value), when:clean(f.when.value), group:f.group.value, budget:f.budget.value, service:f.service.value};
-  const err = {};
-  if (v.name.length < 2) err.name = "Please enter your name.";
-  if (!/^(\+?91|0)?[6-9]\d{9}$/.test(v.phone)) err.phone = "Enter a valid 10-digit Indian WhatsApp number.";
-  if (!v.dest) err.dest = "Choose a destination.";
-  if (!v.from) err.from = "Where are you travelling from?";
-  if (!v.when) err.when = "Add a month or dates.";
-  if (!v.group) err.group = "Select group size.";
-  if (!v.budget) err.budget = "Select a budget band.";
-  return {v, err};
+function validate() {
+  const f = form.elements, v = { name: clean(f.name.value), phone: f.phone.value.replace(/[\s\-()]/g, ""), destination: f.dest.value, departure_city: clean(f.from.value), travel_dates: clean(f.when.value), group_size: f.group.value, service: f.service.value, budget: f.budget.value, website: f.website.value };
+  const e = {};
+  if (v.name.length < 2) e.name = "Please enter your name.";
+  const m = v.phone.match(/^(?:\+?91|0)?([6-9]\d{9})$/); if (!m) e.phone = "Enter a valid 10-digit Indian WhatsApp number"; else v.phone = "91" + m[1];
+  if (!v.destination) e.dest = "Choose a destination.";
+  if (!v.departure_city) e.from = "Where are you travelling from?";
+  if (!v.travel_dates) e.when = "Add a month or dates.";
+  if (!v.group_size) e.group = "Select group size.";
+  if (!v.budget) e.budget = "Select a budget band.";
+  if (!f.consent.checked) e.consent = "Please tick to continue.";
+  return { v, e };
 }
-form.addEventListener("submit", e => {
-  e.preventDefault();
-  const {v, err} = validate(form);
-  $$(".err", form).forEach(x => x.textContent = err[x.dataset.for] || "");
-  const first = Object.keys(err)[0]; if (first) { form[first].focus(); return; }
-  const rows = [["Name",v.name],["WhatsApp",v.phone],["Destination",v.dest],["From",v.from],["Travel dates",v.when],["Group size",v.group],["Service",LABEL[v.service]],["Budget / person",BUDGET[v.budget]]];
+const FIELD = { name: "name", phone: "phone", dest: "dest", from: "from", when: "when", group: "group", budget: "budget", consent: "consent" };
+
+async function api(path, body) {
+  const ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 20000);
+  try {
+    const r = await fetch(CFG.apiBase + path, { method: body ? "POST" : "GET", headers: body ? { "Content-Type": "application/json" } : {}, body: body ? JSON.stringify(body) : undefined, signal: ctl.signal });
+    const d = await r.json().catch(() => ({}));
+    if (!r.ok) throw Object.assign(new Error(typeof d.detail === "string" ? d.detail : r.statusText), { status: r.status });
+    return d;
+  } finally { clearTimeout(t); }
+}
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+let busy = false;
+form.addEventListener("submit", async ev => {
+  ev.preventDefault(); if (busy) return;
+  const { v, e } = validate();
+  $$(".err", form).forEach(x => { x.textContent = e[x.dataset.for] || ""; const i = form.elements[FIELD[x.dataset.for]]; i && i.setAttribute("aria-invalid", !!e[x.dataset.for]); });
+  const first = Object.keys(e)[0]; if (first) { form.elements[FIELD[first]].focus(); return; }
+
+  busy = true; const btn = $("#submit"); btn.disabled = true; btn.textContent = "Sending…";
+  let leadId = null, note = "";
+  if (CFG.apiBase) {
+    try { leadId = (await api("/api/leads", v)).lead_id; track("generate_lead", { destination: v.destination, service: v.service }); }
+    catch (err) { note = err.status === 429 ? "You've sent a few requests already. WhatsApp us below and we'll pick it up." : "We couldn't reach our planner just now. Your details are in the WhatsApp message below, so nothing is lost."; }
+  }
+  const rows = [["Name", v.name], ["WhatsApp", v.phone], ["Destination", v.destination], ["From", v.departure_city], ["Travel dates", v.travel_dates], ["Group size", v.group_size], ["Service", SVC[v.service]], ["Budget / person", BUDGET[v.budget]]];
   $("#c-name").textContent = v.name.split(" ")[0];
-  $("#c-list").replaceChildren(...rows.flatMap(([k,val]) => [el("dt",{textContent:k}), el("dd",{textContent:val})]));
-  const msg = ["Hi! I'd like an instant quote.", "", ...rows.map(([k,val]) => `*${k}:* ${val}`), "", `Rough estimate: ${$("#est-main").textContent}`].join("\n");
-  $("#c-wa").href = waLink(msg);
-  form.hidden = true; $("#confirm").hidden = false; $("#confirm").scrollIntoView({block:"center"});
+  $("#c-list").replaceChildren(...rows.flatMap(([k, val]) => [Object.assign(document.createElement("dt"), { textContent: k }), Object.assign(document.createElement("dd"), { textContent: val })]));
+  $("#c-wa").href = waLink(["Hi! I'd like an instant quote.", "", ...rows.map(([k, val]) => `*${k}:* ${val}`), "", `Rough estimate: ${$("#est-main").textContent}`, leadId ? `Ref: ${leadId.slice(0, 8)}` : ""].join("\n").trim());
+  buildNext(leadId, v, note);
+  form.hidden = true; $("#confirm").hidden = false; $("#confirm").focus(); $("#confirm").scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
+  btn.disabled = false; btn.textContent = "Get my quote"; busy = false;
 });
 const showForm = () => { form.hidden = false; $("#confirm").hidden = true; };
 $("#c-edit").onclick = showForm;
 
-// ===== scroll reveal =====
-const io = "IntersectionObserver" in window ? new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add("in"); io.unobserve(x.target); } }), {threshold:.12}) : null;
-$$(".reveal").forEach(r => io ? io.observe(r) : r.classList.add("in"));
+// ===== post-lead funnel: free preview -> pay =====
+function buildNext(leadId, v, note) {
+  const box = $("#next"); box.replaceChildren(); box.hidden = true;
+  const status = () => { let p = $("p.status", box); if (!p) box.prepend(p = Object.assign(document.createElement("p"), { className: "status" })); p.replaceChildren(); return p; };
+  const say = (txt, spin) => { const p = status(); if (spin) p.append(Object.assign(document.createElement("span"), { className: "spin" })); p.append(txt); };
+  const btn = (label, cls, fn) => { const b = Object.assign(document.createElement("button"), { className: "btn " + cls + " btn-block", type: "button", textContent: label }); b.onclick = fn; box.append(b); return b; };
+  const link = (label, href) => { const a = Object.assign(document.createElement("a"), { className: "btn btn-ghost btn-block", href, target: "_blank", rel: "noopener", textContent: label }); box.append(a); };
+  if (note) { box.hidden = false; say(note); return; }
+  if (!leadId) return;
+  box.hidden = false;
+  const pay = (kind, label) => async b => { b.disabled = true; try { const r = await api("/api/create-payment-link", { lead_id: leadId, kind, blueprint_id: BP_ID[v.destination] }); track("begin_checkout", { kind }); location.assign(r.payment_url); } catch { b.disabled = false; say("Couldn't open checkout. Please use WhatsApp above."); } };
+
+  if (v.service === "blueprint" && BP_ID[v.destination]) { say("Instant download after payment."); btn(`Buy ${v.destination} blueprint`, "btn-primary", e => pay("blueprint")(e.currentTarget)); return; }
+  if (v.service !== "blueprint" && HAS_KB.has(v.destination)) {
+    say("Want to see the quality first? Get a free preview of your itinerary.");
+    const go = btn("Generate my free preview", "btn-primary", async () => {
+      go.remove(); say("Building your itinerary. This takes about a minute…", true);
+      try {
+        const r = await api("/api/generate-preview", { lead_id: leadId });
+        if (r.status === "needs_manual") { say("We'll plan this one by hand and WhatsApp you shortly."); return; }
+        for (let i = 0; i < CFG.pollMax; i++) {
+          const s = await api(`/api/leads/${leadId}/status`);
+          if (s.preview_url) { say("Your preview is ready."); track("preview_ready"); link("Open preview PDF (Day 1)", s.preview_url); if (v.service === "custom") btn("Unlock the full plan · ₹2,499", "btn-primary", e => pay("custom_plan")(e.currentTarget)); return; }
+          if (s.status === "failed" || s.status === "needs_manual") { say("We'll finish this plan by hand and WhatsApp you shortly."); return; }
+          await sleep(CFG.pollMs);
+        }
+        say("Still working on it. We'll WhatsApp you when it's ready.");
+      } catch (err) { say(err.status === 429 ? "Too many requests right now. We'll WhatsApp you your plan." : err.status === 503 ? "We're busy right now. We'll WhatsApp you your plan." : "Couldn't build the preview here. We'll WhatsApp you your plan."); }
+    });
+  }
+}
 </script>
 </body>
 </html>
