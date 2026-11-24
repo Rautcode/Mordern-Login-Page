@@ -30,6 +30,7 @@ class Q:
     def in_(self, k, vs): self.filters.append(lambda r: r.get(k) in vs); return self
     def lt(self, k, v): self.filters.append(lambda r: r.get(k) is not None and r[k] < v); return self
     def gte(self, k, v): self.filters.append(lambda r: r.get(k) is not None and r[k] >= v); return self
+    def lte(self, k, v): self.filters.append(lambda r: r.get(k) is not None and r[k] <= v); return self
     def order(self, *_, **__): return self
     def range(self, *_): return self
     def limit(self, n): self._lim = n; return self

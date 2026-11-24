@@ -73,6 +73,8 @@ Real reviews and real faces are the biggest trust gap on the site. They have to 
   6. Delete the "Smoke Test" lead. Only then swap in live keys and a live webhook secret, and make one real small payment to yourself and refund it.
 - Upload the real blueprint PDFs to the `blueprints` bucket (`rajasthan.pdf`, `kerala.pdf`). Blueprint delivery is currently a Telegram message to
   you with a signed link to forward on WhatsApp. That is why the site says "sent to your WhatsApp after payment".
+- Optional: automatic WhatsApp acknowledgement and Day 1 preview via Meta's Cloud API (free to start with Meta's test number). Setup and limits are in
+  `travel-backend/README.md`, "WhatsApp". It needs a dedicated business number, so decide that before you register one.
 - Open the CI `audit` job output (pip-audit, npm audit) and fix anything high or critical.
 - Blueprint and custom-plan checkouts charge fixed server-side amounts and show them on the Razorpay page. Keep that, or switch those two products
   to quote-only.

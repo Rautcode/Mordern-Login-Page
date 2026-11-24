@@ -33,6 +33,13 @@ class Settings(BaseSettings):
     turnstile_secret: SecretStr | None = None  # set to require a Cloudflare Turnstile check on every new lead
     telegram_chat_id: str | None = None
 
+    # WhatsApp Cloud API (Meta). All four, or none: a half-configured webhook must never run. See README "WhatsApp".
+    whatsapp_access_token: SecretStr | None = None
+    whatsapp_phone_number_id: str | None = None
+    whatsapp_verify_token: SecretStr | None = None
+    whatsapp_app_secret: SecretStr | None = None
+    whatsapp_graph_version: str = Field(default="v23.0", pattern=r"^v\d{1,2}\.\d$")  # check Meta's changelog; versions expire
+
     whatsapp_number: str = "91XXXXXXXXXX"
     brand_name: str = "Ground-Tested Trips"
     custom_plan_price_inr: int = Field(default=2499, ge=1)
@@ -61,6 +68,15 @@ class Settings(BaseSettings):
         if len(key) < 32 or len(set(key)) < 12:
             raise ValueError("ADMIN_API_KEY must be at least 32 characters with real variety. Generate one: python -c \"import secrets; print(secrets.token_urlsafe(48))\"")
         return v
+
+    @model_validator(mode="after")
+    def _whatsapp_all_or_nothing(self):
+        vals = [self.whatsapp_access_token, self.whatsapp_phone_number_id, self.whatsapp_verify_token, self.whatsapp_app_secret]
+        got = [bool(v and (v.get_secret_value() if isinstance(v, SecretStr) else v)) for v in vals]
+        if any(got) and not all(got):
+            raise ValueError("WhatsApp Cloud API needs all of WHATSAPP_ACCESS_TOKEN, WHATSAPP_PHONE_NUMBER_ID, WHATSAPP_VERIFY_TOKEN and "
+                             "WHATSAPP_APP_SECRET (the app secret is what proves a webhook really came from Meta), or none of them")
+        return self
 
     @model_validator(mode="after")
     def _production_must_be_complete(self):

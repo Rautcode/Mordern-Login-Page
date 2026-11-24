@@ -11,7 +11,7 @@ from fastapi.responses import JSONResponse
 
 from app.config import get_settings
 from app.database import close_db, db, init_db
-from app.routers import admin, console, itineraries, leads, payments
+from app.routers import admin, console, itineraries, leads, payments, whatsapp
 from app.security import check_proxy_trust
 from app.services import notifier, pdf_generator, rag_loader
 
@@ -74,6 +74,7 @@ app.include_router(itineraries.router)
 app.include_router(payments.router)
 app.include_router(admin.router)
 app.include_router(console.router)
+app.include_router(whatsapp.router)
 
 
 @app.get("/health", tags=["ops"])
