@@ -72,6 +72,7 @@ Real reviews and real faces are the biggest trust gap on the site. They have to 
 
 ## Leads console
 Open `https://<your-api-domain>/admin` and sign in with `ADMIN_API_KEY`. It lists leads with their source (campaign tag or referrer),
-lets you message them on WhatsApp, change status, build a quote (preview first, then save) and re-send a paid delivery.
+lets you message them on WhatsApp, change status, build a quote (preview first, then save), re-send a paid delivery, and **Export CSV**. The export is exactly what the table shows,
+so search or filter first (choose "paid" to get only the people with a trip booked). It holds phone numbers: use it only to plan those trips, and do not add people to broadcast lists or groups without their consent.
 The page is served by the API itself (same origin, strict CSP, never indexed); the key lives only in that browser tab.
 Keep `ADMIN_API_KEY` long and random, and rotate it if anyone who knew it leaves.

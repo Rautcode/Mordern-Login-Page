@@ -60,7 +60,16 @@ const mk = (o) => ({ departure_city: 'Pune', travel_dates: 'Dec', group_size: '7
   assert.equal(await p.locator('#rows tr:nth-child(2) button:has-text("Re-send")').count(), 1, 'paid lead can be re-sent'); assert.equal(await p.locator('#rows tr:nth-child(1) button:has-text("Re-send")').count(), 0);
 
   // search + status filter
-  await p.fill('#q', 'meera'); assert.equal(await p.locator('#rows tr').count(), 1); await p.fill('#q', ''); await p.selectOption('#filter', 'paid'); assert.equal(await p.locator('#rows tr').count(), 1); await p.selectOption('#filter', '');
+  await p.fill('#q', 'meera'); assert.equal(await p.locator('#rows tr').count(), 1); await p.fill('#q', ''); await p.selectOption('#filter', 'paid'); assert.equal(await p.locator('#rows tr').count(), 1);
+  // export = exactly what is shown: filter to "paid" and only the booked traveller is in the file
+  assert.equal(await p.textContent('#export'), 'Export CSV (1)');
+  { const [d] = await Promise.all([p.waitForEvent('download'), p.click('#export')]); const csv = fs.readFileSync(await d.path(), 'utf8'); const lines = csv.trim().split('\r\n');
+    assert(/^leads-\d{4}-\d{2}-\d{2}\.csv$/.test(d.suggestedFilename())); assert(csv.startsWith('\uFEFF"When","Name","Phone"')); assert.equal(lines.length, 2, 'header plus the one paid lead'); assert(lines[1].includes('"Ravi"') && lines[1].includes('"direct"') === false && lines[1].includes('referral: l.instagram.com'));
+    assert((await p.textContent('#msg')).includes('customers') && (await p.textContent('#msg')).includes('Exported 1 lead')); }
+  await p.selectOption('#filter', ''); assert.equal(await p.textContent('#export'), 'Export CSV (3)');
+  { const [d] = await Promise.all([p.waitForEvent('download'), p.click('#export')]); const csv = fs.readFileSync(await d.path(), 'utf8'); assert.equal(csv.trim().split('\r\n').length, 4); assert(csv.includes('"919876543210"') && csv.includes('""window.__x=1""'), 'quotes inside cells are doubled'); }
+  const csvT = await p.evaluate(() => __console.toCsv([{ name: '=HYPERLINK("http://x","y")', phone: '919800000000', status: 'new', notes: 'a,b\nc', destination: '+1 call', service: '-2', departure_city: '@home', created_at: '2026-01-01T00:00:00Z' }]));
+  assert(csvT.includes('"\'=HYPERLINK(""http://x"",""y"")"') && csvT.includes('"\'+1 call"') && csvT.includes('"\'-2"') && csvT.includes('"\'@home"') && csvT.includes('"a,b\nc"'), 'formula starters neutralised, commas and newlines kept inside quotes');
 
   // status change sends the key + body; a failed save reverts and says why
   await p.selectOption('#rows tr:nth-child(1) select', 'needs_manual'); await p.waitForFunction(() => document.querySelector('#msg').textContent.includes('updated'));

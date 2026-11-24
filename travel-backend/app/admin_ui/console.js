@@ -27,8 +27,14 @@ const summarize = rows => {
 const MODE = { train: "train", flight: "flight", road: "road trip", flexible: "mode: advise me" };
 const brief = l => [MODE[l.travel_mode], l.trip_length && l.trip_length + " days", l.group_type, l.stay_pref && "stay: " + l.stay_pref, l.interests && "likes " + l.interests].filter(Boolean).join(" · ");
 const roundingOf = o => o.total - o.subtotal - o.gst;   // the per-person split is rounded up, so the lines can sum to a little less than the total
+// ---- CSV export: every cell quoted, and a leading = + - @ neutralised (a stranger's name must never run as a spreadsheet formula) ----
+const CSV_COLS = [["created_at", "When"], ["name", "Name"], ["phone", "Phone"], ["destination", "Destination"], ["service", "Service"], ["status", "Status"], ["departure_city", "From"],
+  ["travel_dates", "Travel dates"], ["group_size", "Group size"], ["budget", "Budget band (thousand rupees per person)"], ["travel_mode", "Travel by"], ["trip_length", "Trip length (days)"],
+  ["group_type", "Group type"], ["stay_pref", "Stay"], ["interests", "Interests"], ["notes", "Notes"]];
+const csvCell = v => { let s = v == null ? "" : String(v); if (/^[=+\-@\t\r]/.test(s)) s = "'" + s; return '"' + s.replace(/"/g, '""') + '"'; };
+const toCsv = list => [[...CSV_COLS.map(c => c[1]), "Source"], ...list.map(l => [...CSV_COLS.map(([k]) => l[k]), sourceOf(l)])].map(r => r.map(csvCell).join(",")).join("\r\n") + "\r\n";
 const matches = (l, q) => !q || [l.name, l.phone, l.destination].some(v => String(v || "").toLowerCase().includes(q.toLowerCase()));
-window.__console = { sourceOf, waLink, summarize, matches, brief, roundingOf };   // test hook; read-only helpers, no secrets
+window.__console = { sourceOf, waLink, summarize, matches, brief, roundingOf, toCsv };   // test hook; read-only helpers, no secrets
 
 // ---- state + DOM ----
 const $ = s => document.querySelector(s);
@@ -51,9 +57,10 @@ async function api(path, opts = {}) {
   return data;
 }
 
+const shown = () => { const q = $("#q").value.trim(), f = $("#filter").value; return rows.filter(l => matches(l, q) && (!f || l.status === f)); };   // what the table shows is what the export contains
 function render() {
-  const q = $("#q").value.trim(), f = $("#filter").value;
-  const vis = rows.filter(l => matches(l, q) && (!f || l.status === f));
+  const vis = shown();
+  $("#export").textContent = `Export CSV (${vis.length})`; $("#export").disabled = !vis.length;
   const body = $("#rows"); body.replaceChildren();
   for (const l of vis) {
     const sel = el("select", { "aria-label": "Status for " + l.name });
@@ -139,6 +146,12 @@ $("#quote-close").onclick = () => $("#quote").close();
 $("#filter").append(...STATUSES.map(s => el("option", { value: s, textContent: s.replace("_", " ") })));
 $("#filter").onchange = $("#q").oninput = render;
 $("#refresh").onclick = () => load(false);
+$("#export").onclick = () => {
+  const list = shown(); if (!list.length) return;
+  const url = URL.createObjectURL(new Blob(["\uFEFF" + toCsv(list)], { type: "text/csv;charset=utf-8" }));   // BOM so Excel reads the rupee sign and Devanagari correctly
+  const a = el("a", { href: url, download: `leads-${new Date().toISOString().slice(0, 10)}.csv` }); document.body.append(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(url), 1000);
+  say(`Exported ${list.length} lead${list.length === 1 ? "" : "s"}${$("#more").hidden ? "" : ". More leads exist: press Load more first to include them"}. The file holds customers' phone numbers: use it only to plan their trips.`, true);
+};
 $("#more").onclick = () => load(true);
 $("#signout").onclick = () => signOut("");
 $("#login-form").onsubmit = e => { e.preventDefault(); key = $("#key").value.trim(); if (!key) return; try { sessionStorage.setItem(KEYNAME, key); } catch {} $("#login-msg").textContent = ""; load(false); };
