@@ -6,7 +6,7 @@
     "updated": "24 November 2026",
     "sections": [
       {"h": "Who we are", "p": ["[BRAND_NAME] is a trip-planning business run by [LEGAL_NAME] as a sole proprietorship, based at [BUSINESS_ADDRESS]. You can reach us on WhatsApp at +91XXXXXXXXXX or by email at [CONTACT_EMAIL]."]},
-      {"h": "What we do", "p": ["We design group trips and, when you ask us to and we confirm it in writing, arrange bookings with independent providers such as hotels, drivers and activity operators. We are an intermediary: the providers deliver the services, and their own terms also apply to you."]},
+      {"h": "What we do", "p": ["We design custom trips for solo travellers, couples, families and groups and, when you ask us to and we confirm it in writing, arrange bookings with independent providers such as hotels, drivers and activity operators. We are an intermediary: the providers deliver the services, and their own terms also apply to you."]},
       {"h": "What you can buy", "ul": [
         "Ready blueprint: a ready-made route PDF that we send to your WhatsApp after payment.",
         "Custom plan: a day-by-day plan built around your brief. We show Day 1 free where we can, deliver within 24 hours of receiving everything we need, and include one free revision.",
@@ -33,7 +33,7 @@
   {
     "slug": "refunds",
     "title": "Refund and Cancellation Policy",
-    "description": "How refunds and cancellations work at [BRAND_NAME] for ready blueprints, custom plans and booked group trips.",
+    "description": "How refunds and cancellations work at [BRAND_NAME] for ready blueprints, custom plans and booked trips.",
     "updated": "24 November 2026",
     "sections": [
       {"h": "The short version", "p": ["Refunds depend on what you bought and how far along we are. The rules below apply unless your written quote says something different. For a booked trip, the quote always wins."]},

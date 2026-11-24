@@ -94,11 +94,15 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 .nav>.logo{min-width:0}
 @media(max-width:480px){.nav-cta .wa-link{display:none}.logo{font-size:1.1rem;gap:7px}.logo svg{width:28px;height:28px}.nav-cta{gap:8px}.nav-cta .btn{font-size:.85rem;padding:8px 14px}}
 
-/* hero: the scenery is the design */
-.hero{padding:0;min-height:max(640px,min(100svh,920px));display:flex;flex-direction:column;overflow:hidden;background:linear-gradient(#F8E3BF,#F2B98A 70%,#E9945F);isolation:isolate}
-.scene{position:absolute;inset:0;z-index:-1}
-.scene svg{width:100%;height:100%;display:block}
-.hero-in{padding:136px 0 clamp(190px,17vw,250px);position:relative}
+/* hero: words on the left, our own trip photos on the right */
+.hero{padding:0;overflow:hidden;background:linear-gradient(#F8E3BF,#F2B98A 80%,#EFA877);isolation:isolate}
+.hero-in{padding:120px 0 72px;position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:32px;align-items:center}
+.hero-photos{position:relative;min-height:590px}
+.hpic{position:absolute;margin:0;background:#fff;padding:10px 10px 14px;box-shadow:0 16px 32px -12px rgba(31,36,33,.5);width:min(250px,52%)}
+.hpic::before{content:"";position:absolute;top:-11px;left:50%;width:78px;height:22px;margin-left:-39px;background:rgba(212,163,89,.55);transform:rotate(-3deg)}
+.hpic img{display:block;width:100%;height:auto;aspect-ratio:1/.85;object-fit:cover}
+.hpic figcaption{font:600 1.2rem var(--hand);color:var(--ink);text-align:center;margin-top:6px}
+.hpic.a{left:0;top:0;transform:rotate(-5deg)}.hpic.b{right:0;top:120px;transform:rotate(4deg)}.hpic.c{left:3%;top:310px;transform:rotate(-2deg)}
 .stamp-line{display:inline-flex;align-items:center;gap:10px;font:500 .78rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--forest);border:1.5px dashed var(--forest);padding:6px 14px;border-radius:6px;background:rgba(255,252,246,.5)}
 .hero h1{font-size:clamp(2.1rem,4.1vw,3.6rem);max-width:22ch;margin:18px 0 16px;text-wrap:balance}
 .hero p.sub{font-size:1.1rem;color:#33402f;max-width:52ch}
@@ -108,18 +112,11 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 .chip{font:700 .9rem var(--sans);padding:9px 16px;border-radius:999px;border:1.5px solid var(--forest);background:rgba(255,252,246,.72);color:var(--forest);cursor:pointer;transition:.15s}
 .chip:hover{background:var(--forest);color:#fff;transform:translateY(-2px) rotate(-1.5deg)}
 .proof{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:18px;font:500 .78rem var(--mono);letter-spacing:.04em;color:var(--forest)}.proof b{color:var(--terra-d)}
-.cloud{animation:drift 90s linear infinite}.cloud.b{animation-duration:130s;animation-delay:-40s}
-.van{animation:drive 46s linear infinite}
-.sun-glow{animation:glow 6s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
-@keyframes drift{from{transform:translateX(-260px)}to{transform:translateX(1700px)}}
-@keyframes drive{from{transform:translateX(-220px)}to{transform:translateX(1700px)}}
-@keyframes glow{50%{opacity:.55;transform:scale(1.06)}}
 
-@media(max-width:760px){
-  .hero{min-height:0}
-  .hero-in{padding:140px 0 8px}
-  .scene{position:relative;inset:auto;order:2;height:clamp(250px,72vw,340px);margin-top:6px}
-  .birds{display:none}
+@media(max-width:900px){
+  .hero-in{grid-template-columns:1fr;padding:132px 0 36px;gap:18px}
+  .hero-photos{min-height:300px;max-width:440px;width:100%;margin:0 auto}
+  .hpic{width:min(210px,54%)}.hpic.a{top:0}.hpic.b{top:60px}.hpic.c{display:none}
 }
 /* trust strip */
 .strip{padding:0;margin-top:-1px;background:var(--forest);color:#F5EEE1}
@@ -389,7 +386,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
 .js .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none;transition:none}
-  .cloud,.van,.sun-glow,.fab a,.spin{animation:none}.btn,.chip,.card{transition:none}
+  .fab a,.spin{animation:none}.btn,.chip,.card{transition:none}
 }
 
 .rp{padding:132px 0 56px}.rp h1{font-size:clamp(2rem,4.4vw,3.3rem);max-width:24ch;margin:14px 0}.rp .grid{display:grid;grid-template-columns:1fr minmax(240px,340px);gap:44px;align-items:start}
@@ -437,7 +434,7 @@ body{padding-bottom:0}footer{padding-top:70px}
     <h1>Jaipur, Jaisalmer &amp; Jodhpur: a group trip where every hour fits real opening times</h1>
     <p class="lead">This is the Rajasthan plan we designed for a group of 10 (24–29 October), checked against live IRCTC availability and current operating hours. We publish it with its hard deadlines and the one afternoon we had to fix, because that is what a plan is worth.</p>
     <dl class="glance"><div><dt>Days</dt><dd>6 days, 5 nights</dd></div><div><dt>Tested with</dt><dd>10 people, 24–29 Oct</dd></div><div><dt>On the ground</dt><dd>2 AC Tempo Travellers (12-seater)</dd></div><div><dt>Trains</dt><dd>3 legs, all daily</dd></div></dl>
-    <div class="cta-row"><a class="btn btn-primary" href="../?trip=rajasthan#planner">Plan this trip for my group</a><a class="btn btn-wa" href="https://wa.me/91XXXXXXXXXX?text=Hi%21%20I%27d%20like%20to%20plan%20the%20Rajasthan%20trip%20%28Jaipur%2C%20Jaisalmer%2C%20Jodhpur%29%20for%20our%20group." target="_blank" rel="noopener">Ask on WhatsApp</a></div>
+    <div class="cta-row"><a class="btn btn-primary" href="../?trip=rajasthan#planner">Plan this trip for me</a><a class="btn btn-wa" href="https://wa.me/91XXXXXXXXXX?text=Hi%21%20I%27d%20like%20to%20plan%20the%20Rajasthan%20trip%20%28Jaipur%2C%20Jaisalmer%2C%20Jodhpur%29%20for%20our%20group." target="_blank" rel="noopener">Ask on WhatsApp</a></div>
   </div>
   <figure><img src="../img/real-rajasthan-cover.webp" width="800" height="1130" alt="Cover page of the Rajasthan plan we designed: Mumbai to Jaipur, Jaisalmer, Jodhpur and back to Pune, 24 to 29 October, 10 people, 2 Tempo Travellers, 5 nights, 3 train legs" fetchpriority="high"><figcaption>A page from the real plan</figcaption></figure></div>
 </div></section>
@@ -464,7 +461,7 @@ body{padding-bottom:0}footer{padding-top:70px}
 </div></section>
 
 <section class="cta-band"><div class="wrap">
-  <h2>Want this fitted to your dates and group?</h2>
+  <h2>Want this fitted to your dates and who is travelling?</h2>
   <p>Free Day 1 preview, a custom quote in 24 hours. Every plan is built around your budget and requirements.</p>
   <div class="cta-row"><a class="btn btn-primary" href="../?trip=rajasthan#planner">Start planning</a><a class="btn btn-wa" href="https://wa.me/91XXXXXXXXXX?text=Hi%21%20I%27d%20like%20to%20plan%20the%20Rajasthan%20trip%20%28Jaipur%2C%20Jaisalmer%2C%20Jodhpur%29%20for%20our%20group." target="_blank" rel="noopener">WhatsApp us</a></div>
 </div></section>
@@ -472,7 +469,7 @@ body{padding-bottom:0}footer{padding-top:70px}
 <footer>
   <div class="wrap">
     <div class="f-grid">
-      <div><a href="../" class="logo">[BRAND_NAME]</a><p style="margin-top:12px;max-width:42ch">Ground-Tested Trips. Zero Guesswork. Online-first trip planning for group travel from Pune and PCMC, Maharashtra.</p></div>
+      <div><a href="../" class="logo">[BRAND_NAME]</a><p style="margin-top:12px;max-width:42ch">Ground-Tested Trips. Zero Guesswork. Online-first trip planning and booking for travellers across India. Based in Pune, Maharashtra.</p></div>
       <div><h3>More</h3><ul><li><a href="../#routes">All proven routes</a></li><li><a href="../#services">Services</a></li><li><a href="../#faq">FAQ</a></li></ul></div>
       <div><h3>Connect</h3><ul><li><a href="https://www.instagram.com/[INSTAGRAM_HANDLE]" target="_blank" rel="noopener">Instagram @[INSTAGRAM_HANDLE]</a></li><li><a href="https://wa.me/91XXXXXXXXXX?text=Hi%21%20I%27d%20like%20to%20plan%20the%20Rajasthan%20trip%20%28Jaipur%2C%20Jaisalmer%2C%20Jodhpur%29%20for%20our%20group." target="_blank" rel="noopener">WhatsApp us</a></li></ul></div>
     </div>

@@ -4,13 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Refund and Cancellation Policy | [BRAND_NAME]</title>
-<meta name="description" content="How refunds and cancellations work at [BRAND_NAME] for ready blueprints, custom plans and booked group trips.">
+<meta name="description" content="How refunds and cancellations work at [BRAND_NAME] for ready blueprints, custom plans and booked trips.">
 <link rel="canonical" href="https://YOUR-DOMAIN.com/refunds/">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta name="theme-color" content="#F5EEE1">
 <link rel="icon" href="../favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article"><meta property="og:locale" content="en_IN"><meta property="og:site_name" content="[BRAND_NAME]">
-<meta property="og:title" content="Refund and Cancellation Policy"><meta property="og:description" content="How refunds and cancellations work at [BRAND_NAME] for ready blueprints, custom plans and booked group trips.">
+<meta property="og:title" content="Refund and Cancellation Policy"><meta property="og:description" content="How refunds and cancellations work at [BRAND_NAME] for ready blueprints, custom plans and booked trips.">
 <meta property="og:url" content="https://YOUR-DOMAIN.com/refunds/"><meta property="og:image" content="https://YOUR-DOMAIN.com/og-image.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="preload" as="font" type="font/woff2" crossorigin href="../fonts/young-serif-latin.woff2">
@@ -91,11 +91,15 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 .nav>.logo{min-width:0}
 @media(max-width:480px){.nav-cta .wa-link{display:none}.logo{font-size:1.1rem;gap:7px}.logo svg{width:28px;height:28px}.nav-cta{gap:8px}.nav-cta .btn{font-size:.85rem;padding:8px 14px}}
 
-/* hero: the scenery is the design */
-.hero{padding:0;min-height:max(640px,min(100svh,920px));display:flex;flex-direction:column;overflow:hidden;background:linear-gradient(#F8E3BF,#F2B98A 70%,#E9945F);isolation:isolate}
-.scene{position:absolute;inset:0;z-index:-1}
-.scene svg{width:100%;height:100%;display:block}
-.hero-in{padding:136px 0 clamp(190px,17vw,250px);position:relative}
+/* hero: words on the left, our own trip photos on the right */
+.hero{padding:0;overflow:hidden;background:linear-gradient(#F8E3BF,#F2B98A 80%,#EFA877);isolation:isolate}
+.hero-in{padding:120px 0 72px;position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:32px;align-items:center}
+.hero-photos{position:relative;min-height:590px}
+.hpic{position:absolute;margin:0;background:#fff;padding:10px 10px 14px;box-shadow:0 16px 32px -12px rgba(31,36,33,.5);width:min(250px,52%)}
+.hpic::before{content:"";position:absolute;top:-11px;left:50%;width:78px;height:22px;margin-left:-39px;background:rgba(212,163,89,.55);transform:rotate(-3deg)}
+.hpic img{display:block;width:100%;height:auto;aspect-ratio:1/.85;object-fit:cover}
+.hpic figcaption{font:600 1.2rem var(--hand);color:var(--ink);text-align:center;margin-top:6px}
+.hpic.a{left:0;top:0;transform:rotate(-5deg)}.hpic.b{right:0;top:120px;transform:rotate(4deg)}.hpic.c{left:3%;top:310px;transform:rotate(-2deg)}
 .stamp-line{display:inline-flex;align-items:center;gap:10px;font:500 .78rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--forest);border:1.5px dashed var(--forest);padding:6px 14px;border-radius:6px;background:rgba(255,252,246,.5)}
 .hero h1{font-size:clamp(2.1rem,4.1vw,3.6rem);max-width:22ch;margin:18px 0 16px;text-wrap:balance}
 .hero p.sub{font-size:1.1rem;color:#33402f;max-width:52ch}
@@ -105,18 +109,11 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 .chip{font:700 .9rem var(--sans);padding:9px 16px;border-radius:999px;border:1.5px solid var(--forest);background:rgba(255,252,246,.72);color:var(--forest);cursor:pointer;transition:.15s}
 .chip:hover{background:var(--forest);color:#fff;transform:translateY(-2px) rotate(-1.5deg)}
 .proof{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:18px;font:500 .78rem var(--mono);letter-spacing:.04em;color:var(--forest)}.proof b{color:var(--terra-d)}
-.cloud{animation:drift 90s linear infinite}.cloud.b{animation-duration:130s;animation-delay:-40s}
-.van{animation:drive 46s linear infinite}
-.sun-glow{animation:glow 6s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
-@keyframes drift{from{transform:translateX(-260px)}to{transform:translateX(1700px)}}
-@keyframes drive{from{transform:translateX(-220px)}to{transform:translateX(1700px)}}
-@keyframes glow{50%{opacity:.55;transform:scale(1.06)}}
 
-@media(max-width:760px){
-  .hero{min-height:0}
-  .hero-in{padding:140px 0 8px}
-  .scene{position:relative;inset:auto;order:2;height:clamp(250px,72vw,340px);margin-top:6px}
-  .birds{display:none}
+@media(max-width:900px){
+  .hero-in{grid-template-columns:1fr;padding:132px 0 36px;gap:18px}
+  .hero-photos{min-height:300px;max-width:440px;width:100%;margin:0 auto}
+  .hpic{width:min(210px,54%)}.hpic.a{top:0}.hpic.b{top:60px}.hpic.c{display:none}
 }
 /* trust strip */
 .strip{padding:0;margin-top:-1px;background:var(--forest);color:#F5EEE1}
@@ -386,7 +383,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
 .js .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none;transition:none}
-  .cloud,.van,.sun-glow,.fab a,.spin{animation:none}.btn,.chip,.card{transition:none}
+  .fab a,.spin{animation:none}.btn,.chip,.card{transition:none}
 }
 
 .rp{padding:132px 0 56px}.rp h1{font-size:clamp(2rem,4.4vw,3.3rem);max-width:24ch;margin:14px 0}.rp .grid{display:grid;grid-template-columns:1fr minmax(240px,340px);gap:44px;align-items:start}
@@ -437,7 +434,7 @@ body{padding-bottom:0}footer{padding-top:70px}
 <footer>
   <div class="wrap">
     <div class="f-grid">
-      <div><a href="../" class="logo">[BRAND_NAME]</a><p style="margin-top:12px;max-width:42ch">Ground-Tested Trips. Zero Guesswork. Online-first trip planning for group travel from Pune and PCMC, Maharashtra.</p></div>
+      <div><a href="../" class="logo">[BRAND_NAME]</a><p style="margin-top:12px;max-width:42ch">Ground-Tested Trips. Zero Guesswork. Online-first trip planning and booking for travellers across India. Based in Pune, Maharashtra.</p></div>
       <div><h3>More</h3><ul><li><a href="../#routes">All proven routes</a></li><li><a href="../#services">Services</a></li><li><a href="../#faq">FAQ</a></li></ul></div>
       <div><h3>Connect</h3><ul><li><a href="https://www.instagram.com/[INSTAGRAM_HANDLE]" target="_blank" rel="noopener">Instagram @[INSTAGRAM_HANDLE]</a></li><li><a href="https://wa.me/91XXXXXXXXXX?text=Hi%21%20I%20have%20a%20question." target="_blank" rel="noopener">WhatsApp us</a></li></ul></div>
     </div>

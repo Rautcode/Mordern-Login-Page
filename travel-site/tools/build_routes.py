@@ -65,7 +65,7 @@ def footer(wa):
     return f"""<footer>
   <div class="wrap">
     <div class="f-grid">
-      <div><a href="../" class="logo">[BRAND_NAME]</a><p style="margin-top:12px;max-width:42ch">Ground-Tested Trips. Zero Guesswork. Online-first trip planning for group travel from Pune and PCMC, Maharashtra.</p></div>
+      <div><a href="../" class="logo">[BRAND_NAME]</a><p style="margin-top:12px;max-width:42ch">Ground-Tested Trips. Zero Guesswork. Online-first trip planning and booking for travellers across India. Based in Pune, Maharashtra.</p></div>
       <div><h3>More</h3><ul><li><a href="../#routes">All proven routes</a></li><li><a href="../#services">Services</a></li><li><a href="../#faq">FAQ</a></li></ul></div>
       <div><h3>Connect</h3><ul><li><a href="https://www.instagram.com/[INSTAGRAM_HANDLE]" target="_blank" rel="noopener">Instagram @[INSTAGRAM_HANDLE]</a></li><li><a href="{wa}" target="_blank" rel="noopener">WhatsApp us</a></li></ul></div>
     </div>
@@ -180,7 +180,7 @@ def page(r, css, attr, logo):
     <h1>{E(r["h1"])}</h1>
     <p class="lead">{E(r["intro"])}</p>
     <dl class="glance">{"".join(f"<div><dt>{E(k)}</dt><dd>{E(v)}</dd></div>" for k, v in r["glance"])}</dl>
-    <div class="cta-row"><a class="btn btn-primary" href="{plan}">Plan this trip for my group</a><a class="btn btn-wa" href="{wa}" target="_blank" rel="noopener">Ask on WhatsApp</a></div>
+    <div class="cta-row"><a class="btn btn-primary" href="{plan}">Plan this trip for me</a><a class="btn btn-wa" href="{wa}" target="_blank" rel="noopener">Ask on WhatsApp</a></div>
   </div>
   <figure><img src="{im["src"]}" width="{im["w"]}" height="{im["h"]}" alt="{E(im["alt"])}" fetchpriority="high"><figcaption>{E(im["cap"])}</figcaption></figure></div>
 </div></section>
@@ -204,7 +204,7 @@ def page(r, css, attr, logo):
 </div></section>
 
 <section class="cta-band"><div class="wrap">
-  <h2>Want this fitted to your dates and group?</h2>
+  <h2>Want this fitted to your dates and who is travelling?</h2>
   <p>Free Day 1 preview, a custom quote in 24 hours. Every plan is built around your budget and requirements.</p>
   <div class="cta-row"><a class="btn btn-primary" href="{plan}">Start planning</a><a class="btn btn-wa" href="{wa}" target="_blank" rel="noopener">WhatsApp us</a></div>
 </div></section>
