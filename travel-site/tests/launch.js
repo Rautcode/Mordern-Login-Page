@@ -6,7 +6,7 @@ const { chromium } = require('playwright'); const assert = require('assert');
 const { spawnSync } = require('child_process'); const http = require('http'); const fs = require('fs'); const os = require('os'); const path = require('path'); const crypto = require('crypto');
 const ROOT = path.join(__dirname, '..'); const run = (...a) => spawnSync('python3', [path.join(ROOT, 'tools', 'personalize.py'), ...a], { encoding: 'utf8' });
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'launch-')); const out = path.join(tmp, 'dist');
-const brand = { brand: 'Test & Co', domain: 'trips.example.org', whatsapp: '919876543210', instagram: 'test.handle', founder: 'Asha Rao', udyam: 'UDYAM-MH-12-3456789', api_base: 'https://api.example.org' };
+const brand = { brand: 'Test & Co', domain: 'trips.example.org', whatsapp: '919876543210', instagram: 'test.handle', founder: 'Asha Rao', legal_name: 'Asha Rao', email: 'hello@trips.example.org', address: '12 Example Road, Pune, Maharashtra 411001', legal_reviewed: true, udyam: 'UDYAM-MH-12-3456789', api_base: 'https://api.example.org' };
 const bf = path.join(tmp, 'brand.json'); fs.writeFileSync(bf, JSON.stringify(brand));
 
 // 1. build
@@ -24,7 +24,7 @@ assert(csp.includes("frame-ancestors 'none'") && /script-src 'self' 'sha256-/.te
 
 // 2. personaliser refuses bad input
 const bad = (patch, why) => { const f = path.join(tmp, 'bad.json'); fs.writeFileSync(f, JSON.stringify({ ...brand, ...patch })); const x = run(f, '--out', path.join(tmp, 'bad-out')); assert.notEqual(x.status, 0, why); };
-bad({ domain: 'https://x.com/' }, 'scheme in domain'); bad({ whatsapp: '+91 98765' }, 'bad whatsapp'); bad({ founder: '' }, 'missing founder'); bad({ api_base: 'http://insecure.example' }, 'http api'); bad({ udyam: 'nope' }, 'bad udyam');
+bad({ domain: 'https://x.com/' }, 'scheme in domain'); bad({ legal_reviewed: false }, 'legal pages must be reviewed'); bad({ legal_reviewed: undefined }, 'review flag missing'); bad({ email: 'not-an-email' }, 'bad email'); bad({ address: '' }, 'missing address'); bad({ whatsapp: '+91 98765' }, 'bad whatsapp'); bad({ founder: '' }, 'missing founder'); bad({ api_base: 'http://insecure.example' }, 'http api'); bad({ udyam: 'nope' }, 'bad udyam');
 assert.notEqual(run(path.join(ROOT, 'tools', 'brand.example.json'), '--out', path.join(tmp, 'ex')).status, 0, 'example values rejected');
 fs.mkdirSync(path.join(tmp, 'precious')); fs.writeFileSync(path.join(tmp, 'precious', 'keep.txt'), 'x');
 assert.notEqual(run(bf, '--out', path.join(tmp, 'precious')).status, 0, 'refuses to overwrite a folder it did not create'); assert(fs.existsSync(path.join(tmp, 'precious', 'keep.txt')));
@@ -60,9 +60,9 @@ const srv = http.createServer((q, s) => { let f = path.join(out, decodeURICompon
   assert((await p.getAttribute('#tel', 'href')) === 'tel:+919876543210');
   // real flows under the CSP: popup, drawer, planner -> backend funnel (fetch allowed to api_base only)
   await p.evaluate(() => document.querySelector('[data-route=goa]').click()); await p.keyboard.press('Escape');
-  await p.evaluate(() => document.querySelector('[data-bp=goa]').click()); await p.keyboard.press('Escape');
+  await p.evaluate(() => document.querySelector('[data-bp=kerala]').click()); await p.keyboard.press('Escape');
   await p.evaluate(() => document.querySelector('#planner').scrollIntoView());
-  await p.click('label.pk:has(input[name=dest][value="Goa"])'); await p.fill('#from', 'Pune'); await p.fill('#when', 'Dec'); await p.click('label.pk:has(input[name=travel][value="train"])'); await p.click('#submit');
+  await p.click('label.pk:has(input[name=dest][value="Kerala"])'); await p.fill('#from', 'Pune'); await p.fill('#when', 'Dec'); await p.click('label.pk:has(input[name=travel][value="train"])'); await p.click('#submit');
   await p.click('label.pk:has(input[name=group][value="3-6"])'); await p.click('label.pk:has(input[name=budget][value="5-10"])'); await p.click('#submit');
   await p.fill('#name', 'Asha'); await p.fill('#phone', '9876543210'); await p.check('#consent'); await p.click('#submit'); await p.waitForSelector('#confirm:not([hidden])');
   assert(await p.locator('#next button').count() >= 1, 'funnel reached the API through the CSP'); await p.waitForTimeout(500);
@@ -71,6 +71,7 @@ const srv = http.createServer((q, s) => { let f = path.join(out, decodeURICompon
   assert((await p.evaluate(() => window.__csp || [])).some(v => v.startsWith('script-src')), 'and the browser reports it');
   const nf = await p.goto(base + '/does-not-exist'); assert.equal(nf.status(), 404); assert((await p.textContent('h1')).includes("isn't on the map")); assert((await p.getAttribute('a.b', 'href')).startsWith('https://wa.me/919876543210'));
   // route landing page: shipped, personalised, runs under the strict CSP, hands the destination + campaign to the planner
+  for (const L of JSON.parse(fs.readFileSync(path.join(ROOT, 'tools', 'legal.json'), 'utf8'))) { const pg = fs.readFileSync(path.join(out, L.slug, 'index.html'), 'utf8'); assert(!/\[[A-Z][A-Z_]{3,}\]|YOUR-DOMAIN|91XXXXXXXXXX/.test(pg), `${L.slug}: no placeholders left`); assert(pg.includes('hello@trips.example.org') && pg.includes('919876543210'), `${L.slug}: contact details filled in`); if (L.slug !== 'refunds') assert(pg.includes('Asha Rao') && pg.includes('12 Example Road, Pune'), `${L.slug}: the operator's legal name and address are filled in`); }
   for (const R of JSON.parse(fs.readFileSync(path.join(ROOT, 'tools', 'routes.json'), 'utf8'))) { assert(fs.existsSync(path.join(out, R.slug, 'index.html')), `${R.slug} shipped in the build`); assert(fs.readFileSync(path.join(out, R.slug, 'index.html'), 'utf8').includes(`https://trips.example.org/${R.slug}/`), `${R.slug} canonical is personalised`); }
   { const v0 = violations.length; await p.goto(base + '/rajasthan-trip-from-pune/?utm_source=ig'); await p.waitForLoadState('networkidle');
     assert((await p.title()).includes('Test & Co')); assert.equal(await p.getAttribute('link[rel=canonical]', 'href'), 'https://trips.example.org/rajasthan-trip-from-pune/');

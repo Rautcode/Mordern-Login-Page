@@ -11,6 +11,7 @@ python3 -m http.server 8000      # then open http://localhost:8000
 | Path | Purpose |
 |---|---|
 | `index.html` | The whole home page: hero, routes, pricing, 3-step planner, FAQ. Placeholders like `[BRAND_NAME]` and `91XXXXXXXXXX` are filled at build time |
+| `terms/`, `refunds/`, `privacy/` | Generated from `tools/legal.json`. Drafts written from what the software does: read them, then set `legal_reviewed` in `brand.json` (the build refuses to run without it) |
 | `rajasthan-trip-from-pune/`, `kerala-trip-from-pune/` | Generated route landing pages. Do not edit by hand: run `python3 tools/build_routes.py` after changing `tools/routes.json` or the page styles. A new route is one entry in `routes.json` |
 | `tools/personalize.py` | Turns the site into a deployable `dist/` with your brand details and a strict CSP |
 | `_headers.template` | Security and cache headers (Cloudflare Pages and Netlify read the generated `_headers`) |
@@ -20,7 +21,7 @@ python3 -m http.server 8000      # then open http://localhost:8000
 ## Launch in three commands
 
 ```bash
-cp tools/brand.example.json brand.json   # edit: brand, domain, whatsapp, instagram, founder, api_base
+cp tools/brand.example.json brand.json   # edit: brand, domain, whatsapp, instagram, founder, legal_name, email, address, legal_reviewed, api_base
 npm run build                            # regenerates route pages, then writes ./dist
 # upload ./dist as a static site, then add the site origin to the backend's CORS_ORIGINS
 ```

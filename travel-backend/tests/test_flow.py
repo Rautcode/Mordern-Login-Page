@@ -146,7 +146,7 @@ def test_quick_blueprint_checkout_with_minimal_lead(env):
     assert r.status_code == 201, r.text
     lid = r.json()["lead_id"]
     assert any("New lead" in a and "Asha" in a for a in env.alerts)            # alert copes with the missing fields
-    p = c.post("/api/create-payment-link", json={"lead_id": lid, "kind": "blueprint", "blueprint_id": "goa"})
+    p = c.post("/api/create-payment-link", json={"lead_id": lid, "kind": "blueprint", "blueprint_id": "kerala"})
     assert p.status_code == 200 and p.json()["amount_inr"] == 699
     assert c.post("/api/leads", json={"name": "Asha", "phone": "9876543210", "destination": "Goa", "service": "custom"}).status_code == 422
 
@@ -167,7 +167,7 @@ def test_lead_source_is_stored_and_alerted(env):
 def test_underpayment_is_not_marked_paid(env):
     c = env.c
     lid = c.post("/api/leads", json={**LEAD, "service": "blueprint"}).json()["lead_id"]
-    c.post("/api/create-payment-link", json={"lead_id": lid, "kind": "blueprint", "blueprint_id": "goa"})
+    c.post("/api/create-payment-link", json={"lead_id": lid, "kind": "blueprint", "blueprint_id": "kerala"})
     link_id = env.db.tables["payments"][0]["rp_link_id"]
     body = json.dumps({"event": "payment_link.paid", "payload": {"payment_link": {"entity": {"id": link_id, "amount_paid": 100}}}}).encode()
     assert c.post("/api/webhooks/razorpay", content=body, headers=sign(body)).json() == {"status": "underpaid"}

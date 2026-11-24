@@ -1,0 +1,91 @@
+[
+  {
+    "slug": "terms",
+    "title": "Terms of Service",
+    "description": "The terms for planning and booking trips with [BRAND_NAME]: what we do, how quotes and payments work, and what we are and are not responsible for.",
+    "updated": "24 November 2026",
+    "sections": [
+      {"h": "Who we are", "p": ["[BRAND_NAME] is a trip-planning business run by [LEGAL_NAME] as a sole proprietorship, based at [BUSINESS_ADDRESS]. You can reach us on WhatsApp at +91XXXXXXXXXX or by email at [CONTACT_EMAIL]."]},
+      {"h": "What we do", "p": ["We design group trips and, when you ask us to and we confirm it in writing, arrange bookings with independent providers such as hotels, drivers and activity operators. We are an intermediary: the providers deliver the services, and their own terms also apply to you."]},
+      {"h": "What you can buy", "ul": [
+        "Ready blueprint: a ready-made route PDF that we send to your WhatsApp after payment.",
+        "Custom plan: a day-by-day plan built around your brief. We show Day 1 free where we can, deliver within 24 hours of receiving everything we need, and include one free revision.",
+        "Group package: a written quote for bookings arranged by us. A 50% advance confirms the bookings, and the balance schedule is written in your quote."]},
+      {"h": "Quotes and payment", "p": [
+        "Every trip is quoted in writing around your budget and requirements. A quote states what is included and how long it stays valid. We confirm a booking only after we receive the payment the quote asks for, and we tell you in writing. Online payments are processed by Razorpay, and the amount is shown on the payment page before you pay.",
+        "Please pay only through payment links we send you or a business bank account we share with you in writing."]},
+      {"h": "Your responsibilities", "ul": [
+        "Give us accurate information about your group, dates and needs.",
+        "Carry valid government ID for every traveller where providers require it.",
+        "Arrive on time for departures and transfers, and follow safety instructions from guides and drivers.",
+        "Check that everyone is fit for the activities in your plan, and buy travel insurance (we recommend it).",
+        "Train tickets: where a plan names trains, we give you the train numbers and timings so you can book on IRCTC yourself. We do not sell railway tickets."]},
+      {"h": "Plans, timings and changes", "p": ["Opening hours, availability, road conditions and timings change. We build plans from information checked at the time and tell you when something changes. Weather, landslides, closures, strikes and similar events outside our control can force changes, and we will offer the closest alternative we can."]},
+      {"h": "Safety and responsibility", "p": ["Travel and outdoor activities carry risk. Providers are independent and responsible for their own services. Within what the law allows, our responsibility for a booking is limited to the amount you paid us for that booking. Nothing in these terms limits any liability that cannot be limited by law, and nothing affects your rights under Indian consumer law."]},
+      {"h": "Cancellations and refunds", "html": "<p>See our <a href=\"../refunds/\">Refund and Cancellation Policy</a>.</p>"},
+      {"h": "Your information", "html": "<p>See our <a href=\"../privacy/\">Privacy Policy</a> for what we collect and why.</p>"},
+      {"h": "Using our plans", "p": ["Plans, PDFs and other content are for you and your group. Please do not resell or republish them."]},
+      {"h": "Complaints", "p": ["Tell us first on WhatsApp or at [CONTACT_EMAIL]. We will acknowledge your complaint and work with you to resolve it."]},
+      {"h": "Governing law", "p": ["These terms are governed by the laws of India, and the courts at Pune, Maharashtra have jurisdiction, without affecting any right the law gives you as a consumer to approach other forums."]},
+      {"h": "Changes to these terms", "p": ["We may update these terms. The version published when you pay applies to that purchase."]}
+    ]
+  },
+  {
+    "slug": "refunds",
+    "title": "Refund and Cancellation Policy",
+    "description": "How refunds and cancellations work at [BRAND_NAME] for ready blueprints, custom plans and booked group trips.",
+    "updated": "24 November 2026",
+    "sections": [
+      {"h": "The short version", "p": ["Refunds depend on what you bought and how far along we are. The rules below apply unless your written quote says something different. For a booked trip, the quote always wins."]},
+      {"h": "Ready blueprint", "ul": [
+        "If you have paid and we have not sent the PDF to your WhatsApp within 24 hours, message us and we will send it or refund you in full.",
+        "Once the PDF has been sent it cannot be refunded, because it is a digital product, unless the file is damaged or clearly not the route you bought. In that case we replace it or refund you."]},
+      {"h": "Custom plan", "ul": [
+        "Cancel before we start building your plan: full refund.",
+        "After we have started: the fee is not refundable, because the work is done. Your free revision is there to fix anything that does not fit your brief.",
+        "If we cannot deliver a plan that fits your brief: we refund the fee."]},
+      {"h": "Group packages and booked trips", "p": [
+        "When we book hotels, vehicles or activities for you, those providers set their own cancellation rules. Your written quote lists the cancellation schedule for each booking before you pay the advance.",
+        "If you cancel, we refund the money we recover from providers plus any part of your payment that has not been spent, after deducting charges that providers keep and any payment-gateway fee that is not returned to us. We show you the numbers behind every deduction."]},
+      {"h": "If we cancel or cannot deliver", "p": ["If we have to cancel a booked trip or part of it, for example because of unsafe conditions or a provider failing, we will offer an alternative first. If you prefer a refund, we return everything you paid that has not been spent and is recoverable, and we show you proof of what is not recoverable."]},
+      {"h": "Weather and events outside our control", "p": ["Landslides, floods, strikes, closures and similar events can change a trip. We will rebook or adjust where we can. Costs already spent that cannot be recovered cannot be refunded, but we pass on every refund we receive from providers."]},
+      {"h": "How refunds are paid", "p": ["Refunds go back to the original payment method. They are usually credited within 5 to 7 working days after we process them, though your bank can take longer."]},
+      {"h": "How to ask for a refund", "p": ["Message us on WhatsApp at +91XXXXXXXXXX or email [CONTACT_EMAIL] with your name, the number you booked with and what you want to cancel. Please contact us before raising a chargeback with your bank, so we can fix it faster."]}
+    ]
+  },
+  {
+    "slug": "privacy",
+    "title": "Privacy Policy",
+    "description": "What [BRAND_NAME] collects when you plan a trip with us, why, who it is shared with, and how you can ask us to correct or delete it.",
+    "updated": "24 November 2026",
+    "sections": [
+      {"h": "Who is responsible", "p": ["[BRAND_NAME] is run by [LEGAL_NAME], [BUSINESS_ADDRESS]. For privacy requests and complaints, write to [CONTACT_EMAIL]. We handle personal data in line with India's Digital Personal Data Protection Act, 2023."]},
+      {"h": "What we collect", "ul": [
+        "What you type into our forms: your name, WhatsApp number and trip details (destination, dates, group size, budget, how you want to travel, interests and any notes you write).",
+        "Which link brought you here: the campaign tag in the link (such as utm_source) and the name of the website that referred you, never the full address.",
+        "Payment status for purchases. Razorpay handles your card or UPI details, and we never see or store them.",
+        "Messages you send us on WhatsApp or email."]},
+      {"h": "Why we use it", "ul": [
+        "To plan your trip, send you a quote and contact you about it on WhatsApp.",
+        "To take payment and deliver what you bought.",
+        "To see which links bring useful enquiries.",
+        "To meet legal, tax and accounting duties and handle disputes."], "p": ["We do not sell your data, and we do not send unrelated marketing."]},
+      {"h": "Who we share it with", "ul": [
+        "Supabase: stores our enquiry and booking records and the files we deliver to you.",
+        "Razorpay: processes payments.",
+        "Telegram: we send ourselves an alert for each new enquiry. It includes your name, number and trip details.",
+        "Google (Gemini): when we draft a plan with AI, we send the trip details (destination, dates, group size, budget, travel preferences and notes). We do not send your name or phone number. Please do not put sensitive personal information in the notes.",
+        "Our hosting provider: serves this website and keeps standard server logs.",
+        "Hotels, drivers and activity operators: only what they need to deliver your booking, such as traveller names."], "p": ["Some of these providers process data outside India."]},
+      {"h": "Cookies and similar storage", "p": ["We do not use advertising or analytics cookies. While you fill in our form, your browser's session storage keeps your in-progress answers (never your phone number or notes) and the campaign information described above. It is cleared when you close the tab."]},
+      {"h": "How long we keep it", "p": ["We keep enquiry and booking records for as long as we need them to serve you, handle disputes and meet legal and tax duties. Then we delete or anonymise them."]},
+      {"h": "Your rights", "ul": [
+        "Ask what personal data we hold about you.",
+        "Ask us to correct or delete it.",
+        "Withdraw your consent to be contacted, at any time.",
+        "Nominate someone to exercise these rights for you."], "p": ["Write to [CONTACT_EMAIL] or message us on WhatsApp. If we cannot resolve your complaint, you can complain to the Data Protection Board of India as the law provides."]},
+      {"h": "Children", "p": ["Our service is for adults. If your group includes children, you give us their details as their parent or guardian."]},
+      {"h": "Changes to this policy", "p": ["We will post changes here with a new date."]}
+    ]
+  }
+]

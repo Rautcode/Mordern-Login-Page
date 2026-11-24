@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Generate one landing page per route in tools/routes.json  ->  <slug>/index.html  (served at /<slug>/).
+"""Generate the static pages: one landing page per route in tools/routes.json, and the legal pages in tools/legal.json,
+each as <slug>/index.html (served at /<slug>/).
 
     python3 tools/build_routes.py          # write the pages
     python3 tools/build_routes.py --check  # exit 1 if a committed page is out of date (CI)
@@ -26,6 +27,7 @@ EXTRA_CSS = """
 .note-box{background:#EAF0E4;border-left:6px solid var(--forest-2);padding:18px 22px;border-radius:4px}.note-box ul{padding-left:20px;display:grid;gap:8px}
 .tbl{overflow-x:auto}.tbl table{border-collapse:collapse;width:100%;min-width:640px;font-size:.94rem;background:var(--card)}.tbl th,.tbl td{border:1px solid var(--line);padding:10px 12px;text-align:left;vertical-align:top}.tbl th{background:var(--forest);color:#fff}
 .cta-band{background:var(--forest);color:#F5EEE1;padding:44px 0;text-align:center}.cta-band h2{color:#F5EEE1}.cta-band .cta-row{justify-content:center}.cta-band p{margin:12px auto 0}
+.prose{max-width:780px}.prose h1{font-size:clamp(2rem,4.4vw,3rem);margin:14px 0 6px}.prose h2{font-size:1.45rem;margin:34px 0 10px}.prose p,.prose li{max-width:72ch}.prose ul{padding-left:20px;display:grid;gap:7px;margin:8px 0}.prose p{margin:8px 0}.prose a{color:var(--terra-d)}.legal a{text-decoration:none}
 .crumbs{font-size:.88rem;color:var(--muted)}.crumbs a{color:var(--forest)}
 body{padding-bottom:0}footer{padding-top:70px}
 @media(max-width:820px){.rp .grid{grid-template-columns:1fr}.tl li{grid-template-columns:1fr;gap:0}}
@@ -48,6 +50,83 @@ def table(t):
     return (f'<section class="rs"><div class="wrap">\n  <h2>{E(t["title"])}</h2><p class="lead" style="margin:0 0 18px">{E(t["note"])}</p>\n'
             f'  <div class="tbl" role="region" aria-label="{label}" tabindex="0"><table><caption class="hand" style="text-align:left;padding-bottom:6px">{E(t["caption"])}</caption>'
             f'<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>\n</div></section>')
+
+
+def header(logo, wa, plan, cta="Plan this trip"):
+    return f"""<header class="hdr solid">
+  <div class="wrap nav">
+    <a href="../" class="logo" aria-label="[BRAND_NAME] home">{logo}</a>
+    <div class="nav-cta"><a class="btn btn-ghost wa-link" href="{wa}" target="_blank" rel="noopener">WhatsApp</a><a href="{plan}" class="btn btn-primary">{cta}</a></div>
+  </div>
+</header>"""
+
+
+def footer(wa):
+    return f"""<footer>
+  <div class="wrap">
+    <div class="f-grid">
+      <div><a href="../" class="logo">[BRAND_NAME]</a><p style="margin-top:12px;max-width:42ch">Ground-Tested Trips. Zero Guesswork. Online-first trip planning for group travel from Pune and PCMC, Maharashtra.</p></div>
+      <div><h3>More</h3><ul><li><a href="../#routes">All proven routes</a></li><li><a href="../#services">Services</a></li><li><a href="../#faq">FAQ</a></li></ul></div>
+      <div><h3>Connect</h3><ul><li><a href="https://www.instagram.com/[INSTAGRAM_HANDLE]" target="_blank" rel="noopener">Instagram @[INSTAGRAM_HANDLE]</a></li><li><a href="{wa}" target="_blank" rel="noopener">WhatsApp us</a></li></ul></div>
+    </div>
+    <div class="copy"><span>© [BRAND_NAME]. Every plan and quote is built around your budget and confirmed in writing.</span><span class="legal"><a href="../terms/">Terms</a> · <a href="../refunds/">Refunds</a> · <a href="../privacy/">Privacy</a></span></div>
+  </div>
+</footer>"""
+
+
+def mbar(wa, plan):
+    return f"""<nav class="mbar" aria-label="Quick actions"><a class="btn btn-wa" href="{wa}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn-primary" href="{plan}">Plan My Trip</a></nav>"""
+
+
+def head(title, desc, url, css, attr, ld="", og="article"):
+    return f"""<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{E(title)} | [BRAND_NAME]</title>
+<meta name="description" content="{E(desc)}">
+<link rel="canonical" href="{url}">
+<meta name="robots" content="index,follow,max-image-preview:large">
+<meta name="theme-color" content="#F5EEE1">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="{og}"><meta property="og:locale" content="en_IN"><meta property="og:site_name" content="[BRAND_NAME]">
+<meta property="og:title" content="{E(title)}"><meta property="og:description" content="{E(desc)}">
+<meta property="og:url" content="{url}"><meta property="og:image" content="https://YOUR-DOMAIN.com/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+{ld}<link rel="preload" as="font" type="font/woff2" crossorigin href="../fonts/young-serif-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../fonts/figtree-latin.woff2">
+<style>{css}{EXTRA_CSS}</style>
+<script>{attr}</script>
+</head>"""
+
+
+def section(s):
+    ul = "<ul>" + "".join(f"<li>{E(x)}</li>" for x in s["ul"]) + "</ul>" if s.get("ul") else ""
+    return f"<h2>{E(s['h'])}</h2>" + ul + "".join(f"<p>{E(x)}</p>" for x in s.get("p", [])) + s.get("html", "")
+
+
+def info_page(p, css, attr, logo):
+    url = f"https://YOUR-DOMAIN.com/{p['slug']}/"
+    wa = f"https://wa.me/91XXXXXXXXXX?text={quote('Hi! I have a question.')}"
+    plan = "../#planner"
+    return f"""{head(p["title"], p["description"], url, css, attr)}
+<body>
+<a class="skip" href="#main">Skip to content</a>
+{header(logo, wa, plan, "Plan my trip")}
+<main id="main">
+<section class="rp"><div class="wrap prose">
+  <p class="crumbs"><a href="../">Home</a> / {E(p["title"])}</p>
+  <h1>{E(p["title"])}</h1>
+  <p class="lead">Last updated {E(p["updated"])}</p>
+  {"".join(section(s) for s in p["sections"])}
+</div></section>
+</main>
+{footer(wa)}
+{mbar(wa, plan)}
+</body>
+</html>
+"""
 
 
 def page(r, css, attr, logo):
@@ -92,12 +171,7 @@ def page(r, css, attr, logo):
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="hdr solid">
-  <div class="wrap nav">
-    <a href="../" class="logo" aria-label="[BRAND_NAME] home">{logo}</a>
-    <div class="nav-cta"><a class="btn btn-ghost wa-link" href="{wa}" target="_blank" rel="noopener">WhatsApp</a><a href="{plan}" class="btn btn-primary">Plan this trip</a></div>
-  </div>
-</header>
+{header(logo, wa, plan)}
 <main id="main">
 <section class="rp"><div class="wrap">
   <p class="crumbs"><a href="../">Home</a> / <a href="../#routes">Proven routes</a> / {E(r["name"])}</p>
@@ -135,17 +209,8 @@ def page(r, css, attr, logo):
   <div class="cta-row"><a class="btn btn-primary" href="{plan}">Start planning</a><a class="btn btn-wa" href="{wa}" target="_blank" rel="noopener">WhatsApp us</a></div>
 </div></section>
 </main>
-<footer>
-  <div class="wrap">
-    <div class="f-grid">
-      <div><a href="../" class="logo">[BRAND_NAME]</a><p style="margin-top:12px;max-width:42ch">Ground-Tested Trips. Zero Guesswork. Online-first trip planning for group travel from Pune and PCMC, Maharashtra.</p></div>
-      <div><h3>More</h3><ul><li><a href="../#routes">All proven routes</a></li><li><a href="../#services">Services</a></li><li><a href="../#faq">FAQ</a></li></ul></div>
-      <div><h3>Connect</h3><ul><li><a href="https://www.instagram.com/[INSTAGRAM_HANDLE]" target="_blank" rel="noopener">Instagram @[INSTAGRAM_HANDLE]</a></li><li><a href="{wa}" target="_blank" rel="noopener">WhatsApp us</a></li></ul></div>
-    </div>
-    <div class="copy"><span>© [BRAND_NAME]. Every plan and quote is built around your budget and confirmed in writing.</span></div>
-  </div>
-</footer>
-<nav class="mbar" aria-label="Quick actions"><a class="btn btn-wa" href="{wa}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn-primary" href="{plan}">Plan My Trip</a></nav>
+{footer(wa)}
+{mbar(wa, plan)}
 </body>
 </html>
 """
@@ -154,13 +219,14 @@ def page(r, css, attr, logo):
 def main():
     css, attr, logo = source()
     routes = json.loads((ROOT / "tools" / "routes.json").read_text(encoding="utf-8"))
+    legal = json.loads((ROOT / "tools" / "legal.json").read_text(encoding="utf-8"))
+    pages = [(r["slug"], page(r, css, attr, logo)) for r in routes] + [(p["slug"], info_page(p, css, attr, logo)) for p in legal]
     stale = []
-    for r in routes:
-        out = ROOT / r["slug"] / "index.html"
-        new = page(r, css, attr, logo)
+    for slug, new in pages:
+        out = ROOT / slug / "index.html"
         if "--check" in sys.argv:
             if not out.exists() or out.read_text(encoding="utf-8") != new:
-                stale.append(r["slug"])
+                stale.append(slug)
         else:
             out.parent.mkdir(exist_ok=True)
             out.write_text(new, encoding="utf-8")

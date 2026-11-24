@@ -6,5 +6,9 @@
   "instagram": "yourhandle",
   "founder": "Your Name",
   "udyam": "UDYAM-MH-00-0000000",
-  "api_base": ""
+  "api_base": "",
+  "legal_name": "Your Full Legal Name",
+  "email": "hello@yourdomain.com",
+  "address": "Your business address, Pune, Maharashtra",
+  "legal_reviewed": false
 }
