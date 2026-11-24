@@ -35,7 +35,7 @@ async def lifespan(app: FastAPI):
 
 s = get_settings()
 app = FastAPI(
-    title="Ground-Tested Trips API",
+    title="GhumoCo API",
     lifespan=lifespan,
     docs_url=None if s.is_prod else "/docs",
     redoc_url=None,

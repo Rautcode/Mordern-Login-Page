@@ -41,7 +41,7 @@ class Settings(BaseSettings):
     whatsapp_graph_version: str = Field(default="v23.0", pattern=r"^v\d{1,2}\.\d$")  # check Meta's changelog; versions expire
 
     whatsapp_number: str = "91XXXXXXXXXX"
-    brand_name: str = "Ground-Tested Trips"
+    brand_name: str = "GhumoCo"
     custom_plan_price_inr: int = Field(default=2499, ge=1)
     advance_pct: int = Field(default=50, ge=1, le=100)
     gst_rate_pct: float = Field(default=5.0, ge=0, le=28)  # confirm with your CA

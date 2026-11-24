@@ -17,6 +17,7 @@ python3 -m http.server 8000      # then open http://localhost:8000
 | `_headers.template` | Security and cache headers (Cloudflare Pages and Netlify read the generated `_headers`) |
 | `tests/` | Playwright: `e2e.js`, `a11y.js` (axe), `admin.js` (leads console), `launch.js` (built site under the real CSP) |
 | `LAUNCH.md` | Launch checklist, console notes |
+| `npm run preview` | Builds a preview with the brand name from `tools/brand.example.json` (GhumoCo) and placeholder contact details, and serves it at http://localhost:8080 |
 | `PILOT.md` | Pilot trip kit: supplier checks, WhatsApp templates, incident protocol |
 
 ## Launch in three commands
