@@ -3,6 +3,9 @@ on:
   push:
   pull_request:
 
+permissions:
+  contents: read   # the default token can write; these jobs only need to read the repo
+
 jobs:
   backend:
     runs-on: ubuntu-24.04
@@ -23,6 +26,19 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 20 }
-      - run: npm install --no-audit --no-fund
+      - run: npm ci --no-audit --no-fund
       - run: npx playwright install --with-deps chromium
       - run: npm test
+
+  # Advisory only for now (does not fail the build): known-vulnerability scan of dependencies. Review its output before launch.
+  audit:
+    runs-on: ubuntu-24.04
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - run: pip install pip-audit && pip-audit -r travel-backend/requirements.txt
+      - uses: actions/setup-node@v4
+        with: { node-version: 20 }
+      - run: npm audit --prefix travel-site
