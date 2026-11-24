@@ -216,7 +216,7 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     for (const f of pages) { const hits = fs.readFileSync(path.join(root, f), 'utf8').match(/₹\s?\d[\d,]*(?![\d,]*k)|\bRs\.?\s?\d|"price(?:Currency)?"\s*:|\bINR\b/g); assert(!hits, `${f} shows a price: ${hits}`); }
     assert(!fs.existsSync(path.join(root, 'fares.json')), 'the flight-fare data went with the prices');
     const home = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
-    assert(!/vetted local|verified local|100% ground-tested|hidden agency markups/i.test(home), 'no claim we cannot back up yet');
+    assert(!/vetted local|verified local|100% ground-tested|hidden agency markups|500\+|80K\+|trusted by|travellers planned for|signature routes, walked/i.test(home), 'no claim we cannot back up yet');
     assert.deepEqual([...home.matchAll(/class="linkbtn" data-bp="([\w-]+)"/g)].map(m => m[1]), ['rajasthan', 'kerala'], 'a blueprint is offered only where a real plan exists');
     assert.equal((home.match(/class="postmark"/g) || []).length, 2); assert.equal((home.match(/<b>Ground-tested<\/b>/g) || []).length, 2, 'only Rajasthan and Kerala are labelled ground-tested'); }
   // ---- legal pages: present, linked from every page, honest about what the code does ----
