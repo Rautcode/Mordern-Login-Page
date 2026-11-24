@@ -19,6 +19,8 @@ WhatsApp order message. You take payment yourself (UPI or bank transfer to your 
 3. **Build and publish.** `npm run build`, then upload `dist/` to Cloudflare Pages (direct upload) or Netlify. Both read the generated `_headers`
    (security and cache headers) and `404.html`. The build refuses to finish if any placeholder is left, hides the Udyam badge if you have no number
    yet, and builds a strict Content-Security-Policy that only allows your own scripts.
+   The link-preview picture shown on WhatsApp and Instagram is `og-image.png`. It carries no brand name (the build cannot edit a picture), so it stays valid
+   for any brand. To change its words or photos, edit `tools/og.html` and run `node tools/make_og.js`.
 4. **Set up your channels.** A separate WhatsApp Business number with quick replies and an away message ("replies 7-9 pm"). Submit
    `https://your-domain/sitemap.xml` in Google Search Console. Create a Google Business Profile under your brand name.
 5. **Check what the site claims.** It says Rajasthan and Kerala plans come from real trips, that you quote around the customer's budget, and that
