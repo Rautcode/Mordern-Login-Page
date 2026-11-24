@@ -1,0 +1,2 @@
+Fonts are self-hosted under the SIL Open Font License 1.1 (https://openfontlicense.org):
+Young Serif, Figtree, IBM Plex Mono, Caveat. Source: Google Fonts.

@@ -50,11 +50,21 @@
  {"@type":"Question","name":"What do I get in the free preview versus the paid Custom Plan?","acceptedAnswer":{"@type":"Answer","text":"The free preview shows Day 1 of your itinerary in full so you can judge the quality. The Rs 2,499 Custom Plan unlocks every day, the food map and the priority cut-lists."}}]}
 </script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Figtree:wght@400;600;700&family=IBM+Plex+Mono:wght@500&family=Young+Serif&display=swap" rel="stylesheet">
-
+<link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/young-serif-latin.woff2">
+<link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/figtree-latin.woff2">
 <style>
+@font-face{font-family:'Caveat';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/caveat-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Caveat';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/caveat-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/figtree-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/figtree-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/figtree-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/figtree-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/figtree-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Figtree';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/figtree-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/ibm-plex-mono-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/ibm-plex-mono-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Young Serif';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/young-serif-latin-ext.woff2) format('woff2');unicode-range:U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF}
+@font-face{font-family:'Young Serif';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/young-serif-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
 :root{
   --paper:#F5EEE1; --paper-2:#EDE2CC; --card:#FFFCF6; --ink:#1F2421; --muted:#5E5A50;
   --forest:#1B3B2B; --forest-2:#2C5A41; --terra:#C85A32; --terra-d:#A8431F; --gold:#D4A359; --sea:#2F6F73; --line:#DDD0B6;
@@ -361,7 +371,7 @@ details p{padding:0 0 20px;color:#3d3d37}
 footer{position:relative;background:#10241A;color:#CFD8CF;padding:70px 0 110px;margin-top:70px;font-size:.93rem}
 .f-grid{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:34px}
 @media(max-width:760px){.f-grid{grid-template-columns:1fr}}
-footer .logo{color:#fff}footer h4{font:500 .78rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+footer .logo{color:#fff}footer h3{font:500 .78rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
 footer ul{list-style:none;padding:0;display:grid;gap:9px}footer a{text-decoration:none}footer a:hover{color:var(--gold)}
 .udyam{display:inline-block;margin-top:16px;border:1.5px dashed var(--gold);color:var(--gold);padding:7px 14px;font:500 .74rem var(--mono);letter-spacing:.04em}
 .copy{margin-top:40px;padding-top:20px;border-top:1px solid rgba(255,255,255,.12);font-size:.8rem;color:#8EA196;display:flex;gap:16px;flex-wrap:wrap;justify-content:space-between}
@@ -574,8 +584,8 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
 <section id="about" aria-labelledby="about-h">
   <div class="wrap notes">
     <div class="polas reveal" aria-hidden="false">
-      <figure class="pola a"><img src="img/trip-crew-700.webp" alt="A group of travellers standing with their motorbikes on a forest road" width="700" height="595" loading="lazy" decoding="async"><figcaption>The crew, mid-ride</figcaption></figure>
-      <figure class="pola b"><img src="img/trip-sunset-700.webp" alt="People silhouetted against the sea as the sun sets" width="700" height="595" loading="lazy" decoding="async"><figcaption>Sunset at the sea's edge</figcaption></figure>
+      <figure class="pola a"><img src="img/trip-crew-560.webp" alt="A group of travellers standing with their motorbikes on a forest road" width="560" height="476" loading="lazy" decoding="async"><figcaption>The crew, mid-ride</figcaption></figure>
+      <figure class="pola b"><img src="img/trip-sunset-560.webp" alt="People silhouetted against the sea as the sun sets" width="560" height="476" loading="lazy" decoding="async"><figcaption>Sunset at the sea's edge</figcaption></figure>
     </div>
     <div class="reveal">
       <span class="kicker">Field notes</span>
@@ -601,12 +611,12 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
   </div>
   <div class="reel" tabindex="0" role="region" aria-label="Photos and video clips from our trips. Scroll sideways to see more.">
     <figure class="snap"><video class="l" muted loop playsinline preload="none" poster="img/poster-waterfall.webp" width="640" height="480" aria-label="Clip: the group pausing at a waterfall"><source src="video/waterfall.webm" type="video/webm"><source src="video/waterfall.mp4" type="video/mp4"></video><figcaption>Waterfall stop, whole crew</figcaption></figure>
-    <figure class="snap"><img src="img/reel-statue-600.webp" alt="A large grey stone statue of Shiva seated with a trident against a cloudy sky" width="600" height="800" loading="lazy" decoding="async"><figcaption>Shiva above the sea</figcaption></figure>
+    <figure class="snap"><img src="img/reel-statue-520.webp" alt="A large grey stone statue of Shiva seated with a trident against a cloudy sky" width="520" height="693" loading="lazy" decoding="async"><figcaption>Shiva above the sea</figcaption></figure>
     <figure class="snap"><video class="p" muted loop playsinline preload="none" poster="img/poster-houseboat.webp" width="480" height="640" aria-label="Clip: a houseboat on still water"><source src="video/houseboat.webm" type="video/webm"><source src="video/houseboat.mp4" type="video/mp4"></video><figcaption>Houseboat on still water</figcaption></figure>
-    <figure class="snap"><img src="img/reel-temple-600.webp" alt="Two red laterite temples around a paved courtyard" width="600" height="800" loading="lazy" decoding="async"><figcaption>Roop Narayan Mandir</figcaption></figure>
+    <figure class="snap"><img src="img/reel-temple-520.webp" alt="Two red laterite temples around a paved courtyard" width="520" height="693" loading="lazy" decoding="async"><figcaption>Roop Narayan Mandir</figcaption></figure>
     <figure class="snap"><video class="p" muted loop playsinline preload="none" poster="img/poster-hills.webp" width="480" height="640" aria-label="Clip: green hills and clouds from a hilltop"><source src="video/hills.webm" type="video/webm"><source src="video/hills.mp4" type="video/mp4"></video><figcaption>Hilltop, green all round</figcaption></figure>
-    <figure class="snap"><img src="img/reel-sea-600.webp" alt="The sun low over a glittering sea" width="600" height="800" loading="lazy" decoding="async"><figcaption>Sea light</figcaption></figure>
-    <figure class="snap"><img src="img/reel-plane-600.webp" alt="An aircraft on the tarmac at night beside boarding stairs" width="600" height="800" loading="lazy" decoding="async"><figcaption>Night flight, boarding</figcaption></figure>
+    <figure class="snap"><img src="img/reel-sea-520.webp" alt="The sun low over a glittering sea" width="520" height="693" loading="lazy" decoding="async"><figcaption>Sea light</figcaption></figure>
+    <figure class="snap"><img src="img/reel-plane-520.webp" alt="An aircraft on the tarmac at night beside boarding stairs" width="520" height="693" loading="lazy" decoding="async"><figcaption>Night flight, boarding</figcaption></figure>
     <figure class="snap"><video class="p" muted loop playsinline preload="none" poster="img/poster-mist.webp" width="480" height="640" aria-label="Clip: mist rolling over forested hills"><source src="video/mist.webm" type="video/webm"><source src="video/mist.mp4" type="video/mp4"></video><figcaption>Mist over the hills</figcaption></figure>
   </div>
   <div class="wrap ig reveal"><span class="hand">See more on Instagram →</span><a class="btn btn-ghost" id="ig" target="_blank" rel="noopener"><svg class="i"><use href="#i-insta"/></svg>@[INSTAGRAM_HANDLE]</a></div>
@@ -907,15 +917,15 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
         <p style="margin-top:12px;max-width:42ch">Ground-Tested Trips. Zero Guesswork. Online-first trip planning for group travel from Pune and PCMC, Maharashtra.</p>
         <span class="udyam">UDYAM MSME REGISTERED · [UDYAM_REG_NO]</span>
       </div>
-      <div><h4>Trips from Pune</h4><ul><li><a href="#routes">Rajasthan tour from Pune</a></li><li><a href="#routes">Kerala 3-day trip</a></li><li><a href="#routes">Goa trip from Pune</a></li><li><a href="#routes">Gokarna &amp; Hampi trip</a></li><li><a href="#pricing">Pricing</a></li></ul></div>
-      <div><h4>Connect</h4><ul><li><a id="ig2" target="_blank" rel="noopener">Instagram @[INSTAGRAM_HANDLE]</a></li><li><a data-wa target="_blank" rel="noopener">WhatsApp us</a></li><li><a href="#faq">FAQ</a></li></ul></div>
+      <div><h3>Trips from Pune</h3><ul><li><a href="#routes">Rajasthan tour from Pune</a></li><li><a href="#routes">Kerala 3-day trip</a></li><li><a href="#routes">Goa trip from Pune</a></li><li><a href="#routes">Gokarna &amp; Hampi trip</a></li><li><a href="#pricing">Pricing</a></li></ul></div>
+      <div><h3>Connect</h3><ul><li><a id="ig2" target="_blank" rel="noopener">Instagram @[INSTAGRAM_HANDLE]</a></li><li><a data-wa target="_blank" rel="noopener">WhatsApp us</a></li><li><a href="#faq">FAQ</a></li></ul></div>
     </div>
     <div class="copy"><span>© <span id="yr"></span> [BRAND_NAME]. Prices are indicative and confirmed in your written quote.</span><button data-open="privacy">Privacy</button></div>
   </div>
 </footer>
 
-<div class="fab"><a data-wa target="_blank" rel="noopener" aria-label="Chat with Trip Planner on WhatsApp"><svg class="i"><use href="#i-chat"/></svg></a><span class="tip">Chat with Trip Planner</span></div>
-<div class="mbar"><a class="btn btn-wa" data-wa target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg>WhatsApp</a><a class="btn btn-primary" id="mbar-plan" href="#planner">Plan My Trip</a></div>
+<aside class="fab" aria-label="Chat shortcut"><a data-wa target="_blank" rel="noopener" aria-label="Chat with Trip Planner on WhatsApp"><svg class="i"><use href="#i-chat"/></svg></a><span class="tip">Chat with Trip Planner</span></aside>
+<nav class="mbar" aria-label="Quick actions"><a class="btn btn-wa" data-wa target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg>WhatsApp</a><a class="btn btn-primary" id="mbar-plan" href="#planner">Plan My Trip</a></nav>
 
 <dialog id="d-route" aria-labelledby="dr-t">
   <div class="dh"><h3 id="dr-t"></h3><button data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
@@ -986,7 +996,7 @@ if (!/X/i.test(CFG.whatsapp)) { const t = $("#tel"); t.href = "tel:+" + CFG.what
 const burger = $("#burger"), links = $("#links");
 burger.onclick = () => burger.setAttribute("aria-expanded", links.classList.toggle("open"));
 links.onclick = e => { if (e.target.closest("a")) { links.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); } };
-const hdr = $("#hdr"); const onScroll = () => hdr.classList.toggle("solid", scrollY > 40); onScroll(); addEventListener("scroll", onScroll, { passive: true });
+const hdr = $("#hdr"); const onScroll = () => hdr.classList.toggle("solid", scrollY > 40); requestAnimationFrame(onScroll); addEventListener("scroll", onScroll, { passive: true });
 
 // real photos (optional) replace the illustration for that card
 for (const [id, src] of Object.entries(CFG.photos)) {
