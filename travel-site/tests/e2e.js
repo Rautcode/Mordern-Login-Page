@@ -229,6 +229,7 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     const kb = fs.readFileSync(path.join(root, '..', 'travel-backend', 'app', 'knowledge_base', R.kb), 'utf8'); const txt = await pg.innerText('main');
     for (const n of new Set(txt.match(/\b\d{5}\b/g) || [])) assert(kb.includes(n), `${R.slug}: ${n} is not in the verified knowledge base`);
     assert(!/(?:\+?91[\s-]?)?[6-9]\d{4}[\s-]?\d{5}\b/.test(txt), 'no phone-like numbers on a public page');
+    if (!R.price) { const whole = await pg.content(); assert(!/₹|\bRs\.?\s?\d|"price"/.test(whole), `${R.slug} publishes no price, so no price may appear anywhere on it (text or structured data)`); }
     // every rupee amount in the day plan and the tables must be one the knowledge base states
     const money = await pg.evaluate(() => [...document.querySelectorAll('.day, .tbl')].map(e => e.innerText).join('\n')); const kbN = kb.replace(/,/g, '');
     for (const m of new Set([...money.matchAll(/₹\s?(\d[\d,]*)/g)].map(x => x[1].replace(/,/g, '')))) assert(new RegExp(`(?<![\\d,])${m}(?!\\d)`).test(kbN), `${R.slug}: ₹${m} is not in the knowledge base`);

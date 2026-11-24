@@ -57,7 +57,9 @@ def page(r, css, attr, logo):
     ld_faq = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
         {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in r["faq"]]}
     ld_trip = {"@context": "https://schema.org", "@type": "TouristTrip", "name": r["title"], "description": r["description"], "touristType": "Group",
-               "url": url, "offers": {"@type": "Offer", "priceCurrency": "INR", "price": str(r["price"]), "url": url}}
+               "url": url}
+    if r.get("price"):  # a route without a published price carries no price anywhere, structured data included
+        ld_trip["offers"] = {"@type": "Offer", "priceCurrency": "INR", "price": str(r["price"]), "url": url}
     ld_crumb = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://YOUR-DOMAIN.com/"},
         {"@type": "ListItem", "position": 2, "name": r["name"], "item": url}]}
@@ -66,6 +68,7 @@ def page(r, css, attr, logo):
     days = "".join(
         f'<article class="day"><p class="kicker">{E(d["d"])}</p><h3>{E(d["t"])}</h3><ul class="tl">'
         + "".join(f"<li><time>{E(t)}</time><span>{E(x)}</span></li>" for t, x in d["items"]) + "</ul></article>" for d in r["days"])
+    blueprint_line = f' Or take the full time-stamped Blueprint PDF for ₹{r["price"]}.' if r.get("price") else ""
     fixed = (f'<section class="rs"><div class="wrap"><h2>{E(r["fixed_title"])}</h2><p>{E(r["fixed"])}</p></div></section>'
              if r.get("fixed") else "")
     tables = "\n\n".join(table(t) for t in r["tables"])
@@ -131,7 +134,7 @@ def page(r, css, attr, logo):
 
 <section class="cta-band"><div class="wrap">
   <h2>Want this fitted to your dates and group?</h2>
-  <p>Free Day 1 preview, a custom quote in 24 hours. Or take the full time-stamped Blueprint PDF for ₹{r["price"]}.</p>
+  <p>Free Day 1 preview, a custom quote in 24 hours.{blueprint_line}</p>
   <div class="cta-row"><a class="btn btn-primary" href="{plan}">Start planning</a><a class="btn btn-wa" href="{wa}" target="_blank" rel="noopener">WhatsApp us</a></div>
 </div></section>
 </main>
