@@ -62,7 +62,13 @@ Real reviews and real faces are the biggest trust gap on the site. They have to 
 - Set `CORS_ORIGINS=https://your-domain`, put the API origin in `brand.json` as `api_base`, and rebuild `dist/`.
 - Razorpay: add `https://api-origin/api/webhooks/razorpay` as the webhook, same secret as `RAZORPAY_WEBHOOK_SECRET`.
 - Set `FORWARDED_ALLOW_IPS` (see `travel-backend/README.md`) and confirm two different networks get separate rate-limit budgets.
-- Run a real end-to-end in Razorpay test mode: lead, preview, payment link, paid webhook, delivery alert. Everything is tested against fakes only.
+- **Run a real end-to-end in Razorpay test mode before using live keys.** Everything in the automated tests uses fakes, so this is the first time the real Razorpay API and webhook are exercised.
+  1. Deploy the API with `RAZORPAY_KEY_ID`/`RAZORPAY_KEY_SECRET` from Razorpay's **Test mode** (`rzp_test_...`) and a long random `RAZORPAY_WEBHOOK_SECRET`.
+  2. In Razorpay (Test mode) add the webhook `https://<api-origin>/api/webhooks/razorpay` with that same secret and the Payment Link events (paid, partially paid, expired, cancelled).
+  3. If Turnstile is on, use Cloudflare's published test keys for this run, or leave `TURNSTILE_SECRET` unset (check Cloudflare's docs for the current dummy values).
+  4. `cd travel-backend && python scripts/smoke.py https://<api-origin>` creates one lead named "Smoke Test" and one payment link, then waits. Open the link and pay with Razorpay's test UPI id or test card.
+  5. Check by hand: the script prints "webhook received"; the Telegram alert arrived; the lead is **paid** in `/admin`; Razorpay shows the webhook delivered with a 200. Also pay a link a second time or let one expire, to see the other statuses behave.
+  6. Delete the "Smoke Test" lead. Only then swap in live keys and a live webhook secret, and make one real small payment to yourself and refund it.
 - Upload the real blueprint PDFs to the `blueprints` bucket (`rajasthan.pdf`, `kerala.pdf`). Blueprint delivery is currently a Telegram message to
   you with a signed link to forward on WhatsApp. That is why the site says "sent to your WhatsApp after payment".
 - Open the CI `audit` job output (pip-audit, npm audit) and fix anything high or critical.
