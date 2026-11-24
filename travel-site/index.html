@@ -128,11 +128,15 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 .nav>.logo{min-width:0}
 @media(max-width:480px){.nav-cta .wa-link{display:none}.logo{font-size:1.1rem;gap:7px}.logo svg{width:28px;height:28px}.nav-cta{gap:8px}.nav-cta .btn{font-size:.85rem;padding:8px 14px}}
 
-/* hero: the scenery is the design */
-.hero{padding:0;min-height:max(640px,min(100svh,920px));display:flex;flex-direction:column;overflow:hidden;background:linear-gradient(#F8E3BF,#F2B98A 70%,#E9945F);isolation:isolate}
-.scene{position:absolute;inset:0;z-index:-1}
-.scene svg{width:100%;height:100%;display:block}
-.hero-in{padding:136px 0 clamp(190px,17vw,250px);position:relative}
+/* hero: words on the left, our own trip photos on the right */
+.hero{padding:0;overflow:hidden;background:linear-gradient(#F8E3BF,#F2B98A 80%,#EFA877);isolation:isolate}
+.hero-in{padding:120px 0 72px;position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:32px;align-items:center}
+.hero-photos{position:relative;min-height:590px}
+.hpic{position:absolute;margin:0;background:#fff;padding:10px 10px 14px;box-shadow:0 16px 32px -12px rgba(31,36,33,.5);width:min(250px,52%)}
+.hpic::before{content:"";position:absolute;top:-11px;left:50%;width:78px;height:22px;margin-left:-39px;background:rgba(212,163,89,.55);transform:rotate(-3deg)}
+.hpic img{display:block;width:100%;height:auto;aspect-ratio:1/.85;object-fit:cover}
+.hpic figcaption{font:600 1.2rem var(--hand);color:var(--ink);text-align:center;margin-top:6px}
+.hpic.a{left:0;top:0;transform:rotate(-5deg)}.hpic.b{right:0;top:120px;transform:rotate(4deg)}.hpic.c{left:3%;top:310px;transform:rotate(-2deg)}
 .stamp-line{display:inline-flex;align-items:center;gap:10px;font:500 .78rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--forest);border:1.5px dashed var(--forest);padding:6px 14px;border-radius:6px;background:rgba(255,252,246,.5)}
 .hero h1{font-size:clamp(2.1rem,4.1vw,3.6rem);max-width:22ch;margin:18px 0 16px;text-wrap:balance}
 .hero p.sub{font-size:1.1rem;color:#33402f;max-width:52ch}
@@ -142,18 +146,11 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 .chip{font:700 .9rem var(--sans);padding:9px 16px;border-radius:999px;border:1.5px solid var(--forest);background:rgba(255,252,246,.72);color:var(--forest);cursor:pointer;transition:.15s}
 .chip:hover{background:var(--forest);color:#fff;transform:translateY(-2px) rotate(-1.5deg)}
 .proof{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:18px;font:500 .78rem var(--mono);letter-spacing:.04em;color:var(--forest)}.proof b{color:var(--terra-d)}
-.cloud{animation:drift 90s linear infinite}.cloud.b{animation-duration:130s;animation-delay:-40s}
-.van{animation:drive 46s linear infinite}
-.sun-glow{animation:glow 6s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
-@keyframes drift{from{transform:translateX(-260px)}to{transform:translateX(1700px)}}
-@keyframes drive{from{transform:translateX(-220px)}to{transform:translateX(1700px)}}
-@keyframes glow{50%{opacity:.55;transform:scale(1.06)}}
 
-@media(max-width:760px){
-  .hero{min-height:0}
-  .hero-in{padding:140px 0 8px}
-  .scene{position:relative;inset:auto;order:2;height:clamp(250px,72vw,340px);margin-top:6px}
-  .birds{display:none}
+@media(max-width:900px){
+  .hero-in{grid-template-columns:1fr;padding:132px 0 36px;gap:18px}
+  .hero-photos{min-height:300px;max-width:440px;width:100%;margin:0 auto}
+  .hpic{width:min(210px,54%)}.hpic.a{top:0}.hpic.b{top:60px}.hpic.c{display:none}
 }
 /* trust strip */
 .strip{padding:0;margin-top:-1px;background:var(--forest);color:#F5EEE1}
@@ -423,7 +420,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
 .js .reveal.in{opacity:1;transform:none}
 @media(prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none;transition:none}
-  .cloud,.van,.sun-glow,.fab a,.spin{animation:none}.btn,.chip,.card{transition:none}
+  .fab a,.spin{animation:none}.btn,.chip,.card{transition:none}
 }
 </style>
 </head>
@@ -531,40 +528,11 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
 <main id="main">
 <!-- ============ HERO ============ -->
 <section class="hero" id="top" aria-labelledby="h1">
-  <div class="scene" aria-hidden="true">
-    <svg viewBox="0 0 1440 760" preserveAspectRatio="xMaxYMax slice" focusable="false">
-      <g data-p=".02"><circle class="sun-glow" cx="1010" cy="330" r="230" fill="url(#g-halo)"/><circle cx="1010" cy="330" r="74" fill="#FFF0C6"/></g>
-      <g data-p=".03" fill="#FFF8E6" opacity=".7">
-        <g class="cloud"><ellipse cx="200" cy="150" rx="90" ry="16"/><ellipse cx="250" cy="138" rx="60" ry="14"/></g>
-        <g class="cloud b"><ellipse cx="700" cy="230" rx="110" ry="14"/><ellipse cx="760" cy="218" rx="70" ry="13"/></g>
-      </g>
-      <g class="birds" data-p=".04" fill="none" stroke="#5B3A24" stroke-width="3" stroke-linecap="round" opacity=".55"><path d="M1190 200q9 -9 18 0q9 -9 18 0"/><path d="M1245 170q8 -8 16 0q8 -8 16 0"/><path d="M1150 160q7 -7 14 0q7 -7 14 0"/></g>
-      <path data-p=".05" d="M0 480C120 440 230 462 340 430S560 396 700 424S980 456 1100 414S1330 392 1440 430V760H0Z" fill="#F0B88C" opacity=".85"/>
-      <g data-p=".08">
-        <path d="M820 540C930 458 1090 446 1190 468S1370 512 1440 530V760H820Z" fill="#B4552F"/>
-        <g fill="#7A3319"><path d="M990 488V430 h14v-9h14v9h14v-9h14v9h14v-9h14v9h14v-9h14v9h14v-9h14v9h14v-9h14v9h14v-9h14v9h14v-9h14v9h14v-9h14v9 V488Z"/>
-          <rect x="1005" y="384" width="32" height="46"/><path d="M1001 386Q1021 346 1041 386Z"/>
-          <rect x="1110" y="344" width="46" height="86"/><path d="M1104 346Q1133 288 1162 346Z"/><rect x="1131" y="270" width="3" height="22"/>
-          <rect x="1210" y="388" width="32" height="42"/><path d="M1206 390Q1226 352 1246 390Z"/></g>
-        <g fill="#F7C873"><rect x="1126" y="372" width="7" height="14"/><rect x="1138" y="372" width="7" height="14"/><rect x="1020" y="404" width="6" height="11"/></g>
-      </g>
-      <path data-p=".12" d="M0 556C150 500 300 548 470 522S770 470 910 512S1210 566 1440 508V760H0Z" fill="#D98A5B"/>
-      <path data-p=".16" d="M0 626C200 586 380 620 560 598S910 566 1110 606S1340 630 1440 600V760H0Z" fill="#2C5A41"/>
-      <g data-p=".2"><path d="M0 686C240 654 520 692 800 668S1250 662 1440 682V760H0Z" fill="#1B3B2B"/>
-        <g style="color:#10281C"><use href="#palm" transform="translate(70 716) scale(1.45)"/><use href="#palm" transform="translate(150 722) scale(.95)"/><use href="#palm" transform="translate(1370 712) scale(1.7)"/></g>
-        <rect y="722" width="1440" height="38" fill="#10241A"/>
-        <path d="M0 742H1440" stroke="#D4A359" stroke-width="3" stroke-dasharray="26 22" opacity=".8"/>
-        <g class="van" transform="translate(0 0)"><g transform="translate(0 692)">
-          <rect x="0" y="0" width="104" height="38" rx="8" fill="#FAF7F2"/><rect x="62" y="-8" width="40" height="12" rx="4" fill="#FAF7F2"/>
-          <g fill="#7FA9AB"><rect x="8" y="7" width="16" height="12" rx="2"/><rect x="28" y="7" width="16" height="12" rx="2"/><rect x="48" y="7" width="16" height="12" rx="2"/><rect x="70" y="7" width="26" height="12" rx="2"/></g>
-          <rect x="0" y="24" width="104" height="5" fill="#C85A32"/><circle cx="24" cy="40" r="8" fill="#1F2421"/><circle cx="82" cy="40" r="8" fill="#1F2421"/><circle cx="24" cy="40" r="3" fill="#bbb"/><circle cx="82" cy="40" r="3" fill="#bbb"/></g></g>
-      </g>
-    </svg>
-  </div>
   <div class="wrap hero-in">
+   <div class="hero-copy">
     <span class="stamp-line">Custom trip planner · Pune &amp; PCMC</span>
-    <h1 id="h1">Group trips from Pune, planned minute by minute.</h1>
-    <p class="sub">Time-stamped itineraries with exact train &amp; flight connections, local food maps and verified stays, for friend groups, families and weekend explorers.</p>
+    <h1 id="h1">Group trips from Pune, planned minute by minute around your budget.</h1>
+    <p class="sub">Time-stamped itineraries with exact train &amp; flight connections, local food maps and stays picked for your budget, for friend groups, families and weekend explorers.</p>
     <div class="cta-row">
       <a href="#planner" class="btn btn-primary">Get a Custom Itinerary</a>
       <a href="#sample" class="btn btn-ghost">View Sample Blueprint</a>
@@ -576,7 +544,13 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
         <button class="chip" data-dest="Goa">Goa</button><button class="chip" data-dest="Hampi–Gokarna">Hampi–Gokarna</button>
       </div>
     </div>
-    <p class="proof"><span><b>2</b> routes written up from real trips</span><span>Quote in <b>24 hours</b></span></p>
+    <p class="proof"><span><b>2</b> routes written up from real trips</span><span>Quote in <b>24 hours</b></span><span>No payment to enquire</span></p>
+   </div>
+   <div class="hero-photos" aria-label="Photos from our own trips">
+    <figure class="hpic a"><img src="img/trip-crew-560.webp" alt="A group of travellers standing with their motorbikes on a forest road" width="560" height="476" decoding="async" fetchpriority="high"><figcaption>The crew, mid-ride</figcaption></figure>
+    <figure class="hpic b"><img src="img/trip-kerala-480.webp" alt="Coconut palms along a river bank under heavy monsoon clouds" width="480" height="300" decoding="async"><figcaption>Kerala, monsoon light</figcaption></figure>
+    <figure class="hpic c"><img src="img/trip-goa-480.webp" alt="View over a sandy beach and calm sea from a hilltop" width="480" height="300" decoding="async"><figcaption>Goa, from the hilltop</figcaption></figure>
+   </div>
   </div>
 </section>
 
@@ -1038,12 +1012,6 @@ for (const [id, src] of Object.entries(CFG.photos)) {
   const art = $(`[data-photo="${id}"]`); if (!art || !/^[\w./-]+$/.test(src)) continue;
   const img = Object.assign(document.createElement("img"), { src, alt: art.querySelector("svg")?.getAttribute("aria-label") || "", loading: "lazy", width: 640, height: 400 });
   img.onload = () => art.querySelector("svg")?.replaceWith(img); // keep the illustration if the photo 404s
-}
-
-// hero parallax (skipped for reduced motion)
-if (!reduce) {
-  const layers = $$("[data-p]"), hero = $(".hero"); let tick = false;
-  addEventListener("scroll", () => { if (tick) return; tick = true; requestAnimationFrame(() => { const y = Math.min(scrollY, hero.offsetHeight); const small = matchMedia("(max-width:767px)").matches; layers.forEach(l => l.style.transform = small ? "" : `translateY(${y * l.dataset.p * -1}px)`); tick = false; }); }, { passive: true });
 }
 
 // reveal + count-up

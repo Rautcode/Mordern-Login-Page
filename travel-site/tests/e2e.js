@@ -141,11 +141,15 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     await rp.evaluate(() => document.getElementById('road').scrollIntoView()); await rp.waitForTimeout(1200);
     assert.equal(await rp.evaluate(() => [...document.querySelectorAll('.snap video')].every(v => v.controls && v.paused)), true, 'reduced motion: clips paused with controls'); await ctx.close(); }
   { const mp = await b.newPage({ viewport: { width: 390, height: 844 } }); await mp.goto(PAGE); await mp.evaluate(() => window.scrollTo(0, 300)); await mp.waitForTimeout(250);
-    assert.equal(await mp.evaluate(() => document.querySelector('[data-p]').style.transform), '', 'no scroll parallax on phones');
     assert.equal(await mp.textContent('#mbar-plan'), 'Plan My Trip'); await mp.evaluate(() => window.scrollTo(0, 0)); await mp.click('.chip[data-dest=Goa]'); await mp.waitForTimeout(200);
     const t = await mp.textContent('#mbar-plan'); assert.equal(t, 'Resume your plan →'); await mp.close();
     const dp = await b.newPage({ viewport: { width: 1280, height: 800 } }); await dp.goto(PAGE); await dp.evaluate(() => window.scrollTo(0, 300)); await dp.waitForTimeout(250);
-    assert((await dp.evaluate(() => document.querySelector('[data-p]').style.transform)).includes('translateY'), 'parallax on desktop'); await dp.close(); }
+    await dp.close(); }
+  // hero: the value, the action and our own photos are all in the first screen; the hero is made of real photos, not a drawing
+  for (const [w, h] of [[1280, 800], [390, 844], [768, 1024]]) { const pg = await b.newPage({ viewport: { width: w, height: h } }); await pg.goto(PAGE); await pg.waitForTimeout(700);
+    const m = await pg.evaluate(() => { const r = s => document.querySelector(s).getBoundingClientRect(); const imgs = [...document.querySelectorAll('.hero-photos img')].filter(i => i.offsetParent);
+      return { h1: r('.hero h1').bottom, cta: r('.hero .btn-primary').bottom, loaded: imgs.length > 0 && imgs.every(i => i.naturalWidth > 0), n: imgs.length, sw: document.documentElement.scrollWidth, svgScene: !!document.querySelector('.hero .scene') }; });
+    assert(m.cta <= h, `hero CTA is below the first screen at ${w}x${h}: ${JSON.stringify(m)}`); assert(m.loaded && m.n >= 2, `hero photos must load: ${JSON.stringify(m)}`); assert(m.sw <= w, `hero overflows sideways at ${w}: ${m.sw}`); assert(!m.svgScene); await pg.close(); }
   // real reviews appear only when supplied
   { const rp = await b.newPage({ viewport: { width: 1280, height: 800 } });
     await rp.addInitScript(() => { window.SITE_CONFIG = { reviews: [{ quote: '<b>Great</b> trip', name: 'Rohan K.', meta: 'Pune' }] }; }); await rp.goto(PAGE);
