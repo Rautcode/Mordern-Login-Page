@@ -12,6 +12,10 @@ create table if not exists leads (
   group_size           text,
   service              text not null check (service in ('blueprint','custom','complete')),
   budget               text,
+  utm_source           text,
+  utm_medium           text,
+  utm_campaign         text,
+  referrer             text,
   status               text not null default 'new' check (status in
                          ('new','generating','preview_ready','needs_manual','failed','quoted','paid','delivered','lost')),
   preview_pdf_path     text,
@@ -55,6 +59,8 @@ create unique index if not exists payments_one_active
 -- Existing database? run once:
 --   alter table leads alter column departure_city drop not null, alter column travel_dates drop not null,
 --     alter column group_size drop not null, alter column budget drop not null;
+--   alter table leads add column if not exists utm_source text, add column if not exists utm_medium text,
+--     add column if not exists utm_campaign text, add column if not exists referrer text;
 
 alter table leads        enable row level security;
 alter table itineraries  enable row level security;

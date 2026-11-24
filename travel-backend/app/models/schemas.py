@@ -38,8 +38,13 @@ class LeadCreate(BaseModel):
     service: Service
     budget: Budget | None = None
     website: str = Field(default="", max_length=200)  # honeypot: hidden field bots fill, humans don't
+    # lead source (campaign tags + referring hostname only; never a full URL)
+    utm_source: Text60 | None = None
+    utm_medium: Text60 | None = None
+    utm_campaign: Text60 | None = None
+    referrer: Text60 | None = None
 
-    @field_validator("name", "departure_city", "travel_dates")
+    @field_validator("name", "departure_city", "travel_dates", "utm_source", "utm_medium", "utm_campaign", "referrer")
     @classmethod
     def _no_control_chars(cls, v: str | None) -> str | None:
         return _CTRL.sub(" ", v).strip() if v else v

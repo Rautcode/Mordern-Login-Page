@@ -62,6 +62,12 @@ def esc(v: object) -> str:
     return html.escape(str(v), quote=True)
 
 
+def source_label(lead: dict) -> str:
+    parts = [lead.get("utm_source"), lead.get("utm_medium"), lead.get("utm_campaign")]
+    tag = " / ".join(p for p in parts if p)
+    return tag or (f"referral from {lead['referrer']}" if lead.get("referrer") else "direct")
+
+
 def fmt_new_lead(lead: dict) -> str:
     hello = f"Hi {lead['name']}! Thanks for your {lead['destination']} trip enquiry. I'm picking it up now."
     return (
@@ -70,6 +76,7 @@ def fmt_new_lead(lead: dict) -> str:
         f"{esc(lead['destination'])} from {esc(lead.get('departure_city') or '-')}\n"
         f"Dates: {esc(lead.get('travel_dates') or '-')} · Group: {esc(lead.get('group_size') or '-')} · Budget/pp (₹k): {esc(lead.get('budget') or '-')}\n"
         f"Service: {esc(lead['service'])}\n"
+        f"Source: {esc(source_label(lead))}\n"
         f'<a href="{esc(customer_wa_link(lead["phone"], hello))}">Reply on WhatsApp</a>\n'
         f"<code>{esc(lead['id'])}</code>"
     )

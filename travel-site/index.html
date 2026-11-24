@@ -984,6 +984,16 @@ const CFG = Object.assign({
 
 const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const track = (name, data = {}) => { try { window.gtag && gtag("event", name, data); } catch {} };
+// ===== lead source: first-touch campaign tags + referring HOSTNAME only, kept for this visit (sessionStorage) =====
+const ATTR = (() => {
+  try {
+    const old = JSON.parse(sessionStorage.getItem("attr") || "{}"), q = new URLSearchParams(location.search), c = v => (v || "").replace(/[^\w\-.~ %+@]/g, "").slice(0, 60);
+    let ref = ""; try { const h = new URL(document.referrer).hostname; if (h && h !== location.hostname) ref = c(h); } catch {}
+    const a = { ...old };
+    for (const [k, v] of Object.entries({ utm_source: c(q.get("utm_source")), utm_medium: c(q.get("utm_medium")), utm_campaign: c(q.get("utm_campaign")), referrer: ref })) if (v && !a[k]) a[k] = v;   // first touch wins
+    sessionStorage.setItem("attr", JSON.stringify(a)); return a;
+  } catch { return {}; }
+})();
 const waLink = text => `https://wa.me/${CFG.whatsapp}` + (text ? `?text=${encodeURIComponent(text)}` : "");
 const reduce = matchMedia("(prefers-reduced-motion:reduce)").matches;
 
@@ -1194,7 +1204,7 @@ form.addEventListener("submit", async ev => {
   busy = true; const btn = $("#submit"); btn.disabled = true; btn.textContent = "Sending…";
   let leadId = null, note = "";
   if (CFG.apiBase) {
-    try { leadId = (await api("/api/leads", v)).lead_id; track("generate_lead", { destination: v.destination, service: v.service }); }
+    try { leadId = (await api("/api/leads", { ...v, ...ATTR })).lead_id; track("generate_lead", { destination: v.destination, service: v.service }); }
     catch (err) { note = err.status === 429 ? "You've sent a few requests already. WhatsApp us below and we'll pick it up." : "We couldn't reach our planner just now. Your details are in the WhatsApp message below, so nothing is lost."; }
   }
   const rows = [["Name", v.name], ["WhatsApp", v.phone], ["Destination", v.destination], ["From", v.departure_city], ["Travel dates", v.travel_dates], ["Group size", v.group_size], ["Service", SVC[v.service]], ["Budget / person", BUDGET[v.budget]]];
@@ -1203,7 +1213,7 @@ form.addEventListener("submit", async ev => {
   $("#c-wa").href = waLink(["Hi! I'd like an instant quote.", "", ...rows.map(([k, val]) => `*${k}:* ${val}`), "", `Rough estimate: ${$("#est-main").textContent}`, leadId ? `Ref: ${leadId.slice(0, 8)}` : ""].join("\n").trim());
   buildNext(leadId, v, note);
   form.hidden = true; $("#confirm").hidden = false; $("#confirm").focus(); $("#confirm").scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
-  btn.disabled = false; btn.textContent = "Get my quote"; busy = false; try { sessionStorage.clear(); } catch {}
+  btn.disabled = false; btn.textContent = "Get my quote"; busy = false; try { sessionStorage.removeItem("draft"); } catch {}
 });
 const showForm = () => { form.hidden = false; $("#confirm").hidden = true; gotoStep(1); };
 $("#c-edit").onclick = showForm;
@@ -1257,7 +1267,7 @@ $("#dwform").addEventListener("submit", async ev => {
   if (!CFG.apiBase) { window.open(waLink(msg), "_blank", "noopener"); return; }   // WhatsApp-only mode
   btn.disabled = true; say("Opening secure checkout…");
   try {
-    const lead = await api("/api/leads", { name, phone, destination: t.dest, service: "blueprint", website: $("#dw-hp").value });
+    const lead = await api("/api/leads", { name, phone, destination: t.dest, service: "blueprint", website: $("#dw-hp").value, ...ATTR });
     const r = await api("/api/create-payment-link", { lead_id: lead.lead_id, kind: "blueprint", blueprint_id: t.bp });
     track("begin_checkout", { kind: "blueprint" }); location.assign(r.payment_url);
   } catch { btn.disabled = false; st.replaceChildren("We couldn't open checkout. ", Object.assign(document.createElement("a"), { href: waLink(msg), target: "_blank", rel: "noopener", textContent: "Order on WhatsApp instead →" })); }

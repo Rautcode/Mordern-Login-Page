@@ -55,6 +55,16 @@ def test_blueprint_lead_needs_only_contact_and_destination():
         LeadCreate(name="A", phone="9876543210", destination="Goa", service="complete", departure_city="Pune")
 
 
+def test_lead_source_fields_are_optional_bounded_and_cleaned():
+    base = dict(name="A", phone="9876543210", destination="Goa", service="blueprint")
+    ok = LeadCreate(utm_source="instagram", utm_medium="bio", utm_campaign="goa-dec", referrer="l.instagram.com", **base)
+    assert (ok.utm_source, ok.referrer) == ("instagram", "l.instagram.com")
+    assert LeadCreate(**base).utm_source is None
+    assert LeadCreate(utm_source="a\nb", **base).utm_source == "a b"          # control characters neutralised
+    with pytest.raises(ValidationError):
+        LeadCreate(utm_campaign="x" * 61, **base)
+
+
 def test_webhook_signature_and_endpoint_rejects_forgery():
     body = b'{"event":"payment_link.paid"}'
     good = hmac.new(b"whsec_test", body, hashlib.sha256).hexdigest()

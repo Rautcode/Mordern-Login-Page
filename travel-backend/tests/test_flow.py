@@ -145,6 +145,19 @@ def test_quick_blueprint_checkout_with_minimal_lead(env):
     assert c.post("/api/leads", json={"name": "Asha", "phone": "9876543210", "destination": "Goa", "service": "custom"}).status_code == 422
 
 
+def test_lead_source_is_stored_and_alerted(env):
+    c = env.c
+    r = c.post("/api/leads", json={**LEAD, "utm_source": "instagram", "utm_medium": "bio", "utm_campaign": "goa-dec", "referrer": "l.instagram.com"})
+    assert r.status_code == 201, r.text
+    row = env.db.tables["leads"][-1]
+    assert (row["utm_source"], row["utm_medium"], row["utm_campaign"], row["referrer"]) == ("instagram", "bio", "goa-dec", "l.instagram.com")
+    assert any("Source: instagram / bio / goa-dec" in a for a in env.alerts)
+    c.post("/api/leads", json={**LEAD, "referrer": "www.google.com"})
+    assert any("Source: referral from www.google.com" in a for a in env.alerts)
+    c.post("/api/leads", json=LEAD)
+    assert any("Source: direct" in a for a in env.alerts)
+
+
 def test_underpayment_is_not_marked_paid(env):
     c = env.c
     lid = c.post("/api/leads", json={**LEAD, "service": "blueprint"}).json()["lead_id"]

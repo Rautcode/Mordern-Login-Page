@@ -181,5 +181,33 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     assert(u.startsWith('https://wa.me/?text=') && u.includes('₹11,499') && u.includes('8–16 people'), u); await pop.close(); await pg.close(); }
   { const pg = await b.newPage({ viewport: { width: 1280, height: 900 } }); await pg.addInitScript(() => { window.SITE_CONFIG = { refundPolicy: '<b>x</b> Refunded if late.' }; }); await pg.goto(PAGE);
     assert.equal(await pg.locator('#refund').isVisible(), true); assert.equal(await pg.locator('#refund b').count(), 0, 'policy text is not HTML'); await pg.close(); }
+  // ---- lead source: campaign tags + referrer HOSTNAME, sanitised, first-touch, both lead forms ----
+  { const html = require('fs').readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8'); const calls = [];
+    const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } }); const pg = await ctx.newPage();
+    await pg.addInitScript(() => { window.SITE_CONFIG = { apiBase: 'http://api.test' }; });
+    await pg.route('http://site.test/**', r => r.fulfill({ contentType: 'text/html', body: html }));
+    await pg.route('http://api.test/**', async r => { let body = null; try { body = r.request().postDataJSON(); } catch {} calls.push([new URL(r.request().url()).pathname, body]);
+      await r.fulfill({ status: 201, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify({ lead_id: 'eeeeeeee-0000-0000-0000-000000000000', payment_url: 'https://rzp.io/i/x' }) }); });
+    await pg.route('https://rzp.io/**', r => r.abort());
+    await pg.goto('http://site.test/?utm_source=instagram&utm_medium=bio&utm_campaign=goa-dec%3Cscript%3Ealert(1)%3C%2Fscript%3E&fbclid=ignored', { referer: 'https://l.instagram.com/some/path?token=secret' });
+    await pg.reload();                                     // reload drops the referrer but the visit's first touch must survive
+    await pg.evaluate(() => document.querySelector('#planner').scrollIntoView());
+    await pg.click(chip('dest', 'Goa')); await pg.fill('#from', 'Pune'); await pg.fill('#when', 'Dec'); await pg.click('#submit');
+    await pg.click(chip('group', '3-6')); await pg.click(chip('budget', '5-10')); await pg.click('#submit');
+    await pg.fill('#name', 'Asha'); await pg.fill('#phone', '9876543210'); await pg.check('#consent'); await pg.click('#submit'); await pg.waitForSelector('#confirm:not([hidden])');
+    const lead = calls.find(c => c[0] === '/api/leads')[1];
+    assert.equal(lead.utm_source, 'instagram'); assert.equal(lead.utm_medium, 'bio'); assert.equal(lead.utm_campaign, 'goa-decscriptalert1script', 'hostile characters stripped');
+    assert(!/[<>()/]/.test(lead.utm_campaign)); assert.equal('fbclid' in lead, false);
+    assert.equal(lead.referrer, 'l.instagram.com', 'first touch survives reload; hostname only, no path or token');
+    // fresh visit: referrer kept as hostname only, with no path or token
+    const ctx2 = await b.newContext({ viewport: { width: 1280, height: 900 } }); const p2 = await ctx2.newPage(); calls.length = 0;
+    await p2.addInitScript(() => { window.SITE_CONFIG = { apiBase: 'http://api.test' }; });
+    await p2.route('http://site.test/**', r => r.fulfill({ contentType: 'text/html', body: html })); await p2.route('http://api.test/**', async r => { let body = null; try { body = r.request().postDataJSON(); } catch {} calls.push([new URL(r.request().url()).pathname, body]);
+      await r.fulfill({ status: 201, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify({ lead_id: 'ffffffff-0000-0000-0000-000000000000', payment_url: 'https://rzp.io/i/y' }) }); });
+    await p2.route('https://rzp.io/**', r => r.abort());
+    await p2.goto('http://site.test/', { referer: 'https://l.instagram.com/some/path?token=secret' });
+    await p2.evaluate(() => document.querySelector('[data-bp=goa]').click()); await p2.fill('#dw-name', 'Asha'); await p2.fill('#dw-phone', '9876543210'); await p2.check('#dw-consent'); await p2.click('#dw-pay'); await p2.waitForTimeout(400);
+    const dl = calls.find(c => c[0] === '/api/leads')[1]; assert.equal(dl.referrer, 'l.instagram.com', 'hostname only: no path, no token'); assert.equal('utm_source' in dl, false, 'untagged visit sends no campaign keys');
+    await ctx.close(); await ctx2.close(); }
   console.log('fallbacks OK'); console.log('errors:', errs); await b.close(); console.log('ALL OK');
 })().catch(e => { console.error('FAIL', e.message); process.exit(1); });
