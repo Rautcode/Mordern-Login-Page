@@ -295,5 +295,56 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     assert.deepEqual(bad, []); await ctx.close();
     ({ pg, ctx, bad } = await open(Date.parse(F.as_of) + (F.max_age_days + 1) * 864e5)); await set(pg, {}); await pg.waitForTimeout(400); assert.equal(await hint(pg), null, 'stale data is never shown'); await ctx.close();
     ({ pg, ctx, bad } = await open(fresh, null)); await set(pg, {}); await pg.waitForTimeout(400); assert.equal(await hint(pg), null, 'missing fares.json: silent'); assert.deepEqual(bad, [], 'and no errors'); await ctx.close(); }
+  // ---- pre-launch review regressions: blank tag, honest blueprint pricing, https-only checkout, resilient polling, header fit ----
+  { const fs = require('fs'); const root = path.join(__dirname, '..'); const types = { '.html': 'text/html', '.webp': 'image/webp', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png' };
+    const open = async (handler, { w = 1280, url = '/' } = {}) => {
+      const ctx = await b.newContext({ viewport: { width: w, height: 900 } }); const pg = await ctx.newPage(); const calls = []; let n = 0;
+      await pg.addInitScript(() => { window.SITE_CONFIG = { apiBase: 'http://api.test', pollMs: 40, pollMax: 12 }; });
+      await pg.route('http://site.test/**', r => { let f = path.join(root, decodeURIComponent(new URL(r.request().url()).pathname)); if (f.endsWith(path.sep)) f += 'index.html';
+        if (!fs.existsSync(f) || fs.statSync(f).isDirectory()) return r.fulfill({ status: 404, body: 'nf' }); r.fulfill({ contentType: types[path.extname(f)] || 'application/octet-stream', body: fs.readFileSync(f) }); });
+      await pg.route('http://api.test/**', async r => { let body = null; try { body = r.request().postDataJSON(); } catch {} const pth = new URL(r.request().url()).pathname; calls.push([pth, body]);
+        const out = handler(pth, body, ++n); if (out === 'abort') return r.abort();
+        await r.fulfill({ status: out[0], contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify(out[1]) }); });
+      await pg.route('https://rzp.io/**', r => r.abort()); await pg.goto('http://site.test' + url); return { pg, ctx, calls }; };
+    const ok = (extra = {}) => (p, body) => p === '/api/leads' ? [201, { lead_id: 'cccccccc-0000-0000-0000-000000000001' }] : p === '/api/create-payment-link' ? [201, { payment_url: extra.pay ?? 'https://rzp.io/i/ok' }] : [200, {}];
+    const toConfirm = async pg => { await pg.click('#submit'); await pg.waitForSelector('#confirm:not([hidden])'); };
+
+    // 1. a campaign tag that is only spaces must not reach the API (it used to be a 422 that lost the lead); a padded one is trimmed
+    let { pg, ctx, calls } = await open(ok(), { url: '/?utm_source=%20&utm_medium=+&utm_campaign=%20x%20' });
+    await toPlanner(pg); await fill(pg); await toConfirm(pg);
+    const l1 = calls.find(c => c[0] === '/api/leads')[1]; assert.equal('utm_source' in l1, false); assert.equal('utm_medium' in l1, false); assert.equal(l1.utm_campaign, 'x'); await ctx.close();
+
+    // 2. the blueprint price shown is the price charged, and a destination without one is blocked
+    ({ pg, ctx } = await open(ok())); await toPlanner(pg);
+    await pg.click(chip('dest', 'Rajasthan')); await pg.fill('#from', 'Pune'); await pg.fill('#when', 'Dec'); await pg.click(chip('travel', 'train')); await pg.click('#submit');
+    await pg.click('label.radio:has(input[value=blueprint])'); await pg.click(chip('group', '3-6')); await pg.click(chip('budget', '5-10'));
+    assert.equal(await pg.textContent('#est-main'), '₹799'); assert.equal(await pg.textContent('#bp-lbl'), '(₹799)');
+    await pg.click('#back'); await pg.click(chip('dest', 'Goa')); await pg.click('#submit'); assert.equal(await pg.textContent('#est-main'), '₹699'); assert.equal(await pg.textContent('#bp-lbl'), '(₹699)');
+    await pg.click('#back'); await pg.click(chip('dest', 'Konkan')); assert.equal(await pg.textContent('#est-main'), 'Not available');
+    await pg.click('#submit'); await pg.click('#submit');
+    assert((await pg.textContent('.err[data-for=service]')).includes('No ready blueprint') && (await pg.textContent('#step-label')).startsWith('Step 2'), 'blocked on step 2'); await ctx.close();
+
+    // 3. the page says what really happens after payment, shows the price on the button, and only ever navigates to https
+    let pay = 'javascript:window.__x=1';
+    ({ pg, ctx, calls } = await open((p, body, n) => ok({ pay })(p, body))); await toPlanner(pg); await fill(pg, { svc: 'blueprint', dest: 'Goa' }); await toConfirm(pg);
+    const nxt = await pg.textContent('#next'); assert(nxt.includes('We send the PDF to your WhatsApp after payment.') && !/instant/i.test(nxt), nxt);
+    await pg.click('#next button:has-text("Buy Goa blueprint · ₹699")'); await pg.waitForFunction(() => document.querySelector('#next').textContent.includes("Couldn't open checkout"));
+    assert.equal(await pg.evaluate(() => window.__x), undefined, 'javascript: URL never ran'); assert(pg.url().startsWith('http://site.test'), 'did not navigate');
+    pay = 'http://evil.test/pay'; await pg.click('#next button:has-text("Buy Goa blueprint")'); await pg.waitForTimeout(300); assert(pg.url().startsWith('http://site.test'), 'plain http is refused too'); await ctx.close();
+
+    // 4. one aborted status request while polling must not hide a finished preview
+    let st = 0;
+    ({ pg, ctx } = await open((p, body, n) => p === '/api/leads' ? [201, { lead_id: 'cccccccc-0000-0000-0000-000000000004' }] : p === '/api/generate-preview' ? [202, { status: 'generating' }]
+      : p.endsWith('/status') ? (++st === 1 ? 'abort' : st === 2 ? [200, { status: 'generating' }] : [200, { status: 'preview_ready', preview_url: 'https://signed.test/x.pdf' }]) : [200, {}]));
+    await toPlanner(pg); await fill(pg); await toConfirm(pg); await pg.click('#next button:has-text("Generate my free preview")');
+    await pg.waitForFunction(() => document.querySelector('#next').textContent.includes('Your preview is ready'), null, { timeout: 8000 }); assert(st >= 3, 'kept polling through the blip'); await ctx.close();
+
+    // 5. the header fits at 320 and 390px with a long real-world brand name, on the home page and a route page
+    for (const w of [320, 390]) for (const u of ['/', '/rajasthan-trip-from-pune/']) {
+      ({ pg, ctx } = await open(ok(), { w, url: u }));
+      await pg.evaluate(() => document.querySelectorAll('.hdr .logo').forEach(l => { l.lastChild.textContent = 'The Very Long Brand Name Travel Co.'; }));
+      const m = await pg.evaluate(() => { const vis = [...document.querySelectorAll('.hdr a, .hdr button')].filter(e => e.offsetParent !== null);
+        return { right: Math.max(...vis.map(e => e.getBoundingClientRect().right)), w: innerWidth, sw: document.documentElement.scrollWidth }; });
+      assert(m.right <= m.w + 0.5 && m.sw <= m.w, `header overflows at ${w}px on ${u}: ${JSON.stringify(m)}`); await ctx.close(); } }
   console.log('fallbacks OK'); console.log('errors:', errs); await b.close(); console.log('ALL OK');
 })().catch(e => { console.error('FAIL', e.message); process.exit(1); });

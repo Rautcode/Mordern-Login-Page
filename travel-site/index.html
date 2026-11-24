@@ -124,6 +124,8 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
   .links.open{display:flex}.links a{padding:14px 0;border-bottom:1px dashed var(--line)}
   #burger{display:grid}.nav-cta .btn{padding:10px 16px;min-height:44px;white-space:nowrap}
 }
+@media(max-width:380px){.nav-cta>.btn-primary{display:none}.logo{font-size:1rem;line-height:1.1}.nav{gap:8px}}   /* the bottom bar already has Plan My Trip */
+.nav>.logo{min-width:0}
 @media(max-width:480px){.nav-cta .wa-link{display:none}.logo{font-size:1.1rem;gap:7px}.logo svg{width:28px;height:28px}.nav-cta{gap:8px}.nav-cta .btn{font-size:.85rem;padding:8px 14px}}
 
 /* hero: the scenery is the design */
@@ -796,8 +798,8 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
     <div class="tickets">
       <article class="tk reveal"><div>
         <h3>Ready-Made Proven Blueprint</h3>
-        <div class="amt">₹699 – ₹999<small>ONE-TIME</small></div>
-        <ul><li>Instant PDF download of our tested Rajasthan, Kerala, Goa, or Hampi–Gokarna routes</li><li>Exact train/flight numbers, hotel area recommendations, food master list, packing checklist</li></ul>
+        <div class="amt">₹699 – ₹799<small>ONE-TIME</small></div>
+        <ul><li>PDF sent to your WhatsApp after payment: our tested Rajasthan, Kerala, Goa, or Hampi–Gokarna routes</li><li>Exact train/flight numbers, hotel area recommendations, food master list, packing checklist</li></ul>
         <button class="btn btn-ghost btn-block" data-plan="blueprint">Buy Ready Blueprint</button></div></article>
       <article class="tk pop reveal"><div>
         <span class="seal">MOST POPULAR</span>
@@ -851,9 +853,9 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
             <div class="pick" role="radiogroup" aria-label="Group size"><label class="pk"><input type="radio" name="group" value="1-2"><span>1–2</span></label><label class="pk"><input type="radio" name="group" value="3-6"><span>3–6</span></label><label class="pk"><input type="radio" name="group" value="7-12"><span>7–12</span></label><label class="pk"><input type="radio" name="group" value="13+"><span>13+</span></label></div><div class="err" data-for="group"></div>
             <label class="lbl" style="margin-top:18px">What do you need?</label>
             <div class="radios">
-              <label class="radio"><input type="radio" name="service" value="blueprint">Ready Blueprint (₹699)</label>
+              <label class="radio"><input type="radio" name="service" value="blueprint">Ready Blueprint <span id="bp-lbl">(₹699–₹799)</span></label>
               <label class="radio"><input type="radio" name="service" value="custom" checked>Custom PDF Plan (₹2,499)</label>
-              <label class="radio"><input type="radio" name="service" value="complete">Complete All-Inclusive Package</label></div>
+              <label class="radio"><input type="radio" name="service" value="complete">Complete All-Inclusive Package</label></div><div class="err" data-for="service"></div>
             <label class="lbl" style="margin-top:18px">Approximate budget per person</label>
             <div class="pick" role="radiogroup" aria-label="Budget per person"><label class="pk"><input type="radio" name="budget" value="5-10"><span>₹5k–₹10k</span></label><label class="pk"><input type="radio" name="budget" value="10-18"><span>₹10k–₹18k</span></label><label class="pk"><input type="radio" name="budget" value="18+"><span>₹18k+</span></label></div><div class="err" data-for="budget"></div>
             <details class="tailor"><summary><span>Help us tailor it <small>optional, takes 30 seconds</small></span></summary>
@@ -887,7 +889,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
           <h3>Got it, <span id="c-name"></span>. One tap to finish.</h3>
           <dl id="c-list"></dl>
           <ol class="nextsteps"><li><b>Tap the WhatsApp button</b> so we get your details instantly.</li><li><b>See Day 1 free</b> if your route is covered.</li><li><b>Get your firm quote within 24 hours.</b> Pay only to unlock the full plan.</li></ol>
-          <a class="btn btn-wa btn-block" id="c-wa" target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg>Send details on WhatsApp for instant quote</a>
+          <a class="btn btn-wa btn-block" id="c-wa" target="_blank" rel="noopener"><svg class="i"><use href="#i-chat"/></svg>Send details on WhatsApp</a>
           <div class="next" id="next" hidden></div>
           <button class="btn btn-ghost btn-block" id="c-edit" style="margin-top:12px" type="button">Edit details</button>
         </div>
@@ -963,7 +965,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
 <dialog id="d-dw" class="sheet" aria-labelledby="dw-t">
   <div class="dh"><h3 id="dw-t"></h3><button data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
   <div class="db">
-    <p><b id="dw-price" style="font:400 2rem var(--serif);color:var(--terra-d)"></b> <span class="note">one-time PDF · instant download after payment</span></p>
+    <p><b id="dw-price" style="font:400 2rem var(--serif);color:var(--terra-d)"></b> <span class="note">one-time PDF · sent to your WhatsApp after payment</span></p>
     <div id="dw-prev"></div>
     <div><h4 style="font:500 .78rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--terra-d);margin-bottom:8px">What's inside</h4><ul id="dw-inc" style="padding-left:18px;display:grid;gap:6px"></ul></div>
     <form id="dwform" novalidate>
@@ -1009,7 +1011,7 @@ const track = (name, data = {}) => { try { window.gtag && gtag("event", name, da
 // ===== lead source: first-touch campaign tags + referring HOSTNAME only, kept for this visit (sessionStorage) =====
 const ATTR = (() => {
   try {
-    const old = JSON.parse(sessionStorage.getItem("attr") || "{}"), q = new URLSearchParams(location.search), c = v => (v || "").replace(/[^\w\-.~ %+@]/g, "").slice(0, 60);
+    const old = JSON.parse(sessionStorage.getItem("attr") || "{}"), q = new URLSearchParams(location.search), c = v => (v || "").replace(/[^\w\-.~ %+@]/g, "").slice(0, 60).trim();
     let ref = ""; try { const h = new URL(document.referrer).hostname; if (h && h !== location.hostname) ref = c(h); } catch {}
     const a = { ...old };
     for (const [k, v] of Object.entries({ utm_source: c(q.get("utm_source")), utm_medium: c(q.get("utm_medium")), utm_campaign: c(q.get("utm_campaign")), referrer: ref })) if (v && !a[k]) a[k] = v;   // first touch wins
@@ -1104,7 +1106,7 @@ $$(".zoomable").forEach(b => b.onclick = () => { const z = Object.assign(new Ima
 $("#late").onclick = e => { const on = e.currentTarget.getAttribute("aria-pressed") !== "true"; e.currentTarget.setAttribute("aria-pressed", on); $("#ticket").classList.toggle("is-late", on); $("#late-note").hidden = !on; $("#late-label").textContent = on ? "Back on schedule" : "We're running 90 minutes late"; track("sample_cutlist_toggle"); };
 
 // ===== route data (modal) =====
-const INC = ["Instant PDF download", "Exact train/flight numbers & timings", "Hotel area recommendations", "Food master list ('EAT' tags)", "Packing checklist"];
+const INC = ["PDF sent to your WhatsApp after payment", "Exact train/flight numbers & timings", "Hotel area recommendations", "Food master list ('EAT' tags)", "Packing checklist"];
 const EXE = ["Stays + Tempo Traveller/cab booking", "Verified local ground coordinator", "Final inclusions confirmed in your quote", "50% advance to confirm"];
 const TRIPS = {
   rajasthan: { title: "Jaipur → Jaisalmer → Jodhpur (6D/5N)", dest: "Rajasthan", people: "8–16", from: 11499, bp: "rajasthan", price: 799, sum: "Blueprint ₹799 · Custom Group Execution from ₹11,499/person", days: ["Day 1: Overnight train 12955, Mumbai Central → Jaipur", "Day 2: Jaipur: Amer Fort and the Sheesh Mahal, Hawa Mahal at night, street-food crawl", "Day 3: Jaipur: City Palace, Jantar Mantar, Nahargarh lunch, then train 12468 to Jaisalmer", "Day 4: Jaisalmer Fort, Patwon ki Haveli, Kuldhara, Sam Sand Dunes camp", "Day 5: Drive to Jodhpur (NH125), Flying Fox at Mehrangarh, Jaswant Thada, then train 20495 to Pune", "Day 6: Arrive Pune Junction, 16:40"] },
@@ -1151,7 +1153,8 @@ $$("[data-dest]").forEach(b => b.onclick = () => plan(null, b.dataset.dest));
 
 const inr = n => "₹" + n.toLocaleString("en-IN");
 const G = { "1-2": [1, 2], "3-6": [3, 6], "7-12": [7, 12], "13+": [13, null] }, B = { "5-10": [5000, 10000], "10-18": [10000, 18000], "18+": [18000, null] };
-const SVC = { blueprint: "Ready Blueprint (₹699)", custom: "Custom PDF Plan (₹2,499)", complete: "Complete All-Inclusive Package" };
+const bpPrice = d => Object.values(TRIPS).find(t => t.dest === d)?.price;   // what the backend will charge for that destination's blueprint
+const SVC = { custom: "Custom PDF Plan (₹2,499)", complete: "Complete All-Inclusive Package" };
 const BUDGET = { "5-10": "₹5k–₹10k", "10-18": "₹10k–₹18k", "18+": "₹18k+" };
 const TRAVEL = { train: "Train", flight: "Flight", road: "Road trip", flexible: "Not sure, advise me" };
 const GTYPE = { friends: "Friends", family: "Family", colleagues: "Colleagues", other: "Other" };
@@ -1184,11 +1187,17 @@ function fareHint() {
 }
 function updateEst() { _updateEst(); syncBar(); const f = $("#est-fare"), t = fareHint(); f.textContent = t; f.hidden = !t; }
 function _updateEst() {
-  const v = form.elements, svc = v.service.value, g = G[v.group.value], b = B[v.budget.value];
+  const v = form.elements, bpp = bpPrice(v.dest.value);
+  $("#bp-lbl").textContent = !v.dest.value ? "(₹699–₹799)" : bpp ? `(₹${bpp})` : "(not available for this destination)";
+  const svc = v.service.value, g = G[v.group.value], b = B[v.budget.value];
   $("#bp-from").textContent = v.from.value.trim().slice(0, 14) || "Pune"; $("#bp-to").textContent = v.dest.value || "Anywhere";
   $("#bp-group").textContent = v.group.value || "—"; $("#bp-svc").textContent = { blueprint: "Blueprint", custom: "Custom plan", complete: "Full package" }[svc];
   const main = $("#est-main"), sub = $("#est-sub");
-  if (svc === "blueprint") { main.textContent = "₹699 – ₹999"; sub.textContent = "One-time PDF of a ready-made route. Trip cost is separate and yours to book."; return; }
+  if (svc === "blueprint") {
+    const bp = bpPrice(v.dest.value);
+    main.textContent = bp ? "₹" + bp : v.dest.value ? "Not available" : "₹699 – ₹799";
+    sub.textContent = v.dest.value && !bp ? "We have no ready blueprint for this destination yet. Pick Custom PDF Plan and we'll plan it for you."
+      : "One-time PDF of a ready-made route, sent to your WhatsApp after payment. Trip cost is separate and yours to book."; return; }
   main.textContent = svc === "custom" ? "₹2,499" : "Custom quote";
   let trip = " Add group size and budget for a trip-cost range.";
   if (g && b) { const lo = b[0] * g[0], hi = g[1] && b[1] ? b[1] * g[1] : null; trip = ` Indicative trip spend for your group: ${hi ? `${inr(lo)} – ${inr(hi)}` : `${inr(lo)}+`}.`; }
@@ -1197,7 +1206,7 @@ function _updateEst() {
 form.addEventListener("input", () => { engaged = true; updateEst(); });
 
 // ===== 3-step form: fewer fields per screen, tap-chips, saved draft =====
-const STEPS = [null, ["dest", "from", "when", "travel"], ["group", "budget"], ["name", "phone", "consent"]];
+const STEPS = [null, ["dest", "from", "when", "travel"], ["group", "service", "budget"], ["name", "phone", "consent"]];
 const STEP_LABEL = ["", "Where & when", "Who's going", "Where to send it"];
 let step = 1;
 function gotoStep(n) {
@@ -1225,6 +1234,7 @@ function validate() {
   if (!v.travel_dates) e.when = "Add a month or dates.";
   if (!v.travel_mode) e.travel = "Choose how you will travel.";
   if (!v.group_size) e.group = "Select group size.";
+  if (v.service === "blueprint" && v.destination && !bpPrice(v.destination)) e.service = "No ready blueprint for this destination yet. Choose Custom PDF Plan.";
   if (!v.budget) e.budget = "Select a budget band.";
   if (!f.consent.checked) e.consent = "Please tick to continue.";
   return { v, e };
@@ -1240,6 +1250,7 @@ async function api(path, body) {
   } finally { clearTimeout(t); }
 }
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+const goPay = u => { if (!/^https:\/\//.test(u)) throw new Error("unexpected payment URL"); location.assign(u); };   // never navigate to anything but https
 
 let busy = false;
 form.addEventListener("submit", async ev => {
@@ -1256,10 +1267,10 @@ form.addEventListener("submit", async ev => {
     try { leadId = (await api("/api/leads", { ...v, ...ATTR })).lead_id; track("generate_lead", { destination: v.destination, service: v.service }); }
     catch (err) { note = err.status === 429 ? "You've sent a few requests already. WhatsApp us below and we'll pick it up." : "We couldn't reach our planner just now. Your details are in the WhatsApp message below, so nothing is lost."; }
   }
-  const rows = [["Name", v.name], ["WhatsApp", v.phone], ["Destination", v.destination], ["From", v.departure_city], ["Travel by", TRAVEL[v.travel_mode]], ["Travel dates", v.travel_dates], ["Group size", v.group_size], ["Service", SVC[v.service]], ["Budget / person", BUDGET[v.budget]], ...extraRows(v)];
+  const rows = [["Name", v.name], ["WhatsApp", v.phone], ["Destination", v.destination], ["From", v.departure_city], ["Travel by", TRAVEL[v.travel_mode]], ["Travel dates", v.travel_dates], ["Group size", v.group_size], ["Service", v.service === "blueprint" ? `Ready Blueprint (${bpPrice(v.destination) ? "₹" + bpPrice(v.destination) : "not available for this destination"})` : SVC[v.service]], ["Budget / person", BUDGET[v.budget]], ...extraRows(v)];
   $("#c-name").textContent = v.name.split(" ")[0];
   $("#c-list").replaceChildren(...rows.flatMap(([k, val]) => [Object.assign(document.createElement("dt"), { textContent: k }), Object.assign(document.createElement("dd"), { textContent: val })]));
-  $("#c-wa").href = waLink(["Hi! I'd like an instant quote.", "", ...rows.map(([k, val]) => `*${k}:* ${val}`), "", `Rough estimate: ${$("#est-main").textContent}`, leadId ? `Ref: ${leadId.slice(0, 8)}` : ""].join("\n").trim());
+  $("#c-wa").href = waLink(["Hi! I'd like a quote for this trip.", "", ...rows.map(([k, val]) => `*${k}:* ${val}`), "", `Rough estimate: ${$("#est-main").textContent}`, leadId ? `Ref: ${leadId.slice(0, 8)}` : ""].join("\n").trim());
   buildNext(leadId, v, note);
   form.hidden = true; $("#confirm").hidden = false; $("#confirm").focus(); $("#confirm").scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
   btn.disabled = false; btn.textContent = "Get my quote"; busy = false; try { sessionStorage.removeItem("draft"); } catch {}
@@ -1277,9 +1288,9 @@ function buildNext(leadId, v, note) {
   if (note) { box.hidden = false; say(note); return; }
   if (!leadId) return;
   box.hidden = false;
-  const pay = (kind, label) => async b => { b.disabled = true; try { const r = await api("/api/create-payment-link", { lead_id: leadId, kind, blueprint_id: BP_ID[v.destination] }); track("begin_checkout", { kind }); location.assign(r.payment_url); } catch { b.disabled = false; say("Couldn't open checkout. Please use WhatsApp above."); } };
+  const pay = (kind, label) => async b => { b.disabled = true; try { const r = await api("/api/create-payment-link", { lead_id: leadId, kind, blueprint_id: BP_ID[v.destination] }); track("begin_checkout", { kind }); goPay(r.payment_url); } catch { b.disabled = false; say("Couldn't open checkout. Please use WhatsApp above."); } };
 
-  if (v.service === "blueprint" && BP_ID[v.destination]) { say("Instant download after payment."); btn(`Buy ${v.destination} blueprint`, "btn-primary", e => pay("blueprint")(e.currentTarget)); return; }
+  if (v.service === "blueprint" && BP_ID[v.destination]) { say("We send the PDF to your WhatsApp after payment."); btn(`Buy ${v.destination} blueprint · ₹${bpPrice(v.destination)}`, "btn-primary", e => pay("blueprint")(e.currentTarget)); return; }
   if (v.service !== "blueprint" && HAS_KB.has(v.destination)) {
     say("Want to see the quality first? Get a free preview of your itinerary.");
     const go = btn("Generate my free preview", "btn-primary", async () => {
@@ -1287,8 +1298,10 @@ function buildNext(leadId, v, note) {
       try {
         const r = await api("/api/generate-preview", { lead_id: leadId });
         if (r.status === "needs_manual") { say("We'll plan this one by hand and WhatsApp you shortly."); return; }
-        for (let i = 0; i < CFG.pollMax; i++) {
-          const s = await api(`/api/leads/${leadId}/status`);
+        for (let i = 0, fails = 0; i < CFG.pollMax; i++) {
+          let s;
+          try { s = await api(`/api/leads/${leadId}/status`); fails = 0; }
+          catch (err) { if ((err.status && err.status < 500) || ++fails > 3) throw err; await sleep(CFG.pollMs); continue; }   // retry network blips and 5xx only
           if (s.preview_url) { say("Your preview is ready."); track("preview_ready"); link("Open preview PDF (Day 1)", s.preview_url); btn("Share with your group", "btn-ghost", () => shareText(planPitch(v))); if (v.service === "custom") btn("Unlock the full plan · ₹2,499", "btn-primary", e => pay("custom_plan")(e.currentTarget)); return; }
           if (s.status === "failed" || s.status === "needs_manual") { say("We'll finish this plan by hand and WhatsApp you shortly."); return; }
           await sleep(CFG.pollMs);
@@ -1318,7 +1331,7 @@ $("#dwform").addEventListener("submit", async ev => {
   try {
     const lead = await api("/api/leads", { name, phone, destination: t.dest, service: "blueprint", website: $("#dw-hp").value, ...ATTR });
     const r = await api("/api/create-payment-link", { lead_id: lead.lead_id, kind: "blueprint", blueprint_id: t.bp });
-    track("begin_checkout", { kind: "blueprint" }); location.assign(r.payment_url);
+    track("begin_checkout", { kind: "blueprint" }); goPay(r.payment_url);
   } catch { btn.disabled = false; st.replaceChildren("We couldn't open checkout. ", Object.assign(document.createElement("a"), { href: waLink(msg), target: "_blank", rel: "noopener", textContent: "Order on WhatsApp instead →" })); }
 });
 // From a route page's "Plan this trip": ?trip=rajasthan preselects the destination. Runs last so TRIPS and the form exist.

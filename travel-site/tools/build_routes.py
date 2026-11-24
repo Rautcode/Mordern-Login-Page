@@ -84,7 +84,7 @@ def page(r, css, attr, logo):
 <header class="hdr solid">
   <div class="wrap nav">
     <a href="../" class="logo" aria-label="[BRAND_NAME] home">{logo}</a>
-    <div class="nav-cta"><a class="btn btn-ghost" href="{wa}" target="_blank" rel="noopener">WhatsApp</a><a href="{plan}" class="btn btn-primary">Plan this trip</a></div>
+    <div class="nav-cta"><a class="btn btn-ghost wa-link" href="{wa}" target="_blank" rel="noopener">WhatsApp</a><a href="{plan}" class="btn btn-primary">Plan this trip</a></div>
   </div>
 </header>
 <main id="main">

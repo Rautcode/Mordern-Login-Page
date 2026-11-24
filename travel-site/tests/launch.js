@@ -30,6 +30,14 @@ fs.mkdirSync(path.join(tmp, 'precious')); fs.writeFileSync(path.join(tmp, 'preci
 assert.notEqual(run(bf, '--out', path.join(tmp, 'precious')).status, 0, 'refuses to overwrite a folder it did not create'); assert(fs.existsSync(path.join(tmp, 'precious', 'keep.txt')));
 const noUd = path.join(tmp, 'nu.json'); fs.writeFileSync(noUd, JSON.stringify({ ...brand, udyam: '' })); assert.equal(run(noUd, '--out', path.join(tmp, 'nu-out')).status, 0);
 assert(!fs.readFileSync(path.join(tmp, 'nu-out', 'index.html'), 'utf8').includes('class="udyam"'), 'badge hidden when no Udyam number');
+// brand text is JSON-escaped inside structured data and HTML-escaped in the page, even with quotes, & and <
+const odd = path.join(tmp, 'odd.json'); fs.writeFileSync(odd, JSON.stringify({ ...brand, brand: 'Acme & "Sons" <b>' })); assert.equal(run(odd, '--out', path.join(tmp, 'odd-out')).status, 0);
+const oddHtml = fs.readFileSync(path.join(tmp, 'odd-out', 'index.html'), 'utf8');
+assert.equal(JSON.parse(oddHtml.match(/<script type="application\/ld\+json">([\s\S]*?)<\/script>/)[1]).name, 'Acme & "Sons" <b>', 'structured data keeps the real brand name');
+assert(oddHtml.includes('Acme &amp; &quot;Sons&quot; &lt;b&gt;') && !oddHtml.includes('<b>Acme'), 'page text is HTML-escaped');
+// a missing or malformed brand file gives a clear message, not a Python traceback
+fs.writeFileSync(path.join(tmp, 'mal.json'), '{not json');
+for (const f of [path.join(tmp, 'nope.json'), path.join(tmp, 'mal.json')]) { const x = run(f, '--out', path.join(tmp, 'x-out')); assert.notEqual(x.status, 0); assert(/cannot read/.test(x.stderr) && !/Traceback/.test(x.stderr), x.stderr); }
 
 // 3. serve dist WITH its headers and drive real flows
 const hdr = {}; let cur = null; for (const line of headers.split('\n')) { if (/^\//.test(line)) cur = line.trim(); else if (/^\s+\S/.test(line) && cur === '/*') { const [k, ...v] = line.trim().split(': '); hdr[k] = v.join(': '); } }
@@ -47,7 +55,7 @@ const srv = http.createServer((q, s) => { let f = path.join(out, decodeURICompon
   await p.addInitScript(() => addEventListener('securitypolicyviolation', e => (window.__csp = (window.__csp || []).concat(e.violatedDirective + ' ' + e.blockedURI))));
   await p.route('https://api.example.org/**', r => { const u = new URL(r.request().url()); r.fulfill({ status: u.pathname === '/api/leads' ? 201 : 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify(u.pathname === '/api/leads' ? { lead_id: 'dddddddd-0000-0000-0000-000000000000' } : { status: 'generating' }) }); });
   await p.goto(base + '/'); await p.waitForLoadState('networkidle');
-  const resp = await p.request.get(base + '/'); for (const k of ['content-security-policy', 'x-content-type-options', 'referrer-policy', 'permissions-policy']) assert(resp.headers()[k], k + ' header served');
+  const resp = await p.request.get(base + '/'); for (const k of ['content-security-policy', 'x-content-type-options', 'strict-transport-security', 'referrer-policy', 'permissions-policy']) assert(resp.headers()[k], k + ' header served');
   assert((await p.title()).includes('Test & Co'), 'brand in title'); assert.equal(await p.locator('#tel').isVisible(), true, 'real number shows the header phone link');
   assert((await p.getAttribute('#tel', 'href')) === 'tel:+919876543210');
   // real flows under the CSP: popup, drawer, planner -> backend funnel (fetch allowed to api_base only)

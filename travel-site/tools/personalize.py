@@ -23,7 +23,12 @@ def die(msg):
 
 
 def load(path, allow_example):
-    b = json.loads(Path(path).read_text(encoding="utf-8"))
+    try:
+        b = json.loads(Path(path).read_text(encoding="utf-8"))
+    except (OSError, ValueError) as e:
+        die(f"cannot read {path} as JSON ({e})")
+    if not isinstance(b, dict):
+        die(f"{path} must contain a JSON object")
     need = ["brand", "domain", "whatsapp", "instagram", "founder"]
     miss = [k for k in need if not str(b.get(k, "")).strip()]
     if miss:
@@ -50,6 +55,11 @@ def load(path, allow_example):
 
 
 def fill(text, b):
+    # Brand and founder inside JSON-LD must be JSON-escaped, not HTML-escaped (&amp; would show up literally in structured data).
+    jesc = lambda v: json.dumps(v, ensure_ascii=False)[1:-1].replace("<", "\\u003c")
+    text = re.sub(r'(<script type="application/ld\+json">)(.*?)(</script>)',
+                  lambda m: m.group(1) + m.group(2).replace("[BRAND_NAME]", jesc(b["brand"])).replace("[FOUNDER_NAME]", jesc(b["founder"])) + m.group(3),
+                  text, flags=re.S)
     esc = lambda v: v.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;").replace('"', "&quot;")
     pairs = [("+91XXXXXXXXXX", b["phone"]), ("91XXXXXXXXXX", b["whatsapp"]), ("YOUR-DOMAIN.com", b["domain"]),
              ("[BRAND_NAME]", esc(b["brand"])), ("[INSTAGRAM_HANDLE]", b["instagram"]), ("[FOUNDER_NAME]", esc(b["founder"])),
@@ -98,6 +108,8 @@ def main():
             continue
         if src.suffix in TEXT:
             text = fill(src.read_text(encoding="utf-8"), b)
+            if name == "index.html" and b["api_base"] and f'apiBase: "{b["api_base"]}"' not in text:
+                die('api_base was not applied: index.html no longer contains \'apiBase: "",\' (update personalize.py to match)')
             if name == "sitemap.xml":
                 text = re.sub(r"<lastmod>.*?</lastmod>", f"<lastmod>{datetime.date.today().isoformat()}</lastmod>", text)
             (out / name).parent.mkdir(parents=True, exist_ok=True)

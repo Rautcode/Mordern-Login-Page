@@ -87,6 +87,7 @@ const mk = (o) => ({ departure_city: 'Pune', travel_dates: 'Dec', group_size: '7
   await p.evaluate(() => sessionStorage.setItem('adminKey', 'expired')); await p.reload(); await p.waitForFunction(() => document.querySelector('#login-msg').textContent.length > 0); assert(await p.isVisible('#login'));
   assert.deepEqual(await p.evaluate(() => window.__csp || []), [], 'no CSP violations'); assert.deepEqual(errs, []);
   // pure helpers
+  assert.equal(await p.evaluate(() => __console.roundingOf({ total: 3806, subtotal: 3623, gst: 181 })), 2);
   const h = await p.evaluate(() => ({ s: __console.sourceOf({ referrer: 'x.com' }), w: __console.waLink({ phone: 'abc', name: 'A', destination: 'Goa' }), m: __console.matches({ name: 'Ann', phone: '1', destination: 'Goa' }, 'GOA') }));
   assert.deepEqual(h, { s: 'referral: x.com', w: null, m: true });
   console.log('ADMIN OK: auth, hostile input, sources, WhatsApp links, status, quote lock, a11y, CSP'); await b.close();
