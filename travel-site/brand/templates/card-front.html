@@ -1,0 +1,10 @@
+<!doctype html><meta charset="utf-8"><title>business card front</title><link rel="stylesheet" href="base.css">
+<style>
+/* 89 x 51 mm card with 3 mm bleed = 95 x 57 mm. Keep text inside the inner 83 x 45 mm. */
+@page{size:95mm 57mm;margin:0}
+body{width:95mm;height:57mm;background:var(--forest);position:relative;overflow:hidden}
+body::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 92% 8%,rgba(232,84,30,.22),transparent 45%)}
+.logo{position:absolute;left:50%;top:50%;width:60mm;transform:translate(-50%,-56%)}
+.tag{position:absolute;left:0;right:0;bottom:7mm;text-align:center;font:500 5.4pt 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--dune)}
+</style>
+<body><img class="logo" src="../ghumoco-logo-reversed.svg" alt=""><div class="tag">{{tagline_short}}</div>

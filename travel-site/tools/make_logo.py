@@ -56,5 +56,12 @@ out.mkdir(exist_ok=True)
 (out / "ghumoco-mark-light.svg").write_text(svg(100, 100, mark(FOREST, ORANGE), "GhumoCo"), encoding="utf-8")
 (out / "ghumoco-logo.svg").write_text(lockup(FOREST, ORANGE, (FOREST, ORANGE)), encoding="utf-8")
 (out / "ghumoco-logo-tagline.svg").write_text(lockup(FOREST, ORANGE, (FOREST, ORANGE), tagline=True), encoding="utf-8")
+# colour variants of the horizontal logo and the bare mark
+WHITE = "#FFFFFF"
+(out / "ghumoco-logo-reversed.svg").write_text(lockup(CREAM, BRIGHT, (CREAM, BRIGHT)), encoding="utf-8")    # for dark backgrounds
+(out / "ghumoco-logo-mono.svg").write_text(lockup(FOREST, FOREST, (FOREST, FOREST)), encoding="utf-8")      # one colour: stamps, invoices, embossing
+(out / "ghumoco-logo-white.svg").write_text(lockup(WHITE, WHITE, (WHITE, WHITE)), encoding="utf-8")         # over photos
+(out / "ghumoco-mark-mono.svg").write_text(svg(100, 100, mark(FOREST, FOREST), "GhumoCo"), encoding="utf-8")
+(out / "ghumoco-mark-white.svg").write_text(svg(100, 100, mark(WHITE, WHITE), "GhumoCo"), encoding="utf-8")
 (ROOT / "favicon.svg").write_text(svg(100, 100, mark(CREAM, BRIGHT, tile=FOREST), "GhumoCo"), encoding="utf-8")
 print("wrote brand/*.svg and favicon.svg")

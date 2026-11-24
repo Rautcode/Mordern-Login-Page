@@ -1,0 +1,55 @@
+<!doctype html><meta charset="utf-8"><title>{{brand}} brand guide</title><link rel="stylesheet" href="base.css">
+<style>
+@page{size:297mm 210mm;margin:0}
+.pg{width:297mm;height:210mm;padding:14mm 16mm;position:relative;overflow:hidden;page-break-after:always;background:var(--paper)}
+.pg.dark{background:var(--forest);color:var(--paper)}
+.kick{font:500 7.5pt 'IBM Plex Mono',monospace;letter-spacing:.16em;text-transform:uppercase;color:var(--orange)}
+h1{font:400 26pt/1.1 'Young Serif',Georgia,serif;color:var(--forest);margin:2mm 0 5mm}.dark h1{color:var(--paper)}
+h3{font:800 10.5pt Figtree;color:var(--forest);margin-bottom:1.5mm}p,li{font-size:9.2pt;line-height:1.5}li{margin:0 0 1.2mm 4mm}
+.grid{display:grid;gap:8mm}.g2{grid-template-columns:1fr 1fr}.g3{grid-template-columns:repeat(3,1fr)}
+.box{background:#fff;border-radius:3mm;padding:6mm;display:flex;align-items:center;justify-content:center;min-height:36mm}.box.d{background:var(--forest)}.box.o{background:var(--orange)}.box.p{background:var(--paper2)}
+.box img{max-width:100%;max-height:26mm}
+.cap{font:500 6.8pt 'IBM Plex Mono',monospace;letter-spacing:.08em;color:var(--muted);margin-top:1.5mm}
+.sw{border-radius:3mm;height:46mm;padding:4mm;display:flex;flex-direction:column;justify-content:flex-end;font:500 7pt/1.5 'IBM Plex Mono',monospace}
+.clear{position:relative;border:.4mm dashed var(--orange);padding:8mm;background:#fff;border-radius:2mm}.clear img{display:block;height:20mm}
+.no{color:#a33}.ok{color:var(--forest2)}
+.foot{position:absolute;left:16mm;right:16mm;bottom:8mm;display:flex;justify-content:space-between;font:500 6.8pt 'IBM Plex Mono',monospace;color:var(--muted)}.dark .foot{color:var(--dune)}
+.cover img{height:30mm}.cover h1{font-size:40pt;color:var(--paper);margin-top:14mm}.cover p{color:var(--dune);font-size:12pt;margin-top:4mm}
+.copy{background:#fff;border-radius:3mm;padding:5mm}.copy p{margin-bottom:2mm}
+</style>
+<body>
+<div class="pg dark cover"><img src="../ghumoco-logo-reversed.svg" alt=""><h1>Brand guide</h1><p>Logo, colour, type and voice for {{brand}}. {{tagline}}</p>
+<div class="foot"><span>Version 1 &middot; temporary logo, replace the files in brand/ when the final logo is chosen</span><span>{{website}}</span></div></div>
+
+<div class="pg"><div class="kick">01 Logo</div><h1>One mark, used simply</h1>
+<div class="grid g3"><div><div class="box"><img src="../ghumoco-logo.svg" alt=""></div><div class="cap">Primary, on paper or white</div></div>
+<div><div class="box d"><img src="../ghumoco-logo-reversed.svg" alt=""></div><div class="cap">Reversed, on forest green or dark photos</div></div>
+<div><div class="box o"><img src="../ghumoco-logo-white.svg" alt=""></div><div class="cap">White, on orange or over a darkened photo</div></div>
+<div><div class="box"><img src="../ghumoco-logo-mono.svg" alt=""></div><div class="cap">One colour: stamps, forms, embossing</div></div>
+<div><div class="box p"><img src="../ghumoco-mark.svg" style="max-height:24mm" alt=""></div><div class="cap">Icon: profile pictures, favicon, app tile</div></div>
+<div><div class="clear"><img src="../ghumoco-logo.svg" alt=""></div><div class="cap">Clear space: keep one G-height free on every side</div></div></div>
+<div class="grid g2" style="margin-top:7mm"><div><h3>Do</h3><ul class="ok"><li>Use the files in brand/ as they are.</li><li>Minimum size: logo 30 mm or 120 px wide, icon 16 px.</li><li>Put it on flat colour, or on a photo with a dark overlay.</li></ul></div>
+<div><h3>Don't</h3><ul class="no"><li>Stretch, rotate, outline or add shadows.</li><li>Recolour it outside the palette, or retype the name in another font.</li><li>Place it on a busy photo with no overlay.</li></ul></div></div>
+<div class="foot"><span>{{brand}} brand guide</span><span>01</span></div></div>
+
+<div class="pg"><div class="kick">02 Colour and type</div><h1>Earthy, with one hot accent</h1>
+<div class="grid" style="grid-template-columns:repeat(5,1fr)">
+<div class="sw" style="background:#F5EEE1;border:.3mm solid #d8cdb3">Canvas<br>#F5EEE1<br>245 238 225<br>Page backgrounds</div>
+<div class="sw" style="background:#CDB892">Dune<br>#CDB892<br>205 184 146<br>Lines, quiet accents</div>
+<div class="sw" style="background:#E8541E;color:#fff">Compass orange<br>#E8541E<br>232 84 30<br>Buttons, the dot, "Co"</div>
+<div class="sw" style="background:#1B3B2B;color:#fff">Trail green<br>#1B3B2B<br>27 59 43<br>Logo, headings, dark panels</div>
+<div class="sw" style="background:#1F2421;color:#fff">Departure black<br>#1F2421<br>31 36 33<br>Body text</div></div>
+<p class="cap" style="margin-top:2mm">Bright orange #FF6A1F is for dark backgrounds only. Colours are given in HEX and RGB. Ask your printer for a colour proof before a big print run.</p>
+<div class="grid g2" style="margin-top:7mm"><div><h3>Typefaces (free, open licence)</h3>
+<p style="font:400 20pt 'Young Serif';color:var(--forest)">Young Serif: headlines</p><p style="font:800 14pt Figtree">Figtree: logo, body and buttons</p><p style="font:600 18pt Caveat;color:var(--orange)">Caveat: handwritten notes and captions</p><p style="font:500 9pt 'IBM Plex Mono'">IBM PLEX MONO: LABELS</p><p class="cap">Licences: fonts/LICENSES.txt. All four may be used commercially.</p></div>
+<div><h3>Photos</h3><ul><li>Use your own trip photos. No stock beaches, no photos from other sites.</li><li>Taped-polaroid style with a handwritten caption.</li><li>Ask the people in a photo before you post it, and keep their yes in writing.</li><li>Straight, natural light; crop to the people or the place.</li></ul></div></div>
+<div class="foot"><span>{{brand}} brand guide</span><span>02</span></div></div>
+
+<div class="pg"><div class="kick">03 Voice and rules</div><h1>Plain, specific, honest</h1>
+<div class="grid g3"><div><h3>How we sound</h3><ul><li>Friendly and direct, like a well-organised friend.</li><li>Concrete: times, places, what is included, what is not.</li><li>Short sentences. No hype words.</li></ul></div>
+<div><h3>Rules we keep</h3><ul><li>No invented numbers, ratings or traveller counts.</li><li>No prices unless they are in a written quote.</li><li>No "verified", "vetted" or "safe" unless we can show how.</li><li>Reviews and photos only with the traveller's written yes.</li><li>No fake urgency: only say "limited seats" when it is true.</li></ul></div>
+<div><h3>Templates in this kit</h3><ul><li>Instagram posts (1080 x 1080)</li><li>Stories and WhatsApp status (1080 x 1920)</li><li>Wide cover (1640 x 624)</li><li>Business card, front and back (95 x 57 mm with bleed)</li><li>Thank-you card, A6</li><li>Invoice and quote (A4)</li><li>Email signature</li></ul></div></div>
+<div class="grid g2" style="margin-top:6mm"><div class="copy"><h3>Instagram bio</h3><p>Custom India trips, planned minute by minute around your budget. Quote in 24 hours. Message us to start.</p>
+<h3>WhatsApp Business description</h3><p>Custom India trip planning and bookings for solo travellers, couples, families and groups. Send your dates, budget and who is travelling, and we reply within 24 hours.</p></div>
+<div class="copy"><h3>WhatsApp greeting and away message</h3><p>Hi! Thanks for messaging {{brand}}. To plan your trip faster, send your destination, dates, number of travellers and budget.</p><p>Thanks for your message. We reply within 24 hours. We use your details only to plan your trip.</p></div></div>
+<div class="foot"><span>{{brand}} brand guide</span><span>03</span></div></div>

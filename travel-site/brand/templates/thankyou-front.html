@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8"><title>thank-you card front</title><link rel="stylesheet" href="base.css">
+<style>
+/* A6 105 x 148 mm with 3 mm bleed = 111 x 154 mm */
+@page{size:111mm 154mm;margin:0}
+body{width:111mm;height:154mm;background:var(--forest);position:relative;overflow:hidden}
+body::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 90% 6%,rgba(232,84,30,.25),transparent 45%)}
+.pola{position:absolute;left:50%;top:15mm;width:78mm;margin-left:-39mm;transform:rotate(-3deg);background:#fff;padding:3.5mm 3.5mm 5mm;box-shadow:0 5mm 8mm -3mm rgba(0,0,0,.5)}
+.pola img{display:block;width:100%;aspect-ratio:1/.85;object-fit:cover}
+.pola::before{content:"";position:absolute;top:-3mm;left:50%;width:22mm;height:6mm;margin-left:-11mm;background:rgba(212,163,89,.7);transform:rotate(-3deg)}
+.pola figcaption{font:600 16pt 'Caveat',cursive;text-align:center;margin-top:2mm;color:var(--ink)}
+.thanks{position:absolute;left:0;right:0;top:106mm;text-align:center;font:400 30pt 'Young Serif',Georgia,serif;color:var(--paper)}
+.thanks b{color:var(--bright);font-weight:400}
+.logo{position:absolute;left:50%;bottom:9mm;width:44mm;transform:translateX(-50%)}
+</style>
+<body><figure class="pola"><img src="../../img/{{photo}}" alt=""><figcaption>{{caption}}</figcaption></figure>
+<div class="thanks">Thank <b>you!</b></div><img class="logo" src="../ghumoco-logo-reversed.svg" alt="">

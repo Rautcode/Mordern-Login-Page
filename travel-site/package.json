@@ -2,12 +2,13 @@
   "name": "travel-site",
   "private": true,
   "scripts": {
-    "test": "python3 tools/build_routes.py --check && node tests/e2e.js && node tests/a11y.js && node tests/a11y.js rajasthan-trip-from-pune/index.html kerala-trip-from-pune/index.html terms/index.html refunds/index.html privacy/index.html && node tests/admin.js && node tests/addphoto.js && node tests/launch.js",
+    "test": "python3 tools/build_routes.py --check && node tests/e2e.js && node tests/a11y.js && node tests/a11y.js rajasthan-trip-from-pune/index.html kerala-trip-from-pune/index.html terms/index.html refunds/index.html privacy/index.html && node tests/admin.js && node tests/addphoto.js && node tests/kit.js && node tests/launch.js",
     "test:e2e": "node tests/e2e.js",
     "test:a11y": "node tests/a11y.js",
     "test:launch": "node tests/launch.js",
     "test:admin": "node tests/admin.js",
     "build:routes": "python3 tools/build_routes.py",
+    "kit": "node tools/make_kit.js",
     "build": "python3 tools/build_routes.py && python3 tools/personalize.py brand.json",
     "preview": "python3 tools/build_routes.py && python3 tools/personalize.py tools/brand.example.json --out dist-preview --allow-example && python3 -m http.server 8080 -d dist-preview"
   },

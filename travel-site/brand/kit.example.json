@@ -1,0 +1,48 @@
+{
+  "_note": "EXAMPLE values. Copy this file to brand/kit.json (git-ignored), put your real details in it, then run: node tools/make_kit.js",
+  "brand": "GhumoCo",
+  "tagline": "Your India trip, planned minute by minute.",
+  "tagline_short": "Custom trips across India",
+  "founder": "Your Name",
+  "title": "Founder",
+  "phone": "+91 98765 43210",
+  "email": "hello@yourdomain.com",
+  "website": "yourdomain.com",
+  "instagram": "@yourhandle",
+  "city": "Pune, Maharashtra",
+  "legal_name": "Your Full Legal Name",
+  "address": "Your business address, Pune, Maharashtra 411001",
+  "state": "Maharashtra",
+  "udyam": "UDYAM-MH-00-0000000",
+  "gstin": "",
+  "payment": "UPI: yourname@upi\nBank: Your Bank, A/c 0000000000, IFSC XXXX0000000\nA/c name: Your Full Legal Name",
+  "terms": "50% advance confirms the booking; the balance is due as written in your quote. Cancellation and refunds follow the Refund Policy at yourdomain.com/refunds. Providers (hotels, drivers, activity operators) set their own cancellation rules, listed in your quote.",
+  "invoice": {
+    "sample": true,
+    "number": "GC-2026-0001",
+    "date": "24 Nov 2026",
+    "due": "On receipt",
+    "customer_name": "Sample Customer",
+    "customer_address": "Sample address, Mumbai, Maharashtra",
+    "customer_phone": "+91 90000 00000",
+    "customer_state": "Maharashtra",
+    "customer_gstin": "",
+    "trip": "Kerala, 3 days",
+    "gst_rate_pct": 5,
+    "advance_received": 0,
+    "items": [
+      {
+        "description": "Custom itinerary",
+        "detail": "Kerala, 3 days, 4 travellers (sample line)",
+        "qty": 1,
+        "rate": 2000
+      },
+      {
+        "description": "Hotel booking service fee",
+        "detail": "2 nights (sample line)",
+        "qty": 1,
+        "rate": 1000
+      }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+<!doctype html><meta charset="utf-8"><title>story</title><link rel="stylesheet" href="base.css"><link rel="stylesheet" href="social.css">
+<style>
+body{width:1080px;height:1920px}.card{width:1080px;height:1920px}
+/* Instagram and WhatsApp overlay the top and bottom ~250px: everything important stays between them */
+.logo{left:84px;top:260px;height:78px}
+.txt{position:absolute;left:84px;top:400px;width:900px}
+h1{font-size:100px}
+.sub{margin-top:36px;font-size:42px;width:820px}
+.cta{left:84px;bottom:262px;font-size:40px;padding:26px 50px}
+.url{left:84px;bottom:196px;font-size:26px}
+.pola{width:480px;padding:18px 18px 24px}.pola figcaption{font-size:44px}
+.pola.a{right:70px;top:1000px;transform:rotate(4deg)}.pola.b{display:none}
+.nopic .txt{top:520px}
+</style>
+<body><div class="card {{variant}} {{layout}}"><img class="logo" src="../{{logo}}" alt="">
+<div class="txt"><h1>{{headline}}</h1><p class="sub">{{sub}}</p></div>{{pics_html}}
+<div class="cta">{{cta}}</div><div class="url">{{website}}</div></div>

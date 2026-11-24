@@ -1,0 +1,15 @@
+<!doctype html><meta charset="utf-8"><title>business card back</title><link rel="stylesheet" href="base.css">
+<style>
+@page{size:95mm 57mm;margin:0}
+body{width:95mm;height:57mm;background:var(--paper);position:relative;overflow:hidden}
+.bar{position:absolute;left:0;top:0;bottom:0;width:5mm;background:var(--forest)}.bar::after{content:"";position:absolute;left:0;top:0;width:5mm;height:12mm;background:var(--orange)}
+.mark{position:absolute;right:9mm;top:8mm;width:9mm}
+.in{position:absolute;left:12mm;top:10mm;right:8mm}
+.name{font:400 15pt/1.1 'Young Serif',Georgia,serif;color:var(--forest)}
+.role{margin-top:1.5mm;font:500 6pt 'IBM Plex Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--orange)}
+.lines{position:absolute;left:12mm;bottom:8mm;font-size:7.6pt;line-height:1.55;font-weight:600;color:var(--ink)}
+.lines span{display:inline-block;width:13mm;font:500 5.6pt 'IBM Plex Mono',monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+</style>
+<body><div class="bar"></div><img class="mark" src="../ghumoco-mark-light.svg" alt="">
+<div class="in"><div class="name">{{founder}}</div><div class="role">{{title}}</div></div>
+<div class="lines"><span>Phone</span>{{phone}}<br><span>Email</span>{{email}}<br><span>Web</span>{{website}}<br><span>Insta</span>{{instagram}}<br><span>Base</span>{{city}}</div>
