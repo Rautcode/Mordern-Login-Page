@@ -1,0 +1,421 @@
+{
+ "title": "Kerala in 3 days: Munnar, Thekkady and Alleppey",
+ "destination": "Kerala",
+ "duration_days": 3,
+ "summary": "Land at 03:30, sleep in the vehicle to Munnar, then tea hills, jeep trails, a Kalaripayattu show and the backwaters, home on a late flight.",
+ "days": [
+  {
+   "day_number": 1,
+   "title": "Kochi Airport to Munnar: waterfalls, tea and the hills",
+   "transit": [
+    {
+     "mode": "flight",
+     "number": "",
+     "origin": "Pune",
+     "destination": "Kochi",
+     "depart": "Confirm on airline",
+     "arrive": "03:30",
+     "notes": "Flight number is not in the source: confirm on the airline."
+    }
+   ],
+   "schedule": [
+    {
+     "time": "03:30",
+     "activity": "Land at Kochi. Driver meets you at arrivals with a name board; 45 minutes to freshen up.",
+     "kind": "transit",
+     "notes": "",
+     "hard_deadline": false,
+     "cost": "",
+     "tip": ""
+    },
+    {
+     "time": "04:15",
+     "activity": "Depart for Munnar (130 km, about 4 hours with stops). Everyone sleeps in the Tempo Traveller.",
+     "kind": "transit",
+     "notes": "",
+     "hard_deadline": false,
+     "cost": "",
+     "tip": ""
+    },
+    {
+     "time": "06:30",
+     "activity": "Breakfast at a highway dhaba in Kothamangalam",
+     "kind": "eat",
+     "notes": "Puttu + kadala curry, idiyappam + egg curry, hot chai.",
+     "hard_deadline": false,
+     "cost": "about Rs. 80 per person",
+     "tip": ""
+    },
+    {
+     "time": "08:30",
+     "activity": "Cheeyappara Waterfalls on NH85 (30 min)",
+     "kind": "sight",
+     "notes": "Free.",
+     "hard_deadline": false,
+     "cost": "",
+     "tip": "Slippery rocks: stay away from the edge."
+    },
+    {
+     "time": "09:30",
+     "activity": "Reach Munnar and check in at Sea Grace Cottage; rest an hour",
+     "kind": "stay",
+     "notes": "",
+     "hard_deadline": false,
+     "cost": "",
+     "tip": "Call the owner the night before to confirm early check-in at 09:30."
+    },
+    {
+     "time": "11:00",
+     "activity": "Attukad Waterfalls",
+     "kind": "sight",
+     "notes": "9 km from town on a narrow road; the Tempo Traveller parks at the base, 5-minute walk.",
+     "hard_deadline": false,
+     "cost": "",
+     "tip": "Wear grip shoes."
+    },
+    {
+     "time": "12:00",
+     "activity": "Lunch at a local restaurant in Munnar town",
+     "kind": "eat",
+     "notes": "Kerala biryani, kappa + meen curry.",
+     "hard_deadline": false,
+     "cost": "about Rs. 150 per person",
+     "tip": ""
+    },
+    {
+     "time": "13:30",
+     "activity": "Tea Museum (KDHP), about 45 minutes",
+     "kind": "sight",
+     "notes": "Open 09:00-17:00: finish before 17:00.",
+     "hard_deadline": true,
+     "cost": "Rs. 150 per person",
+     "tip": ""
+    },
+    {
+     "time": "14:30",
+     "activity": "Mattupetty Dam and a boat on the lake",
+     "kind": "sight",
+     "notes": "",
+     "hard_deadline": false,
+     "cost": "group boat about Rs. 700 flat (20-seater)",
+     "tip": ""
+    },
+    {
+     "time": "15:45",
+     "activity": "Echo Point",
+     "kind": "sight",
+     "notes": "",
+     "hard_deadline": false,
+     "cost": "",
+     "tip": ""
+    },
+    {
+     "time": "16:45",
+     "activity": "Top Station viewpoint",
+     "kind": "sight",
+     "notes": "Open 05:00-20:00; 1 km walk from parking.",
+     "hard_deadline": false,
+     "cost": "Rs. 20 per person",
+     "tip": "Cash only."
+    },
+    {
+     "time": "18:30",
+     "activity": "Munnar town street food and spice shopping",
+     "kind": "eat",
+     "notes": "Parotta + beef fry, pazham pori, cardamom chai.",
+     "hard_deadline": false,
+     "cost": "about Rs. 150 per person",
+     "tip": ""
+    },
+    {
+     "time": "19:30",
+     "activity": "Back at the cottage; bonfire if the owner can arrange it. Sleep by 22:00 for a 05:30 start.",
+     "kind": "stay",
+     "notes": "",
+     "hard_deadline": false,
+     "cost": "",
+     "tip": "Ask the owner tonight to arrange 2 jeeps for Kolukkumalai at 06:30."
+    }
+   ],
+   "cut_list": [
+    "Echo Point",
+    "Mattupetty Dam boat",
+    "Attukad Waterfalls"
+   ],
+   "warnings": [
+    "Tea Museum closes at 17:00: it must be done before then."
+   ]
+  },
+  {
+   "day_number": 2,
+   "title": "Kolukkumalai sunrise jeeps, then Thekkady",
+   "transit": [],
+   "schedule": [
+    {
+     "time": "05:30",
+     "activity": "Wake up and a quick breakfast",
+     "kind": "eat",
+     "notes": "Appam + stew or puttu.",
+     "hard_deadline": false,
+     "cost": "about Rs. 80 per person",
+     "tip": ""
+    },
+    {
+     "time": "06:30",
+     "activity": "Drive to Suryanelli base (35 km, about 1 hour)",
+     "kind": "transit",
+     "notes": "",
+     "hard_deadline": false,
+     "cost": "",
+     "tip": ""
+    },
+    {
+     "time": "07:30",
+     "activity": "Kolukkumalai tea estate jeep safari (about 2 hours)",
+     "kind": "sight",
+     "notes": "The Tempo Traveller cannot go up: transfer to 2 pre-arranged jeeps.",
+     "hard_deadline": false,
+     "cost": "2 jeeps at about Rs. 4,000 each",
+     "tip": "Backup viewpoints near Munnar: Lockhart Gap or Pothamedu."
+    },
+    {
+     "time": "10:00",
+     "activity": "Back at the base, check out and depart for Thekkady via NH85 (91 km, about 3 hours in the monsoon)",
+     "kind": "transit",
+     "notes": "",
+     "hard_deadline": false,
+     "cost": "",
+     "tip": ""
+    },
+    {
+     "time": "13:00",
+     "activity": "Lunch in Kumily, then check in at Ferndale Homestay",
+     "kind": "eat",
+     "notes": "Parotta + chicken or fish curry. Avoid tourist restaurants near the Periyar gate: overpriced.",
+     "hard_deadline": false,
+     "cost": "about Rs. 150 per person",
+     "tip": ""
+    },
+    {
+     "time": "14:30",
+     "activity": "Sathram jeep safari near the Periyar Tiger Reserve border (about 3 hours)",
+     "kind": "sight",
+     "notes": "Wildlife sighting is not guaranteed (about 40% chance of elephants, bison, deer).",
+     "hard_deadline": false,
+     "cost": "2 jeeps at about Rs. 2,500-3,000 each",
+     "tip": ""
+    },
+    {
+     "time": "18:00",
+     "activity": "Kalaripayattu show at Kadathanadan Kalari Centre, Kumily (about 2 hours)",
+     "kind": "sight",
+     "notes": "18:00 slot.",
+     "hard_deadline": true,
+     "cost": "Rs. 300 per person",
+     "tip": "Book in advance for the group."
+    },
+    {
+     "time": "20:15",
+     "activity": "Dinner in Kumily",
+     "kind": "eat",
+     "notes": "Prawn curry + appam, fish pollichathu.",
+     "hard_deadline": false,
+     "cost": "about Rs. 180 per person",
+     "tip": ""
+    }
+   ],
+   "cut_list": [
+    "Sathram jeep safari: shorten"
+   ],
+   "warnings": [
+    "Jeeps may cancel in extreme heavy rain: use the backup viewpoints."
+   ]
+  },
+  {
+   "day_number": 3,
+   "title": "Thekkady to Alleppey, then the late flight home",
+   "transit": [
+    {
+     "mode": "flight",
+     "number": "",
+     "origin": "Kochi",
+     "destination": "Pune",
+     "depart": "23:04",
+     "arrive": "about 01:00-01:15 next morning",
+     "notes": "Flight number is not in the source: confirm on the airline. Web check-in on the morning of Day 3."
+    }
+   ],
+   "schedule": [
+    {
+     "time": "07:00",
+     "activity": "Breakfast near the homestay and checkout",
+     "kind": "eat",
+     "notes": "",
+     "hard_deadline": false,
+     "cost": "about Rs. 80 per person",
+     "tip": ""
+    },
+    {
+     "time": "08:00",
+     "activity": "Depart for Alleppey via Changanassery (138 km, about 3.5 hours): hills to paddy fields and backwaters",
+     "kind": "transit",
+     "notes": "",
+     "hard_deadline": false,
+     "cost": "",
+     "tip": ""
+    },
+    {
+     "time": "11:30",
+     "activity": "Alleppey Beach (45 min) and its 150-year-old iron pier",
+     "kind": "sight",
+     "notes": "",
+     "hard_deadline": false,
+     "cost": "",
+     "tip": "No swimming in the monsoon: waves are rough and dangerous."
+    },
+    {
+     "time": "12:30",
+     "activity": "Alappuzha Lighthouse (45 min, climb 5 floors)",
+     "kind": "sight",
+     "notes": "Open Tuesday-Sunday 09:00-17:30.",
+     "hard_deadline": false,
+     "cost": "Rs. 20 per person",
+     "tip": "Cash only."
+    },
+    {
+     "time": "13:30",
+     "activity": "Kumarakom Bird Sanctuary and a boat ride on Vembanad Lake (1.5 hours)",
+     "kind": "sight",
+     "notes": "",
+     "hard_deadline": false,
+     "cost": "Rs. 50 entry plus Rs. 200 boat",
+     "tip": ""
+    },
+    {
+     "time": "15:00",
+     "activity": "Lunch and a chill at Asado Cafe or Cafe Catamaran",
+     "kind": "eat",
+     "notes": "Karimeen pollichathu, filter coffee, banana pancakes.",
+     "hard_deadline": false,
+     "cost": "about Rs. 300-500 per person",
+     "tip": ""
+    },
+    {
+     "time": "16:30",
+     "activity": "Depart Alleppey for Kochi Airport (83 km, about 2 hours with buffer)",
+     "kind": "transit",
+     "notes": "No slack: Sunday traffic.",
+     "hard_deadline": true,
+     "cost": "",
+     "tip": ""
+    },
+    {
+     "time": "18:30",
+     "activity": "Reach the airport: dinner, charge phones, duty-free (Kerala tea, banana chips, spices)",
+     "kind": "buffer",
+     "notes": "",
+     "hard_deadline": false,
+     "cost": "",
+     "tip": ""
+    },
+    {
+     "time": "21:00",
+     "activity": "Check-in and security; at the gate by 22:30",
+     "kind": "buffer",
+     "notes": "",
+     "hard_deadline": true,
+     "cost": "",
+     "tip": ""
+    },
+    {
+     "time": "23:04",
+     "activity": "Flight to Pune",
+     "kind": "transit",
+     "notes": "",
+     "hard_deadline": true,
+     "cost": "",
+     "tip": ""
+    }
+   ],
+   "cut_list": [
+    "Kumarakom Bird Sanctuary",
+    "Alappuzha Lighthouse"
+   ],
+   "warnings": [
+    "Depart Alleppey by 16:30 without fail: 83 km to the airport, Sunday traffic, flight at 23:04.",
+    "Alleppey Beach in the monsoon: no swimming."
+   ]
+  }
+ ],
+ "packing": [
+  "Grip shoes for wet rocks",
+  "Rain jacket",
+  "Cash: Top Station and the lighthouse take cash only",
+  "Power bank for the red-eye"
+ ],
+ "budget_notes": "",
+ "disclaimers": [
+  "Ratings, costs and timings are as recorded at design time (June, monsoon): re-check for your dates."
+ ],
+ "before_you_book": [
+  "Web check-in on the morning of Day 3, 24 hours before the flight.",
+  "Pre-book the Kalaripayattu show (18:00 slot) for the whole group.",
+  "Ask the Munnar owner to arrange 2 jeeps for Kolukkumalai at 06:30 and confirm 09:30 early check-in."
+ ],
+ "cost_summary": [
+  {
+   "item": "Flights (round trip)",
+   "per_person": "Rs. 10,543"
+  },
+  {
+   "item": "Tempo Traveller, all-in",
+   "per_person": "Rs. 1,591"
+  },
+  {
+   "item": "Stay, 2 nights",
+   "per_person": "Rs. 1,470"
+  },
+  {
+   "item": "Kolukkumalai jeeps",
+   "per_person": "Rs. 730"
+  },
+  {
+   "item": "Sathram jeep safari",
+   "per_person": "Rs. 500"
+  },
+  {
+   "item": "Kalaripayattu show",
+   "per_person": "Rs. 300"
+  },
+  {
+   "item": "Sightseeing entries",
+   "per_person": "Rs. 315"
+  },
+  {
+   "item": "Food, 3 days",
+   "per_person": "Rs. 1,400"
+  },
+  {
+   "item": "Shopping, misc and buffer",
+   "per_person": "Rs. 1,000"
+  },
+  {
+   "item": "Total, flights included",
+   "per_person": "about Rs. 17,849"
+  }
+ ],
+ "driver_card": {
+  "route": [
+   "Kochi Airport to Munnar via NH85: 130 km, about 4 hours with stops",
+   "Munnar to Kolukkumalai base (Suryanelli): 35 km, about 1 hour",
+   "Munnar to Thekkady / Kumily via NH85: 91 km, about 3 hours in the monsoon",
+   "Thekkady to Alleppey via Changanassery: 138 km, about 3.5 hours",
+   "Alleppey to Kochi Airport via NH66: 83 km, about 2 hours with buffer"
+  ],
+  "critical_notes": [
+   "Leave Alleppey by 16:30 without fail: Sunday traffic, flight at 23:04, airport by 18:30.",
+   "The Tempo Traveller cannot go up Kolukkumalai: the group changes to jeeps at the base.",
+   "Attukad Waterfalls: narrow road, park at the base."
+  ]
+ }
+}

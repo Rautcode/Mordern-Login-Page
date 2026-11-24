@@ -29,7 +29,7 @@ def _render_sync(html: str) -> bytes:
 async def render_pdf(itin: ItineraryJSON, lead: dict, preview: bool) -> bytes:
     html = _env.get_template("itinerary_pdf.html").render(
         it=itin.model_dump(),
-        lead={k: lead[k] for k in ("name", "departure_city", "travel_dates", "group_size")},
+        lead={k: lead.get(k) or "" for k in ("name", "departure_city", "travel_dates", "group_size")},  # blueprint leads omit most
         preview=preview,
         brand=get_settings().brand_name,
     )

@@ -29,7 +29,16 @@ HARD RULES
    `hard_deadline` true for stops bound by a closing time or departure, and a `cut_list` ordered
    from first-to-drop to last-to-drop if the group runs late. Add buffers for road transfers.
 5. Fit the lead's group size and dates. If the dates give no duration, use the route's default duration.
-6. Write concise, practical English. No marketing fluff."""
+6. Write concise, practical English. No marketing fluff.
+7. Money: `cost` on a stop and every `cost_summary` line may only repeat amounts written in the knowledge base,
+   in its own words ("Rs. 150 per person"). If it gives no price use "" / []. Never estimate or round.
+8. `tip` and day `warnings` are practical cautions from the knowledge base only (cash only, slippery, closing time,
+   monsoon, book ahead). Use "" / [] when it has none.
+9. `before_you_book`: the knowledge base's booking-ahead advice (trains whose availability falls, peak season,
+   slots that sell out), one short line each with the reason.
+10. `driver_card`: `route` has one line per road leg (from -> to, distance, time) and `critical_notes` the departure
+   deadlines and no-go points a driver must respect. Never output phone numbers, names of private individuals or any
+   contact details."""
 
 
 class PlannerError(Exception):
@@ -55,6 +64,21 @@ def find_unverified(itin: ItineraryJSON, allowed: set[str]) -> list[str]:
             num = re.sub(r"\s", "", leg.number)
             if leg.mode in ("train", "flight") and num and num not in allowed:
                 bad.append(f"Day {day.day_number}: {leg.mode} {leg.number}")
+    return bad
+
+
+def _numbers(text: str) -> set[str]:
+    return {m.replace(",", "") for m in re.findall(r"\d[\d,]*", text)}
+
+
+def find_unverified_amounts(itin: ItineraryJSON, kb: str) -> list[str]:
+    """Amounts printed on a stop or in the cost summary that the knowledge base never mentions (invented prices)."""
+    known, bad = _numbers(kb), []
+    for day in itin.days:
+        for s in day.schedule:
+            bad += [f"Day {day.day_number} '{s.activity[:30]}': {n}" for n in sorted(_numbers(s.cost) - known)]
+    for c in itin.cost_summary:
+        bad += [f"cost summary '{c.item[:30]}': {n}" for n in sorted(_numbers(c.per_person) - known)]
     return bad
 
 
@@ -98,6 +122,14 @@ async def generate_itinerary(lead: dict, kb: str) -> tuple[ItineraryJSON, dict]:
                 prompt += (
                     f"\n\nYour previous answer used identifiers not in the knowledge base: {bad}. "
                     "Regenerate using only identifiers from the knowledge base, else leave number empty."
+                )
+                continue
+            bad = find_unverified_amounts(itin, kb)
+            if bad:
+                last_err = f"unverified amounts {bad}"
+                prompt += (
+                    f"\n\nYour previous answer used amounts not in the knowledge base: {bad}. "
+                    "Regenerate repeating only amounts written in the knowledge base, else leave cost empty."
                 )
                 continue
             u = resp.usage_metadata

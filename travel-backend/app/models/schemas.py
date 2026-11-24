@@ -103,6 +103,8 @@ class Stop(BaseModel):
     kind: Literal["transit", "sight", "eat", "stay", "buffer"]
     notes: str
     hard_deadline: bool  # True if a closing time / departure makes this stop non-negotiable
+    cost: str  # price exactly as in the knowledge base, e.g. "Rs. 150 per person"; "" if it gives none
+    tip: str  # one practical tip from the knowledge base (cash only, slippery, book ahead); "" if none
 
 
 class Day(BaseModel):
@@ -111,6 +113,17 @@ class Day(BaseModel):
     transit: list[TransitLeg]
     schedule: list[Stop]
     cut_list: list[str]  # what to drop, in order, if the group runs late
+    warnings: list[str]  # cautions for this day taken from the knowledge base (closing times, safety, monsoon)
+
+
+class CostLine(BaseModel):
+    item: str
+    per_person: str  # as written in the knowledge base, e.g. "Rs. 1,591"
+
+
+class DriverCard(BaseModel):
+    route: list[str]  # one line per road leg: from -> to, distance, time (from the knowledge base)
+    critical_notes: list[str]  # deadlines and no-go points the driver must know; never phone numbers
 
 
 class ItineraryJSON(BaseModel):
@@ -122,6 +135,9 @@ class ItineraryJSON(BaseModel):
     packing: list[str]
     budget_notes: str
     disclaimers: list[str]
+    before_you_book: list[str]  # what to book early and why, from the knowledge base's planning notes
+    cost_summary: list[CostLine]  # only if the knowledge base states costs; otherwise []
+    driver_card: DriverCard
 
 
 # ---------------- Payments ----------------

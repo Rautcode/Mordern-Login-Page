@@ -16,7 +16,9 @@ from fastapi.testclient import TestClient
 from pydantic import ValidationError
 
 from app.main import app
-from app.models.schemas import Day, ItineraryJSON, LeadCreate, PricingInput, Stop, TransitLeg
+from pathlib import Path
+
+from app.models.schemas import Day, DriverCard, ItineraryJSON, LeadCreate, PricingInput, Stop, TransitLeg
 from app.routers.payments import amount_paise, verify_signature
 from app.services import ai_planner, pdf_generator, pricing_engine, rag_loader
 
@@ -96,8 +98,9 @@ def test_payment_amounts_are_server_side():
 def _itin(number: str, mode="train") -> ItineraryJSON:
     leg = TransitLeg(mode=mode, number=number, origin="A", destination="B", depart="x", arrive="y", notes="")
     return ItineraryJSON(title="t", destination="Rajasthan", duration_days=1, summary="s", packing=[], budget_notes="", disclaimers=[],
-                         days=[Day(day_number=1, title="d", transit=[leg], cut_list=["c"],
-                                   schedule=[Stop(time="08:00", activity="Amer <b>Fort</b>", kind="sight", notes="", hard_deadline=True)])])
+                         before_you_book=[], cost_summary=[], driver_card=DriverCard(route=[], critical_notes=[]),
+                         days=[Day(day_number=1, title="d", transit=[leg], cut_list=["c"], warnings=[],
+                                   schedule=[Stop(time="08:00", activity="Amer <b>Fort</b>", kind="sight", notes="", hard_deadline=True, cost="", tip="")])])
 
 
 def test_hallucination_guard():
@@ -145,3 +148,53 @@ def test_admin_api_throttles_key_guessing():
     codes = [c.get("/api/admin/leads", headers={"X-Admin-Key": "wrong"}).status_code for _ in range(121)]
     assert codes[0] == 401 and codes[-1] == 429
     admin_router._admin_limit.hits.clear()                      # don't starve other tests that share this client IP
+
+
+# ---- richer PDF: real plan as fixture ----
+KERALA = Path(__file__).parent / "fixtures" / "kerala_itinerary.json"
+
+
+def _kerala() -> ItineraryJSON:
+    return ItineraryJSON.model_validate_json(KERALA.read_text(encoding="utf-8"))
+
+
+def _html(it: ItineraryJSON, lead: dict, preview: bool) -> str:
+    return pdf_generator._env.get_template("itinerary_pdf.html").render(it=it.model_dump(), lead=lead, preview=preview, brand="B")
+
+
+def test_real_kerala_plan_passes_both_hallucination_guards():
+    rag_loader.load_all()
+    kb = rag_loader.get_context("Kerala")
+    it = _kerala()
+    assert ai_planner.find_unverified(it, rag_loader.allowed_identifiers(kb)) == []
+    assert ai_planner.find_unverified_amounts(it, kb) == []          # every price on the page is one the operator wrote down
+
+
+def test_invented_amounts_are_flagged():
+    rag_loader.load_all()
+    kb = rag_loader.get_context("Kerala")
+    it = _kerala()
+    it.days[0].schedule[3].cost = "Rs. 9,999 per person"
+    it.cost_summary[0].per_person = "Rs. 123"
+    bad = " ".join(ai_planner.find_unverified_amounts(it, kb))
+    assert "9999" in bad and "123" in bad
+
+
+def test_pdf_sections_and_preview_gating():
+    lead = dict(name="Asha", departure_city="Pune", travel_dates="June", group_size="7-12")
+    full, prev = _html(_kerala(), lead, False), _html(_kerala(), lead, True)
+    for needle in ("Driver quick card", "Before you book", "Cost per person", "Watch out today", "Tip: Slippery rocks", "about Rs. 17,849"):
+        assert needle in full, needle
+    for paid in ("Driver quick card", "Before you book", "Cost per person", "about Rs. 17,849"):
+        assert paid not in prev, f"{paid} must stay behind the paywall"
+    assert "Rs. 150 per person" in prev                                # Day 1 is the free sample, costs included
+
+
+def test_pdf_survives_blank_lead_fields_and_hostile_text():
+    it = _kerala()
+    it.days[0].warnings = ["<script>alert(1)</script>"]
+    blank = dict(name="Asha", departure_city=None, travel_dates=None, group_size=None)   # blueprint leads omit these
+    pdf = asyncio.run(pdf_generator.render_pdf(it, blank, False))
+    assert pdf.startswith(b"%PDF") and len(pdf) > 5000
+    html = _html(it, {k: v or "" for k, v in blank.items()}, False)
+    assert "None" not in html and "<script>alert" not in html and "&lt;script&gt;" in html

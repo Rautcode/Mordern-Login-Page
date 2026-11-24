@@ -4,36 +4,57 @@
 <meta charset="utf-8">
 <title>{{ it.title }}</title>
 <style>
+  /* Every coloured element sets BOTH foreground and background so nothing can render dark-on-dark.
+     No emoji or symbol glyphs: the container fonts do not carry them (checklist boxes are drawn in CSS). */
   @page { size: A4; margin: 16mm 14mm 20mm; background: #FAF7F2;
     @bottom-center { content: "{{ brand }}  ·  Page " counter(page) " of " counter(pages);
-      font: 8pt 'DejaVu Sans', 'Liberation Sans', sans-serif; color: #8a7f6d; } }
+      font: 8pt 'DejaVu Sans', 'Liberation Sans', sans-serif; color: #6b6558; } }
   body { font: 10pt/1.5 'Liberation Sans', 'DejaVu Sans', sans-serif; color: #1E1E1E; }
   h1, h2, h3 { font-family: 'DejaVu Serif', Georgia, serif; color: #1B3B2B; margin: 0; }
-  .cover { background: #1B3B2B; color: #fff; padding: 22mm 14mm; border-radius: 6mm; margin-bottom: 8mm; }
-  .cover h1 { color: #fff; font-size: 26pt; line-height: 1.15; }
+  h3 { font-size: 12pt; margin-bottom: 2mm; }
+  .cover { background: #1B3B2B; color: #fff; padding: 20mm 14mm 16mm; border-radius: 6mm; margin-bottom: 8mm; }
+  .cover h1 { color: #fff; font-size: 24pt; line-height: 1.25; margin: 3mm 0 4mm; }
   .cover .tag { color: #D4A359; font-size: 9pt; letter-spacing: .12em; text-transform: uppercase; }
-  .cover p { color: #e9e4d8; margin: 4mm 0 0; }
+  .cover p { color: #efe9dc; margin: 0; }
   .meta { margin-top: 6mm; font-size: 9pt; color: #D4A359; }
-  .summary { margin: 0 0 6mm; }
-  .day { page-break-inside: avoid; margin: 0 0 7mm; background: #fff; border: .3mm solid #e4dccd; border-radius: 4mm; overflow: hidden; }
-  .day-h { background: #C85A32; color: #fff; padding: 3mm 5mm; }
+  .day { margin: 0 0 7mm; background: #fff; border: .3mm solid #e4dccd; border-radius: 4mm; }
+  .day-h { background: #A94724; color: #fff; padding: 3mm 5mm; border-radius: 4mm 4mm 0 0; }
   .day-h h2 { color: #fff; font-size: 13pt; }
-  .day-h small { font-size: 8pt; opacity: .9; letter-spacing: .08em; text-transform: uppercase; }
+  .day-h small { color: #fff; font-size: 8pt; letter-spacing: .08em; text-transform: uppercase; }
   .pad { padding: 3mm 5mm 4mm; }
-  .leg { background: #e8f0ea; border-left: 1.2mm solid #1B3B2B; padding: 2mm 3mm; margin: 2mm 0; font-size: 9pt; }
+  .leg { background: #e8f0ea; color: #1E1E1E; border-left: 1.2mm solid #1B3B2B; padding: 2mm 3mm; margin: 2mm 0; font-size: 9pt; }
   table.sched { width: 100%; border-collapse: collapse; margin-top: 2mm; }
+  table.sched tr { page-break-inside: avoid; }
   table.sched td { padding: 1.4mm 0; vertical-align: top; border-bottom: .2mm dotted #d9cfbd; }
   td.t { width: 15mm; font-weight: bold; color: #1B3B2B; }
   .eat { background: #A94724; color: #fff; font-size: 7pt; font-weight: bold; padding: .3mm 1.6mm; border-radius: 1mm; letter-spacing: .06em; }
   .stop { background: #1E1E1E; color: #fff; font-size: 7pt; font-weight: bold; padding: .3mm 1.6mm; border-radius: 1mm; letter-spacing: .06em; }
-  .note { color: #6b6558; font-size: 8.5pt; }
-  .cut { background: #fff3ec; border: .3mm solid #f0c9b6; border-radius: 2mm; padding: 2mm 3mm; margin-top: 3mm; font-size: 9pt; }
+  .cost { background: #e8f0ea; color: #1B3B2B; font-size: 8pt; font-weight: bold; padding: .3mm 1.8mm; border-radius: 1mm; white-space: nowrap; }
+  .note { color: #5e5a50; font-size: 8.5pt; }
+  .tip { color: #6b3f00; font-size: 8.5pt; font-style: italic; }
+  .warn { background: #fdecea; color: #6e1710; border-left: 1.4mm solid #b3261e; padding: 2mm 3mm; margin-top: 3mm; font-size: 9pt; }
+  .warn ul { margin: 1mm 0 0; padding-left: 5mm; }
+  .cut { background: #fff3ec; color: #1E1E1E; border: .3mm solid #f0c9b6; border-radius: 2mm; padding: 2mm 3mm; margin-top: 3mm; font-size: 9pt; }
   .cut ol { margin: 1mm 0 0; padding-left: 5mm; }
-  .locked { padding: 3mm 5mm; color: #6b6558; font-style: italic; }
-  .banner { background: #fff3ec; border: .4mm dashed #C85A32; border-radius: 3mm; padding: 4mm 5mm; margin: 0 0 6mm; color: #A94724; font-weight: bold; }
-  .box { background: #fff; border: .3mm solid #e4dccd; border-radius: 3mm; padding: 3mm 5mm; margin-bottom: 5mm; page-break-inside: avoid; }
+  .locked { padding: 3mm 5mm; color: #5e5a50; font-style: italic; }
+  .banner { background: #fff3ec; color: #8a3a1c; border: .4mm dashed #C85A32; border-radius: 3mm; padding: 4mm 5mm; margin: 0 0 6mm; font-weight: bold; }
+  .box { background: #fff; color: #1E1E1E; border: .3mm solid #e4dccd; border-radius: 3mm; padding: 3mm 5mm; margin-bottom: 5mm; page-break-inside: avoid; }
   .box ul { margin: 1mm 0 0; padding-left: 5mm; }
-  .disc { font-size: 8pt; color: #6b6558; }
+  ul.check { list-style: none; padding-left: 0; }
+  ul.check li { margin: 1.2mm 0; padding-left: 6mm; position: relative; }
+  ul.check li::before { content: ""; position: absolute; left: 0; top: 1mm; width: 3.2mm; height: 3.2mm; border: .4mm solid #1B3B2B; border-radius: .6mm; background: #fff; }
+  table.cost-t { width: 100%; border-collapse: collapse; font-size: 9pt; }
+  table.cost-t th { background: #1B3B2B; color: #fff; text-align: left; padding: 1.6mm 2.4mm; }
+  table.cost-t td { padding: 1.4mm 2.4mm; border-bottom: .2mm solid #e4dccd; background: #fff; color: #1E1E1E; }
+  table.cost-t tr:nth-child(even) td { background: #f6f1e6; }
+  .driver { page-break-before: always; }
+  .driver h1 { font-size: 20pt; line-height: 1.25; }
+  .driver .sub { color: #5e5a50; margin: 1mm 0 5mm; }
+  .driver ol { font-size: 11.5pt; line-height: 1.6; padding-left: 7mm; }
+  .driver .warn { font-size: 11pt; }
+  .fill { margin-top: 7mm; font-size: 11pt; }
+  .fill div { border-bottom: .3mm solid #1B3B2B; height: 9mm; margin-bottom: 2mm; color: #5e5a50; font-size: 8.5pt; }
+  .disc { font-size: 8pt; color: #5e5a50; }
 </style>
 </head>
 <body>
@@ -42,11 +63,11 @@
   <div class="tag">{{ brand }} · Ground-Tested Itinerary</div>
   <h1>{{ it.title }}</h1>
   <p>{{ it.summary }}</p>
-  <div class="meta">Prepared for {{ lead.name }} · {{ lead.group_size }} travellers · {{ lead.departure_city }} · {{ lead.travel_dates }} · {{ it.duration_days }} days</div>
+  <div class="meta">{{ ["Prepared for " ~ lead.name if lead.name, (lead.group_size ~ " travellers") if lead.group_size, lead.departure_city, lead.travel_dates, it.duration_days ~ " days"] | select | join(" · ") }}</div>
 </div>
 
 {% if preview %}
-<div class="banner">PREVIEW: Day 1 is shown in full. Complete the payment to unlock the full day-by-day blueprint, food map and priority cut-lists.</div>
+<div class="banner">PREVIEW: Day 1 is shown in full. Complete the payment to unlock the full day-by-day blueprint, costs, booking checklist, driver card and priority cut-lists.</div>
 {% endif %}
 
 {% for day in it.days %}
@@ -67,12 +88,17 @@
         <td>
           {% if s.kind == 'eat' %}<span class="eat">EAT</span> {% endif %}
           {% if s.hard_deadline %}<span class="stop">HARD STOP</span> {% endif %}
-          {{ s.activity }}
+          {{ s.activity }}{% if s.cost %} <span class="cost">{{ s.cost }}</span>{% endif %}
           {% if s.notes %}<br><span class="note">{{ s.notes }}</span>{% endif %}
+          {% if s.tip %}<br><span class="tip">Tip: {{ s.tip }}</span>{% endif %}
         </td>
       </tr>
       {% endfor %}
     </table>
+    {% if day.warnings %}
+    <div class="warn"><b>Watch out today</b>
+      <ul>{% for w in day.warnings %}<li>{{ w }}</li>{% endfor %}</ul></div>
+    {% endif %}
     {% if day.cut_list %}
     <div class="cut"><b>Priority cut-list</b> (drop in this order if you run late)
       <ol>{% for c in day.cut_list %}<li>{{ c }}</li>{% endfor %}</ol></div>
@@ -83,12 +109,33 @@
 {% endfor %}
 
 {% if not preview %}
+  {% if it.before_you_book %}
+  <div class="box"><h3>Before you book</h3><ul class="check">{% for b in it.before_you_book %}<li>{{ b }}</li>{% endfor %}</ul></div>
+  {% endif %}
+  {% if it.cost_summary %}
+  <div class="box"><h3>Cost per person</h3>
+    <table class="cost-t"><thead><tr><th>Item</th><th>Per person</th></tr></thead>
+      <tbody>{% for c in it.cost_summary %}<tr><td>{{ c.item }}</td><td>{{ c.per_person }}</td></tr>{% endfor %}</tbody></table>
+  </div>
+  {% endif %}
   {% if it.packing %}
-  <div class="box"><h3>Packing checklist</h3><ul>{% for p in it.packing %}<li>{{ p }}</li>{% endfor %}</ul></div>
+  <div class="box"><h3>Packing checklist</h3><ul class="check">{% for p in it.packing %}<li>{{ p }}</li>{% endfor %}</ul></div>
   {% endif %}
   {% if it.budget_notes %}<div class="box"><h3>Budget notes</h3><p>{{ it.budget_notes }}</p></div>{% endif %}
 {% endif %}
 
 <p class="disc">{% for d in it.disclaimers %}{{ d }} {% endfor %}Timings and prices marked "confirm before travel" must be re-verified before booking.</p>
+
+{% if not preview and (it.driver_card.route or it.driver_card.critical_notes) %}
+<div class="driver">
+  <h1>Driver quick card</h1>
+  <p class="sub">{{ it.title }} · print this page and keep it in the vehicle</p>
+  {% if it.driver_card.route %}<h3>Route at a glance</h3><ol>{% for r in it.driver_card.route %}<li>{{ r }}</li>{% endfor %}</ol>{% endif %}
+  {% if it.driver_card.critical_notes %}
+  <div class="warn"><b>Must not slip</b><ul>{% for n in it.driver_card.critical_notes %}<li>{{ n }}</li>{% endfor %}</ul></div>
+  {% endif %}
+  <div class="fill"><div>Group leader name:</div><div>Group leader phone:</div><div>Driver name and vehicle number:</div></div>
+</div>
+{% endif %}
 </body>
 </html>
