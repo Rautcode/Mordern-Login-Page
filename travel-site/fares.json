@@ -1,0 +1,15 @@
+{
+  "as_of": "2026-11-24",
+  "max_age_days": 30,
+  "note": "Lowest published economy fares seen on public fare pages, rounded DOWN to the nearest 500 rupees so they stay a floor. Those pages carry their own dates and disagree with each other, so treat every figure as 'from about'. Refresh monthly (see LAUNCH.md); the planner hides the hint once as_of is older than max_age_days.",
+  "origins": { "pune": "PNQ", "pimpri": "PNQ", "pcmc": "PNQ", "mumbai": "BOM", "bombay": "BOM" },
+  "destinations": { "Rajasthan": "JAI", "Kerala": "COK", "Goa": "GOI" },
+  "routes": {
+    "PNQ-JAI": { "from_inr": 12500, "basis": "round trip: Expedia India listed round trips from 12,944", "source": "https://expedia.co.in/lp/flights/pnq/jai/pune-to-jaipur" },
+    "PNQ-COK": { "from_inr": 9500, "basis": "round trip: Kayak cheapest return in 72 hours 9,798 (Pune to Kerala); 25% of users found 10,192 or less", "source": "https://www.kayak.co.in/flight-routes/Pune-Lohegaon-PNQ/Kochi-COK" },
+    "PNQ-GOI": { "from_inr": 5000, "basis": "2 x lowest one-way (derived, no round-trip floor published): one-way 2,539 on Kayak", "source": "https://www.kayak.co.in/flight-routes/Pune-Lohegaon-PNQ/Goa-INGA" },
+    "BOM-JAI": { "from_inr": 8500, "basis": "round trip: Trip.com round trips from 8,767", "source": "https://in.trip.com/flights/mumbai-to-jaipur/airfares-bom-jai/" },
+    "BOM-COK": { "from_inr": 12000, "basis": "2 x lowest one-way (derived, no round-trip floor published): one-way 6,114 on Skyscanner (Mumbai to Kerala)", "source": "https://www.skyscanner.co.in/flights/flights-from-airport-to-region/bom/44292301/cheap-flights-from-mumbai-to-kerala" },
+    "BOM-GOI": { "from_inr": 5000, "basis": "2 x lowest one-way (derived, no round-trip floor published): one-way 2,666 on Skyscanner", "source": "https://www.skyscanner.co.in/routes/ibom/igoi/mumbai-to-goa.html" }
+  }
+}

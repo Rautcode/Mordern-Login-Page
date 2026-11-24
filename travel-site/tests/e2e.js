@@ -266,5 +266,34 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     const min = calls.find(c => c[0] === '/api/leads')[1]; assert.equal(min.travel_mode, 'flexible');
     for (const k of ['trip_length', 'group_type', 'stay_pref', 'interests', 'notes']) assert.equal(k in min, false, `${k} omitted when skipped`);
     await ctx.close(); }
+  // ---- flight fare hint: data is sane, shown only when it should be, hidden when stale or unknown ----
+  { const fs = require('fs'); const root = path.join(__dirname, '..'); const F = JSON.parse(fs.readFileSync(path.join(root, 'fares.json'), 'utf8'));
+    assert(/^\d{4}-\d{2}-\d{2}$/.test(F.as_of) && !isNaN(Date.parse(F.as_of)), 'as_of is a date'); assert(F.max_age_days >= 7 && F.max_age_days <= 60);
+    const codes = new Set([...Object.values(F.origins), ...Object.values(F.destinations)]);
+    for (const [k, r] of Object.entries(F.routes)) { const [o, d] = k.split('-');
+      assert(Object.values(F.origins).includes(o) && Object.values(F.destinations).includes(d), `${k}: both airports are known`);
+      assert(Number.isInteger(r.from_inr) && r.from_inr >= 1000 && r.from_inr <= 100000 && r.from_inr % 500 === 0, `${k}: sane floor rounded to 500`);
+      assert(r.basis.length > 10 && /^https:\/\//.test(r.source), `${k}: records how it was derived and where`); }
+    for (const o of new Set(Object.values(F.origins))) for (const d of new Set(Object.values(F.destinations))) assert(F.routes[`${o}-${d}`], `route ${o}-${d} exists for every origin x destination`);
+    const age = (Date.now() - Date.parse(F.as_of)) / 864e5; if (age > F.max_age_days) console.warn(`NOTE: fares.json is ${Math.round(age)} days old, the planner now hides flight fares. Refresh it (see LAUNCH.md).`);
+    const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8'); const fresh = Date.parse(F.as_of) + 864e5;
+    const open = async (time, fares = F) => { const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } }); const pg = await ctx.newPage(); const bad = []; pg.on('pageerror', e => bad.push(e.message));
+      await pg.clock.setFixedTime(time);
+      await pg.route('http://site.test/fares.json', r => fares ? r.fulfill({ contentType: 'application/json', body: JSON.stringify(fares) }) : r.fulfill({ status: 404, body: 'nf' }));
+      await pg.route('http://site.test/', r => r.fulfill({ contentType: 'text/html', body: html })); await pg.goto('http://site.test/'); await toPlanner(pg); return { pg, ctx, bad }; };
+    const set = async (pg, o) => { await pg.click(chip('dest', o.dest ?? 'Rajasthan')); await pg.fill('#from', o.from ?? 'Pune'); await pg.fill('#when', 'Dec'); await pg.click(chip('travel', o.travel ?? 'flight')); await pg.click('#submit'); await pg.click(chip('group', o.group ?? '7-12')); await pg.waitForTimeout(150); };
+    const hint = pg => pg.evaluate(() => { const e = document.querySelector('#est-fare'); return e.hidden ? null : e.textContent; });
+    let { pg, ctx, bad } = await open(fresh);
+    await set(pg, {}); await pg.waitForFunction(() => !document.querySelector('#est-fare').hidden);
+    let t = await hint(pg); assert(t.startsWith('Flights: from about ₹12,500 per person round trip, ₹87,500 for 7+ people'), t); assert(t.includes('24 Nov 2026') && t.includes('exact fare'));
+    // step 2 has no travel chips: go back to change the mode
+    await pg.click('#back'); await pg.click(chip('travel', 'flexible')); await pg.waitForTimeout(100); assert((await hint(pg)).startsWith('If you fly: from about ₹12,500'), 'flexible is worded as a maybe');
+    await pg.click(chip('travel', 'train')); await pg.waitForTimeout(100); assert.equal(await hint(pg), null, 'no flight hint for a train trip');
+    await pg.click(chip('travel', 'flight')); await pg.fill('#from', 'Nashik'); await pg.waitForTimeout(100); assert.equal(await hint(pg), null, 'unknown origin: no hint');
+    await pg.fill('#from', 'PUNE, Maharashtra'); await pg.click(chip('dest', 'Hampi–Gokarna')); await pg.waitForTimeout(100); assert.equal(await hint(pg), null, 'no airport mapped: no hint');
+    await pg.click(chip('dest', 'Goa')); await pg.fill('#from', 'Mumbai'); await pg.waitForTimeout(100); assert((await hint(pg)).includes('₹5,000 per person'), 'case-insensitive origin, other route');
+    assert.deepEqual(bad, []); await ctx.close();
+    ({ pg, ctx, bad } = await open(Date.parse(F.as_of) + (F.max_age_days + 1) * 864e5)); await set(pg, {}); await pg.waitForTimeout(400); assert.equal(await hint(pg), null, 'stale data is never shown'); await ctx.close();
+    ({ pg, ctx, bad } = await open(fresh, null)); await set(pg, {}); await pg.waitForTimeout(400); assert.equal(await hint(pg), null, 'missing fares.json: silent'); assert.deepEqual(bad, [], 'and no errors'); await ctx.close(); }
   console.log('fallbacks OK'); console.log('errors:', errs); await b.close(); console.log('ALL OK');
 })().catch(e => { console.error('FAIL', e.message); process.exit(1); });

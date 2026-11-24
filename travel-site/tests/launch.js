@@ -69,5 +69,12 @@ const srv = http.createServer((q, s) => { let f = path.join(out, decodeURICompon
     await p.click('.cta-row a.btn-primary >> nth=0'); await p.waitForURL(/\?trip=rajasthan/); assert(await p.isChecked('input[name=dest][value="Rajasthan"]'));
     assert.equal(await p.evaluate(() => JSON.parse(sessionStorage.getItem('attr')).utm_source), 'ig');
     assert.equal(violations.length, v0, 'no CSP violations on the route page or the hop to the planner'); assert.deepEqual(await p.evaluate(() => window.__csp || []), []); }
+  // flight fare hint: file ships with cache headers and renders under the strict CSP
+  { const fr = await p.request.get(base + '/fares.json'); assert.equal(fr.status(), 200); assert(/\/fares\.json\s+Cache-Control: public, max-age=3600/.test(headers), 'the generated _headers caches fares.json for an hour (the test server only applies the global block)');
+    const F = await fr.json(); const v0 = violations.length; await p.goto(base + '/'); await p.evaluate(() => document.querySelector('#planner').scrollIntoView());
+    await p.evaluate(a => { Date.now = () => Date.parse(a) + 864e5; }, F.as_of);   // pin "today" so this test does not rot when the fares age out
+    await p.click('label.pk:has(input[name=dest][value="Goa"])'); await p.fill('#from', 'Pune'); await p.click('label.pk:has(input[name=travel][value="flight"])');
+    await p.waitForFunction(() => !document.querySelector('#est-fare').hidden); assert((await p.textContent('#est-fare')).includes('₹5,000 per person'));
+    assert.equal(violations.length, v0, 'no CSP violations from the fares fetch'); }
   console.log('LAUNCH OK: build, hashes, headers, strict CSP under real flows, 404, input validation'); await b.close(); srv.close(); fs.rmSync(tmp, { recursive: true, force: true });
 })().catch(e => { console.error('LAUNCH FAIL', e.message); try { srv.close(); } catch {} process.exit(1); });

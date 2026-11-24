@@ -348,6 +348,7 @@ fieldset{border:0;padding:0;min-width:0}
 .bp dl{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
 .bp dt{font:500 .68rem var(--mono);color:var(--muted);letter-spacing:.12em;text-transform:uppercase}.bp dd{font-weight:700;font-size:.98rem}
 .bp .big{font:400 2rem var(--serif);color:var(--terra-d);line-height:1.1;margin-top:18px}
+.fare{margin-top:12px;padding:10px 12px;background:#EAF0E4;border-left:4px solid var(--forest-2);font-size:.84rem;line-height:1.45;color:var(--ink)}
 .bp small{display:block;color:var(--muted);font-size:.78rem;margin-top:10px;line-height:1.4}
 .confirm[hidden],form[hidden]{display:none}
 .confirm dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:16px 0 20px;font-size:.93rem}.confirm dt{color:var(--muted)}.confirm dd{font-weight:700;overflow-wrap:anywhere}
@@ -897,6 +898,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
         <dl><div><dt>Group</dt><dd id="bp-group">&mdash;</dd></div><div><dt>Service</dt><dd id="bp-svc">Custom plan</dd></div></dl>
         <div class="big" id="est-main">₹2,499</div>
         <p id="est-sub" style="font-size:.9rem;margin-top:6px"></p>
+        <p id="est-fare" class="fare" hidden></p>
         <small>Indicative only. Fares, season and group size move real prices. Your quote is the number that counts.</small>
       </div></aside>
     </div>
@@ -1163,7 +1165,24 @@ function syncBar() {
   const est = $("#est-main").textContent.replace(/\s/g, ""), bar = $("#mbar-plan");
   bar.textContent = engaged ? `${est.startsWith("₹") ? "Est. " + est : "Quote"} · Resume →` : "Plan My Trip";
 }
-function updateEst() { _updateEst(); syncBar(); }
+// ===== flight fare hint: lowest published fares from fares.json. Silent when the data is stale, missing, or the route is unknown =====
+let FARES = null, faresTried = false;
+function loadFares() {   // lazy: only when someone picks flight; never on file:// (offline copy)
+  if (faresTried || !/^https?:$/.test(location.protocol)) return; faresTried = true;
+  fetch("fares.json").then(r => r.ok ? r.json() : null).then(d => { FARES = d; updateEst(); }).catch(() => {});
+}
+function fareHint() {
+  const v = form.elements, mode = v.travel.value;
+  if ((mode !== "flight" && mode !== "flexible") || v.service.value === "blueprint") return "";
+  loadFares(); if (!FARES) return "";
+  const age = (Date.now() - Date.parse(FARES.as_of)) / 864e5;
+  if (!(age >= 0 && age <= FARES.max_age_days)) return "";   // stale or malformed date: say nothing rather than something wrong
+  const city = v.from.value.toLowerCase(), o = Object.keys(FARES.origins).find(k => city.includes(k)), d = FARES.destinations[v.dest.value];
+  const r = o && d && FARES.routes[FARES.origins[o] + "-" + d]; if (!r) return "";
+  const g = G[v.group.value], when = new Date(FARES.as_of).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+  return `${mode === "flexible" ? "If you fly: " : "Flights: "}from about ${inr(r.from_inr)} per person round trip${g && g[0] > 2 ? `, ${inr(r.from_inr * g[0])} for ${g[0]}+ people` : ""}. These are the lowest published fares when we checked on ${when}; December and holiday dates usually cost more. Your quote has the exact fare.`;
+}
+function updateEst() { _updateEst(); syncBar(); const f = $("#est-fare"), t = fareHint(); f.textContent = t; f.hidden = !t; }
 function _updateEst() {
   const v = form.elements, svc = v.service.value, g = G[v.group.value], b = B[v.budget.value];
   $("#bp-from").textContent = v.from.value.trim().slice(0, 14) || "Pune"; $("#bp-to").textContent = v.dest.value || "Anywhere";

@@ -31,3 +31,11 @@ Open `https://<your-api-domain>/admin` and sign in with `ADMIN_API_KEY`. It list
 lets you message them on WhatsApp, change status, build a quote (preview first, then save) and re-send a paid delivery.
 The page is served by the API itself (same origin, strict CSP, never indexed); the key lives only in that browser tab.
 Keep `ADMIN_API_KEY` long and random, and rotate it if anyone who knew it leaves.
+
+## Flight fare hint (refresh monthly)
+The planner shows "Flights: from about ₹X per person" for Pune/Mumbai to Jaipur, Kochi and Goa when the visitor picks flight.
+The numbers live in `fares.json` only. To refresh: for each route search a round trip on a mid-range date on two fare sites,
+put the LOWEST typical economy round-trip fare (rounded down to the nearest 500) in `from_inr`, write what you used in `basis`
+and the page in `source`, then set `as_of` to today. If `as_of` is older than `max_age_days` (30) the hint hides itself, so a
+stale price can never reach a customer. Add a city or airport by editing `origins`, `destinations` and `routes`; no code change.
+These are floors, not quotes: the copy tells visitors that peak dates cost more and that the quote has the exact fare.
