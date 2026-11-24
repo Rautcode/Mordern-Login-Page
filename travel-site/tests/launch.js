@@ -71,6 +71,7 @@ const srv = http.createServer((q, s) => { let f = path.join(out, decodeURICompon
   assert((await p.evaluate(() => window.__csp || [])).some(v => v.startsWith('script-src')), 'and the browser reports it');
   const nf = await p.goto(base + '/does-not-exist'); assert.equal(nf.status(), 404); assert((await p.textContent('h1')).includes("isn't on the map")); assert((await p.getAttribute('a.b', 'href')).startsWith('https://wa.me/919876543210'));
   // route landing page: shipped, personalised, runs under the strict CSP, hands the destination + campaign to the planner
+  for (const R of JSON.parse(fs.readFileSync(path.join(ROOT, 'tools', 'routes.json'), 'utf8'))) { assert(fs.existsSync(path.join(out, R.slug, 'index.html')), `${R.slug} shipped in the build`); assert(fs.readFileSync(path.join(out, R.slug, 'index.html'), 'utf8').includes(`https://trips.example.org/${R.slug}/`), `${R.slug} canonical is personalised`); }
   { const v0 = violations.length; await p.goto(base + '/rajasthan-trip-from-pune/?utm_source=ig'); await p.waitForLoadState('networkidle');
     assert((await p.title()).includes('Test & Co')); assert.equal(await p.getAttribute('link[rel=canonical]', 'href'), 'https://trips.example.org/rajasthan-trip-from-pune/');
     assert((await p.getAttribute('.cta-row a.btn-wa', 'href')).startsWith('https://wa.me/919876543210'));

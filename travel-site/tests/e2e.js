@@ -211,27 +211,32 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     await p2.evaluate(() => document.querySelector('[data-bp=goa]').click()); await p2.fill('#dw-name', 'Asha'); await p2.fill('#dw-phone', '9876543210'); await p2.check('#dw-consent'); await p2.click('#dw-pay'); await p2.waitForTimeout(400);
     const dl = calls.find(c => c[0] === '/api/leads')[1]; assert.equal(dl.referrer, 'l.instagram.com', 'hostname only: no path, no token'); assert.equal('utm_source' in dl, false, 'untagged visit sends no campaign keys');
     await ctx.close(); await ctx2.close(); }
-  // ---- route landing page: facts match the knowledge base, nothing broken, campaign + destination carry into the planner ----
-  { const fs = require('fs'); const root = path.join(__dirname, '..'); const types = { '.html': 'text/html', '.webp': 'image/webp', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png' };
-    assert(fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8').includes('/rajasthan-trip-from-pune/'), 'route page is in the sitemap');
+  // ---- route landing pages: for EVERY route, facts match its knowledge base, nothing is broken, campaign + destination reach the planner ----
+  for (const R of JSON.parse(require('fs').readFileSync(path.join(__dirname, '..', 'tools', 'routes.json'), 'utf8'))) {
+    const fs = require('fs'); const root = path.join(__dirname, '..'); const types = { '.html': 'text/html', '.webp': 'image/webp', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png' };
+    assert(fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8').includes(`/${R.slug}/`), `${R.slug} is in the sitemap`);
+    assert(fs.readFileSync(path.join(root, 'index.html'), 'utf8').includes(`href="${R.slug}/"`), `${R.slug} is linked from the home page`);
     const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } }); const pg = await ctx.newPage(); const bad = []; pg.on('pageerror', e => bad.push(e.message)); pg.on('console', m => m.type() === 'error' && bad.push(m.text()));
     await pg.route('http://site.test/**', r => { let f = path.join(root, decodeURIComponent(new URL(r.request().url()).pathname)); if (f.endsWith(path.sep)) f += 'index.html';
       if (!fs.existsSync(f) || fs.statSync(f).isDirectory()) return r.fulfill({ status: 404, body: 'nf' });
       r.fulfill({ contentType: types[path.extname(f)] || 'application/octet-stream', body: fs.readFileSync(f) }); });
-    await pg.goto('http://site.test/rajasthan-trip-from-pune/?utm_source=ig&utm_campaign=raj', { referer: 'https://l.instagram.com/x?t=1' });
-    assert.equal(await pg.locator('h1').count(), 1);
+    await pg.goto(`http://site.test/${R.slug}/?utm_source=ig&utm_campaign=raj`, { referer: 'https://l.instagram.com/x?t=1' });
+    assert.equal(await pg.locator('h1').count(), 1, R.slug);
     const ld = await pg.$$eval('script[type="application/ld+json"]', n => n.map(x => JSON.parse(x.textContent)));
     assert.deepEqual(ld.map(o => o['@type']), ['TouristTrip', 'FAQPage', 'BreadcrumbList']);
     assert.equal(await pg.locator('details').count(), ld[1].mainEntity.length, 'FAQ markup matches the visible FAQ');
     assert.deepEqual(await pg.evaluate(() => [...document.images].filter(i => !i.complete || !i.naturalWidth).map(i => i.src)), [], 'no broken images');
-    const kb = fs.readFileSync(path.join(root, '..', 'travel-backend', 'app', 'knowledge_base', 'rajasthan.md'), 'utf8'); const txt = await pg.innerText('main');
-    for (const n of new Set(txt.match(/\b\d{5}\b/g) || [])) assert(kb.includes(n), `page mentions ${n}, which is not in the verified knowledge base`);
+    const kb = fs.readFileSync(path.join(root, '..', 'travel-backend', 'app', 'knowledge_base', R.kb), 'utf8'); const txt = await pg.innerText('main');
+    for (const n of new Set(txt.match(/\b\d{5}\b/g) || [])) assert(kb.includes(n), `${R.slug}: ${n} is not in the verified knowledge base`);
     assert(!/(?:\+?91[\s-]?)?[6-9]\d{4}[\s-]?\d{5}\b/.test(txt), 'no phone-like numbers on a public page');
+    // every rupee amount in the day plan and the tables must be one the knowledge base states
+    const money = await pg.evaluate(() => [...document.querySelectorAll('.day, .tbl')].map(e => e.innerText).join('\n')); const kbN = kb.replace(/,/g, '');
+    for (const m of new Set([...money.matchAll(/₹\s?(\d[\d,]*)/g)].map(x => x[1].replace(/,/g, '')))) assert(new RegExp(`(?<![\\d,])${m}(?!\\d)`).test(kbN), `${R.slug}: ₹${m} is not in the knowledge base`);
     assert.deepEqual(bad, [], 'no console or page errors');
-    await pg.click('.cta-row a.btn-primary >> nth=0'); await pg.waitForURL(/\/\?trip=rajasthan/);
-    assert(await pg.isChecked('input[name=dest][value="Rajasthan"]'), 'destination preselected in the planner');
+    await pg.click('.cta-row a.btn-primary >> nth=0'); await pg.waitForURL(new RegExp(`/\\?trip=${R.key}`));
+    assert(await pg.isChecked(`input[name=dest][value="${R.name}"]`), 'destination preselected in the planner');
     const attr = await pg.evaluate(() => JSON.parse(sessionStorage.getItem('attr'))); assert.equal(attr.utm_source, 'ig'); assert.equal(attr.utm_campaign, 'raj'); assert.equal(attr.referrer, 'l.instagram.com');
-    await pg.goto('http://site.test/?trip=__proto__'); await pg.goto('http://site.test/?trip=nope'); assert.equal(await pg.isChecked('input[name=dest][value="Rajasthan"]'), false, 'unknown ?trip= is ignored'); assert.deepEqual(bad, []);
+    await pg.goto('http://site.test/?trip=__proto__'); await pg.goto('http://site.test/?trip=nope'); assert.equal(await pg.isChecked(`input[name=dest][value="${R.name}"]`), false, 'unknown ?trip= is ignored'); assert.deepEqual(bad, []);
     await ctx.close(); }
   // ---- brief: mode of travel is required; optional answers reach the API; skipping them sends nothing extra ----
   { const html = require('fs').readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8'); const calls = [];
@@ -340,7 +345,7 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     await pg.waitForFunction(() => document.querySelector('#next').textContent.includes('Your preview is ready'), null, { timeout: 8000 }); assert(st >= 3, 'kept polling through the blip'); await ctx.close();
 
     // 5. the header fits at 320 and 390px with a long real-world brand name, on the home page and a route page
-    for (const w of [320, 390]) for (const u of ['/', '/rajasthan-trip-from-pune/']) {
+    for (const w of [320, 390]) for (const u of ['/', '/rajasthan-trip-from-pune/', '/kerala-trip-from-pune/']) {
       ({ pg, ctx } = await open(ok(), { w, url: u }));
       await pg.evaluate(() => document.querySelectorAll('.hdr .logo').forEach(l => { l.lastChild.textContent = 'The Very Long Brand Name Travel Co.'; }));
       const m = await pg.evaluate(() => { const vis = [...document.querySelectorAll('.hdr a, .hdr button')].filter(e => e.offsetParent !== null);

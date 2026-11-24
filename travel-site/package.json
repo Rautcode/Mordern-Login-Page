@@ -2,7 +2,7 @@
   "name": "travel-site",
   "private": true,
   "scripts": {
-    "test": "python3 tools/build_routes.py --check && node tests/e2e.js && node tests/a11y.js && node tests/a11y.js rajasthan-trip-from-pune/index.html && node tests/admin.js && node tests/launch.js",
+    "test": "python3 tools/build_routes.py --check && node tests/e2e.js && node tests/a11y.js && node tests/a11y.js rajasthan-trip-from-pune/index.html && node tests/a11y.js kerala-trip-from-pune/index.html && node tests/admin.js && node tests/launch.js",
     "test:e2e": "node tests/e2e.js",
     "test:a11y": "node tests/a11y.js",
     "test:launch": "node tests/launch.js",

@@ -8,47 +8,176 @@
     "kicker": "Ground-tested route · 6 days, 5 nights",
     "h1": "Jaipur, Jaisalmer & Jodhpur: a group trip where every hour fits real opening times",
     "intro": "This is the Rajasthan plan we designed for a group of 10 (24–29 October), checked against live IRCTC availability and current operating hours. We publish it with its hard deadlines and the one afternoon we had to fix, because that is what a plan is worth.",
-    "image": {"src": "../img/real-rajasthan-cover.webp", "w": 800, "h": 1130, "alt": "Cover page of the Rajasthan plan we designed: Mumbai to Jaipur, Jaisalmer, Jodhpur and back to Pune, 24 to 29 October, 10 people, 2 Tempo Travellers, 5 nights, 3 train legs", "cap": "A page from the real plan"},
+    "image": {
+      "src": "../img/real-rajasthan-cover.webp",
+      "w": 800,
+      "h": 1130,
+      "alt": "Cover page of the Rajasthan plan we designed: Mumbai to Jaipur, Jaisalmer, Jodhpur and back to Pune, 24 to 29 October, 10 people, 2 Tempo Travellers, 5 nights, 3 train legs",
+      "cap": "A page from the real plan"
+    },
     "glance": [
-      ["Days", "6 days, 5 nights"],
-      ["Tested with", "10 people, 24–29 Oct"],
-      ["On the ground", "2 AC Tempo Travellers (12-seater)"],
-      ["Trains", "3 legs, all daily"],
-      ["Blueprint PDF", "₹799"],
-      ["Full group execution", "from ₹11,499 per person"]
+      [
+        "Days",
+        "6 days, 5 nights"
+      ],
+      [
+        "Tested with",
+        "10 people, 24–29 Oct"
+      ],
+      [
+        "On the ground",
+        "2 AC Tempo Travellers (12-seater)"
+      ],
+      [
+        "Trains",
+        "3 legs, all daily"
+      ],
+      [
+        "Blueprint PDF",
+        "₹799"
+      ],
+      [
+        "Full group execution",
+        "from ₹11,499 per person"
+      ]
     ],
     "days": [
-      {"d": "Day 1 · Sat", "t": "Depart Mumbai, overnight train", "items": [
-        ["17:30", "Assemble at Mumbai Central with luggage."],
-        ["19:05", "Board train 12955 (Mumbai Central–Jaipur SF Express). Sleep on the train."]]},
-      {"d": "Day 2 · Sun", "t": "Jaipur, Amer by evening light", "items": [
-        ["12:00", "Arrive Jaipur Jn. A midday arrival buys more daylight. Check in, lunch."],
-        ["14:30", "Amer Fort: courtyards and the Sheesh Mahal."],
-        ["19:30", "Hawa Mahal with its facade lit up. An exterior photo stop, no entry needed."],
-        ["20:30", "Street-food crawl (pyaaz kachori at Rawat Mishtan Bhandar), then a rooftop dinner in C-Scheme."]]},
-      {"d": "Day 3 · Mon", "t": "Pink City by day, desert train by night", "items": [
-        ["09:00", "City Palace and Jantar Mantar."],
-        ["12:30", "Nahargarh Fort, with lunch and a skyline view at Padao inside the fort."],
-        ["15:30", "Leave for Jaipur Jn with luggage. The road down the hill plus city traffic means you leave with margin."],
-        ["16:25", "Board train 12468 (Leelan SF Express) to Jaisalmer. Sleep on the train."]]},
-      {"d": "Day 4 · Tue", "t": "Jaisalmer: living fort, ghost village, dunes", "items": [
-        ["05:05", "Arrive Jaisalmer. A second, separate 12-seater AC Tempo Traveller meets the group."],
-        ["06:00", "Check in, freshen up, breakfast."],
-        ["10:00", "Jaisalmer Fort ramparts and Patwon ki Haveli."],
-        ["14:30", "Drive to the desert, stopping at Kuldhara, the abandoned village."],
-        ["15:30", "Check in at a Sam Sand Dunes desert camp."],
-        ["16:30", "4x4 dune bashing and quad biking at sunset."],
-        ["20:00", "Folk music, campfire dinner and stargazing."]]},
-      {"d": "Day 5 · Wed", "t": "Desert highway, zip-line, night train", "items": [
-        ["08:00", "Breakfast and camp checkout. We start early to protect the afternoon."],
-        ["08:30", "Depart for Jodhpur via NH125: a real 280–285 km, 4.5 to 6 hours. Treat 14:30 as the earliest realistic arrival, not a promise."],
-        ["14:30–15:30", "Flying Fox zip-line at Mehrangarh Fort. Book the earliest slot as soon as the arrival time firms up."],
-        ["17:00", "Jaswant Thada, a quick visit right after the zip-line."],
-        ["19:00", "Dinner at Stepwell Square (Toorji Ka Jhalra)."],
-        ["20:30", "Drop at Jodhpur Jn with a real buffer."],
-        ["22:00", "Board train 20495 to Pune."]]},
-      {"d": "Day 6 · Thu", "t": "On the rails", "items": [
-        ["16:40", "Arrive Pune Jn after an 18h40 journey. Whoever is collecting the group should go to Pune Jn."]]}
+      {
+        "d": "Day 1 · Sat",
+        "t": "Depart Mumbai, overnight train",
+        "items": [
+          [
+            "17:30",
+            "Assemble at Mumbai Central with luggage."
+          ],
+          [
+            "19:05",
+            "Board train 12955 (Mumbai Central–Jaipur SF Express). Sleep on the train."
+          ]
+        ]
+      },
+      {
+        "d": "Day 2 · Sun",
+        "t": "Jaipur, Amer by evening light",
+        "items": [
+          [
+            "12:00",
+            "Arrive Jaipur Jn. A midday arrival buys more daylight. Check in, lunch."
+          ],
+          [
+            "14:30",
+            "Amer Fort: courtyards and the Sheesh Mahal."
+          ],
+          [
+            "19:30",
+            "Hawa Mahal with its facade lit up. An exterior photo stop, no entry needed."
+          ],
+          [
+            "20:30",
+            "Street-food crawl (pyaaz kachori at Rawat Mishtan Bhandar), then a rooftop dinner in C-Scheme."
+          ]
+        ]
+      },
+      {
+        "d": "Day 3 · Mon",
+        "t": "Pink City by day, desert train by night",
+        "items": [
+          [
+            "09:00",
+            "City Palace and Jantar Mantar."
+          ],
+          [
+            "12:30",
+            "Nahargarh Fort, with lunch and a skyline view at Padao inside the fort."
+          ],
+          [
+            "15:30",
+            "Leave for Jaipur Jn with luggage. The road down the hill plus city traffic means you leave with margin."
+          ],
+          [
+            "16:25",
+            "Board train 12468 (Leelan SF Express) to Jaisalmer. Sleep on the train."
+          ]
+        ]
+      },
+      {
+        "d": "Day 4 · Tue",
+        "t": "Jaisalmer: living fort, ghost village, dunes",
+        "items": [
+          [
+            "05:05",
+            "Arrive Jaisalmer. A second, separate 12-seater AC Tempo Traveller meets the group."
+          ],
+          [
+            "06:00",
+            "Check in, freshen up, breakfast."
+          ],
+          [
+            "10:00",
+            "Jaisalmer Fort ramparts and Patwon ki Haveli."
+          ],
+          [
+            "14:30",
+            "Drive to the desert, stopping at Kuldhara, the abandoned village."
+          ],
+          [
+            "15:30",
+            "Check in at a Sam Sand Dunes desert camp."
+          ],
+          [
+            "16:30",
+            "4x4 dune bashing and quad biking at sunset."
+          ],
+          [
+            "20:00",
+            "Folk music, campfire dinner and stargazing."
+          ]
+        ]
+      },
+      {
+        "d": "Day 5 · Wed",
+        "t": "Desert highway, zip-line, night train",
+        "items": [
+          [
+            "08:00",
+            "Breakfast and camp checkout. We start early to protect the afternoon."
+          ],
+          [
+            "08:30",
+            "Depart for Jodhpur via NH125: a real 280–285 km, 4.5 to 6 hours. Treat 14:30 as the earliest realistic arrival, not a promise."
+          ],
+          [
+            "14:30–15:30",
+            "Flying Fox zip-line at Mehrangarh Fort. Book the earliest slot as soon as the arrival time firms up."
+          ],
+          [
+            "17:00",
+            "Jaswant Thada, a quick visit right after the zip-line."
+          ],
+          [
+            "19:00",
+            "Dinner at Stepwell Square (Toorji Ka Jhalra)."
+          ],
+          [
+            "20:30",
+            "Drop at Jodhpur Jn with a real buffer."
+          ],
+          [
+            "22:00",
+            "Board train 20495 to Pune."
+          ]
+        ]
+      },
+      {
+        "d": "Day 6 · Thu",
+        "t": "On the rails",
+        "items": [
+          [
+            "16:40",
+            "Arrive Pune Jn after an 18h40 journey. Whoever is collecting the group should go to Pune Jn."
+          ]
+        ]
+      }
     ],
     "deadlines_title": "The deadlines that cannot slide",
     "deadlines": [
@@ -59,14 +188,6 @@
     ],
     "fixed_title": "What we fixed in the original plan",
     "fixed": "The first draft of Day 5 did not fit real operating hours: the zip-line runs only 09:30–17:00 and Jaswant Thada closes between 17:00 and 18:00. We re-sequenced it: zip-line first, the moment the group lands in Jodhpur, then Jaswant Thada as a quick stop, both inside real hours, with the 22:00 train leaving a genuine buffer instead of a squeeze. This is the kind of catch we make for every plan.",
-    "trains_title": "Train legs we checked on IRCTC",
-    "trains_note": "Checked by us for 24–29 October. Timings and availability change, so we re-check them for your dates before you book.",
-    "trains": [
-      ["Mumbai Central → Jaipur Jn", "12955", "19:05", "12:00 +1", "Daily", "AC 3 Tier seats fell from 146 to 58 over the week we watched: book early."],
-      ["Jaipur Jn → Jaisalmer", "12468", "16:25", "05:05 +1", "Daily", "12h40 journey. October to February is peak season."],
-      ["Jodhpur Jn → Pune Jn", "20495", "22:00", "16:40 +1", "Daily", "18h40 journey. Mostly available; book early."],
-      ["Pune Jn → Jaipur Jn (alternative start)", "12939", "17:30", "14:40 +1", "Wed and Sun only", "Does not run on Fridays. It showed a waitlist for one search date."]
-    ],
     "book_title": "Book these early",
     "book": [
       "Train 12955 for the whole group: AC 3 Tier availability drops week over week.",
@@ -75,12 +196,404 @@
       "The Flying Fox slot, as soon as your Jodhpur arrival time is clear."
     ],
     "faq": [
-      ["Can we start from Pune instead of Mumbai?", "Yes. The on-ground days stay the same and we re-plan the first and last legs. The Pune to Jaipur train 12939 runs only on Wednesdays and Sundays and does not run on Fridays, so your start date matters."],
-      ["Why two Tempo Traveller bookings?", "The overnight train from Jaipur to Jaisalmer breaks vehicle continuity. One vehicle serves the Jaipur days, and a separate 12-seater AC Tempo Traveller covers Jaisalmer and Jodhpur."],
-      ["Why isn't the Jodhpur arrival time guaranteed?", "The desert highway from Sam to Jodhpur is 280–285 km and takes 4.5 to 6 hours. We plan from the realistic worst case and put the one fixed appointment, the zip-line, after it."],
-      ["Does the route work for a group that is not 10 people?", "The day structure works for groups of roughly 8 to 16. Vehicles, rooms and the zip-line slot split change with group size, and your quote shows the per-person split before you commit."]
+      [
+        "Can we start from Pune instead of Mumbai?",
+        "Yes. The on-ground days stay the same and we re-plan the first and last legs. The Pune to Jaipur train 12939 runs only on Wednesdays and Sundays and does not run on Fridays, so your start date matters."
+      ],
+      [
+        "Why two Tempo Traveller bookings?",
+        "The overnight train from Jaipur to Jaisalmer breaks vehicle continuity. One vehicle serves the Jaipur days, and a separate 12-seater AC Tempo Traveller covers Jaisalmer and Jodhpur."
+      ],
+      [
+        "Why isn't the Jodhpur arrival time guaranteed?",
+        "The desert highway from Sam to Jodhpur is 280–285 km and takes 4.5 to 6 hours. We plan from the realistic worst case and put the one fixed appointment, the zip-line, after it."
+      ],
+      [
+        "Does the route work for a group that is not 10 people?",
+        "The day structure works for groups of roughly 8 to 16. Vehicles, rooms and the zip-line slot split change with group size, and your quote shows the per-person split before you commit."
+      ]
     ],
     "price": 799,
-    "wa": "Hi! I'd like to plan the Rajasthan trip (Jaipur, Jaisalmer, Jodhpur) for our group."
+    "wa": "Hi! I'd like to plan the Rajasthan trip (Jaipur, Jaisalmer, Jodhpur) for our group.",
+    "kb": "rajasthan.md",
+    "tables": [
+      {
+        "title": "Train legs we checked on IRCTC",
+        "note": "Checked by us for 24–29 October. Timings and availability change, so we re-check them for your dates before you book.",
+        "caption": "Train legs",
+        "head": [
+          "Leg",
+          "Train",
+          "Departs",
+          "Arrives",
+          "Runs",
+          "Note"
+        ],
+        "rows": [
+          [
+            "Mumbai Central → Jaipur Jn",
+            "12955",
+            "19:05",
+            "12:00 +1",
+            "Daily",
+            "AC 3 Tier seats fell from 146 to 58 over the week we watched: book early."
+          ],
+          [
+            "Jaipur Jn → Jaisalmer",
+            "12468",
+            "16:25",
+            "05:05 +1",
+            "Daily",
+            "12h40 journey. October to February is peak season."
+          ],
+          [
+            "Jodhpur Jn → Pune Jn",
+            "20495",
+            "22:00",
+            "16:40 +1",
+            "Daily",
+            "18h40 journey. Mostly available; book early."
+          ],
+          [
+            "Pune Jn → Jaipur Jn (alternative start)",
+            "12939",
+            "17:30",
+            "14:40 +1",
+            "Wed and Sun only",
+            "Does not run on Fridays. It showed a waitlist for one search date."
+          ]
+        ]
+      }
+    ]
+  },
+  {
+    "slug": "kerala-trip-from-pune",
+    "key": "kerala",
+    "name": "Kerala",
+    "kb": "kerala.md",
+    "title": "Kerala Group Trip: Munnar, Thekkady & Alleppey (3 Days)",
+    "description": "A ground-tested 3-day Kerala group trip: Munnar, Kolukkumalai jeeps, Thekkady and Alleppey, with real costs and monsoon notes. Plan it for your group from Pune.",
+    "kicker": "Ground-tested route · 3 days, 2 nights",
+    "h1": "Kerala in 3 days: Munnar, Thekkady and Alleppey, planned to survive the monsoon",
+    "intro": "This is the Kerala plan we designed for a group of 11 (12–14 June, monsoon season): about 557 km by 12-seater AC Tempo Traveller between a 03:30 landing and a 23:04 flight home. We publish what it actually cost and the deadlines that cannot slip.",
+    "image": {
+      "src": "../img/real-kerala-cost.webp",
+      "w": 800,
+      "h": 406,
+      "alt": "Cost page from the Kerala plan we designed: per person and for the group of 11, covering flights, Tempo Traveller, stay, jeeps, the Kalaripayattu show, entries, food and shopping, totalling Rs. 17,849 per person",
+      "cap": "The real cost page"
+    },
+    "glance": [
+      [
+        "Days",
+        "3 days, 2 nights"
+      ],
+      [
+        "Tested with",
+        "11 people, 12–14 June (monsoon)"
+      ],
+      [
+        "On the ground",
+        "12-seater AC Tempo Traveller, about 557 km"
+      ],
+      [
+        "Flights",
+        "Pune to Kochi return, about ₹10,543 per person on our trip"
+      ],
+      [
+        "Cost on our trip",
+        "about ₹17,849 per person, flights included"
+      ],
+      [
+        "Blueprint PDF",
+        "₹699"
+      ]
+    ],
+    "days": [
+      {
+        "d": "Day 1 · Fri",
+        "t": "Kochi Airport to Munnar: waterfalls, tea and the hills",
+        "items": [
+          [
+            "03:30",
+            "Land at Kochi. The driver meets you at arrivals with a name board; 45 minutes to freshen up."
+          ],
+          [
+            "04:15",
+            "Depart for Munnar (130 km, about 4 hours with stops). Everyone sleeps in the Tempo Traveller."
+          ],
+          [
+            "06:30",
+            "Breakfast at a highway dhaba in Kothamangalam: puttu and kadala curry, idiyappam and egg curry, hot chai (about ₹80 per person)."
+          ],
+          [
+            "08:30",
+            "Cheeyappara Waterfalls on NH85 (30 minutes, free). Slippery rocks: stay away from the edge."
+          ],
+          [
+            "09:30",
+            "Reach Munnar and check in at Sea Grace Cottage; rest an hour."
+          ],
+          [
+            "11:00",
+            "Attukad Waterfalls, 9 km from town on a narrow road. The Tempo Traveller parks at the base; it is a 5-minute walk, so wear grip shoes."
+          ],
+          [
+            "12:00",
+            "Lunch at a local restaurant in Munnar town: Kerala biryani, kappa and meen curry (about ₹150 per person)."
+          ],
+          [
+            "13:30",
+            "Tea Museum (KDHP), about 45 minutes, ₹150 per person. Open 09:00–17:00."
+          ],
+          [
+            "14:30",
+            "Mattupetty Dam and a boat on the lake (group boat about ₹700 flat, 20-seater)."
+          ],
+          [
+            "15:45",
+            "Echo Point."
+          ],
+          [
+            "16:45",
+            "Top Station viewpoint, a 1 km walk from parking (₹20 per person, cash only)."
+          ],
+          [
+            "18:30",
+            "Munnar town street food and spice shopping: parotta and beef fry, pazham pori, cardamom chai (about ₹150 per person)."
+          ],
+          [
+            "19:30",
+            "Back at the cottage; bonfire if the owner can arrange it. Sleep by 22:00 for a 05:30 start, and ask tonight for 2 jeeps for Kolukkumalai at 06:30."
+          ]
+        ]
+      },
+      {
+        "d": "Day 2 · Sat",
+        "t": "Kolukkumalai sunrise jeeps, then Thekkady",
+        "items": [
+          [
+            "05:30",
+            "Wake up and a quick breakfast: appam and stew or puttu (about ₹80 per person)."
+          ],
+          [
+            "06:30",
+            "Drive to the Suryanelli base (35 km, about 1 hour)."
+          ],
+          [
+            "07:30",
+            "Kolukkumalai tea estate jeep safari, about 2 hours. The Tempo Traveller cannot go up, so the group transfers to 2 pre-arranged jeeps (about ₹4,000 each)."
+          ],
+          [
+            "10:00",
+            "Back at the base, check out and drive to Thekkady via NH85 (91 km, about 3 hours in the monsoon)."
+          ],
+          [
+            "13:00",
+            "Lunch in Kumily: parotta with chicken or fish curry (about ₹150 per person), then check in at Ferndale Homestay. Avoid the tourist restaurants near the Periyar gate: they are overpriced."
+          ],
+          [
+            "14:30",
+            "Sathram jeep safari near the Periyar Tiger Reserve border, about 3 hours (2 jeeps at about ₹2,500–3,000 each). Wildlife is not guaranteed: about a 40% chance of elephants, bison and deer."
+          ],
+          [
+            "18:00",
+            "Kalaripayattu show at Kadathanadan Kalari Centre, Kumily, about 2 hours (₹300 per person). Pre-book it for the group."
+          ],
+          [
+            "20:15",
+            "Dinner in Kumily: prawn curry and appam, fish pollichathu (about ₹180 per person)."
+          ],
+          [
+            "21:30",
+            "Back at the homestay."
+          ]
+        ]
+      },
+      {
+        "d": "Day 3 · Sun",
+        "t": "Thekkady to Alleppey, then the late flight home",
+        "items": [
+          [
+            "07:00",
+            "Breakfast near the homestay and checkout (about ₹80 per person)."
+          ],
+          [
+            "08:00",
+            "Depart for Alleppey via Changanassery (138 km, about 3.5 hours): the road drops from the hills to paddy fields and backwaters."
+          ],
+          [
+            "11:30",
+            "Alleppey Beach (45 minutes) and its 150-year-old iron pier. No swimming in the monsoon: the waves are rough and dangerous."
+          ],
+          [
+            "12:30",
+            "Alappuzha Lighthouse (45 minutes, 5 floors to climb). Open Tuesday to Sunday 09:00–17:30; ₹20 per person, cash only."
+          ],
+          [
+            "13:30",
+            "Kumarakom Bird Sanctuary and a boat ride on Vembanad Lake, 1.5 hours (₹50 entry plus ₹200 boat). June to August is breeding season for resident birds; migratory birds come only November to February."
+          ],
+          [
+            "15:00",
+            "Lunch and a rest at Asado Cafe or Cafe Catamaran in Alleppey (about ₹300–500 per person): karimeen pollichathu, filter coffee, banana pancakes."
+          ],
+          [
+            "16:30",
+            "Depart Alleppey for Kochi Airport (83 km, about 2 hours with buffer). No slack: this one is without fail."
+          ],
+          [
+            "18:30",
+            "Reach the airport, 6.5 hours before the flight: dinner, charge phones, duty-free for Kerala tea, banana chips and spices."
+          ],
+          [
+            "21:00",
+            "Check-in and security; be at the gate by 22:30."
+          ],
+          [
+            "23:04",
+            "Flight to Pune, landing about 01:00–01:15 the next morning."
+          ]
+        ]
+      }
+    ],
+    "deadlines_title": "The deadlines that cannot slip",
+    "deadlines": [
+      "<b>Leave Alleppey by 16:30 without fail.</b> It is 83 km to the airport, Sunday traffic is slow and the flight is at 23:04. Be at the airport by 18:30.",
+      "<b>Tea Museum (KDHP)</b> is open 09:00–17:00, so it must be done before 17:00.",
+      "<b>Top Station viewpoint</b> is open 05:00–20:00 and takes cash only (₹20 per person).",
+      "<b>Alappuzha Lighthouse</b> is open Tuesday to Sunday 09:00–17:30 (Sunday is open) and takes cash only (₹20 per person).",
+      "<b>Kolukkumalai</b> is a jeep trail only. A Tempo Traveller cannot go up, and jeeps may cancel in extreme heavy rain. Backup viewpoints near Munnar: Lockhart Gap or Pothamedu.",
+      "<b>Kalaripayattu show:</b> the 18:00 slot (₹300 per person) must be booked in advance.",
+      "<b>Alleppey Beach in the monsoon:</b> no swimming.",
+      "If a spot closes for heavy rain or a landslide alert, tell the group leader at once and use the backup viewpoints."
+    ],
+    "tables": [
+      {
+        "title": "The legs between stops",
+        "note": "Roads and times as we recorded them on our June trip, in the monsoon. We re-check them for your dates.",
+        "caption": "Road legs",
+        "head": [
+          "Leg",
+          "Road",
+          "Distance",
+          "Time"
+        ],
+        "rows": [
+          [
+            "Kochi Airport to Munnar",
+            "NH85 via Kothamangalam, Neriamangalam, Adimali",
+            "130 km",
+            "about 4 hrs with stops"
+          ],
+          [
+            "Munnar to Kolukkumalai base (Suryanelli)",
+            "local road",
+            "35 km",
+            "about 1 hr"
+          ],
+          [
+            "Munnar to Thekkady / Kumily",
+            "NH85 (Western Ghats)",
+            "91 km",
+            "about 3 hrs in the monsoon"
+          ],
+          [
+            "Thekkady to Alleppey",
+            "via Changanassery",
+            "138 km",
+            "about 3.5 hrs"
+          ],
+          [
+            "Alleppey to Kochi Airport",
+            "NH66",
+            "83 km",
+            "about 2 hrs with buffer"
+          ]
+        ]
+      },
+      {
+        "title": "What our June trip cost per person",
+        "note": "From our plan for 11 people in June 2026. Your quote shows the split for your own group and dates.",
+        "caption": "Cost per person",
+        "head": [
+          "Item",
+          "Per person"
+        ],
+        "rows": [
+          [
+            "Flights (Pune to Kochi return)",
+            "₹10,543"
+          ],
+          [
+            "Tempo Traveller, all-in",
+            "₹1,591"
+          ],
+          [
+            "Stay, 2 nights",
+            "₹1,470"
+          ],
+          [
+            "Kolukkumalai jeeps",
+            "₹730"
+          ],
+          [
+            "Sathram jeep safari",
+            "₹500"
+          ],
+          [
+            "Kalaripayattu show",
+            "₹300"
+          ],
+          [
+            "Sightseeing entries",
+            "₹315"
+          ],
+          [
+            "Food, 3 days",
+            "₹1,400"
+          ],
+          [
+            "Shopping, misc and buffer",
+            "₹1,000"
+          ],
+          [
+            "Total, flights included",
+            "about ₹17,849 (₹1,96,308 for the group)"
+          ]
+        ]
+      }
+    ],
+    "book_title": "Book these early",
+    "book": [
+      "Web check-in on the morning of Day 3, 24 hours before the flight. At the airport: baggage drop, security, and at the gate by 22:30.",
+      "The Kalaripayattu show (18:00 slot) for the whole group.",
+      "Two jeeps for Kolukkumalai at 06:30: ask the Munnar owner the night before, and call to confirm the early check-in at 09:30.",
+      "Flights. Our plan does not fix flight numbers, so compare fares for your dates (the return fare was about ₹10,543 per person in June)."
+    ],
+    "faq": [
+      [
+        "Why land at 03:30 and drive straight to Munnar?",
+        "It turns the flight into the first leg of the trip. After 45 minutes to freshen up, the group sleeps in the Tempo Traveller on the 4-hour drive and reaches Munnar by 09:30 with the whole day ahead."
+      ],
+      [
+        "Can we reach Kolukkumalai in the Tempo Traveller?",
+        "No. It is a jeep trail only, so the group transfers to 2 jeeps at the Suryanelli base (about ₹4,000 each). They may cancel in extreme heavy rain; Lockhart Gap and Pothamedu are the backup viewpoints."
+      ],
+      [
+        "Does this plan work in the monsoon?",
+        "It was designed in one. The drive from Munnar to Thekkady takes about 3 hours in the monsoon, there is no swimming at Alleppey Beach, and Kolukkumalai jeeps may cancel in heavy rain. If a spot closes for rain or a landslide alert, the group leader switches to the backup viewpoints."
+      ],
+      [
+        "Why leave Alleppey at 16:30?",
+        "It is 83 km to Kochi Airport, Sunday traffic is slow and the flight leaves at 23:04. Leaving at 16:30 puts you at the airport by 18:30 with time for dinner and check-in."
+      ],
+      [
+        "How big a group does it suit?",
+        "We tested it with 11 people in one 12-seater Tempo Traveller and 2 jeeps at each jeep stop. Vehicles, rooms and jeeps change with group size, and your quote shows the per-person split before you commit."
+      ]
+    ],
+    "price": 699,
+    "wa": "Hi! I'd like to plan the Kerala trip (Munnar, Thekkady, Alleppey) for our group."
   }
 ]

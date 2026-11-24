@@ -23,7 +23,7 @@ DESTINATION_FILES = {
 BLUEPRINTS = {
     "rajasthan": {"title": "Jaipur → Jaisalmer → Jodhpur (6D/5N)", "destination": "Rajasthan", "price_inr": 799, "file": "rajasthan.pdf"},
     "hampi-gokarna": {"title": "Gokarna → Murudeshwar → Hampi (5D/4N, Ex-Pune)", "destination": "Hampi–Gokarna", "price_inr": 699, "file": "hampi-gokarna.pdf"},
-    "kerala": {"title": "Kerala Temple & Nature Circuit (3D/2N)", "destination": "Kerala", "price_inr": 699, "file": "kerala.pdf"},
+    "kerala": {"title": "Kochi → Munnar → Thekkady → Alleppey (3D/2N)", "destination": "Kerala", "price_inr": 699, "file": "kerala.pdf"},
     "goa": {"title": "Goa Hidden Gems & Classics (4D/3N, Ex-Pune)", "destination": "Goa", "price_inr": 699, "file": "goa.pdf"},
 }
 

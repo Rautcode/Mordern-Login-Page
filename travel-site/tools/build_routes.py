@@ -41,6 +41,15 @@ def source():
     return css, attr, logo
 
 
+def table(t):
+    head = "".join(f'<th scope="col">{E(h)}</th>' for h in t["head"])
+    body = "".join("<tr>" + "".join(f"<td>{E(c)}</td>" for c in row) + "</tr>" for row in t["rows"])
+    label = E(t["title"]) + ", scrolls sideways on small screens"
+    return (f'<section class="rs"><div class="wrap">\n  <h2>{E(t["title"])}</h2><p class="lead" style="margin:0 0 18px">{E(t["note"])}</p>\n'
+            f'  <div class="tbl" role="region" aria-label="{label}" tabindex="0"><table><caption class="hand" style="text-align:left;padding-bottom:6px">{E(t["caption"])}</caption>'
+            f'<thead><tr>{head}</tr></thead><tbody>{body}</tbody></table></div>\n</div></section>')
+
+
 def page(r, css, attr, logo):
     url = f"https://YOUR-DOMAIN.com/{r['slug']}/"
     wa = f"https://wa.me/91XXXXXXXXXX?text={quote(r['wa'])}"
@@ -57,7 +66,9 @@ def page(r, css, attr, logo):
     days = "".join(
         f'<article class="day"><p class="kicker">{E(d["d"])}</p><h3>{E(d["t"])}</h3><ul class="tl">'
         + "".join(f"<li><time>{E(t)}</time><span>{E(x)}</span></li>" for t, x in d["items"]) + "</ul></article>" for d in r["days"])
-    rows = "".join("<tr>" + "".join(f"<td>{E(c)}</td>" for c in row) + "</tr>" for row in r["trains"])
+    fixed = (f'<section class="rs"><div class="wrap"><h2>{E(r["fixed_title"])}</h2><p>{E(r["fixed"])}</p></div></section>'
+             if r.get("fixed") else "")
+    tables = "\n\n".join(table(t) for t in r["tables"])
     # deadlines/fixed are authored here (trusted, contain <b>); everything else is escaped
     return f"""<!doctype html>
 <html lang="en-IN">
@@ -106,12 +117,9 @@ def page(r, css, attr, logo):
   <h2>{E(r["deadlines_title"])}</h2><div class="note-box"><ul>{"".join(f"<li>{d}</li>" for d in r["deadlines"])}</ul></div>
 </div></section>
 
-<section class="rs"><div class="wrap"><h2>{E(r["fixed_title"])}</h2><p>{E(r["fixed"])}</p></div></section>
+{fixed}
 
-<section class="rs"><div class="wrap">
-  <h2>{E(r["trains_title"])}</h2><p class="lead" style="margin:0 0 18px">{E(r["trains_note"])}</p>
-  <div class="tbl" role="region" aria-label="Train legs, scrolls sideways on small screens" tabindex="0"><table><caption class="hand" style="text-align:left;padding-bottom:6px">Train legs</caption><thead><tr><th scope="col">Leg</th><th scope="col">Train</th><th scope="col">Departs</th><th scope="col">Arrives</th><th scope="col">Runs</th><th scope="col">Note</th></tr></thead><tbody>{rows}</tbody></table></div>
-</div></section>
+{tables}
 
 <section class="rs"><div class="wrap">
   <h2>{E(r["book_title"])}</h2><ul style="padding-left:20px;display:grid;gap:8px">{"".join(f"<li>{E(b)}</li>" for b in r["book"])}</ul>
