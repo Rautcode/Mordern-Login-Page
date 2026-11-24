@@ -62,7 +62,7 @@
       {"h": "Who is responsible", "p": ["[BRAND_NAME] is run by [LEGAL_NAME], [BUSINESS_ADDRESS]. For privacy requests and complaints, write to [CONTACT_EMAIL]. We handle personal data in line with India's Digital Personal Data Protection Act, 2023."]},
       {"h": "What we collect", "ul": [
         "What you type into our forms: your name, WhatsApp number and trip details (destination, dates, group size, budget, how you want to travel, interests and any notes you write).",
-        "Which link brought you here: the campaign tag in the link (such as utm_source) and the name of the website that referred you, never the full address.",
+        "Which link brought you here: the campaign tag in the link (such as utm_source) and the name of the website that referred you, never the full address. A WhatsApp message you start from this site may include it, so we know where you came from.",
         "Payment status for purchases. Razorpay handles your card or UPI details, and we never see or store them.",
         "Messages you send us on WhatsApp or email."]},
       {"h": "Why we use it", "ul": [
@@ -77,7 +77,7 @@
         "Google (Gemini): when we draft a plan with AI, we send the trip details (destination, dates, group size, budget, travel preferences and notes). We do not send your name or phone number. Please do not put sensitive personal information in the notes.",
         "Our hosting provider: serves this website and keeps standard server logs.",
         "Hotels, drivers and activity operators: only what they need to deliver your booking, such as traveller names."], "p": ["Some of these providers process data outside India."]},
-      {"h": "Cookies and similar storage", "p": ["We do not use advertising or analytics cookies. While you fill in our form, your browser's session storage keeps your in-progress answers (never your phone number or notes) and the campaign information described above. It is cleared when you close the tab."]},
+      {"h": "Cookies and similar storage", "p": ["We do not use advertising or analytics cookies. While you fill in our form, your browser's session storage keeps your in-progress answers (never your phone number or notes) and the campaign information described above. It is cleared when you close the tab.", "[ANALYTICS_NOTE]"]},
       {"h": "How long we keep it", "p": ["We keep enquiry and booking records for as long as we need them to serve you, handle disputes and meet legal and tax duties. Then we delete or anonymise them."]},
       {"h": "Your rights", "ul": [
         "Ask what personal data we hold about you.",

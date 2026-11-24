@@ -1015,6 +1015,7 @@ const ATTR = (() => {
   } catch { return {}; }
 })();
 const waLink = text => `https://wa.me/${CFG.whatsapp}` + (text ? `?text=${encodeURIComponent(text)}` : "");
+const srcLine = () => { const s = ATTR.utm_source || ATTR.referrer; return s ? `Source: ${s}` : ""; };   // visible in the message, so the customer sees it and can edit it
 const reduce = matchMedia("(prefers-reduced-motion:reduce)").matches;
 
 // ===== static wiring =====
@@ -1241,7 +1242,7 @@ form.addEventListener("submit", async ev => {
   const rows = [["Name", v.name], ["WhatsApp", v.phone], ["Destination", v.destination], ["From", v.departure_city], ["Travel by", TRAVEL[v.travel_mode]], ["Travel dates", v.travel_dates], ["Group size", v.group_size], ["Service", v.service === "blueprint" ? (hasBlueprint(v.destination) ? "Ready Blueprint" : "Ready Blueprint (not available for this destination)") : SVC[v.service]], ["Budget / person", BUDGET[v.budget]], ...extraRows(v)];
   $("#c-name").textContent = v.name.split(" ")[0];
   $("#c-list").replaceChildren(...rows.flatMap(([k, val]) => [Object.assign(document.createElement("dt"), { textContent: k }), Object.assign(document.createElement("dd"), { textContent: val })]));
-  $("#c-wa").href = waLink(["Hi! I'd like a quote for this trip.", "", ...rows.map(([k, val]) => `*${k}:* ${val}`), "", leadId ? `Ref: ${leadId.slice(0, 8)}` : ""].join("\n").trim());
+  $("#c-wa").href = waLink(["Hi! I'd like a quote for this trip.", "", ...rows.map(([k, val]) => `*${k}:* ${val}`), "", leadId ? `Ref: ${leadId.slice(0, 8)}` : "", srcLine()].join("\n").trim());
   buildNext(leadId, v, note);
   form.hidden = true; $("#confirm").hidden = false; $("#confirm").focus(); $("#confirm").scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
   btn.disabled = false; btn.textContent = "Get my quote"; busy = false; try { sessionStorage.removeItem("draft"); } catch {}
@@ -1296,7 +1297,7 @@ $("#dwform").addEventListener("submit", async ev => {
   ev.preventDefault(); const t = dwTrip, st = $("#dw-status"), btn = $("#dw-pay"), say = x => { st.textContent = x; };
   const name = clean($("#dw-name").value), m = $("#dw-phone").value.replace(/[\s\-()]/g, "").match(/^(?:\+?91|0)?([6-9]\d{9})$/);
   if (name.length < 2) return say("Please enter your name."); if (!m) return say("Enter a valid 10-digit Indian WhatsApp number."); if (!$("#dw-consent").checked) return say("Please tick to continue.");
-  const phone = "91" + m[1], msg = `Hi! I'd like the ${t.dest} blueprint.\n*Name:* ${name}\n*WhatsApp:* ${phone}`;
+  const phone = "91" + m[1], msg = `Hi! I'd like the ${t.dest} blueprint.\n*Name:* ${name}\n*WhatsApp:* ${phone}${srcLine() ? "\n" + srcLine() : ""}`;
   if (!CFG.apiBase) { window.open(waLink(msg), "_blank", "noopener"); return; }   // WhatsApp-only mode
   btn.disabled = true; say("Opening secure checkout…");
   try {

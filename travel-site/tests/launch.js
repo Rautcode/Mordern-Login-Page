@@ -6,13 +6,14 @@ const { chromium } = require('playwright'); const assert = require('assert');
 const { spawnSync } = require('child_process'); const http = require('http'); const fs = require('fs'); const os = require('os'); const path = require('path'); const crypto = require('crypto');
 const ROOT = path.join(__dirname, '..'); const run = (...a) => spawnSync('python3', [path.join(ROOT, 'tools', 'personalize.py'), ...a], { encoding: 'utf8' });
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'launch-')); const out = path.join(tmp, 'dist');
-const brand = { brand: 'Test & Co', domain: 'trips.example.org', whatsapp: '919876543210', instagram: 'test.handle', founder: 'Asha Rao', legal_name: 'Asha Rao', email: 'hello@trips.example.org', address: '12 Example Road, Pune, Maharashtra 411001', legal_reviewed: true, udyam: 'UDYAM-MH-12-3456789', api_base: 'https://api.example.org' };
+const brand = { brand: 'Test & Co', domain: 'trips.example.org', whatsapp: '919876543210', instagram: 'test.handle', founder: 'Asha Rao', legal_name: 'Asha Rao', email: 'hello@trips.example.org', address: '12 Example Road, Pune, Maharashtra 411001', legal_reviewed: true, analytics_token: '0123456789abcdef0123456789abcdef', reviews: [{ quote: 'Everything was planned to the minute and we never waited.', name: 'Rohan K.', meta: 'Rajasthan trip, Pune', consent: true }], udyam: 'UDYAM-MH-12-3456789', api_base: 'https://api.example.org' };
 const bf = path.join(tmp, 'brand.json'); fs.writeFileSync(bf, JSON.stringify(brand));
 
 // 1. build
 let r = run(bf, '--out', out); assert.equal(r.status, 0, r.stderr + r.stdout);
 const html = fs.readFileSync(path.join(out, 'index.html'), 'utf8');
 assert(!/\[[A-Z][A-Z_]{3,}\]|YOUR-DOMAIN|91XXXXXXXXXX/.test(html), 'no placeholders left');
+assert(html.includes('https://static.cloudflareinsights.com/beacon.min.js') && html.includes('0123456789abcdef0123456789abcdef') && html.includes('Everything was planned to the minute'), 'analytics beacon and the consented review are in the page');
 assert(html.includes('Test &amp; Co') && html.includes('https://trips.example.org/') && html.includes('apiBase: "https://api.example.org"') && html.includes('UDYAM-MH-12-3456789'));
 assert(!fs.readFileSync(path.join(out, '404.html'), 'utf8').includes('XXXX'), '404 filled in');
 assert(fs.readFileSync(path.join(out, 'robots.txt'), 'utf8').includes('https://trips.example.org/sitemap.xml'));
@@ -20,16 +21,22 @@ assert(new RegExp(`<lastmod>${new Date().toISOString().slice(0, 10)}</lastmod>`)
 const headers = fs.readFileSync(path.join(out, '_headers'), 'utf8'); const csp = headers.match(/Content-Security-Policy: (.*)/)[1];
 const inline = [...html.matchAll(/<script(?![^>]*(?:src=|json))[^>]*>([\s\S]*?)<\/script>/g)].map(m => "'sha256-" + crypto.createHash('sha256').update(m[1]).digest('base64') + "'");
 assert(inline.length >= 2 && inline.every(h => csp.includes(h)), 'CSP lists the hash of every inline script'); assert(csp.includes('connect-src \'self\' https://api.example.org') && !/unsafe-inline[^;]*;[^]*script/.test(csp.split('style-src')[0]));
+assert(csp.includes('script-src \'self\'') && csp.includes('https://static.cloudflareinsights.com') && csp.includes('https://cloudflareinsights.com'), 'the CSP allows exactly the analytics hosts');
 assert(csp.includes("frame-ancestors 'none'") && /script-src 'self' 'sha256-/.test(csp) && !/script-src[^;]*unsafe-inline/.test(csp), 'script-src has no unsafe-inline');
 
 // 2. personaliser refuses bad input
 const bad = (patch, why) => { const f = path.join(tmp, 'bad.json'); fs.writeFileSync(f, JSON.stringify({ ...brand, ...patch })); const x = run(f, '--out', path.join(tmp, 'bad-out')); assert.notEqual(x.status, 0, why); };
-bad({ domain: 'https://x.com/' }, 'scheme in domain'); bad({ legal_reviewed: false }, 'legal pages must be reviewed'); bad({ legal_reviewed: undefined }, 'review flag missing'); bad({ email: 'not-an-email' }, 'bad email'); bad({ address: '' }, 'missing address'); bad({ whatsapp: '+91 98765' }, 'bad whatsapp'); bad({ founder: '' }, 'missing founder'); bad({ api_base: 'http://insecure.example' }, 'http api'); bad({ udyam: 'nope' }, 'bad udyam');
+bad({ domain: 'https://x.com/' }, 'scheme in domain'); bad({ analytics_token: 'not a token!' }, 'bad analytics token'); bad({ reviews: [{ quote: 'Great trip indeed', name: 'Ann', consent: false }] }, 'no consent'); bad({ reviews: [{ quote: 'Great trip indeed', name: 'Ann' }] }, 'consent missing'); bad({ reviews: 'x' }, 'reviews must be a list'); bad({ reviews: [{ quote: 'ok', name: 'A', consent: true }] }, 'review too short'); bad({ legal_reviewed: false }, 'legal pages must be reviewed'); bad({ legal_reviewed: undefined }, 'review flag missing'); bad({ email: 'not-an-email' }, 'bad email'); bad({ address: '' }, 'missing address'); bad({ whatsapp: '+91 98765' }, 'bad whatsapp'); bad({ founder: '' }, 'missing founder'); bad({ api_base: 'http://insecure.example' }, 'http api'); bad({ udyam: 'nope' }, 'bad udyam');
 assert.notEqual(run(path.join(ROOT, 'tools', 'brand.example.json'), '--out', path.join(tmp, 'ex')).status, 0, 'example values rejected');
 fs.mkdirSync(path.join(tmp, 'precious')); fs.writeFileSync(path.join(tmp, 'precious', 'keep.txt'), 'x');
 assert.notEqual(run(bf, '--out', path.join(tmp, 'precious')).status, 0, 'refuses to overwrite a folder it did not create'); assert(fs.existsSync(path.join(tmp, 'precious', 'keep.txt')));
 const noUd = path.join(tmp, 'nu.json'); fs.writeFileSync(noUd, JSON.stringify({ ...brand, udyam: '' })); assert.equal(run(noUd, '--out', path.join(tmp, 'nu-out')).status, 0);
 assert(!fs.readFileSync(path.join(tmp, 'nu-out', 'index.html'), 'utf8').includes('class="udyam"'), 'badge hidden when no Udyam number');
+// analytics and reviews are strictly opt-in: a build without them carries no beacon, no CSP allowance, no privacy sentence and no placeholder
+const plainF = path.join(tmp, 'plain.json'); fs.writeFileSync(plainF, JSON.stringify({ ...brand, analytics_token: '', reviews: [] })); assert.equal(run(plainF, '--out', path.join(tmp, 'plain-out')).status, 0);
+{ const o = path.join(tmp, 'plain-out'); const idx = fs.readFileSync(path.join(o, 'index.html'), 'utf8'), pv = fs.readFileSync(path.join(o, 'privacy', 'index.html'), 'utf8');
+  assert(!/cloudflareinsights/.test(idx + pv + fs.readFileSync(path.join(o, '_headers'), 'utf8')), 'no analytics anywhere when no token is set'); assert(!pv.includes('Cloudflare Web Analytics') && !pv.includes('ANALYTICS_NOTE'), 'no leftover analytics placeholder'); assert(idx.includes('reviews: []')); }
+assert(fs.readFileSync(path.join(out, 'privacy', 'index.html'), 'utf8').includes('Cloudflare Web Analytics, which counts page views and referring sites without cookies'), 'the privacy page discloses analytics when it is on');
 // brand text is JSON-escaped inside structured data and HTML-escaped in the page, even with quotes, & and <
 const odd = path.join(tmp, 'odd.json'); fs.writeFileSync(odd, JSON.stringify({ ...brand, brand: 'Acme & "Sons" <b>' })); assert.equal(run(odd, '--out', path.join(tmp, 'odd-out')).status, 0);
 const oddHtml = fs.readFileSync(path.join(tmp, 'odd-out', 'index.html'), 'utf8');
@@ -54,7 +61,8 @@ const srv = http.createServer((q, s) => { let f = path.join(out, decodeURICompon
   const violations = [], errs = []; p.on('console', m => { if (/content security policy|refused to/i.test(m.text())) violations.push(m.text().slice(0, 140)); }); p.on('pageerror', e => errs.push(e.message));
   await p.addInitScript(() => addEventListener('securitypolicyviolation', e => (window.__csp = (window.__csp || []).concat(e.violatedDirective + ' ' + e.blockedURI))));
   await p.route('https://api.example.org/**', r => { const u = new URL(r.request().url()); r.fulfill({ status: u.pathname === '/api/leads' ? 201 : 200, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify(u.pathname === '/api/leads' ? { lead_id: 'dddddddd-0000-0000-0000-000000000000' } : { status: 'generating' }) }); });
-  await p.goto(base + '/'); await p.waitForLoadState('networkidle');
+  await p.route('https://static.cloudflareinsights.com/**', r => r.fulfill({ contentType: 'text/javascript', body: '' })); await p.route('https://cloudflareinsights.com/**', r => r.fulfill({ status: 204, body: '' }));
+  await p.goto(base + '/'); await p.waitForLoadState('networkidle'); assert.equal(await p.locator('#proof').isVisible(), true, 'the consented review shows'); assert((await p.textContent('#proof')).includes('Everything was planned to the minute'));
   const resp = await p.request.get(base + '/'); for (const k of ['content-security-policy', 'x-content-type-options', 'strict-transport-security', 'referrer-policy', 'permissions-policy']) assert(resp.headers()[k], k + ' header served');
   assert((await p.title()).includes('Test & Co'), 'brand in title'); assert.equal(await p.locator('#tel').isVisible(), true, 'real number shows the header phone link');
   assert((await p.getAttribute('#tel', 'href')) === 'tel:+919876543210');

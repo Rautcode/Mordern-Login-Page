@@ -57,6 +57,20 @@ def load(path, allow_example):
     if api and not re.fullmatch(r"https://[A-Za-z0-9.-]+(:\d+)?", api):
         die("api_base must be an https origin like https://api.example.com (no path), or empty for WhatsApp-only mode")
     b["udyam"], b["api_base"] = ud, api
+    tok = str(b.get("analytics_token", "")).strip()
+    if tok and not re.fullmatch(r"[A-Za-z0-9]{16,64}", tok):
+        die("analytics_token must be the Cloudflare Web Analytics token (letters and digits), or empty for no analytics")
+    b["analytics_token"] = tok
+    rv = b.get("reviews", [])
+    if not isinstance(rv, list) or len(rv) > 6:
+        die("reviews must be a list of at most 6 entries")
+    for r in rv:
+        if not isinstance(r, dict) or r.get("consent") is not True:
+            die('every review needs "consent": true. Publish a review only if the customer agreed, in writing, to have it (and their name) on your website.')
+        q, n, m = r.get("quote"), r.get("name"), r.get("meta", "")
+        if not all(isinstance(x, str) for x in (q, n, m)) or not 10 <= len(q) <= 400 or not 2 <= len(n) <= 60 or len(m) > 80:
+            die("each review needs a quote (10-400 characters), a name (2-60) and an optional meta line (up to 80)")
+    b["reviews"] = [{"quote": r["quote"], "name": r["name"], "meta": r.get("meta", "")} for r in rv]
     return b
 
 
@@ -76,7 +90,15 @@ def fill(text, b):
         text = re.sub(r'\s*<span class="udyam">.*?</span>', "", text, flags=re.S)
     if b["api_base"]:
         text = text.replace('apiBase: "",', f'apiBase: "{b["api_base"]}",')
+    note = "We measure visits to this website with Cloudflare Web Analytics, which counts page views and referring sites without cookies. See Cloudflare's privacy policy for details."
+    text = text.replace("[ANALYTICS_NOTE]", note) if b["analytics_token"] else re.sub(r"\s*<p>\[ANALYTICS_NOTE\]</p>", "", text)
+    if b["reviews"]:
+        text = text.replace("reviews: []", "reviews: " + json.dumps(b["reviews"], ensure_ascii=False).replace("<", "\\u003c"))
     return text
+
+
+def beacon(b):
+    return f"<script defer src=\"https://static.cloudflareinsights.com/beacon.min.js\" data-cf-beacon='{{\"token\": \"{b['analytics_token']}\"}}'></script>\n"
 
 
 def inline_script_hashes(html):
@@ -116,6 +138,10 @@ def main():
             text = fill(src.read_text(encoding="utf-8"), b)
             if name == "index.html" and b["api_base"] and f'apiBase: "{b["api_base"]}"' not in text:
                 die('api_base was not applied: index.html no longer contains \'apiBase: "",\' (update personalize.py to match)')
+            if name == "index.html" and b["reviews"] and "reviews: [{" not in text:
+                die('reviews were not applied: index.html no longer contains "reviews: []" (update personalize.py to match)')
+            if src.suffix == ".html" and b["analytics_token"]:
+                text = text.replace("</body>", beacon(b) + "</body>", 1)
             if name == "sitemap.xml":
                 text = re.sub(r"<lastmod>.*?</lastmod>", f"<lastmod>{datetime.date.today().isoformat()}</lastmod>", text)
             (out / name).parent.mkdir(parents=True, exist_ok=True)
@@ -125,9 +151,10 @@ def main():
         elif name != "_headers.template":
             shutil.copy2(src, out / name)
 
-    connect = "'self'" + (" " + b["api_base"] if b["api_base"] else "")
+    connect = "'self'" + (" " + b["api_base"] if b["api_base"] else "") + (" https://cloudflareinsights.com" if b["analytics_token"] else "")
+    script_extra = " https://static.cloudflareinsights.com" if b["analytics_token"] else ""
     tpl = (ROOT / "_headers.template").read_text(encoding="utf-8")
-    (out / "_headers").write_text(tpl.replace("{{SCRIPT_HASHES}}", " ".join(sorted(set(hashes)))).replace("{{CONNECT_SRC}}", connect), encoding="utf-8")
+    (out / "_headers").write_text(tpl.replace("{{SCRIPT_HASHES}}", " ".join(sorted(set(hashes)))).replace("{{SCRIPT_EXTRA}}", script_extra).replace("{{CONNECT_SRC}}", connect), encoding="utf-8")
 
     left = []
     for f in out.rglob("*"):

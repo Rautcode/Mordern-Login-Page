@@ -211,6 +211,10 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     await p2.evaluate(() => document.querySelector('[data-bp=kerala]').click()); await p2.fill('#dw-name', 'Asha'); await p2.fill('#dw-phone', '9876543210'); await p2.check('#dw-consent'); await p2.click('#dw-pay'); await p2.waitForTimeout(400);
     const dl = calls.find(c => c[0] === '/api/leads')[1]; assert.equal(dl.referrer, 'l.instagram.com', 'hostname only: no path, no token'); assert.equal('utm_source' in dl, false, 'untagged visit sends no campaign keys');
     await ctx.close(); await ctx2.close(); }
+  // ---- WhatsApp-only mode still tells you where an enquiry came from (visible text, never hidden) ----
+  { for (const [qs, want] of [['?utm_source=instagram&utm_medium=bio', 'Source: instagram'], ['', null]]) {
+      const pg = await b.newPage({ viewport: { width: 1280, height: 900 } }); await pg.goto(PAGE + qs); await toPlanner(pg); await fill(pg); await pg.click('#submit'); await pg.waitForSelector('#confirm:not([hidden])');
+      const wa = decodeURIComponent(await pg.getAttribute('#c-wa', 'href')); if (want) assert(wa.includes(want), wa); else assert(!/Source:/.test(wa), 'no source line for direct visits'); await pg.close(); } }
   // ---- the site publishes no price anywhere: every plan is quoted around the customer's budget and requirements ----
   { const fs = require('fs'); const root = path.join(__dirname, '..'); const pages = ['index.html', '404.html', ...JSON.parse(fs.readFileSync(path.join(root, 'tools', 'routes.json'), 'utf8')).map(r => `${r.slug}/index.html`)];
     for (const f of pages) { const hits = fs.readFileSync(path.join(root, f), 'utf8').match(/₹\s?\d[\d,]*(?![\d,]*k)|\bRs\.?\s?\d|"price(?:Currency)?"\s*:|\bINR\b/g); assert(!hits, `${f} shows a price: ${hits}`); }

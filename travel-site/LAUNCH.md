@@ -24,6 +24,28 @@ WhatsApp order message. You take payment yourself (UPI or bank transfer to your 
 5. **Check what the site claims.** It says Rajasthan and Kerala plans come from real trips, that you quote around the customer's budget, and that
    you reply within 24 hours. Only keep a promise you can keep from your evenings and weekends.
 
+## Measure what works (optional, free)
+1. In the Cloudflare dashboard open **Web Analytics**, add your site, and copy the token. Put it in `brand.json` as `"analytics_token"` and rebuild.
+   That adds Cloudflare's cookie-free beacon to every page, allows exactly Cloudflare's two hosts in the security policy, and adds one honest sentence to
+   the privacy page. Leave it empty for no analytics at all. (This was built without network access to Cloudflare: confirm the dashboard shows visits within a day.)
+2. It counts **visits and where they came from**. It cannot count enquiries. Your enquiries are the WhatsApp chats that start from the site: each one
+   carries a `Source:` line (for example `Source: instagram`) when the visitor arrived through a tagged link or from another website, so you can tell
+   which post brought which chat. The leads console shows the same thing once the backend is on.
+3. Tag every link you post: `https://your-domain/?utm_source=instagram&utm_medium=bio` (use `reel`, `story`, `whatsapp-status` and so on).
+4. Your conversion rate is WhatsApp chats divided by visits. Look at it weekly, and change one thing at a time.
+
+## After every trip: reviews and photos
+Real reviews and real faces are the biggest trust gap on the site. They have to be real and the customer has to agree.
+- On the last evening, in the trip's WhatsApp group, send: *"Thank you for travelling with us! If you enjoyed it, reply with a line or two about the trip.
+  We'd love to show it on our website with your first name and the trip (for example 'Rohan K., 14-person Rajasthan trip'). Reply YES if that is okay."*
+  Keep their reply: it is your written permission.
+- Add each approved review to `brand.json`, in their own words (never write one yourself):
+  `"reviews": [{"quote": "...", "name": "Rohan K.", "meta": "14-person Rajasthan trip · Pune", "consent": true}]`, up to 6.
+  The build refuses any review without `"consent": true`, and the reviews section stays hidden until you add one.
+- A real photo for a route card (Rajasthan still shows an illustration): `pip install pillow`, then
+  `python3 tools/add_route_photo.py rajasthan path/to/photo.jpg --alt "what the photo shows"`. It crops to the right shape, makes both sizes, removes camera
+  and GPS data, and swaps the card. Use only photos you took or have permission to use, and ask the people in them.
+
 ## What the site does and does not offer today
 - **Blueprint PDFs are sold for Rajasthan and Kerala only**, because those are the routes with a finished, real plan. To sell another route: add it to
   `BLUEPRINTS` in `travel-backend/app/services/rag_loader.py`, upload its PDF to the `blueprints` bucket, add it to `BP_ID` and give its card a
