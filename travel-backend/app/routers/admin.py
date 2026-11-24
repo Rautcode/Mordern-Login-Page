@@ -7,12 +7,13 @@ from app.config import get_settings
 from app.database import db, get_lead, update_lead
 from app.models.schemas import LeadStatus, PricingInput, PricingOutput, StatusUpdate
 from app.routers.payments import fulfill
-from app.security import require_admin
+from app.security import RateLimiter, require_admin
 from app.services import pricing_engine
 
 log = logging.getLogger(__name__)
 # ponytail: one shared admin key. Move to JWT/RBAC when a second person needs access or an audit trail.
-router = APIRouter(prefix="/api/admin", tags=["admin"], dependencies=[Depends(require_admin)])
+_admin_limit = RateLimiter(limit=120, window_s=60)  # per IP, counted before the key check so key-guessing is throttled
+router = APIRouter(prefix="/api/admin", tags=["admin"], dependencies=[Depends(_admin_limit), Depends(require_admin)])
 
 
 @router.get("/leads")

@@ -25,3 +25,9 @@ Cloudflare Pages (direct upload) or Netlify both read the generated `_headers` (
 - Send a test lead and a test payment (Razorpay test mode); confirm the Telegram alert arrives.
 - Replace anything marked sample: reviews (`SITE_CONFIG.reviews`), the Goa and Hampi-Gokarna notes, the Rajasthan card art.
 - Have the privacy text reviewed, and decide your refund policy before enabling `SITE_CONFIG.refundPolicy`.
+
+## Leads console
+Open `https://<your-api-domain>/admin` and sign in with `ADMIN_API_KEY`. It lists leads with their source (campaign tag or referrer),
+lets you message them on WhatsApp, change status, build a quote (preview first, then save) and re-send a paid delivery.
+The page is served by the API itself (same origin, strict CSP, never indexed); the key lives only in that browser tab.
+Keep `ADMIN_API_KEY` long and random, and rotate it if anyone who knew it leaves.

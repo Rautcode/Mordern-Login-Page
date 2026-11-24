@@ -10,7 +10,7 @@ from fastapi.responses import JSONResponse
 
 from app.config import get_settings
 from app.database import close_db, db, init_db
-from app.routers import admin, itineraries, leads, payments
+from app.routers import admin, console, itineraries, leads, payments
 from app.services import notifier, pdf_generator, rag_loader
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
@@ -66,6 +66,7 @@ app.include_router(leads.router)
 app.include_router(itineraries.router)
 app.include_router(payments.router)
 app.include_router(admin.router)
+app.include_router(console.router)
 
 
 @app.get("/health", tags=["ops"])

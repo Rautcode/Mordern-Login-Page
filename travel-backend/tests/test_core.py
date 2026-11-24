@@ -124,3 +124,24 @@ def test_knowledge_base_holds_no_private_phone_numbers():
     for dest in ("Rajasthan", "Kerala", "Goa", "Hampi–Gokarna"):
         kb = rag_loader.get_context(dest)
         assert not re.search(r"(?:\+?91[\s-]?)?[6-9]\d{4}[\s-]?\d{5}\b", kb), f"phone-like number in {dest} knowledge base"
+
+
+def test_console_is_served_locked_down():
+    c = TestClient(app)
+    r = c.get("/admin")
+    assert r.status_code == 200 and "Leads console" in r.text and "<script>" not in r.text      # no inline script
+    csp = r.headers["content-security-policy"]
+    assert "script-src 'self'" in csp and "unsafe-inline" not in csp and "frame-ancestors 'none'" in csp
+    assert r.headers["cache-control"] == "no-store" and "noindex" in r.headers["x-robots-tag"]
+    assert c.get("/admin/console.js").headers["content-type"].startswith("text/javascript")
+    assert c.get("/admin/console.css").status_code == 200
+    assert c.get("/admin/main.py").status_code == 404 and c.get("/admin/..%2Fmain.py").status_code == 404
+
+
+def test_admin_api_throttles_key_guessing():
+    from app.routers import admin as admin_router
+    admin_router._admin_limit.hits.clear()
+    c = TestClient(app)
+    codes = [c.get("/api/admin/leads", headers={"X-Admin-Key": "wrong"}).status_code for _ in range(121)]
+    assert codes[0] == 401 and codes[-1] == 429
+    admin_router._admin_limit.hits.clear()                      # don't starve other tests that share this client IP

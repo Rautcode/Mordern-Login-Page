@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Leads console</title>
+<link rel="stylesheet" href="/admin/console.css">
+</head>
+<body>
+<main id="login" hidden>
+  <h1>Leads console</h1>
+  <form id="login-form" autocomplete="off">
+    <label for="key">Admin key</label>
+    <input id="key" type="password" autocomplete="off" required>
+    <button type="submit">Sign in</button>
+    <p id="login-msg" class="msg" role="alert"></p>
+  </form>
+  <p class="hint">The key stays in this tab only and is cleared when you close it or sign out.</p>
+</main>
+
+<main id="app" hidden>
+  <header class="bar">
+    <h1>Leads</h1>
+    <div class="tools">
+      <label class="sr" for="q">Search</label><input id="q" type="search" placeholder="Search name, phone, destination">
+      <label class="sr" for="filter">Status</label>
+      <select id="filter"><option value="">All statuses</option></select>
+      <button id="refresh" type="button">Refresh</button>
+      <button id="signout" type="button" class="ghost">Sign out</button>
+    </div>
+  </header>
+  <p id="msg" class="msg" role="status"></p>
+  <section id="summary" class="summary" aria-label="Summary of loaded leads"></section>
+  <div class="tablewrap" role="region" aria-label="Leads, scrolls sideways on small screens" tabindex="0">
+    <table>
+      <thead><tr><th scope="col">When</th><th scope="col">Lead</th><th scope="col">Trip</th><th scope="col">Source</th><th scope="col">Status</th><th scope="col">Actions</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+  </div>
+  <p><button id="more" type="button" hidden>Load more</button></p>
+</main>
+
+<dialog id="quote" aria-labelledby="quote-t">
+  <form id="quote-form" method="dialog" novalidate>
+    <h2 id="quote-t">Quote</h2>
+    <p id="quote-for" class="hint"></p>
+    <div class="grid" id="quote-fields"></div>
+    <div id="quote-out" class="out" aria-live="polite"></div>
+    <p id="quote-msg" class="msg" role="alert"></p>
+    <div class="row">
+      <button id="quote-preview" type="button">Preview</button>
+      <button id="quote-save" type="button" disabled>Save as customer quote</button>
+      <button id="quote-close" type="button" class="ghost">Close</button>
+    </div>
+  </form>
+</dialog>
+<script src="/admin/console.js"></script>
+</body>
+</html>
