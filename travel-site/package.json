@@ -1,0 +1,6 @@
+{
+  "name": "travel-site",
+  "private": true,
+  "scripts": { "test": "node tests/e2e.js" },
+  "devDependencies": { "playwright": "^1.48.0" }
+}
