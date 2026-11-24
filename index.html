@@ -1,61 +1,302 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="stylesheet" href="style.css">
-    <title>Modern Login Page | AsmrProg</title>
+    <title>Modern Secure Auth | Sign In & Register</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css?v=2.0">
 </head>
 <body>
-    <div class="container" id="container">
-        <div class="form-container sign-up">
-            <form>
-                <h1>Create Account</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
-                </div>
-                <span>or use your email for registration</span>
-                <input type="text" placeholder="Name" required>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Password" required>
-                <button type="submit">Sign Up</button>
-            </form>
+    <!-- Theme Toggle Floating Button -->
+    <header class="app-header">
+        <div class="brand-logo">
+            <svg class="logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+            </svg>
+            <span class="brand-name">NexusAuth</span>
         </div>
-        <div class="form-container sign-in">
-            <form>
-                <h1>Sign In</h1>
-                <div class="social-icons">
-                    <a href="#" class="icon"><i class="fa-brands fa-google-plus-g"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-github"></i></a>
-                    <a href="#" class="icon"><i class="fa-brands fa-linkedin-in"></i></a>
+        <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Toggle theme">
+            <!-- Sun icon -->
+            <svg class="theme-icon sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="5"></circle>
+                <line x1="12" y1="1" x2="12" y2="3"></line>
+                <line x1="12" y1="21" x2="12" y2="23"></line>
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                <line x1="1" y1="12" x2="3" y2="12"></line>
+                <line x1="21" y1="12" x2="23" y2="12"></line>
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+            <!-- Moon icon -->
+            <svg class="theme-icon moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+            </svg>
+        </button>
+    </header>
+
+    <main class="main-content">
+        <!-- Toast Notification Area -->
+        <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+
+        <div class="auth-card" id="auth-container">
+            <!-- Mobile Segmented Tabs (Visible on < 768px) -->
+            <nav class="mobile-tabs" aria-label="Authentication modes">
+                <button type="button" class="tab-btn active" id="mobile-tab-signin" aria-selected="true" role="tab">
+                    Sign In
+                </button>
+                <button type="button" class="tab-btn" id="mobile-tab-signup" aria-selected="false" role="tab">
+                    Create Account
+                </button>
+            </nav>
+
+            <!-- Form: Create Account / Sign Up -->
+            <section class="form-container sign-up" id="signup-section" aria-labelledby="signup-heading" inert>
+                <form id="signup-form" novalidate>
+                    <header class="form-header">
+                        <h1 id="signup-heading">Create Account</h1>
+                        <p class="subtitle">Join thousands of teams securing their workflow.</p>
+                    </header>
+
+                    <!-- Modern Social Auth -->
+                    <div class="social-auth-group">
+                        <button type="button" class="btn-social" aria-label="Sign up with Google">
+                            <svg viewBox="0 0 24 24" class="social-icon" aria-hidden="true">
+                                <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/>
+                                <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5.1 3.7-8.8z"/>
+                                <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15.2c0 2.8.7 5.5 1.9 7.8l3.7-2.9z"/>
+                                <path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2-6.4-4.8L1.9 16.9C3.7 20.6 7.5 23.5 12 23.5z"/>
+                            </svg>
+                            <span>Google</span>
+                        </button>
+                        <button type="button" class="btn-social" aria-label="Sign up with GitHub">
+                            <svg viewBox="0 0 24 24" class="social-icon" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                            </svg>
+                            <span>GitHub</span>
+                        </button>
+                        <button type="button" class="btn-social" aria-label="Sign up with Apple">
+                            <svg viewBox="0 0 24 24" class="social-icon" fill="currentColor" aria-hidden="true">
+                                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.89c.67-.82 1.13-1.96 1.01-3.1-.98.04-2.17.65-2.86 1.47-.6.7-1.13 1.84-.99 2.96 1.1.09 2.22-.55 2.84-1.33z"/>
+                            </svg>
+                            <span>Apple</span>
+                        </button>
+                    </div>
+
+                    <div class="divider">
+                        <span>or register with email</span>
+                    </div>
+
+                    <!-- Input: Full Name -->
+                    <div class="form-group">
+                        <label for="signup-name">Full Name</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="12" cy="7" r="4"></circle>
+                            </svg>
+                            <input type="text" id="signup-name" name="name" placeholder="Sarah Connor" autocomplete="name" required>
+                        </div>
+                    </div>
+
+                    <!-- Input: Email -->
+                    <div class="form-group">
+                        <label for="signup-email">Work Email</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <input type="email" id="signup-email" name="email" placeholder="sarah@example.com" autocomplete="email" required>
+                        </div>
+                    </div>
+
+                    <!-- Input: Password with Live Validation -->
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label for="signup-password">Password</label>
+                            <span class="strength-text" id="strength-label">Password strength</span>
+                        </div>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <input type="password" id="signup-password" name="password" placeholder="Create a strong password" autocomplete="new-password" required>
+                            <button type="button" class="btn-toggle-password" data-target="signup-password" aria-label="Show password">
+                                <svg class="eye-show" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <svg class="eye-hide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
+
+                        <!-- Live Strength Bar -->
+                        <div class="strength-bar-container" aria-hidden="true">
+                            <div class="strength-bar" id="strength-bar"></div>
+                        </div>
+
+                        <!-- Live Checklist Rules -->
+                        <ul class="password-criteria" id="password-criteria" aria-label="Password requirements">
+                            <li id="rule-length" class="criterion">
+                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>8+ characters</span>
+                            </li>
+                            <li id="rule-uppercase" class="criterion">
+                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Uppercase letter</span>
+                            </li>
+                            <li id="rule-number" class="criterion">
+                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Number</span>
+                            </li>
+                            <li id="rule-symbol" class="criterion">
+                                <svg class="check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                <span>Special symbol</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Terms agreement -->
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="terms-agree" required>
+                        <label for="terms-agree">I agree to the <a href="#" class="link-inline">Terms of Service</a> and <a href="#" class="link-inline">Privacy Policy</a></label>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="signup-submit">
+                        <span class="btn-text">Create Account</span>
+                        <div class="spinner" aria-hidden="true"></div>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Form: Sign In -->
+            <section class="form-container sign-in" id="signin-section" aria-labelledby="signin-heading">
+                <form id="signin-form" novalidate>
+                    <header class="form-header">
+                        <h1 id="signin-heading">Welcome Back</h1>
+                        <p class="subtitle">Enter your credentials to access your account.</p>
+                    </header>
+
+                    <!-- Modern Social Auth -->
+                    <div class="social-auth-group">
+                        <button type="button" class="btn-social" aria-label="Sign in with Google">
+                            <svg viewBox="0 0 24 24" class="social-icon" aria-hidden="true">
+                                <path fill="#EA4335" d="M12 5c1.6 0 3 .6 4.1 1.6l3.1-3.1C17.3 1.7 14.8 1 12 1 7.5 1 3.7 3.6 1.9 7.3l3.7 2.9C6.5 7.4 9 5 12 5z"/>
+                                <path fill="#4285F4" d="M23.5 12.3c0-.8-.1-1.6-.2-2.3H12v4.5h6.5c-.3 1.5-1.1 2.8-2.4 3.7l3.7 2.9c2.2-2 3.7-5.1 3.7-8.8z"/>
+                                <path fill="#FBBC05" d="M5.6 14.8c-.2-.7-.4-1.5-.4-2.3s.2-1.6.4-2.3L1.9 7.3C.7 9.7 0 12.3 0 15.2c0 2.8.7 5.5 1.9 7.8l3.7-2.9z"/>
+                                <path fill="#34A853" d="M12 23.5c3.2 0 6-1.1 8-3l-3.7-2.9c-1.1.7-2.5 1.2-4.3 1.2-3 0-5.5-2-6.4-4.8L1.9 16.9C3.7 20.6 7.5 23.5 12 23.5z"/>
+                            </svg>
+                            <span>Google</span>
+                        </button>
+                        <button type="button" class="btn-social" aria-label="Sign in with GitHub">
+                            <svg viewBox="0 0 24 24" class="social-icon" fill="currentColor" aria-hidden="true">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/>
+                            </svg>
+                            <span>GitHub</span>
+                        </button>
+                        <button type="button" class="btn-social" aria-label="Sign in with Apple">
+                            <svg viewBox="0 0 24 24" class="social-icon" fill="currentColor" aria-hidden="true">
+                                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.89c.67-.82 1.13-1.96 1.01-3.1-.98.04-2.17.65-2.86 1.47-.6.7-1.13 1.84-.99 2.96 1.1.09 2.22-.55 2.84-1.33z"/>
+                            </svg>
+                            <span>Apple</span>
+                        </button>
+                    </div>
+
+                    <div class="divider">
+                        <span>or sign in with email</span>
+                    </div>
+
+                    <!-- Input: Email -->
+                    <div class="form-group">
+                        <label for="signin-email">Email Address</label>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                            <input type="email" id="signin-email" name="email" placeholder="name@company.com" autocomplete="email" required>
+                        </div>
+                    </div>
+
+                    <!-- Input: Password -->
+                    <div class="form-group">
+                        <div class="label-row">
+                            <label for="signin-password">Password</label>
+                            <a href="#" class="link-inline" id="forgot-password-link">Forgot password?</a>
+                        </div>
+                        <div class="input-wrapper">
+                            <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                            </svg>
+                            <input type="password" id="signin-password" name="password" placeholder="••••••••" autocomplete="current-password" required>
+                            <button type="button" class="btn-toggle-password" data-target="signin-password" aria-label="Show password">
+                                <svg class="eye-show" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                    <circle cx="12" cy="12" r="3"></circle>
+                                </svg>
+                                <svg class="eye-hide" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path>
+                                    <line x1="1" y1="1" x2="23" y2="23"></line>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Remember me -->
+                    <div class="form-checkbox">
+                        <input type="checkbox" id="remember-me">
+                        <label for="remember-me">Keep me signed in on this device</label>
+                    </div>
+
+                    <button type="submit" class="btn-submit" id="signin-submit">
+                        <span class="btn-text">Sign In</span>
+                        <div class="spinner" aria-hidden="true"></div>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Desktop Sliding Overlay Panels (Visible on >= 768px) -->
+            <aside class="toggle-container" aria-label="Account switcher panel">
+                <div class="toggle">
+                    <!-- Left Overlay Panel (Shown when on Sign Up form) -->
+                    <div class="toggle-panel toggle-left">
+                        <div class="panel-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="badge-icon"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                            <span>Enterprise Security</span>
+                        </div>
+                        <h2>Already have an account?</h2>
+                        <p>Sign in to continue accessing your projects, dashboards, and enterprise resources.</p>
+                        <button type="button" class="btn-ghost" id="login-slide-btn">Sign In</button>
+                    </div>
+
+                    <!-- Right Overlay Panel (Shown when on Sign In form) -->
+                    <div class="toggle-panel toggle-right">
+                        <div class="panel-badge">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="badge-icon"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <span>New Experience</span>
+                        </div>
+                        <h2>New to NexusAuth?</h2>
+                        <p>Create an account in seconds and streamline your authentication workflow with our modern platform.</p>
+                        <button type="button" class="btn-ghost" id="register-slide-btn">Create Account</button>
+                    </div>
                 </div>
-                <span>or use your email account</span>
-                <input type="email" placeholder="Email" required>
-                <input type="password" placeholder="Password" required>
-                <a href="#">Forgot Your Password?</a>
-                <button type="submit">Sign In</button>
-            </form>
+            </aside>
         </div>
-        <div class="toggle-container">
-            <div class="toggle">
-                <div class="toggle-panel toggle-left">
-                    <h1>Welcome Back!</h1>
-                    <p>Enter your personal details to use all of the site's features</p>
-                    <button class="hidden" id="login">Sign In</button>
-                </div>
-                <div class="toggle-panel toggle-right">
-                    <h1>Hello, Friend!</h1>
-                    <p>Register with your personal details to use all of the site's features</p>
-                    <button class="hidden" id="register">Sign Up</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <script src="script.js"></script>
+    </main>
+
+    <footer class="app-footer">
+        <p>© 2026 NexusAuth Inc. Protected by 256-bit SSL encryption.</p>
+    </footer>
+
+    <script src="script.js?v=2.0"></script>
 </body>
 </html>
