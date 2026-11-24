@@ -198,3 +198,19 @@ def test_pdf_survives_blank_lead_fields_and_hostile_text():
     assert pdf.startswith(b"%PDF") and len(pdf) > 5000
     html = _html(it, {k: v or "" for k, v in blank.items()}, False)
     assert "None" not in html and "<script>alert" not in html and "&lt;script&gt;" in html
+
+
+def test_lead_brief_fields_are_optional_closed_sets_and_cleaned():
+    base = dict(name="A", phone="9876543210", destination="Goa", service="blueprint")
+    ok = LeadCreate(travel_mode="road", trip_length="4-5", group_type="friends", stay_pref="comfort",
+                    interests=["food", "adventure", "food"], notes="  Two seniors,\nvegetarian\x00 ", **base)
+    assert (ok.travel_mode, ok.trip_length, ok.group_type, ok.stay_pref) == ("road", "4-5", "friends", "comfort")
+    assert ok.interests == ["food", "adventure"]                      # de-duplicated, order kept
+    assert ok.notes == "Two seniors, vegetarian"                      # control characters neutralised
+    bare = LeadCreate(**base)
+    assert bare.travel_mode is None and bare.interests == [] and bare.notes is None
+    assert LeadCreate(notes="   ", **base).notes is None
+    for bad in (dict(travel_mode="teleport"), dict(trip_length="1"), dict(group_type="x"), dict(stay_pref="x"),
+                dict(interests=["skydiving"]), dict(interests=["food"] * 8), dict(notes="x" * 301)):
+        with pytest.raises(ValidationError):
+            LeadCreate(**bad, **base)

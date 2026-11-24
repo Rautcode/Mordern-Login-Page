@@ -15,7 +15,7 @@ const mk = (o) => ({ departure_city: 'Pune', travel_dates: 'Dec', group_size: '7
   const errs = [], calls = []; p.on('pageerror', e => errs.push(e.message)); p.on('console', m => /content security policy|refused to/i.test(m.text()) && errs.push(m.text()));
   await p.addInitScript(() => addEventListener('securitypolicyviolation', e => (window.__csp = (window.__csp || []).concat(e.violatedDirective))));
   const leads = [
-    mk({ id: '1', name: 'Asha <img src=x onerror="window.__x=1">', phone: '919876543210', destination: 'Goa', service: 'custom', utm_source: 'instagram', utm_medium: 'bio', utm_campaign: 'goa-dec', status: 'new' }),
+    mk({ id: '1', name: 'Asha <img src=x onerror="window.__x=1">', phone: '919876543210', destination: 'Goa', service: 'custom', utm_source: 'instagram', utm_medium: 'bio', utm_campaign: 'goa-dec', status: 'new', travel_mode: 'road', trip_length: '4-5', group_type: 'friends', stay_pref: 'comfort', interests: 'food, adventure', notes: 'Two seniors <i>please</i>' }),
     mk({ id: '2', name: 'Ravi', phone: '12345', destination: 'Rajasthan', service: 'blueprint', referrer: 'l.instagram.com', status: 'paid', group_size: null, budget: null }),
     mk({ id: '3', name: 'Meera', phone: '919812345678', destination: 'Kerala', service: 'custom', status: 'lost', group_size: '3-6' })];
   await p.route('http://admin.test/**', async r => {
@@ -52,6 +52,8 @@ const mk = (o) => ({ departure_city: 'Pune', travel_dates: 'Dec', group_size: '7
   assert.equal(await p.evaluate(() => sessionStorage.getItem('adminKey')), 'good-key', 'key kept for this tab');
   assert.equal(calls[0][1], '/api/admin/leads');
 
+  { const row1 = await p.textContent('#rows tr:nth-child(1)'); assert(row1.includes('road trip · 4-5 days · friends · stay: comfort · likes food, adventure'), 'brief shown');
+    assert(row1.includes('Note: Two seniors <i>please</i>') && (await p.locator('#rows i').count()) === 0, 'customer notes shown as text, never markup'); }
   // WhatsApp link only for a valid number, prefilled text, safe rel
   const wa = p.locator('#rows tr:nth-child(1) a'); const href = await wa.getAttribute('href'); assert(href.startsWith('https://wa.me/919876543210?text=')); assert.equal(await wa.getAttribute('rel'), 'noopener noreferrer');
   assert.equal(await p.locator('#rows tr:nth-child(2) a').count(), 0, 'no link for a malformed number');

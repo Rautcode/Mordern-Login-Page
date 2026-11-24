@@ -54,7 +54,7 @@ const srv = http.createServer((q, s) => { let f = path.join(out, decodeURICompon
   await p.evaluate(() => document.querySelector('[data-route=goa]').click()); await p.keyboard.press('Escape');
   await p.evaluate(() => document.querySelector('[data-bp=goa]').click()); await p.keyboard.press('Escape');
   await p.evaluate(() => document.querySelector('#planner').scrollIntoView());
-  await p.click('label.pk:has(input[name=dest][value="Goa"])'); await p.fill('#from', 'Pune'); await p.fill('#when', 'Dec'); await p.click('#submit');
+  await p.click('label.pk:has(input[name=dest][value="Goa"])'); await p.fill('#from', 'Pune'); await p.fill('#when', 'Dec'); await p.click('label.pk:has(input[name=travel][value="train"])'); await p.click('#submit');
   await p.click('label.pk:has(input[name=group][value="3-6"])'); await p.click('label.pk:has(input[name=budget][value="5-10"])'); await p.click('#submit');
   await p.fill('#name', 'Asha'); await p.fill('#phone', '9876543210'); await p.check('#consent'); await p.click('#submit'); await p.waitForSelector('#confirm:not([hidden])');
   assert(await p.locator('#next button').count() >= 1, 'funnel reached the API through the CSP'); await p.waitForTimeout(500);

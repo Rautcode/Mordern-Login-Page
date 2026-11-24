@@ -22,6 +22,8 @@ async def create_lead(body: LeadCreate, bg: BackgroundTasks):
         return LeadCreated(lead_id=uuid4(), whatsapp_url=notifier.agency_wa_link("Hi!"))
 
     row = body.model_dump(exclude={"website"})
+    row["interests"] = ", ".join(row["interests"])  # stored as text
+    row = {k: v for k, v in row.items() if v not in (None, "")}  # unanswered optional columns stay NULL (and need no migration until used)
     res = await db().table("leads").insert(row).execute()
     lead = res.data[0]
     log.info("lead created id=%s dest=%s service=%s", lead["id"], lead["destination"], lead["service"])

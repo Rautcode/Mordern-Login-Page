@@ -8,7 +8,7 @@ const chip = (n, v) => `label.pk:has(input[name=${n}][value="${v}"])`;
 const val = (p, n) => p.evaluate(n => form.elements[n].value, n);
 // fills all three steps and stops on step 3 with the final button ready
 const fill = async (p, o = {}) => {
-  await p.click(chip('dest', o.dest ?? 'Rajasthan')); await p.fill('#from', 'Pune'); await p.fill('#when', '12-17 Dec'); await p.click('#submit');
+  await p.click(chip('dest', o.dest ?? 'Rajasthan')); await p.fill('#from', 'Pune'); await p.fill('#when', '12-17 Dec'); await p.click(chip('travel', o.travel ?? 'train')); await p.click('#submit');
   await p.click(chip('group', '7-12')); await p.click(`label.radio:has(input[value=${o.svc ?? 'custom'}])`); await p.click(chip('budget', '10-18')); await p.click('#submit');
   await p.fill('#name', o.name ?? 'Test User'); await p.fill('#phone', '98765 43210'); await p.check('#consent');
 };
@@ -76,7 +76,9 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
   assert((await p.textContent('.err[data-for=dest]')).length > 0); assert.equal(await p.textContent('#step-label'), 'Step 1 of 3 · Where & when');
   await p.click(chip('dest', 'Goa')); await p.click('#submit');          // from/when still empty
   assert((await p.textContent('.err[data-for=from]')).length > 0 && (await p.textContent('.err[data-for=when]')).length > 0);
-  await p.fill('#from', 'Pune'); await p.fill('#when', 'Dec'); await p.press('#when', 'Enter');   // Enter advances
+  await p.fill('#from', 'Pune'); await p.fill('#when', 'Dec'); await p.press('#when', 'Enter');   // mode of travel still missing
+  assert((await p.textContent('.err[data-for=travel]')).length > 0 && (await p.textContent('#step-label')).startsWith('Step 1'), 'travel mode is required');
+  await p.click(chip('travel', 'flight')); await p.press('#when', 'Enter');   // Enter advances
   assert.equal(await p.textContent('#step-label'), 'Step 2 of 3 · Who\'s going'); assert.equal(await p.locator('#back').isVisible(), true);
   await p.click('#submit'); assert((await p.textContent('.err[data-for=group]')).length > 0);   // group/budget required
   await p.click('#back'); assert.equal(await p.inputValue('#from'), 'Pune', 'Back keeps answers');
@@ -84,7 +86,7 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
   // draft survives a reload (and never stores the phone)
   await p.click(chip('group', '3-6'));
   await p.evaluate(() => { form.elements.from.value = 'Mumbai'; form.dispatchEvent(new Event('input')); }); await p.reload(); await toPlanner(p);
-  assert.equal(await val(p, 'dest'), 'Goa'); assert.equal(await p.inputValue('#from'), 'Mumbai'); assert.equal(await val(p, 'group'), '3-6');
+  assert.equal(await val(p, 'dest'), 'Goa'); assert.equal(await val(p, 'travel'), 'flight'); assert.equal(await p.inputValue('#from'), 'Mumbai'); assert.equal(await val(p, 'group'), '3-6');
   assert.equal(await p.evaluate(() => sessionStorage.getItem('draft').includes('phone')), false);
   await p.evaluate(() => { form.reset(); sessionStorage.clear(); gotoStep(1); });
 
@@ -115,7 +117,7 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     if (path.endsWith('/status')) return [200, ++n < 3 ? { status: 'generating' } : { status: 'preview_ready', preview_url: 'https://signed.example/prev.pdf' }];
     if (path === '/api/create-payment-link') return [200, { payment_url: 'https://rzp.io/i/abc', amount_inr: 2499 }]; return [404, {}]; });
   await pg.goto(PAGE); await toPlanner(pg); await fill(pg); await pg.click('#submit'); await pg.waitForSelector('#confirm:not([hidden])');
-  assert.deepEqual(calls.find(c => c[1] === '/api/leads')[2], { name: 'Test User', phone: '919876543210', destination: 'Rajasthan', departure_city: 'Pune', travel_dates: '12-17 Dec', group_size: '7-12', service: 'custom', budget: '10-18', website: '' });
+  assert.deepEqual(calls.find(c => c[1] === '/api/leads')[2], { name: 'Test User', phone: '919876543210', destination: 'Rajasthan', departure_city: 'Pune', travel_mode: 'train', travel_dates: '12-17 Dec', group_size: '7-12', service: 'custom', budget: '10-18', website: '' });
   await pg.click('#next button'); await pg.waitForSelector('#next a[href="https://signed.example/prev.pdf"]', { timeout: 5000 });
   assert.equal(await pg.locator('#next button:has-text("Share with your group")').count(), 1, 'preview screen offers sharing');
   await pg.click('#next button:has-text("Unlock")'); await pg.waitForTimeout(300);
@@ -192,7 +194,7 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     await pg.goto('http://site.test/?utm_source=instagram&utm_medium=bio&utm_campaign=goa-dec%3Cscript%3Ealert(1)%3C%2Fscript%3E&fbclid=ignored', { referer: 'https://l.instagram.com/some/path?token=secret' });
     await pg.reload();                                     // reload drops the referrer but the visit's first touch must survive
     await pg.evaluate(() => document.querySelector('#planner').scrollIntoView());
-    await pg.click(chip('dest', 'Goa')); await pg.fill('#from', 'Pune'); await pg.fill('#when', 'Dec'); await pg.click('#submit');
+    await pg.click(chip('dest', 'Goa')); await pg.fill('#from', 'Pune'); await pg.fill('#when', 'Dec'); await pg.click(chip('travel', 'train')); await pg.click('#submit');
     await pg.click(chip('group', '3-6')); await pg.click(chip('budget', '5-10')); await pg.click('#submit');
     await pg.fill('#name', 'Asha'); await pg.fill('#phone', '9876543210'); await pg.check('#consent'); await pg.click('#submit'); await pg.waitForSelector('#confirm:not([hidden])');
     const lead = calls.find(c => c[0] === '/api/leads')[1];
@@ -230,6 +232,39 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     assert(await pg.isChecked('input[name=dest][value="Rajasthan"]'), 'destination preselected in the planner');
     const attr = await pg.evaluate(() => JSON.parse(sessionStorage.getItem('attr'))); assert.equal(attr.utm_source, 'ig'); assert.equal(attr.utm_campaign, 'raj'); assert.equal(attr.referrer, 'l.instagram.com');
     await pg.goto('http://site.test/?trip=__proto__'); await pg.goto('http://site.test/?trip=nope'); assert.equal(await pg.isChecked('input[name=dest][value="Rajasthan"]'), false, 'unknown ?trip= is ignored'); assert.deepEqual(bad, []);
+    await ctx.close(); }
+  // ---- brief: mode of travel is required; optional answers reach the API; skipping them sends nothing extra ----
+  { const html = require('fs').readFileSync(path.join(__dirname, '..', 'index.html'), 'utf8'); const calls = [];
+    const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } }); const pg = await ctx.newPage();
+    await pg.addInitScript(() => { window.SITE_CONFIG = { apiBase: 'http://api.test' }; });
+    await pg.route('http://site.test/**', r => r.fulfill({ contentType: 'text/html', body: html }));
+    await pg.route('http://api.test/**', async r => { let body = null; try { body = r.request().postDataJSON(); } catch {} calls.push([new URL(r.request().url()).pathname, body]);
+      await r.fulfill({ status: 201, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify({ lead_id: 'cccccccc-0000-0000-0000-000000000000', payment_url: 'https://rzp.io/i/z' }) }); });
+    await pg.route('https://rzp.io/**', r => r.abort());
+    await pg.goto('http://site.test/'); await toPlanner(pg);
+    await pg.click(chip('dest', 'Goa')); await pg.fill('#from', 'Pune'); await pg.fill('#when', 'Dec'); await pg.click(chip('triplen', '4-5')); await pg.click('#submit');
+    assert((await pg.textContent('.err[data-for=travel]')).length > 0, 'travel mode required'); assert((await pg.textContent('#step-label')).startsWith('Step 1'));
+    await pg.click(chip('travel', 'road')); await pg.click('#submit');
+    assert.equal(await pg.evaluate(() => document.querySelector('.tailor').open), false, 'optional block starts collapsed');
+    await pg.click(chip('group', '7-12')); await pg.click(chip('budget', '10-18'));
+    await pg.click('.tailor summary'); await pg.click(chip('gtype', 'friends')); await pg.click(chip('stay', 'comfort')); await pg.click(chip('interest', 'food')); await pg.click(chip('interest', 'adventure'));
+    await pg.fill('#notes', '  Two seniors,\n vegetarian <b>x</b> '); await pg.click('#submit');
+    await pg.fill('#name', 'Asha'); await pg.fill('#phone', '9876543210'); await pg.check('#consent'); await pg.click('#submit'); await pg.waitForSelector('#confirm:not([hidden])');
+    const lead = calls.find(c => c[0] === '/api/leads')[1];
+    assert.equal(lead.travel_mode, 'road'); assert.equal(lead.trip_length, '4-5'); assert.equal(lead.group_type, 'friends'); assert.equal(lead.stay_pref, 'comfort');
+    assert.deepEqual(lead.interests, ['adventure', 'food']);   // on-screen order, not click order
+    assert.equal(lead.notes, 'Two seniors, vegetarian <b>x</b>');
+    const sum = await pg.textContent('#c-list'); assert(sum.includes('Road trip') && sum.includes('Adventure, Food') && sum.includes('Two seniors'));
+    assert.equal(await pg.locator('#c-list b').count(), 0, 'notes rendered as text, not markup');
+    const wa = decodeURIComponent(await pg.getAttribute('#c-wa', 'href')); assert(wa.includes('*Travel by:* Road trip') && wa.includes('*Interests:* Adventure, Food'));
+    assert.equal(await pg.evaluate(() => sessionStorage.getItem('draft')), null, 'draft cleared after sending');
+    // skip every optional answer: none of the optional keys are sent
+    await pg.click('#c-edit'); calls.length = 0; await pg.evaluate(() => { form.reset(); sessionStorage.removeItem('draft'); document.querySelector('.tailor').open = false; gotoStep(1); });
+    await pg.click(chip('dest', 'Goa')); await pg.fill('#from', 'Pune'); await pg.fill('#when', 'Dec'); await pg.click(chip('travel', 'flexible')); await pg.click('#submit');
+    await pg.click(chip('group', '3-6')); await pg.click(chip('budget', '5-10')); await pg.click('#submit');
+    await pg.fill('#name', 'Asha'); await pg.fill('#phone', '9876543210'); await pg.check('#consent'); await pg.click('#submit'); await pg.waitForSelector('#confirm:not([hidden])');
+    const min = calls.find(c => c[0] === '/api/leads')[1]; assert.equal(min.travel_mode, 'flexible');
+    for (const k of ['trip_length', 'group_type', 'stay_pref', 'interests', 'notes']) assert.equal(k in min, false, `${k} omitted when skipped`);
     await ctx.close(); }
   console.log('fallbacks OK'); console.log('errors:', errs); await b.close(); console.log('ALL OK');
 })().catch(e => { console.error('FAIL', e.message); process.exit(1); });

@@ -310,11 +310,17 @@ form,.confirm{background:var(--card);color:var(--ink);padding:30px;box-shadow:0 
 .fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}.fields .full{grid-column:1/-1}
 @media(max-width:560px){.fields{grid-template-columns:1fr}form,.confirm{padding:22px 18px}}
 label,legend{font:700 .84rem var(--sans);color:var(--forest);display:block;margin-bottom:6px;padding:0}
-input[type=text],input[type=tel],select{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font:inherit;color:var(--ink);min-height:48px}
-input:focus,select:focus{border-color:var(--forest);outline:3px solid rgba(212,163,89,.55);outline-offset:0}
+input[type=text],input[type=tel],select,textarea{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font:inherit;color:var(--ink);min-height:48px}
+input:focus,select:focus,textarea:focus{border-color:var(--forest);outline:3px solid rgba(212,163,89,.55);outline-offset:0}
 input[aria-invalid=true],select[aria-invalid=true]{border-color:#B3261E}
 .step{border:0;padding:0;margin:0;min-width:0}.step legend{font:400 1.45rem var(--serif);color:var(--forest);margin-bottom:16px;padding:0}
 .lbl{font:700 .84rem var(--sans);color:var(--forest);display:block;margin-bottom:8px}
+.opt{font-weight:400;color:var(--muted)}
+textarea{font:inherit;color:var(--ink);border:1.5px solid var(--line);border-radius:10px;padding:13px 14px;background:#fff;resize:vertical;min-height:84px}
+.tailor{margin-top:22px;border:1.5px dashed var(--line);border-radius:12px;padding:0 16px 16px}
+.tailor summary{font:700 .95rem var(--sans);padding:14px 0;min-height:48px}   /* layout and the +/× marker come from the global summary rule */
+.tailor summary small{display:block;font-weight:400;color:var(--muted);font-size:.85rem}
+.tailor .lbl{margin-top:16px}.tailor .lbl:first-of-type{margin-top:4px}
 .pick{display:flex;flex-wrap:wrap;gap:8px}.pk{position:relative;margin:0}
 .pk input{position:absolute;opacity:0;inset:0;width:100%;height:100%;cursor:pointer}
 .pk span{display:block;padding:11px 18px;border:1.5px solid var(--line);border-radius:999px;background:#fff;font:700 .92rem var(--sans);color:var(--ink);min-height:46px;display:flex;align-items:center;transition:.15s}
@@ -832,6 +838,10 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
               <div><label for="from">Departure city</label><input id="from" name="from" type="text" maxlength="40" list="cities" placeholder="e.g. Pune" autocomplete="off"><datalist id="cities"><option>Pune</option><option>Mumbai</option><option>Bengaluru</option><option>Delhi</option></datalist><div class="err" data-for="from"></div></div>
               <div><label for="when">Travel month / dates</label><input id="when" name="when" type="text" maxlength="40" placeholder="e.g. 12–17 Dec" autocomplete="off"><div class="err" data-for="when"></div></div>
             </div>
+            <label class="lbl" style="margin-top:18px">How will you travel?</label>
+            <div class="pick" role="radiogroup" aria-label="Mode of travel"><label class="pk"><input type="radio" name="travel" value="train"><span>Train</span></label><label class="pk"><input type="radio" name="travel" value="flight"><span>Flight</span></label><label class="pk"><input type="radio" name="travel" value="road"><span>Road trip</span></label><label class="pk"><input type="radio" name="travel" value="flexible"><span>Not sure, advise me</span></label></div><div class="err" data-for="travel"></div>
+            <label class="lbl" style="margin-top:18px">How many days? <span class="opt">optional</span></label>
+            <div class="pick" role="radiogroup" aria-label="Trip length"><label class="pk"><input type="radio" name="triplen" value="2-3"><span>2–3 days</span></label><label class="pk"><input type="radio" name="triplen" value="4-5"><span>4–5 days</span></label><label class="pk"><input type="radio" name="triplen" value="6-8"><span>6–8 days</span></label><label class="pk"><input type="radio" name="triplen" value="9+"><span>9+ days</span></label></div>
           </fieldset>
 
           <fieldset class="step" data-step="2" hidden>
@@ -845,6 +855,16 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
               <label class="radio"><input type="radio" name="service" value="complete">Complete All-Inclusive Package</label></div>
             <label class="lbl" style="margin-top:18px">Approximate budget per person</label>
             <div class="pick" role="radiogroup" aria-label="Budget per person"><label class="pk"><input type="radio" name="budget" value="5-10"><span>₹5k–₹10k</span></label><label class="pk"><input type="radio" name="budget" value="10-18"><span>₹10k–₹18k</span></label><label class="pk"><input type="radio" name="budget" value="18+"><span>₹18k+</span></label></div><div class="err" data-for="budget"></div>
+            <details class="tailor"><summary><span>Help us tailor it <small>optional, takes 30 seconds</small></span></summary>
+              <span class="lbl">Who's going?</span>
+              <div class="pick" role="radiogroup" aria-label="Who is going"><label class="pk"><input type="radio" name="gtype" value="friends"><span>Friends</span></label><label class="pk"><input type="radio" name="gtype" value="family"><span>Family</span></label><label class="pk"><input type="radio" name="gtype" value="colleagues"><span>Colleagues</span></label><label class="pk"><input type="radio" name="gtype" value="other"><span>Other</span></label></div>
+              <span class="lbl">Stay style</span>
+              <div class="pick" role="radiogroup" aria-label="Stay style"><label class="pk"><input type="radio" name="stay" value="budget"><span>Budget</span></label><label class="pk"><input type="radio" name="stay" value="comfort"><span>Comfortable</span></label><label class="pk"><input type="radio" name="stay" value="premium"><span>Premium</span></label><label class="pk"><input type="radio" name="stay" value="any"><span>No preference</span></label></div>
+              <span class="lbl">What do you enjoy? Pick any</span>
+              <div class="pick" role="group" aria-label="Interests"><label class="pk"><input type="checkbox" name="interest" value="adventure"><span>Adventure</span></label><label class="pk"><input type="checkbox" name="interest" value="heritage"><span>Heritage &amp; culture</span></label><label class="pk"><input type="checkbox" name="interest" value="nature"><span>Nature &amp; views</span></label><label class="pk"><input type="checkbox" name="interest" value="beaches"><span>Beaches &amp; chill</span></label><label class="pk"><input type="checkbox" name="interest" value="food"><span>Food</span></label><label class="pk"><input type="checkbox" name="interest" value="spiritual"><span>Spiritual</span></label><label class="pk"><input type="checkbox" name="interest" value="nightlife"><span>Nightlife</span></label></div>
+              <label for="notes" class="lbl">Anything else we should know?</label>
+              <textarea id="notes" name="notes" maxlength="300" rows="3" placeholder="Kids or seniors, food preferences, must-see places, dates you can't move"></textarea>
+            </details>
           </fieldset>
 
           <fieldset class="step" data-step="3" hidden>
@@ -1131,6 +1151,13 @@ const inr = n => "₹" + n.toLocaleString("en-IN");
 const G = { "1-2": [1, 2], "3-6": [3, 6], "7-12": [7, 12], "13+": [13, null] }, B = { "5-10": [5000, 10000], "10-18": [10000, 18000], "18+": [18000, null] };
 const SVC = { blueprint: "Ready Blueprint (₹699)", custom: "Custom PDF Plan (₹2,499)", complete: "Complete All-Inclusive Package" };
 const BUDGET = { "5-10": "₹5k–₹10k", "10-18": "₹10k–₹18k", "18+": "₹18k+" };
+const TRAVEL = { train: "Train", flight: "Flight", road: "Road trip", flexible: "Not sure, advise me" };
+const GTYPE = { friends: "Friends", family: "Family", colleagues: "Colleagues", other: "Other" };
+const STAY = { budget: "Budget", comfort: "Comfortable", premium: "Premium", any: "No preference" };
+const INTEREST = { adventure: "Adventure", heritage: "Heritage & culture", nature: "Nature & views", beaches: "Beaches & chill", food: "Food", spiritual: "Spiritual", nightlife: "Nightlife" };
+// optional answers only become rows when given
+const extraRows = v => [v.trip_length && ["Trip length", v.trip_length + " days"], v.group_type && ["Travelling as", GTYPE[v.group_type]], v.stay_pref && ["Stay", STAY[v.stay_pref]],
+  v.interests && ["Interests", v.interests.map(i => INTEREST[i]).join(", ")], v.notes && ["Notes", v.notes]].filter(Boolean);
 let engaged = false;  // becomes true once the visitor touches the planner; then the bar shows their live estimate
 function syncBar() {
   const est = $("#est-main").textContent.replace(/\s/g, ""), bar = $("#mbar-plan");
@@ -1151,7 +1178,7 @@ function _updateEst() {
 form.addEventListener("input", () => { engaged = true; updateEst(); });
 
 // ===== 3-step form: fewer fields per screen, tap-chips, saved draft =====
-const STEPS = [null, ["dest", "from", "when"], ["group", "budget"], ["name", "phone", "consent"]];
+const STEPS = [null, ["dest", "from", "when", "travel"], ["group", "budget"], ["name", "phone", "consent"]];
 const STEP_LABEL = ["", "Where & when", "Who's going", "Where to send it"];
 let step = 1;
 function gotoStep(n) {
@@ -1161,20 +1188,23 @@ function gotoStep(n) {
 }
 $("#back").onclick = () => gotoStep(step - 1);
 const focusField = k => { const i = form.elements[k]; (i.setAttribute ? i : i[0]).focus(); };
-const DRAFT = ["dest", "from", "when", "group", "budget", "service", "name"]; // never the phone number
+const DRAFT = ["dest", "from", "when", "travel", "triplen", "group", "budget", "service", "gtype", "stay", "name"]; // never the phone number, nor free-text notes
 const saveDraft = () => { try { const d = {}; DRAFT.forEach(k => d[k] = form.elements[k].value); sessionStorage.setItem("draft", JSON.stringify(d)); } catch {} };
 try { const d = JSON.parse(sessionStorage.getItem("draft") || "null"); if (d) DRAFT.forEach(k => { if (typeof d[k] === "string" && d[k]) form.elements[k].value = d[k]; }); } catch {}
 form.addEventListener("input", saveDraft); updateEst();
 
 const clean = s => s.replace(/[\u0000-\u001f\u007f]/g, " ").replace(/\s+/g, " ").trim();
 function validate() {
-  const f = form.elements, v = { name: clean(f.name.value), phone: f.phone.value.replace(/[\s\-()]/g, ""), destination: f.dest.value, departure_city: clean(f.from.value), travel_dates: clean(f.when.value), group_size: f.group.value, service: f.service.value, budget: f.budget.value, website: f.website.value };
+  const f = form.elements, v = { name: clean(f.name.value), phone: f.phone.value.replace(/[\s\-()]/g, ""), destination: f.dest.value, departure_city: clean(f.from.value), travel_dates: clean(f.when.value), group_size: f.group.value, service: f.service.value, budget: f.budget.value, website: f.website.value, travel_mode: f.travel.value };
+  const opt = { trip_length: f.triplen.value, group_type: f.gtype.value, stay_pref: f.stay.value, interests: $$("input[name=interest]:checked", form).map(i => i.value), notes: clean(f.notes.value).slice(0, 300) };
+  for (const [k, val] of Object.entries(opt)) if (Array.isArray(val) ? val.length : val) v[k] = val;   // skipped answers are not sent at all
   const e = {};
   if (v.name.length < 2) e.name = "Please enter your name.";
   const m = v.phone.match(/^(?:\+?91|0)?([6-9]\d{9})$/); if (!m) e.phone = "Enter a valid 10-digit Indian WhatsApp number"; else v.phone = "91" + m[1];
   if (!v.destination) e.dest = "Choose a destination.";
   if (!v.departure_city) e.from = "Where are you travelling from?";
   if (!v.travel_dates) e.when = "Add a month or dates.";
+  if (!v.travel_mode) e.travel = "Choose how you will travel.";
   if (!v.group_size) e.group = "Select group size.";
   if (!v.budget) e.budget = "Select a budget band.";
   if (!f.consent.checked) e.consent = "Please tick to continue.";
@@ -1207,7 +1237,7 @@ form.addEventListener("submit", async ev => {
     try { leadId = (await api("/api/leads", { ...v, ...ATTR })).lead_id; track("generate_lead", { destination: v.destination, service: v.service }); }
     catch (err) { note = err.status === 429 ? "You've sent a few requests already. WhatsApp us below and we'll pick it up." : "We couldn't reach our planner just now. Your details are in the WhatsApp message below, so nothing is lost."; }
   }
-  const rows = [["Name", v.name], ["WhatsApp", v.phone], ["Destination", v.destination], ["From", v.departure_city], ["Travel dates", v.travel_dates], ["Group size", v.group_size], ["Service", SVC[v.service]], ["Budget / person", BUDGET[v.budget]]];
+  const rows = [["Name", v.name], ["WhatsApp", v.phone], ["Destination", v.destination], ["From", v.departure_city], ["Travel by", TRAVEL[v.travel_mode]], ["Travel dates", v.travel_dates], ["Group size", v.group_size], ["Service", SVC[v.service]], ["Budget / person", BUDGET[v.budget]], ...extraRows(v)];
   $("#c-name").textContent = v.name.split(" ")[0];
   $("#c-list").replaceChildren(...rows.flatMap(([k, val]) => [Object.assign(document.createElement("dt"), { textContent: k }), Object.assign(document.createElement("dd"), { textContent: val })]));
   $("#c-wa").href = waLink(["Hi! I'd like an instant quote.", "", ...rows.map(([k, val]) => `*${k}:* ${val}`), "", `Rough estimate: ${$("#est-main").textContent}`, leadId ? `Ref: ${leadId.slice(0, 8)}` : ""].join("\n").trim());

@@ -12,7 +12,10 @@ const PAGE = pathToFileURL(path.join(__dirname, '..', process.argv[2] || 'index.
     await p.goto(PAGE); await p.addStyleTag({ content: '.reveal{opacity:1!important;transform:none!important}' });
     await p.evaluate(() => document.querySelectorAll('img[loading=lazy]').forEach(i => i.loading = 'eager')); await p.waitForTimeout(800);
     const open = sel => async () => { await p.keyboard.press('Escape'); await p.evaluate(s => document.querySelector(s)?.click(), sel); await p.waitForTimeout(400); };
-    const states = [['page', async () => {}], ['route popup', open('[data-route]')], ['blueprint drawer', open('[data-bp]')], ['enlarge page', open('.zoomable')], ['privacy popup', open('[data-open=privacy]')]];
+    const planner = async () => { await p.keyboard.press('Escape'); await p.evaluate(() => document.querySelector('#planner').scrollIntoView());
+      await p.click('label.pk:has(input[name=dest][value="Goa"])'); await p.fill('#from', 'Pune'); await p.fill('#when', 'Dec'); await p.click('label.pk:has(input[name=travel][value="road"])'); await p.waitForTimeout(350); };   // let the chip's 0.15s colour transition finish before measuring
+    const stepTwo = async () => { await planner(); await p.click('#submit'); await p.click('.tailor summary'); await p.waitForTimeout(200); };
+    const states = [['page', async () => {}], ...(process.argv[2] ? [] : [['planner step 1', planner], ['planner step 2 with tailor block open', stepTwo]]), ['route popup', open('[data-route]')], ['blueprint drawer', open('[data-bp]')], ['enlarge page', open('.zoomable')], ['privacy popup', open('[data-open=privacy]')]];
     for (const [name, setup] of states) {
       await setup();
       const r = await new AxeBuilder({ page: p }).withTags(['wcag2a', 'wcag2aa', 'wcag21a', 'wcag21aa', 'best-practice']).analyze();

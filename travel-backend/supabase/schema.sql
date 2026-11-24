@@ -16,6 +16,12 @@ create table if not exists leads (
   utm_medium           text,
   utm_campaign         text,
   referrer             text,
+  travel_mode          text,                       -- train | flight | road | flexible
+  trip_length          text,                       -- 2-3 | 4-5 | 6-8 | 9+ (days)
+  group_type           text,
+  stay_pref            text,
+  interests            text,                       -- comma-separated
+  notes                text,                       -- free text from the customer: untrusted
   status               text not null default 'new' check (status in
                          ('new','generating','preview_ready','needs_manual','failed','quoted','paid','delivered','lost')),
   preview_pdf_path     text,
@@ -61,6 +67,9 @@ create unique index if not exists payments_one_active
 --     alter column group_size drop not null, alter column budget drop not null;
 --   alter table leads add column if not exists utm_source text, add column if not exists utm_medium text,
 --     add column if not exists utm_campaign text, add column if not exists referrer text;
+--   alter table leads add column if not exists travel_mode text, add column if not exists trip_length text,
+--     add column if not exists group_type text, add column if not exists stay_pref text,
+--     add column if not exists interests text, add column if not exists notes text;
 
 alter table leads        enable row level security;
 alter table itineraries  enable row level security;

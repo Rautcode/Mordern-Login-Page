@@ -276,11 +276,17 @@ form,.confirm{background:var(--card);color:var(--ink);padding:30px;box-shadow:0 
 .fields{display:grid;grid-template-columns:1fr 1fr;gap:16px}.fields .full{grid-column:1/-1}
 @media(max-width:560px){.fields{grid-template-columns:1fr}form,.confirm{padding:22px 18px}}
 label,legend{font:700 .84rem var(--sans);color:var(--forest);display:block;margin-bottom:6px;padding:0}
-input[type=text],input[type=tel],select{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font:inherit;color:var(--ink);min-height:48px}
-input:focus,select:focus{border-color:var(--forest);outline:3px solid rgba(212,163,89,.55);outline-offset:0}
+input[type=text],input[type=tel],select,textarea{width:100%;padding:13px 14px;border:1.5px solid var(--line);border-radius:10px;background:#fff;font:inherit;color:var(--ink);min-height:48px}
+input:focus,select:focus,textarea:focus{border-color:var(--forest);outline:3px solid rgba(212,163,89,.55);outline-offset:0}
 input[aria-invalid=true],select[aria-invalid=true]{border-color:#B3261E}
 .step{border:0;padding:0;margin:0;min-width:0}.step legend{font:400 1.45rem var(--serif);color:var(--forest);margin-bottom:16px;padding:0}
 .lbl{font:700 .84rem var(--sans);color:var(--forest);display:block;margin-bottom:8px}
+.opt{font-weight:400;color:var(--muted)}
+textarea{font:inherit;color:var(--ink);border:1.5px solid var(--line);border-radius:10px;padding:13px 14px;background:#fff;resize:vertical;min-height:84px}
+.tailor{margin-top:22px;border:1.5px dashed var(--line);border-radius:12px;padding:0 16px 16px}
+.tailor summary{font:700 .95rem var(--sans);padding:14px 0;min-height:48px}   /* layout and the +/× marker come from the global summary rule */
+.tailor summary small{display:block;font-weight:400;color:var(--muted);font-size:.85rem}
+.tailor .lbl{margin-top:16px}.tailor .lbl:first-of-type{margin-top:4px}
 .pick{display:flex;flex-wrap:wrap;gap:8px}.pk{position:relative;margin:0}
 .pk input{position:absolute;opacity:0;inset:0;width:100%;height:100%;cursor:pointer}
 .pk span{display:block;padding:11px 18px;border:1.5px solid var(--line);border-radius:999px;background:#fff;font:700 .92rem var(--sans);color:var(--ink);min-height:46px;display:flex;align-items:center;transition:.15s}

@@ -24,8 +24,10 @@ const summarize = rows => {
   for (const l of rows) { byStatus[l.status] = (byStatus[l.status] || 0) + 1; const s = sourceOf(l); bySource[s] = (bySource[s] || 0) + 1; }
   return { byStatus, topSources: Object.entries(bySource).sort((a, b) => b[1] - a[1]).slice(0, 4) };
 };
+const MODE = { train: "train", flight: "flight", road: "road trip", flexible: "mode: advise me" };
+const brief = l => [MODE[l.travel_mode], l.trip_length && l.trip_length + " days", l.group_type, l.stay_pref && "stay: " + l.stay_pref, l.interests && "likes " + l.interests].filter(Boolean).join(" · ");
 const matches = (l, q) => !q || [l.name, l.phone, l.destination].some(v => String(v || "").toLowerCase().includes(q.toLowerCase()));
-window.__console = { sourceOf, waLink, summarize, matches };   // test hook; read-only helpers, no secrets
+window.__console = { sourceOf, waLink, summarize, matches, brief };   // test hook; read-only helpers, no secrets
 
 // ---- state + DOM ----
 const $ = s => document.querySelector(s);
@@ -64,7 +66,8 @@ function render() {
     body.append(el("tr", {},
       el("td", { textContent: new Date(l.created_at).toLocaleString("en-IN", { dateStyle: "medium", timeStyle: "short" }) }),
       el("td", {}, el("b", { textContent: l.name }), el("small", { textContent: l.phone })),
-      el("td", {}, el("b", { textContent: `${l.destination} · ${l.service}` }), el("small", { textContent: [l.departure_city && "from " + l.departure_city, trip].filter(Boolean).join(" · ") })),
+      el("td", {}, el("b", { textContent: `${l.destination} · ${l.service}` }), el("small", { textContent: [l.departure_city && "from " + l.departure_city, trip].filter(Boolean).join(" · ") }),
+        ...[brief(l) && el("small", { textContent: brief(l) }), l.notes && el("small", { textContent: "Note: " + l.notes })].filter(Boolean)),
       el("td", { textContent: sourceOf(l) }), el("td", {}, sel), el("td", {}, act)));
   }
   if (!vis.length) body.append(el("tr", {}, el("td", { colSpan: 6, textContent: rows.length ? "No leads match." : "No leads yet." })));

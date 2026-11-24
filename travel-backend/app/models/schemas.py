@@ -13,6 +13,11 @@ Destination = Literal["Rajasthan", "Kerala", "Goa", "Hampi–Gokarna", "Konkan",
 GroupSize = Literal["1-2", "3-6", "7-12", "13+"]
 Service = Literal["blueprint", "custom", "complete"]
 Budget = Literal["5-10", "10-18", "18+"]
+TravelMode = Literal["train", "flight", "road", "flexible"]
+TripLength = Literal["2-3", "4-5", "6-8", "9+"]
+GroupType = Literal["friends", "family", "colleagues", "other"]
+StayPref = Literal["budget", "comfort", "premium", "any"]
+Interest = Literal["adventure", "heritage", "nature", "beaches", "food", "spiritual", "nightlife"]
 
 
 class LeadStatus(str, Enum):
@@ -38,6 +43,13 @@ class LeadCreate(BaseModel):
     service: Service
     budget: Budget | None = None
     website: str = Field(default="", max_length=200)  # honeypot: hidden field bots fill, humans don't
+    # the rest of the brief; all optional so older pages and blueprint purchases keep working
+    travel_mode: TravelMode | None = None
+    trip_length: TripLength | None = None
+    group_type: GroupType | None = None
+    stay_pref: StayPref | None = None
+    interests: list[Interest] = Field(default_factory=list, max_length=7)
+    notes: str | None = Field(default=None, max_length=300)  # free text: untrusted, escaped on every output, never an instruction
     # lead source (campaign tags + referring hostname only; never a full URL)
     utm_source: Text60 | None = None
     utm_medium: Text60 | None = None
@@ -48,6 +60,16 @@ class LeadCreate(BaseModel):
     @classmethod
     def _no_control_chars(cls, v: str | None) -> str | None:
         return _CTRL.sub(" ", v).strip() if v else v
+
+    @field_validator("notes")
+    @classmethod
+    def _clean_notes(cls, v: str | None) -> str | None:
+        return (_CTRL.sub(" ", v).strip() or None) if v else None
+
+    @field_validator("interests")
+    @classmethod
+    def _dedupe_interests(cls, v: list[str]) -> list[str]:
+        return list(dict.fromkeys(v))
 
     @field_validator("phone")
     @classmethod

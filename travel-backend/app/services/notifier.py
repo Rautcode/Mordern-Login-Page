@@ -68,6 +68,22 @@ def source_label(lead: dict) -> str:
     return tag or (f"referral from {lead['referrer']}" if lead.get("referrer") else "direct")
 
 
+_MODE = {"train": "train", "flight": "flight", "road": "road trip", "flexible": "mode: advise me"}
+
+
+def brief_lines(lead: dict) -> list[str]:
+    """Optional parts of the brief as escaped Telegram lines. Notes are customer free text: escaped and clipped."""
+    trip = " · ".join(x for x in (
+        _MODE.get(lead.get("travel_mode") or ""), lead.get("trip_length") and f"{lead['trip_length']} days",
+        lead.get("group_type"), lead.get("stay_pref") and f"stay: {lead['stay_pref']}") if x)
+    out = [f"Trip: {esc(trip)}"] if trip else []
+    if lead.get("interests"):
+        out.append(f"Interests: {esc(lead['interests'])}")
+    if lead.get("notes"):
+        out.append(f"Notes: {esc(str(lead['notes'])[:200])}")
+    return out
+
+
 def fmt_new_lead(lead: dict) -> str:
     hello = f"Hi {lead['name']}! Thanks for your {lead['destination']} trip enquiry. I'm picking it up now."
     return (
@@ -76,6 +92,7 @@ def fmt_new_lead(lead: dict) -> str:
         f"{esc(lead['destination'])} from {esc(lead.get('departure_city') or '-')}\n"
         f"Dates: {esc(lead.get('travel_dates') or '-')} · Group: {esc(lead.get('group_size') or '-')} · Budget/pp (₹k): {esc(lead.get('budget') or '-')}\n"
         f"Service: {esc(lead['service'])}\n"
+        + "".join(line + "\n" for line in brief_lines(lead)) +
         f"Source: {esc(source_label(lead))}\n"
         f'<a href="{esc(customer_wa_link(lead["phone"], hello))}">Reply on WhatsApp</a>\n'
         f"<code>{esc(lead['id'])}</code>"
