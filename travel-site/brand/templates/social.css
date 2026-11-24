@@ -12,3 +12,6 @@ h1{position:relative;font-family:'Young Serif',Georgia,serif;font-weight:400;lin
 .pola::before{content:"";position:absolute;top:-16px;left:50%;width:30%;height:30px;margin-left:-15%;background:rgba(212,163,89,.65);transform:rotate(-3deg)}
 .pola img{display:block;width:100%;aspect-ratio:1/.85;object-fit:cover}
 .pola figcaption{font:600 38px 'Caveat',cursive;text-align:center;line-height:1}
+.range{position:absolute;left:0;bottom:0;width:100%;display:block}
+.card .r-dark{display:none}.card.dark .r-light{display:none}.card.dark .r-dark{display:block}
+.url{color:#F5EEE1;opacity:.92;z-index:3}.cta{z-index:3}

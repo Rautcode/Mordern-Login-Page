@@ -6,6 +6,7 @@ Everything here is generated from templates, so you can change the words or the 
 | Folder / file | What it is |
 |---|---|
 | `ghumoco-logo*.svg / .png` | Logos: primary, reversed (for dark), white, one-colour, with tagline. SVG is the master; PNGs are for Instagram, WhatsApp and documents. |
+| `ghumoco-mountains-light.svg / -dark.svg` | The mountain-range band that runs along the bottom of banners and cards (same greens, cream snow caps and orange sun as the logo). Regenerate with `python3 tools/make_mountains.py`. |
 | `ghumoco-mark*.svg`, `ghumoco-profile-640.png`, `favicon-*.png`, `apple-touch-icon-180.png` | The icon on its own, profile picture and favicons. |
 | `out/social/` | Instagram posts (1080x1080), stories and WhatsApp status (1080x1920), wide cover (1640x624). |
 | `out/cards/` | Business card front/back (95x57 mm with 3 mm bleed) and A6 thank-you card (111x154 mm with bleed): print PDFs and 300 dpi PNGs. |

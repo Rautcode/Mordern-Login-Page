@@ -2,19 +2,17 @@
 <style>
 body{width:1080px;height:1080px}.card{width:1080px;height:1080px}
 .logo{left:72px;top:64px;height:64px}
+.range{height:210px}
 .txt{position:absolute;left:72px;top:190px;width:470px}
 h1{font-size:72px}
 .sub{margin-top:30px;font-size:32px}
 .cta{left:72px;bottom:72px;font-size:32px;padding:20px 38px;z-index:3}
-.url{right:72px;bottom:84px}
+.url{right:72px;bottom:20px}
 .pola{width:330px;padding:14px 14px 20px}.pola figcaption{font-size:34px}
-.pola.a{right:70px;top:190px;transform:rotate(5deg)}.pola.b{right:130px;top:610px;transform:rotate(-5deg)}
-.solo .pola{width:440px;padding:16px 16px 22px}.solo .pola.a{right:56px;top:330px;transform:rotate(4deg)}
+.pola.a{right:70px;top:190px;transform:rotate(5deg)}.pola.b{right:130px;top:560px;transform:rotate(-5deg)}
+.solo .pola{width:440px;padding:16px 16px 22px}.solo .pola.a{right:56px;top:300px;transform:rotate(4deg)}
 .nopic .txt{top:230px;width:880px}.nopic h1{font-size:76px}.nopic .sub{font-size:36px;width:760px}
-.nopic::after{content:"";position:absolute;right:-130px;bottom:-190px;width:560px;height:560px;border-radius:50%;background:var(--orange);opacity:.95}
-.nopic .url{z-index:3;color:#fff;opacity:1}
-.card.nopic .cta{background:#fff;color:var(--forest)}.card.dark.nopic .cta{background:var(--bright);color:#fff}
 </style>
-<body><div class="card {{variant}} {{layout}}"><img class="logo" src="../{{logo}}" alt="">
+<body><div class="card {{variant}} {{layout}}"><img class="range r-light" src="../ghumoco-mountains-light.svg" alt=""><img class="range r-dark" src="../ghumoco-mountains-dark.svg" alt=""><img class="logo" src="../{{logo}}" alt="">
 <div class="txt"><h1>{{headline}}</h1><p class="sub">{{sub}}</p></div>{{pics_html}}
 <div class="cta">{{cta}}</div><div class="url">{{website}}</div></div>

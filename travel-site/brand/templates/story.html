@@ -3,6 +3,7 @@
 body{width:1080px;height:1920px}.card{width:1080px;height:1920px}
 /* Instagram and WhatsApp overlay the top and bottom ~250px: everything important stays between them */
 .logo{left:84px;top:260px;height:78px}
+.range{height:360px}
 .txt{position:absolute;left:84px;top:400px;width:900px}
 h1{font-size:100px}
 .sub{margin-top:36px;font-size:42px;width:820px}
@@ -12,6 +13,6 @@ h1{font-size:100px}
 .pola.a{right:70px;top:1000px;transform:rotate(4deg)}.pola.b{display:none}
 .nopic .txt{top:520px}
 </style>
-<body><div class="card {{variant}} {{layout}}"><img class="logo" src="../{{logo}}" alt="">
+<body><div class="card {{variant}} {{layout}}"><img class="range r-light" src="../ghumoco-mountains-light.svg" alt=""><img class="range r-dark" src="../ghumoco-mountains-dark.svg" alt=""><img class="logo" src="../{{logo}}" alt="">
 <div class="txt"><h1>{{headline}}</h1><p class="sub">{{sub}}</p></div>{{pics_html}}
 <div class="cta">{{cta}}</div><div class="url">{{website}}</div></div>
