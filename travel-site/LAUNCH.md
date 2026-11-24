@@ -68,7 +68,13 @@ Real reviews and real faces are the biggest trust gap on the site. They have to 
 - Open the CI `audit` job output (pip-audit, npm audit) and fix anything high or critical.
 - Blueprint and custom-plan checkouts charge fixed server-side amounts and show them on the Razorpay page. Keep that, or switch those two products
   to quote-only.
-- Add Cloudflare Turnstile (or an OTP) to the lead form before running ads.
+- **Turn on the bot check before running ads (Cloudflare Turnstile, free).** In the Cloudflare dashboard open Turnstile, add your domain, and copy the
+  *site key* and the *secret key*. Set `TURNSTILE_SECRET=<secret key>` on the API, and `"turnstile_site_key": "<site key>"` in `brand.json` (it needs `api_base`), then
+  redeploy both. With the secret set, the API refuses any enquiry without a valid token (fail closed: if Cloudflare cannot be reached, it says no). The visitor then
+  sees "We couldn't verify the form" and the WhatsApp message with their details, so nothing is lost. With no keys nothing changes. The build adds only
+  `challenges.cloudflare.com` to the security policy and one line to the privacy page. Tested against a stubbed widget only: **check it once in a real browser**
+  (open the site, fill the form, confirm the enquiry arrives and the browser console shows no blocked-by-CSP error). Turnstile stops bots, not a person typing
+  someone else's number; add a WhatsApp OTP later if that becomes a problem.
 
 ## Leads console
 Open `https://<your-api-domain>/admin` and sign in with `ADMIN_API_KEY`. It lists leads with their source (campaign tag or referrer),

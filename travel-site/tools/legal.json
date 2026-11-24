@@ -73,6 +73,7 @@
       {"h": "Who we share it with", "ul": [
         "Supabase: stores our enquiry and booking records and the files we deliver to you.",
         "Razorpay: processes payments.",
+        "[TURNSTILE_NOTE]",
         "Telegram: we send ourselves an alert for each new enquiry. It includes your name, number and trip details.",
         "Google (Gemini): when we draft a plan with AI, we send the trip details (destination, dates, group size, budget, travel preferences and notes). We do not send your name or phone number. Please do not put sensitive personal information in the notes.",
         "Our hosting provider: serves this website and keeps standard server logs.",

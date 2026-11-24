@@ -61,6 +61,12 @@ def load(path, allow_example):
     if tok and not re.fullmatch(r"[A-Za-z0-9]{16,64}", tok):
         die("analytics_token must be the Cloudflare Web Analytics token (letters and digits), or empty for no analytics")
     b["analytics_token"] = tok
+    tsk = str(b.get("turnstile_site_key", "")).strip()
+    if tsk and not re.fullmatch(r"[A-Za-z0-9_-]{10,64}", tsk):
+        die("turnstile_site_key must be the public Cloudflare Turnstile site key, or empty for no bot check")
+    if tsk and not api:
+        die("turnstile_site_key needs api_base: the check protects the backend form, and WhatsApp-only mode has none")
+    b["turnstile_site_key"] = tsk
     rv = b.get("reviews", [])
     if not isinstance(rv, list) or len(rv) > 6:
         die("reviews must be a list of at most 6 entries")
@@ -92,6 +98,10 @@ def fill(text, b):
         text = text.replace('apiBase: "",', f'apiBase: "{b["api_base"]}",')
     note = "We measure visits to this website with Cloudflare Web Analytics, which counts page views and referring sites without cookies. See Cloudflare's privacy policy for details."
     text = text.replace("[ANALYTICS_NOTE]", note) if b["analytics_token"] else re.sub(r"\s*<p>\[ANALYTICS_NOTE\]</p>", "", text)
+    tnote = "Cloudflare Turnstile: checks that a form is filled in by a person, and may process your IP address and browser details. See Cloudflare's privacy policy."
+    text = text.replace("[TURNSTILE_NOTE]", tnote) if b["turnstile_site_key"] else re.sub(r"\s*<li>\[TURNSTILE_NOTE\]</li>", "", text)
+    if b["turnstile_site_key"]:
+        text = text.replace('turnstileSiteKey: "",', f'turnstileSiteKey: "{b["turnstile_site_key"]}",')
     if b["reviews"]:
         text = text.replace("reviews: []", "reviews: " + json.dumps(b["reviews"], ensure_ascii=False).replace("<", "\\u003c"))
     return text
@@ -138,6 +148,8 @@ def main():
             text = fill(src.read_text(encoding="utf-8"), b)
             if name == "index.html" and b["api_base"] and f'apiBase: "{b["api_base"]}"' not in text:
                 die('api_base was not applied: index.html no longer contains \'apiBase: "",\' (update personalize.py to match)')
+            if name == "index.html" and b["turnstile_site_key"] and f'turnstileSiteKey: "{b["turnstile_site_key"]}"' not in text:
+                die('turnstile_site_key was not applied: index.html no longer contains \'turnstileSiteKey: "",\' (update personalize.py to match)')
             if name == "index.html" and b["reviews"] and "reviews: [{" not in text:
                 die('reviews were not applied: index.html no longer contains "reviews: []" (update personalize.py to match)')
             if src.suffix == ".html" and b["analytics_token"]:
@@ -151,10 +163,11 @@ def main():
         elif name != "_headers.template":
             shutil.copy2(src, out / name)
 
-    connect = "'self'" + (" " + b["api_base"] if b["api_base"] else "") + (" https://cloudflareinsights.com" if b["analytics_token"] else "")
-    script_extra = " https://static.cloudflareinsights.com" if b["analytics_token"] else ""
+    cf = " https://challenges.cloudflare.com" if b["turnstile_site_key"] else ""
+    connect = "'self'" + (" " + b["api_base"] if b["api_base"] else "") + (" https://cloudflareinsights.com" if b["analytics_token"] else "") + cf
+    script_extra = (" https://static.cloudflareinsights.com" if b["analytics_token"] else "") + cf
     tpl = (ROOT / "_headers.template").read_text(encoding="utf-8")
-    (out / "_headers").write_text(tpl.replace("{{SCRIPT_HASHES}}", " ".join(sorted(set(hashes)))).replace("{{SCRIPT_EXTRA}}", script_extra).replace("{{CONNECT_SRC}}", connect), encoding="utf-8")
+    (out / "_headers").write_text(tpl.replace("{{SCRIPT_HASHES}}", " ".join(sorted(set(hashes)))).replace("{{SCRIPT_EXTRA}}", script_extra).replace("{{CONNECT_SRC}}", connect).replace("{{FRAME_SRC}}", "'self'" + cf), encoding="utf-8")
 
     left = []
     for f in out.rglob("*"):

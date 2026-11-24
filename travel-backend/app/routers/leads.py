@@ -2,13 +2,13 @@ import logging
 from datetime import datetime, timedelta, timezone
 from uuid import UUID, uuid4
 
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
+from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
 
 from app.config import get_settings
 from app.database import db, get_lead, signed_url
 from app.models.schemas import LeadCreate, LeadCreated, LeadStatusOut
 from app.security import RateLimiter
-from app.services import notifier
+from app.services import notifier, turnstile
 
 log = logging.getLogger(__name__)
 router = APIRouter(prefix="/api", tags=["leads"])
@@ -21,10 +21,12 @@ RETRY_WINDOW = timedelta(seconds=120)
 
 
 @router.post("/leads", response_model=LeadCreated, status_code=201, dependencies=[Depends(_create_limit)])
-async def create_lead(body: LeadCreate, bg: BackgroundTasks):
+async def create_lead(body: LeadCreate, bg: BackgroundTasks, request: Request):
     if body.website:  # honeypot tripped: pretend success, store nothing
         return LeadCreated(lead_id=uuid4(), whatsapp_url=notifier.agency_wa_link("Hi!"))
 
+    if turnstile.enabled() and not await turnstile.verify(body.turnstile_token, request.client.host if request.client else None):
+        raise HTTPException(status_code=403, detail="Verification failed. Please try again, or message us on WhatsApp.")
     # The same person tapping twice or retrying after a timeout gets their existing lead: no second record, no second alert.
     recent = (datetime.now(timezone.utc) - RETRY_WINDOW).isoformat()
     dup = await (db().table("leads").select("id").eq("phone", body.phone).eq("destination", body.destination)
@@ -34,7 +36,7 @@ async def create_lead(body: LeadCreate, bg: BackgroundTasks):
     if not _phone_limit.allow(body.phone) or not _global_limit.allow("all"):
         raise HTTPException(status_code=429, detail="Too many requests right now. Message us on WhatsApp and we'll pick it up.")
 
-    row = body.model_dump(exclude={"website"})
+    row = body.model_dump(exclude={"website", "turnstile_token"})
     row["interests"] = ", ".join(row["interests"])  # stored as text
     row = {k: v for k, v in row.items() if v not in (None, "")}  # unanswered optional columns stay NULL (and need no migration until used)
     res = await db().table("leads").insert(row).execute()

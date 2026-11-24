@@ -10,16 +10,17 @@ from pathlib import Path
 from types import SimpleNamespace
 
 import pytest
+import httpx
 from fastapi.testclient import TestClient
 from google.genai import errors
-from pydantic import ValidationError
+from pydantic import SecretStr, ValidationError
 
 from app import security
 from app.config import Settings, get_settings
 from app.main import app
 from app.models.schemas import ItineraryJSON, LeadCreate
 from app.routers import itineraries, leads, payments
-from app.services import ai_planner, notifier, pdf_generator, rag_loader
+from app.services import ai_planner, notifier, pdf_generator, rag_loader, turnstile
 from tests.test_core import _itin
 from tests.test_flow import LEAD, FakeHTTP, env, sign  # noqa: F401  (env is a fixture)
 
@@ -332,6 +333,38 @@ def test_a_double_tap_returns_the_same_lead_and_one_alert(env):
     again = env.c.post("/api/leads", json=LEAD).json()["lead_id"]
     assert again == first and len(env.db.tables["leads"]) == 1
     assert sum(a.startswith("<b>New lead</b>") for a in env.alerts) == 1
+
+
+def test_turnstile_is_enforced_only_when_configured_and_fails_closed(env, monkeypatch):
+    calls = []
+
+    class Cloudflare:   # stands in for Turnstile's siteverify endpoint
+        result = {"success": True}
+
+        async def post(self, url, data=None, **kw):
+            calls.append((url, dict(data or {})))
+            if Cloudflare.result is None:
+                raise httpx.ConnectError("cloudflare unreachable")
+            return SimpleNamespace(status_code=200, json=lambda: Cloudflare.result)
+
+    monkeypatch.setattr(notifier, "_http", Cloudflare())
+    n = iter(range(10))
+    lead = lambda **k: {**LEAD, "phone": f"98765432{next(n)}0", **k}
+    # not configured: the token is ignored and Cloudflare is never called
+    assert env.c.post("/api/leads", json=lead(turnstile_token="whatever")).status_code == 201 and calls == []
+    monkeypatch.setattr(get_settings(), "turnstile_secret", SecretStr("secret-x"))
+    assert env.c.post("/api/leads", json=lead()).status_code == 403, "no token"
+    assert env.c.post("/api/leads", json=lead(website="spam", turnstile_token="t")).status_code == 201 and len(calls) == 0, "honeypot answers first, no call"
+    Cloudflare.result = {"success": False, "error-codes": ["invalid-input-response"]}
+    assert env.c.post("/api/leads", json=lead(turnstile_token="bad")).status_code == 403, "rejected token"
+    Cloudflare.result = {"success": True}
+    ok = env.c.post("/api/leads", json=lead(turnstile_token="good"))
+    assert ok.status_code == 201
+    url, data = calls[-1]
+    assert url == turnstile.VERIFY and data["secret"] == "secret-x" and data["response"] == "good"
+    assert "turnstile_token" not in env.db.tables["leads"][-1], "the token is checked, never stored"
+    Cloudflare.result = None
+    assert env.c.post("/api/leads", json=lead(turnstile_token="good")).status_code == 403, "unreachable Cloudflare fails closed"
 
 
 # ------------------------------------------------------------------ rate limiter and proxy trust

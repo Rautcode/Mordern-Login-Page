@@ -164,6 +164,36 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     await pg.addInitScript(() => { window.SITE_CONFIG = { apiBase: 'http://api.test' }; }); await pg.route('http://api.test/**', r => r.fulfill({ status: 500, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: '{}' })); await pg.goto(PAGE);
     await pg.evaluate(() => document.querySelector('[data-bp=kerala]').click()); await pg.fill('#dw-name', 'Asha'); await pg.fill('#dw-phone', '9876543210'); await pg.check('#dw-consent'); await pg.click('#dw-pay'); await pg.waitForTimeout(400);
     assert((await pg.getAttribute('#dw-status a', 'href')).startsWith('https://wa.me/'), 'checkout failure falls back to WhatsApp'); assert.equal(await pg.isDisabled('#dw-pay'), false); await pg.close(); }
+  // ---- Cloudflare Turnstile: opt-in, one single-use token per attempt, never blocks the WhatsApp fallback ----
+  { const mode = async (key, how, drive) => { const calls = []; const pg = await b.newPage({ viewport: { width: 1280, height: 900 } }); let scriptHits = 0;
+      await pg.addInitScript(k => { window.SITE_CONFIG = { apiBase: 'http://api.test', turnstileSiteKey: k }; }, key);
+      await pg.route('https://challenges.cloudflare.com/**', r => { scriptHits++; if (how === 'blocked') return r.abort();
+        r.fulfill({ contentType: 'application/javascript', body: `window.__ts = { renders: 0, resets: 0, keys: [] }; window.turnstile = { render: (sel, o) => { const n = ++__ts.renders; __ts.keys.push(o.sitekey); if (${how === 'auto'}) setTimeout(() => o.callback('tok-' + n), 0); return 'w' + n; }, reset: () => { __ts.resets++; } };` }); });
+      await pg.route('http://api.test/**', async r => { const u = new URL(r.request().url()); let body = null; try { body = r.request().postDataJSON(); } catch {} calls.push([u.pathname, body]);
+        const ok = u.pathname === '/api/leads'; await r.fulfill({ status: ok ? 201 : 500, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: JSON.stringify(ok ? { lead_id: 'dddddddd-0000-0000-0000-000000000000' } : {}) }); });
+      await pg.context().route('https://wa.me/**', r => r.fulfill({ body: 'ok' })); await pg.goto(PAGE); await drive(pg, calls); const hits = scriptHits; await pg.close(); return { calls, hits }; };
+    const planner = async pg => { await fill(pg); await pg.waitForTimeout(150); await pg.click('#submit'); await pg.waitForTimeout(500); };
+    const drawer = async pg => { await pg.evaluate(() => document.querySelector('[data-bp=kerala]').click()); await pg.fill('#dw-name', 'Asha'); await pg.fill('#dw-phone', '9876543210'); await pg.check('#dw-consent'); await pg.waitForTimeout(150); await pg.click('#dw-pay'); await pg.waitForTimeout(500); };
+    // no key: the script is never requested and no token is sent
+    let r = await mode('', 'auto', planner); assert.equal(r.hits, 0, 'no Turnstile script without a site key'); assert.equal(r.calls[0][0], '/api/leads'); assert(!('turnstile_token' in r.calls[0][1]), 'no token field without a key');
+    // key set: the widget loads and mounts, and its token goes with the lead
+    r = await mode('0x4AAAA-testkey', 'auto', planner); assert.equal(r.hits, 1); assert.equal(r.calls[0][1].turnstile_token, 'tok-1', 'planner sends the Turnstile token');
+    r = await mode('0x4AAAA-testkey', 'auto', drawer); assert.equal(r.calls[0][1].turnstile_token, 'tok-1', 'checkout drawer sends the Turnstile token'); assert.equal(r.calls[0][1].service, 'blueprint');
+    // challenge not finished: nothing is sent, the visitor is told what to do, and nothing is lost
+    r = await mode('0x4AAAA-testkey', 'hold', async pg => { await planner(pg); assert.equal(await pg.locator('.err[data-for=turnstile]').textContent(), 'Please complete the check above, then press the button again.'); });
+    assert.equal(r.calls.length, 0, 'no lead is sent before the check passes');
+    r = await mode('0x4AAAA-testkey', 'hold', async pg => { await drawer(pg); assert((await pg.textContent('#dw-status')).includes('complete the check')); assert.equal(await pg.isDisabled('#dw-pay'), false); });
+    assert.equal(r.calls.length, 0);
+    // Cloudflare unreachable: the form still works through the API refusing it and the WhatsApp fallback, never a dead end
+    r = await mode('0x4AAAA-testkey', 'blocked', async pg => { await planner(pg); assert.equal(await pg.locator('.err[data-for=turnstile]').textContent(), ''); assert(await pg.locator('a[href^="https://wa.me/"]').count() > 0, 'WhatsApp fallback is shown'); });
+    assert(!('turnstile_token' in r.calls[0][1]), 'no token when the script could not load');
+    // a failed attempt resets the widget so the next try gets a fresh token
+    { const calls = []; const pg = await b.newPage({ viewport: { width: 1280, height: 900 } });
+      await pg.addInitScript(() => { window.SITE_CONFIG = { apiBase: 'http://api.test', turnstileSiteKey: '0x4AAAA-testkey' }; });
+      await pg.route('https://challenges.cloudflare.com/**', r => r.fulfill({ contentType: 'application/javascript', body: `window.__ts = { renders: 0, resets: 0 }; window.turnstile = { render: (s, o) => { const n = ++__ts.renders; setTimeout(() => o.callback('tok-' + n), 0); return 'w' + n; }, reset: () => { __ts.resets++; } };` }));
+      await pg.route('http://api.test/**', async r => { calls.push(r.request().url()); await r.fulfill({ status: 403, contentType: 'application/json', headers: { 'access-control-allow-origin': '*' }, body: '{"detail":"Verification failed."}' }); });
+      await pg.context().route('https://wa.me/**', r => r.fulfill({ body: 'ok' })); await pg.goto(PAGE); await planner(pg);
+      assert((await pg.textContent('#planner')).includes("couldn't verify the form"), '403 shows the verification message'); assert.equal(await pg.evaluate(() => __ts.resets), 1, 'the single-use token is discarded after the attempt'); await pg.close(); } }
   // ---- trust & proof: real PDF pages, fit box, ground-tested notes, share, assurances ----
   { const pg = await b.newPage({ viewport: { width: 1280, height: 900 } });
     await pg.addInitScript(() => { window.__shared = null; navigator.share = async d => { window.__shared = d; }; }); await pg.goto(PAGE);

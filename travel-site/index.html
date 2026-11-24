@@ -338,6 +338,7 @@ fieldset{border:0;padding:0;min-width:0}
 .err{color:#B3261E;font-size:.8rem;min-height:1.1em;margin-top:3px}
 .consent{display:flex;gap:10px;align-items:flex-start;font-size:.82rem;color:var(--muted);margin-top:4px}.consent input{margin-top:4px;accent-color:var(--forest);width:18px;height:18px;flex:none}
 .consent button{background:none;border:0;padding:0;font:inherit;color:var(--terra-d);text-decoration:underline;cursor:pointer}
+.ts{margin:4px 0}
 .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 .bp{position:sticky;top:90px;filter:drop-shadow(0 18px 20px rgba(0,0,0,.35))}
 .bp>div{background:var(--card);color:var(--ink);padding:24px;
@@ -874,6 +875,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
               <div><label for="phone">WhatsApp number</label><input id="phone" name="phone" type="tel" inputmode="tel" maxlength="16" placeholder="98XXXXXXXX" autocomplete="tel"><div class="err" data-for="phone"></div></div>
               <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input id="website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
               <div class="full"><label class="consent" for="consent"><input type="checkbox" id="consent"><span>I agree to be contacted on WhatsApp about this trip. <button type="button" data-open="privacy">How we use your details</button></span></label><div class="err" data-for="consent"></div></div>
+              <div class="full"><div id="ts-lead" class="ts"></div><div class="err" data-for="turnstile"></div></div>
             </div>
             <p class="note" style="margin-top:10px">No spam, no calls. We reply on WhatsApp within 24 hours.</p>
           </fieldset>
@@ -970,6 +972,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
         <div class="full"><label for="dw-phone">WhatsApp number</label><input id="dw-phone" type="tel" inputmode="tel" maxlength="16" placeholder="98XXXXXXXX" autocomplete="tel"></div>
         <div class="hp" aria-hidden="true"><label for="dw-hp">Leave this empty</label><input id="dw-hp" type="text" tabindex="-1" autocomplete="off"></div>
         <div class="full"><label class="consent" for="dw-consent"><input type="checkbox" id="dw-consent"><span>I agree to be contacted on WhatsApp about this order. <button type="button" data-open="privacy">How we use your details</button></span></label></div>
+        <div class="full"><div id="ts-dw" class="ts"></div></div>
       </div>
       <p class="err" id="dw-status" role="status" style="margin-top:10px"></p>
       <button class="btn btn-primary btn-block" type="submit" id="dw-pay" style="margin-top:8px">Pay now</button>
@@ -999,6 +1002,7 @@ const CFG = Object.assign({
   photos: {},                        // optional real photos: { rajasthan: "img/jaipur.jpg", ... }
   siteUrl: "",                       // your public address, used in the share-with-group message (defaults to this page)
   refundPolicy: "",                  // e.g. "Delivered within 48 hours, or refunded." Shown under the services only if you set it (decide the terms first)
+  turnstileSiteKey: "",              // Cloudflare Turnstile site key (public). Empty = no bot check. Needs apiBase
   reviews: []                        // real reviews only: [{ quote: "...", name: "Rohan K.", meta: "14-person Rajasthan trip · Pune" }]
 }, window.SITE_CONFIG || {});
 
@@ -1178,16 +1182,16 @@ function _updateEst() {
 form.addEventListener("input", () => { engaged = true; updateEst(); });
 
 // ===== 3-step form: fewer fields per screen, tap-chips, saved draft =====
-const STEPS = [null, ["dest", "from", "when", "travel"], ["group", "service", "budget"], ["name", "phone", "consent"]];
+const STEPS = [null, ["dest", "from", "when", "travel"], ["group", "service", "budget"], ["name", "phone", "consent", "turnstile"]];
 const STEP_LABEL = ["", "Where & when", "Who's going", "Where to send it"];
 let step = 1;
 function gotoStep(n) {
   step = n; $$(".step", form).forEach(f => f.hidden = +f.dataset.step !== n);
   $("#bar").style.width = (n / 3 * 100) + "%"; $("#step-label").textContent = `Step ${n} of 3 · ${STEP_LABEL[n]}`;
-  $("#back").hidden = n === 1; $("#submit").textContent = n === 3 ? "Get my quote" : "Next";
+  $("#back").hidden = n === 1; $("#submit").textContent = n === 3 ? "Get my quote" : "Next"; if (n === 3) tsMount("lead", "#ts-lead");
 }
 $("#back").onclick = () => gotoStep(step - 1);
-const focusField = k => { const i = form.elements[k]; (i.setAttribute ? i : i[0]).focus(); };
+const focusField = k => { const i = form.elements[k]; if (!i) return; (i.setAttribute ? i : i[0]).focus(); };   // "turnstile" has no input of its own
 const DRAFT = ["dest", "from", "when", "travel", "triplen", "group", "budget", "service", "gtype", "stay", "name"]; // never the phone number, nor free-text notes
 const saveDraft = () => { try { const d = {}; DRAFT.forEach(k => d[k] = form.elements[k].value); sessionStorage.setItem("draft", JSON.stringify(d)); } catch {} };
 try { const d = JSON.parse(sessionStorage.getItem("draft") || "null"); if (d) DRAFT.forEach(k => { if (typeof d[k] === "string" && d[k]) form.elements[k].value = d[k]; }); } catch {}
@@ -1222,6 +1226,17 @@ async function api(path, body) {
   } finally { clearTimeout(t); }
 }
 const sleep = ms => new Promise(r => setTimeout(r, ms));
+// ===== Cloudflare Turnstile: opt-in (SITE_CONFIG.turnstileSiteKey + apiBase). One widget per form; a token works once, so reset after every try =====
+const TS = { tok: {}, id: {}, ready: null, failed: false };
+const tsOn = () => !!(CFG.turnstileSiteKey && CFG.apiBase);
+const tsLoad = () => TS.ready ||= new Promise(res => { const s = document.createElement("script"); s.src = "https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"; s.async = true;
+  s.onload = () => res(!!window.turnstile); s.onerror = () => res(false); document.head.append(s); }).then(ok => (TS.failed = !ok, ok));
+async function tsMount(name, selector) {
+  if (!tsOn() || TS.id[name] != null || !(await tsLoad())) return;
+  TS.id[name] = turnstile.render(selector, { sitekey: CFG.turnstileSiteKey, callback: t => { TS.tok[name] = t; }, "expired-callback": () => { TS.tok[name] = ""; }, "error-callback": () => { TS.tok[name] = ""; } });
+}
+const tsToken = name => tsOn() && !TS.failed ? (TS.tok[name] || "") : null;   // null = not in use (or Cloudflare unreachable: the API will refuse and the WhatsApp fallback takes over)
+const tsReset = name => { TS.tok[name] = ""; try { if (TS.id[name] != null) turnstile.reset(TS.id[name]); } catch {} };
 const goPay = u => { if (!/^https:\/\//.test(u)) throw new Error("unexpected payment URL"); location.assign(u); };   // never navigate to anything but https
 
 let busy = false;
@@ -1232,12 +1247,14 @@ form.addEventListener("submit", async ev => {
   const bad = keys.find(k => e[k]); if (bad) { focusField(bad); return; }
   if (step < 3) { track("form_step", { step }); gotoStep(step + 1); return; }
   const early = [1, 2].find(n => STEPS[n].some(k => e[k])); if (early) { gotoStep(early); return; }
+  const tok = tsToken("lead"); if (tok === "") { $(".err[data-for=turnstile]").textContent = "Please complete the check above, then press the button again."; return; }
 
   busy = true; const btn = $("#submit"); btn.disabled = true; btn.textContent = "Sending…";
   let leadId = null, note = "";
   if (CFG.apiBase) {
-    try { leadId = (await api("/api/leads", { ...v, ...ATTR })).lead_id; track("generate_lead", { destination: v.destination, service: v.service }); }
-    catch (err) { note = err.status === 429 ? "You've sent a few requests already. WhatsApp us below and we'll pick it up." : "We couldn't reach our planner just now. Your details are in the WhatsApp message below, so nothing is lost."; }
+    try { leadId = (await api("/api/leads", { ...v, ...ATTR, ...(tok ? { turnstile_token: tok } : {}) })).lead_id; track("generate_lead", { destination: v.destination, service: v.service }); }
+    catch (err) { note = err.status === 429 ? "You've sent a few requests already. WhatsApp us below and we'll pick it up." : err.status === 403 ? "We couldn't verify the form. Your details are in the WhatsApp message below, so nothing is lost." : "We couldn't reach our planner just now. Your details are in the WhatsApp message below, so nothing is lost."; }
+    tsReset("lead");
   }
   const rows = [["Name", v.name], ["WhatsApp", v.phone], ["Destination", v.destination], ["From", v.departure_city], ["Travel by", TRAVEL[v.travel_mode]], ["Travel dates", v.travel_dates], ["Group size", v.group_size], ["Service", v.service === "blueprint" ? (hasBlueprint(v.destination) ? "Ready Blueprint" : "Ready Blueprint (not available for this destination)") : SVC[v.service]], ["Budget / person", BUDGET[v.budget]], ...extraRows(v)];
   $("#c-name").textContent = v.name.split(" ")[0];
@@ -1291,7 +1308,7 @@ function openBlueprint(id) {
   $("#dw-t").textContent = `${t.dest} blueprint`; $("#dw-pay").textContent = "Continue to secure checkout";
   $("#dw-inc").replaceChildren(...INC.map(x => Object.assign(document.createElement("li"), { textContent: x }))); $("#dw-status").textContent = "";
   const pv = $("#dw-prev"), im = new Image(); pv.replaceChildren(); im.onload = () => { im.className = "dw-prev"; im.alt = "Blurred page from a real plan"; const c = document.createElement("p"); c.className = "note"; c.textContent = "A page from a real plan, blurred. Your blueprint is the full document."; pv.append(im, c); }; im.src = `img/blueprint-preview-${id}.webp`; // only Rajasthan and Kerala have a real plan to preview so far
-  $("#d-dw").showModal(); track("blueprint_open", { route: id });
+  $("#d-dw").showModal(); track("blueprint_open", { route: id }); tsMount("dw", "#ts-dw");
 }
 $("#dwform").addEventListener("submit", async ev => {
   ev.preventDefault(); const t = dwTrip, st = $("#dw-status"), btn = $("#dw-pay"), say = x => { st.textContent = x; };
@@ -1299,9 +1316,10 @@ $("#dwform").addEventListener("submit", async ev => {
   if (name.length < 2) return say("Please enter your name."); if (!m) return say("Enter a valid 10-digit Indian WhatsApp number."); if (!$("#dw-consent").checked) return say("Please tick to continue.");
   const phone = "91" + m[1], msg = `Hi! I'd like the ${t.dest} blueprint.\n*Name:* ${name}\n*WhatsApp:* ${phone}${srcLine() ? "\n" + srcLine() : ""}`;
   if (!CFG.apiBase) { window.open(waLink(msg), "_blank", "noopener"); return; }   // WhatsApp-only mode
+  const tok = tsToken("dw"); if (tok === "") return say("Please complete the check above, then press the button again.");
   btn.disabled = true; say("Opening secure checkout…");
   try {
-    const lead = await api("/api/leads", { name, phone, destination: t.dest, service: "blueprint", website: $("#dw-hp").value, ...ATTR });
+    const lead = await api("/api/leads", { name, phone, destination: t.dest, service: "blueprint", website: $("#dw-hp").value, ...ATTR, ...(tok ? { turnstile_token: tok } : {}) });
     const r = await api("/api/create-payment-link", { lead_id: lead.lead_id, kind: "blueprint", blueprint_id: t.bp });
     track("begin_checkout", { kind: "blueprint" }); goPay(r.payment_url);
   } catch { btn.disabled = false; st.replaceChildren("We couldn't open checkout. ", Object.assign(document.createElement("a"), { href: waLink(msg), target: "_blank", rel: "noopener", textContent: "Order on WhatsApp instead →" })); }

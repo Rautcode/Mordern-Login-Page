@@ -30,6 +30,7 @@ class Settings(BaseSettings):
     admin_api_key: SecretStr
 
     telegram_bot_token: SecretStr | None = None
+    turnstile_secret: SecretStr | None = None  # set to require a Cloudflare Turnstile check on every new lead
     telegram_chat_id: str | None = None
 
     whatsapp_number: str = "91XXXXXXXXXX"

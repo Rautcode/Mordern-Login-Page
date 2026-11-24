@@ -43,6 +43,7 @@ class LeadCreate(BaseModel):
     service: Service
     budget: Budget | None = None
     website: str = Field(default="", max_length=200)  # honeypot: hidden field bots fill, humans don't
+    turnstile_token: str | None = Field(default=None, max_length=2100)  # Cloudflare Turnstile response; checked, never stored
     # the rest of the brief; all optional so older pages and blueprint purchases keep working
     travel_mode: TravelMode | None = None
     trip_length: TripLength | None = None
