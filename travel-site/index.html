@@ -673,7 +673,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
           <ul class="hl"><li>3 chained overnight/intercity train legs + Tempo Traveller desert circuit</li><li>Amer &amp; Mehrangarh closing-time strategy</li><li>Sam Sand Dunes sunset</li><li>15+ local food stops</li></ul>
           <p class="intel"><b>Ground-tested</b>The Mehrangarh zip-line closes at 5 PM and Jodhpur is a 4.5–6 hour drive, so the zip-line goes first and everything else bends around it.</p>
           <p class="price"><b>Blueprint ₹799</b> | Custom Group Execution from ₹11,499/person</p>
-          <div class="acts"><button class="btn btn-primary" data-trip="rajasthan">Plan this trip</button><button class="btn btn-ghost" data-route="rajasthan">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="rajasthan">Just want the PDF? Get the blueprint · ₹799</button></div></article>
+          <div class="acts"><button class="btn btn-primary" data-trip="rajasthan">Plan this trip</button><button class="btn btn-ghost" data-route="rajasthan">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="rajasthan">Just want the PDF? Get the blueprint · ₹799</button><a class="linkbtn" href="rajasthan-trip-from-pune/">Read the full route, hour by hour</a></div></article>
       <article class="card reveal" data-id="gokarna" data-cats="weekend multi">
         <div class="art" data-photo="gokarna"><img src="img/trip-gokarna-800.webp" srcset="img/trip-gokarna-480.webp 480w, img/trip-gokarna-800.webp 800w" sizes="(max-width:700px) 100vw, 360px" alt="Stone steps leading down a narrow gap in the hillside to the sea" width="800" height="500" loading="lazy" decoding="async"><div class="postmark">Blueprint<b>₹699</b></div></div>
         <div class="body"><h3>Gokarna → Murudeshwar → Hampi trip from Pune</h3>
@@ -917,7 +917,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
         <p style="margin-top:12px;max-width:42ch">Ground-Tested Trips. Zero Guesswork. Online-first trip planning for group travel from Pune and PCMC, Maharashtra.</p>
         <span class="udyam">UDYAM MSME REGISTERED · [UDYAM_REG_NO]</span>
       </div>
-      <div><h3>Trips from Pune</h3><ul><li><a href="#routes">Rajasthan tour from Pune</a></li><li><a href="#routes">Kerala 3-day trip</a></li><li><a href="#routes">Goa trip from Pune</a></li><li><a href="#routes">Gokarna &amp; Hampi trip</a></li><li><a href="#pricing">Pricing</a></li></ul></div>
+      <div><h3>Trips from Pune</h3><ul><li><a href="rajasthan-trip-from-pune/">Rajasthan tour from Pune</a></li><li><a href="#routes">Kerala 3-day trip</a></li><li><a href="#routes">Goa trip from Pune</a></li><li><a href="#routes">Gokarna &amp; Hampi trip</a></li><li><a href="#pricing">Pricing</a></li></ul></div>
       <div><h3>Connect</h3><ul><li><a id="ig2" target="_blank" rel="noopener">Instagram @[INSTAGRAM_HANDLE]</a></li><li><a data-wa target="_blank" rel="noopener">WhatsApp us</a></li><li><a href="#faq">FAQ</a></li></ul></div>
     </div>
     <div class="copy"><span>© <span id="yr"></span> [BRAND_NAME]. Prices are indicative and confirmed in your written quote.</span><button data-open="privacy">Privacy</button></div>
@@ -1272,6 +1272,8 @@ $("#dwform").addEventListener("submit", async ev => {
     track("begin_checkout", { kind: "blueprint" }); location.assign(r.payment_url);
   } catch { btn.disabled = false; st.replaceChildren("We couldn't open checkout. ", Object.assign(document.createElement("a"), { href: waLink(msg), target: "_blank", rel: "noopener", textContent: "Order on WhatsApp instead →" })); }
 });
+// From a route page's "Plan this trip": ?trip=rajasthan preselects the destination. Runs last so TRIPS and the form exist.
+{ const t = new URLSearchParams(location.search).get("trip"); if (Object.hasOwn(TRIPS, t)) plan("custom", TRIPS[t].dest); }
 </script>
 </body>
 </html>

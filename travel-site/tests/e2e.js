@@ -209,5 +209,27 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     await p2.evaluate(() => document.querySelector('[data-bp=goa]').click()); await p2.fill('#dw-name', 'Asha'); await p2.fill('#dw-phone', '9876543210'); await p2.check('#dw-consent'); await p2.click('#dw-pay'); await p2.waitForTimeout(400);
     const dl = calls.find(c => c[0] === '/api/leads')[1]; assert.equal(dl.referrer, 'l.instagram.com', 'hostname only: no path, no token'); assert.equal('utm_source' in dl, false, 'untagged visit sends no campaign keys');
     await ctx.close(); await ctx2.close(); }
+  // ---- route landing page: facts match the knowledge base, nothing broken, campaign + destination carry into the planner ----
+  { const fs = require('fs'); const root = path.join(__dirname, '..'); const types = { '.html': 'text/html', '.webp': 'image/webp', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png' };
+    assert(fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8').includes('/rajasthan-trip-from-pune/'), 'route page is in the sitemap');
+    const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } }); const pg = await ctx.newPage(); const bad = []; pg.on('pageerror', e => bad.push(e.message)); pg.on('console', m => m.type() === 'error' && bad.push(m.text()));
+    await pg.route('http://site.test/**', r => { let f = path.join(root, decodeURIComponent(new URL(r.request().url()).pathname)); if (f.endsWith(path.sep)) f += 'index.html';
+      if (!fs.existsSync(f) || fs.statSync(f).isDirectory()) return r.fulfill({ status: 404, body: 'nf' });
+      r.fulfill({ contentType: types[path.extname(f)] || 'application/octet-stream', body: fs.readFileSync(f) }); });
+    await pg.goto('http://site.test/rajasthan-trip-from-pune/?utm_source=ig&utm_campaign=raj', { referer: 'https://l.instagram.com/x?t=1' });
+    assert.equal(await pg.locator('h1').count(), 1);
+    const ld = await pg.$$eval('script[type="application/ld+json"]', n => n.map(x => JSON.parse(x.textContent)));
+    assert.deepEqual(ld.map(o => o['@type']), ['TouristTrip', 'FAQPage', 'BreadcrumbList']);
+    assert.equal(await pg.locator('details').count(), ld[1].mainEntity.length, 'FAQ markup matches the visible FAQ');
+    assert.deepEqual(await pg.evaluate(() => [...document.images].filter(i => !i.complete || !i.naturalWidth).map(i => i.src)), [], 'no broken images');
+    const kb = fs.readFileSync(path.join(root, '..', 'travel-backend', 'app', 'knowledge_base', 'rajasthan.md'), 'utf8'); const txt = await pg.innerText('main');
+    for (const n of new Set(txt.match(/\b\d{5}\b/g) || [])) assert(kb.includes(n), `page mentions ${n}, which is not in the verified knowledge base`);
+    assert(!/(?:\+?91[\s-]?)?[6-9]\d{4}[\s-]?\d{5}\b/.test(txt), 'no phone-like numbers on a public page');
+    assert.deepEqual(bad, [], 'no console or page errors');
+    await pg.click('.cta-row a.btn-primary >> nth=0'); await pg.waitForURL(/\/\?trip=rajasthan/);
+    assert(await pg.isChecked('input[name=dest][value="Rajasthan"]'), 'destination preselected in the planner');
+    const attr = await pg.evaluate(() => JSON.parse(sessionStorage.getItem('attr'))); assert.equal(attr.utm_source, 'ig'); assert.equal(attr.utm_campaign, 'raj'); assert.equal(attr.referrer, 'l.instagram.com');
+    await pg.goto('http://site.test/?trip=__proto__'); await pg.goto('http://site.test/?trip=nope'); assert.equal(await pg.isChecked('input[name=dest][value="Rajasthan"]'), false, 'unknown ?trip= is ignored'); assert.deepEqual(bad, []);
+    await ctx.close(); }
   console.log('fallbacks OK'); console.log('errors:', errs); await b.close(); console.log('ALL OK');
 })().catch(e => { console.error('FAIL', e.message); process.exit(1); });

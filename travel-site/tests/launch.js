@@ -62,5 +62,12 @@ const srv = http.createServer((q, s) => { let f = path.join(out, decodeURICompon
   assert.equal(await p.evaluate(() => { const s = document.createElement('script'); s.textContent = 'window.__injected = 1'; document.head.append(s); return window.__injected; }), undefined, 'an injected inline script is blocked');
   assert((await p.evaluate(() => window.__csp || [])).some(v => v.startsWith('script-src')), 'and the browser reports it');
   const nf = await p.goto(base + '/does-not-exist'); assert.equal(nf.status(), 404); assert((await p.textContent('h1')).includes("isn't on the map")); assert((await p.getAttribute('a.b', 'href')).startsWith('https://wa.me/919876543210'));
+  // route landing page: shipped, personalised, runs under the strict CSP, hands the destination + campaign to the planner
+  { const v0 = violations.length; await p.goto(base + '/rajasthan-trip-from-pune/?utm_source=ig'); await p.waitForLoadState('networkidle');
+    assert((await p.title()).includes('Test & Co')); assert.equal(await p.getAttribute('link[rel=canonical]', 'href'), 'https://trips.example.org/rajasthan-trip-from-pune/');
+    assert((await p.getAttribute('.cta-row a.btn-wa', 'href')).startsWith('https://wa.me/919876543210'));
+    await p.click('.cta-row a.btn-primary >> nth=0'); await p.waitForURL(/\?trip=rajasthan/); assert(await p.isChecked('input[name=dest][value="Rajasthan"]'));
+    assert.equal(await p.evaluate(() => JSON.parse(sessionStorage.getItem('attr')).utm_source), 'ig');
+    assert.equal(violations.length, v0, 'no CSP violations on the route page or the hop to the planner'); assert.deepEqual(await p.evaluate(() => window.__csp || []), []); }
   console.log('LAUNCH OK: build, hashes, headers, strict CSP under real flows, 404, input validation'); await b.close(); srv.close(); fs.rmSync(tmp, { recursive: true, force: true });
 })().catch(e => { console.error('LAUNCH FAIL', e.message); try { srv.close(); } catch {} process.exit(1); });

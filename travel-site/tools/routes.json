@@ -1,0 +1,86 @@
+[
+  {
+    "slug": "rajasthan-trip-from-pune",
+    "key": "rajasthan",
+    "name": "Rajasthan",
+    "title": "Rajasthan Group Trip: Jaipur, Jaisalmer & Jodhpur (6 Days)",
+    "description": "A ground-tested 6-day Jaipur, Jaisalmer and Jodhpur group trip: IRCTC-checked train legs, real closing times and the one day we had to re-sequence. Plan it for your group from Pune.",
+    "kicker": "Ground-tested route · 6 days, 5 nights",
+    "h1": "Jaipur, Jaisalmer & Jodhpur: a group trip where every hour fits real opening times",
+    "intro": "This is the Rajasthan plan we designed for a group of 10 (24–29 October), checked against live IRCTC availability and current operating hours. We publish it with its hard deadlines and the one afternoon we had to fix, because that is what a plan is worth.",
+    "image": {"src": "../img/real-rajasthan-cover.webp", "w": 800, "h": 1130, "alt": "Cover page of the Rajasthan plan we designed: Mumbai to Jaipur, Jaisalmer, Jodhpur and back to Pune, 24 to 29 October, 10 people, 2 Tempo Travellers, 5 nights, 3 train legs", "cap": "A page from the real plan"},
+    "glance": [
+      ["Days", "6 days, 5 nights"],
+      ["Tested with", "10 people, 24–29 Oct"],
+      ["On the ground", "2 AC Tempo Travellers (12-seater)"],
+      ["Trains", "3 legs, all daily"],
+      ["Blueprint PDF", "₹799"],
+      ["Full group execution", "from ₹11,499 per person"]
+    ],
+    "days": [
+      {"d": "Day 1 · Sat", "t": "Depart Mumbai, overnight train", "items": [
+        ["17:30", "Assemble at Mumbai Central with luggage."],
+        ["19:05", "Board train 12955 (Mumbai Central–Jaipur SF Express). Sleep on the train."]]},
+      {"d": "Day 2 · Sun", "t": "Jaipur, Amer by evening light", "items": [
+        ["12:00", "Arrive Jaipur Jn. A midday arrival buys more daylight. Check in, lunch."],
+        ["14:30", "Amer Fort: courtyards and the Sheesh Mahal."],
+        ["19:30", "Hawa Mahal with its facade lit up. An exterior photo stop, no entry needed."],
+        ["20:30", "Street-food crawl (pyaaz kachori at Rawat Mishtan Bhandar), then a rooftop dinner in C-Scheme."]]},
+      {"d": "Day 3 · Mon", "t": "Pink City by day, desert train by night", "items": [
+        ["09:00", "City Palace and Jantar Mantar."],
+        ["12:30", "Nahargarh Fort, with lunch and a skyline view at Padao inside the fort."],
+        ["15:30", "Leave for Jaipur Jn with luggage. The road down the hill plus city traffic means you leave with margin."],
+        ["16:25", "Board train 12468 (Leelan SF Express) to Jaisalmer. Sleep on the train."]]},
+      {"d": "Day 4 · Tue", "t": "Jaisalmer: living fort, ghost village, dunes", "items": [
+        ["05:05", "Arrive Jaisalmer. A second, separate 12-seater AC Tempo Traveller meets the group."],
+        ["06:00", "Check in, freshen up, breakfast."],
+        ["10:00", "Jaisalmer Fort ramparts and Patwon ki Haveli."],
+        ["14:30", "Drive to the desert, stopping at Kuldhara, the abandoned village."],
+        ["15:30", "Check in at a Sam Sand Dunes desert camp."],
+        ["16:30", "4x4 dune bashing and quad biking at sunset."],
+        ["20:00", "Folk music, campfire dinner and stargazing."]]},
+      {"d": "Day 5 · Wed", "t": "Desert highway, zip-line, night train", "items": [
+        ["08:00", "Breakfast and camp checkout. We start early to protect the afternoon."],
+        ["08:30", "Depart for Jodhpur via NH125: a real 280–285 km, 4.5 to 6 hours. Treat 14:30 as the earliest realistic arrival, not a promise."],
+        ["14:30–15:30", "Flying Fox zip-line at Mehrangarh Fort. Book the earliest slot as soon as the arrival time firms up."],
+        ["17:00", "Jaswant Thada, a quick visit right after the zip-line."],
+        ["19:00", "Dinner at Stepwell Square (Toorji Ka Jhalra)."],
+        ["20:30", "Drop at Jodhpur Jn with a real buffer."],
+        ["22:00", "Board train 20495 to Pune."]]},
+      {"d": "Day 6 · Thu", "t": "On the rails", "items": [
+        ["16:40", "Arrive Pune Jn after an 18h40 journey. Whoever is collecting the group should go to Pune Jn."]]}
+    ],
+    "deadlines_title": "The deadlines that cannot slide",
+    "deadlines": [
+      "<b>Flying Fox at Mehrangarh</b> runs 09:30–17:00 only. The tour takes 90–120 minutes and a slot holds at most 12 people, so a group of 10 may need to split. It is the one appointment on the trip that cannot move.",
+      "<b>Jaswant Thada</b> closes between 17:00 and 18:00.",
+      "<b>Trains:</b> 12955 leaves at 19:05, 12468 at 16:25 and 20495 at 22:00.",
+      "<b>Road to Jodhpur:</b> after an 08:30 start from Sam, do not plan on arriving before 14:30."
+    ],
+    "fixed_title": "What we fixed in the original plan",
+    "fixed": "The first draft of Day 5 did not fit real operating hours: the zip-line runs only 09:30–17:00 and Jaswant Thada closes between 17:00 and 18:00. We re-sequenced it: zip-line first, the moment the group lands in Jodhpur, then Jaswant Thada as a quick stop, both inside real hours, with the 22:00 train leaving a genuine buffer instead of a squeeze. This is the kind of catch we make for every plan.",
+    "trains_title": "Train legs we checked on IRCTC",
+    "trains_note": "Checked by us for 24–29 October. Timings and availability change, so we re-check them for your dates before you book.",
+    "trains": [
+      ["Mumbai Central → Jaipur Jn", "12955", "19:05", "12:00 +1", "Daily", "AC 3 Tier seats fell from 146 to 58 over the week we watched: book early."],
+      ["Jaipur Jn → Jaisalmer", "12468", "16:25", "05:05 +1", "Daily", "12h40 journey. October to February is peak season."],
+      ["Jodhpur Jn → Pune Jn", "20495", "22:00", "16:40 +1", "Daily", "18h40 journey. Mostly available; book early."],
+      ["Pune Jn → Jaipur Jn (alternative start)", "12939", "17:30", "14:40 +1", "Wed and Sun only", "Does not run on Fridays. It showed a waitlist for one search date."]
+    ],
+    "book_title": "Book these early",
+    "book": [
+      "Train 12955 for the whole group: AC 3 Tier availability drops week over week.",
+      "Train 12468 and the Sam Dunes camp: October to February is peak season.",
+      "Train 20495 for the return.",
+      "The Flying Fox slot, as soon as your Jodhpur arrival time is clear."
+    ],
+    "faq": [
+      ["Can we start from Pune instead of Mumbai?", "Yes. The on-ground days stay the same and we re-plan the first and last legs. The Pune to Jaipur train 12939 runs only on Wednesdays and Sundays and does not run on Fridays, so your start date matters."],
+      ["Why two Tempo Traveller bookings?", "The overnight train from Jaipur to Jaisalmer breaks vehicle continuity. One vehicle serves the Jaipur days, and a separate 12-seater AC Tempo Traveller covers Jaisalmer and Jodhpur."],
+      ["Why isn't the Jodhpur arrival time guaranteed?", "The desert highway from Sam to Jodhpur is 280–285 km and takes 4.5 to 6 hours. We plan from the realistic worst case and put the one fixed appointment, the zip-line, after it."],
+      ["Does the route work for a group that is not 10 people?", "The day structure works for groups of roughly 8 to 16. Vehicles, rooms and the zip-line slot split change with group size, and your quote shows the per-person split before you commit."]
+    ],
+    "price": 799,
+    "wa": "Hi! I'd like to plan the Rajasthan trip (Jaipur, Jaisalmer, Jodhpur) for our group."
+  }
+]

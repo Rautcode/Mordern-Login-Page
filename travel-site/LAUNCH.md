@@ -6,6 +6,9 @@ Everything below is tested (`npm test`). Your personal details never go into git
 ```
 cp tools/brand.example.json brand.json     # edit: brand, domain, whatsapp, instagram, founder, udyam, api_base
 python3 tools/personalize.py brand.json    # writes ./dist
+# Route landing pages (/rajasthan-trip-from-pune/ ...) are generated from tools/routes.json.
+# After editing routes.json or index.html's styling run:  python3 tools/build_routes.py
+# (npm test fails if the committed pages are out of date; `npm run build` regenerates them first.)
 ```
 It refuses to finish if any placeholder is left, hides the Udyam badge if you have no number yet, and builds a strict
 Content-Security-Policy that only allows your own scripts. Leave `api_base` empty for WhatsApp-only mode.

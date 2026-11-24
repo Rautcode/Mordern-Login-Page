@@ -2,11 +2,12 @@
   "name": "travel-site",
   "private": true,
   "scripts": {
-    "test": "node tests/e2e.js && node tests/a11y.js && node tests/launch.js",
+    "test": "python3 tools/build_routes.py --check && node tests/e2e.js && node tests/a11y.js && node tests/a11y.js rajasthan-trip-from-pune/index.html && node tests/launch.js",
     "test:e2e": "node tests/e2e.js",
     "test:a11y": "node tests/a11y.js",
     "test:launch": "node tests/launch.js",
-    "build": "python3 tools/personalize.py brand.json"
+    "build:routes": "python3 tools/build_routes.py",
+    "build": "python3 tools/build_routes.py && python3 tools/personalize.py brand.json"
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.10.0",
