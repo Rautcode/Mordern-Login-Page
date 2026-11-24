@@ -34,10 +34,10 @@
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ItemList","name":"Proven group trip blueprints from Pune","itemListElement":[
- {"@type":"ListItem","position":1,"item":{"@type":"TouristTrip","name":"Jaipur, Jaisalmer and Jodhpur trip from Pune (6 days)","touristType":"Group","offers":{"@type":"Offer","priceCurrency":"INR","price":"799","url":"https://YOUR-DOMAIN.com/#routes"}}},
- {"@type":"ListItem","position":2,"item":{"@type":"TouristTrip","name":"Gokarna, Murudeshwar and Hampi trip from Pune (5 days)","touristType":"Group","offers":{"@type":"Offer","priceCurrency":"INR","price":"699","url":"https://YOUR-DOMAIN.com/#routes"}}},
- {"@type":"ListItem","position":3,"item":{"@type":"TouristTrip","name":"Kerala: Munnar, Thekkady and Alleppey trip from Pune (3 days)","touristType":"Group","offers":{"@type":"Offer","priceCurrency":"INR","price":"699","url":"https://YOUR-DOMAIN.com/#routes"}}},
- {"@type":"ListItem","position":4,"item":{"@type":"TouristTrip","name":"Goa hidden gems trip from Pune (4 days)","touristType":"Group","offers":{"@type":"Offer","priceCurrency":"INR","price":"699","url":"https://YOUR-DOMAIN.com/#routes"}}}]}
+ {"@type":"ListItem","position":1,"item":{"@type":"TouristTrip","name":"Jaipur, Jaisalmer and Jodhpur trip from Pune (6 days)","touristType":"Group"}},
+ {"@type":"ListItem","position":2,"item":{"@type":"TouristTrip","name":"Gokarna, Murudeshwar and Hampi trip from Pune (5 days)","touristType":"Group"}},
+ {"@type":"ListItem","position":3,"item":{"@type":"TouristTrip","name":"Kerala: Munnar, Thekkady and Alleppey trip from Pune (3 days)","touristType":"Group"}},
+ {"@type":"ListItem","position":4,"item":{"@type":"TouristTrip","name":"Goa hidden gems trip from Pune (4 days)","touristType":"Group"}}]}
 </script>
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"FAQPage","mainEntity":[
@@ -46,8 +46,8 @@
  {"@type":"Question","name":"Can you organise a Tempo Traveller and hotels for a 10 to 16 person group from Pune?","acceptedAnswer":{"@type":"Answer","text":"Yes. Pune and PCMC pickups, Tempo Travellers and group-friendly stays are our core use case, with the per-person split shown before you commit."}},
  {"@type":"Question","name":"How do payments and advances work for full packages?","acceptedAnswer":{"@type":"Answer","text":"Full packages run on a 50% advance to lock bookings. The balance schedule and every line item are itemised in your quote, with no hidden agency markups."}},
  {"@type":"Question","name":"Do you cover North India destinations like Manali, Kasol and Rishikesh?","acceptedAnswer":{"@type":"Answer","text":"Yes. We work with vetted local ground teams across Himachal, Uttarakhand and Rajasthan. Choose Himachal/Uttarakhand in the planner and we will route it."}},
- {"@type":"Question","name":"How much does a group trip from Pune cost?","acceptedAnswer":{"@type":"Answer","text":"Group packages start from Rs 8,499 per person for Goa, Rs 10,499 for Gokarna-Hampi and Rs 11,499 for Rajasthan. Kerala is quoted for your dates. Final prices depend on dates, group size and stay type and are confirmed in your quote."}},
- {"@type":"Question","name":"What do I get in the free preview versus the paid Custom Plan?","acceptedAnswer":{"@type":"Answer","text":"The free preview shows Day 1 of your itinerary in full so you can judge the quality. The Rs 2,499 Custom Plan unlocks every day, the food map and the priority cut-lists."}}]}
+ {"@type":"Question","name":"How much does a group trip from Pune cost?","acceptedAnswer":{"@type":"Answer","text":"Every trip is quoted around your budget and requirements, so there is no fixed price list. Tell us your dates, group size and budget in the planner and we send a firm written quote within 24 hours."}},
+ {"@type":"Question","name":"What do I get in the free preview versus the paid Custom Plan?","acceptedAnswer":{"@type":"Answer","text":"The free preview shows Day 1 of your itinerary in full so you can judge the quality. The paid Custom Plan unlocks every day, the food map and the priority cut-lists."}}]}
 </script>
 
 <link rel="preload" as="font" type="font/woff2" crossorigin href="fonts/young-serif-latin.woff2">
@@ -350,7 +350,6 @@ fieldset{border:0;padding:0;min-width:0}
 .bp dl{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
 .bp dt{font:500 .68rem var(--mono);color:var(--muted);letter-spacing:.12em;text-transform:uppercase}.bp dd{font-weight:700;font-size:.98rem}
 .bp .big{font:400 2rem var(--serif);color:var(--terra-d);line-height:1.1;margin-top:18px}
-.fare{margin-top:12px;padding:10px 12px;background:#EAF0E4;border-left:4px solid var(--forest-2);font-size:.84rem;line-height:1.45;color:var(--ink)}
 .bp small{display:block;color:var(--muted);font-size:.78rem;margin-top:10px;line-height:1.4}
 .confirm[hidden],form[hidden]{display:none}
 .confirm dl{display:grid;grid-template-columns:auto 1fr;gap:6px 16px;margin:16px 0 20px;font-size:.93rem}.confirm dt{color:var(--muted)}.confirm dd{font-weight:700;overflow-wrap:anywhere}
@@ -517,7 +516,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
       [BRAND_NAME]
     </a>
     <nav class="links" id="links" aria-label="Primary">
-      <a href="#routes">Proven Routes</a><a href="#how">How It Works</a><a href="#pricing">Pricing Tiers</a><a href="#planner">Custom Planner</a><a href="#faq">FAQ</a>
+      <a href="#routes">Proven Routes</a><a href="#how">How It Works</a><a href="#services">Ways to Work</a><a href="#planner">Custom Planner</a><a href="#faq">FAQ</a>
     </nav>
     <div class="nav-cta">
       <a class="tel" id="tel" hidden></a>
@@ -676,37 +675,37 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
     </div>
     <div class="cards" id="trips" role="tabpanel">
       <article class="card reveal" data-id="rajasthan" data-cats="multi north">
-        <div class="art" data-photo="rajasthan"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: Rajasthan fort above golden dunes at dusk"><use href="#s-raj"/></svg><div class="postmark">Blueprint<b>₹799</b></div></div>
+        <div class="art" data-photo="rajasthan"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: Rajasthan fort above golden dunes at dusk"><use href="#s-raj"/></svg><div class="postmark">Blueprint<b>PDF</b></div></div>
         <div class="body"><h3>Rajasthan tour from Pune: Jaipur → Jaisalmer → Jodhpur</h3>
           <div class="meta"><span>6 DAYS / 5 NIGHTS</span><span>8–16 PEOPLE</span></div>
           <ul class="hl"><li>3 chained overnight/intercity train legs + Tempo Traveller desert circuit</li><li>Amer &amp; Mehrangarh closing-time strategy</li><li>Sam Sand Dunes sunset</li><li>15+ local food stops</li></ul>
           <p class="intel"><b>Ground-tested</b>The Mehrangarh zip-line closes at 5 PM and Jodhpur is a 4.5–6 hour drive, so the zip-line goes first and everything else bends around it.</p>
-          <p class="price"><b>Blueprint ₹799</b> | Custom Group Execution from ₹11,499/person</p>
-          <div class="acts"><button class="btn btn-primary" data-trip="rajasthan">Plan this trip</button><button class="btn btn-ghost" data-route="rajasthan">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="rajasthan">Just want the PDF? Get the blueprint · ₹799</button><a class="linkbtn" href="rajasthan-trip-from-pune/">Read the full route, hour by hour</a></div></article>
+          <p class="price"><b>Blueprint PDF available</b> | Quoted around your budget</p>
+          <div class="acts"><button class="btn btn-primary" data-trip="rajasthan">Plan this trip</button><button class="btn btn-ghost" data-route="rajasthan">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="rajasthan">Just want the PDF? Get the blueprint</button><a class="linkbtn" href="rajasthan-trip-from-pune/">Read the full route, hour by hour</a></div></article>
       <article class="card reveal" data-id="gokarna" data-cats="weekend multi">
-        <div class="art" data-photo="gokarna"><img src="img/trip-gokarna-800.webp" srcset="img/trip-gokarna-480.webp 480w, img/trip-gokarna-800.webp 800w" sizes="(max-width:700px) 100vw, 360px" alt="Stone steps leading down a narrow gap in the hillside to the sea" width="800" height="500" loading="lazy" decoding="async"><div class="postmark">Blueprint<b>₹699</b></div></div>
+        <div class="art" data-photo="gokarna"><img src="img/trip-gokarna-800.webp" srcset="img/trip-gokarna-480.webp 480w, img/trip-gokarna-800.webp 800w" sizes="(max-width:700px) 100vw, 360px" alt="Stone steps leading down a narrow gap in the hillside to the sea" width="800" height="500" loading="lazy" decoding="async"><div class="postmark">Blueprint<b>PDF</b></div></div>
         <div class="body"><h3>Gokarna → Murudeshwar → Hampi trip from Pune</h3>
           <div class="meta"><span>5 DAYS / 4 NIGHTS</span><span>EX-PUNE</span><span>10–16 PEOPLE</span></div>
           <ul class="hl"><li>Overnight AC Tempo Traveller from Pune/PCMC</li><li>Kudle &amp; Om Beach trek</li><li>Murudeshwar temple viewpoint</li><li>Hampi boulder sunrise &amp; coracle ride</li></ul>
           <p class="intel"><b>Ground-tested</b>The Kudle to Om Beach trek is timed to finish before dusk, with a footwear and water checklist.</p>
-          <p class="price"><b>Blueprint ₹699</b> | Weekend Group Batch ₹10,499/person</p>
-          <div class="acts"><button class="btn btn-primary" data-trip="gokarna">Plan this trip</button><button class="btn btn-ghost" data-route="gokarna">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="gokarna">Just want the PDF? Get the blueprint · ₹699</button></div></article>
+          <p class="price"><b>Blueprint PDF available</b> | Quoted around your budget</p>
+          <div class="acts"><button class="btn btn-primary" data-trip="gokarna">Plan this trip</button><button class="btn btn-ghost" data-route="gokarna">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="gokarna">Just want the PDF? Get the blueprint</button></div></article>
       <article class="card reveal" data-id="kerala" data-cats="multi">
-        <div class="art" data-photo="kerala"><img src="img/trip-kerala-800.webp" srcset="img/trip-kerala-480.webp 480w, img/trip-kerala-800.webp 800w" sizes="(max-width:700px) 100vw, 360px" alt="Coconut palms along a river bank under heavy monsoon clouds, with two birds in flight" width="800" height="500" loading="lazy" decoding="async"><div class="postmark">Blueprint<b>₹699</b></div></div>
+        <div class="art" data-photo="kerala"><img src="img/trip-kerala-800.webp" srcset="img/trip-kerala-480.webp 480w, img/trip-kerala-800.webp 800w" sizes="(max-width:700px) 100vw, 360px" alt="Coconut palms along a river bank under heavy monsoon clouds, with two birds in flight" width="800" height="500" loading="lazy" decoding="async"><div class="postmark">Blueprint<b>PDF</b></div></div>
         <div class="body"><h3>Kerala: Munnar, Thekkady &amp; Alleppey from Pune</h3>
           <div class="meta"><span>3 DAYS / 2 NIGHTS</span><span>4–12 PEOPLE</span></div>
           <ul class="hl"><li>Red-eye in, late flight out: 3 days by 12-seater AC Tempo Traveller</li><li>Kolukkumalai sunrise jeeps and a Sathram jungle jeep safari</li><li>Kalaripayattu show in Kumily, then Alleppey and Kumarakom backwaters</li></ul>
           <p class="intel"><b>Ground-tested</b>Kolukkumalai is jeep-only (a Tempo Traveller can't go up), so jeeps are arranged the night before. The Tea Museum shuts at 5 PM, so Munnar is sequenced around it.</p>
-          <p class="price"><b>Blueprint ₹699</b> | Group package quoted for your dates</p>
-          <div class="acts"><button class="btn btn-primary" data-trip="kerala">Plan this trip</button><button class="btn btn-ghost" data-route="kerala">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="kerala">Just want the PDF? Get the blueprint · ₹699</button><a class="linkbtn" href="kerala-trip-from-pune/">Read the full route, hour by hour</a></div></article>
+          <p class="price"><b>Blueprint PDF available</b> | Quoted around your budget</p>
+          <div class="acts"><button class="btn btn-primary" data-trip="kerala">Plan this trip</button><button class="btn btn-ghost" data-route="kerala">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="kerala">Just want the PDF? Get the blueprint</button><a class="linkbtn" href="kerala-trip-from-pune/">Read the full route, hour by hour</a></div></article>
       <article class="card reveal" data-id="goa" data-cats="weekend">
-        <div class="art" data-photo="goa"><img src="img/trip-goa-800.webp" srcset="img/trip-goa-480.webp 480w, img/trip-goa-800.webp 800w" sizes="(max-width:700px) 100vw, 360px" alt="View over a sandy beach and calm sea from a hilltop" width="800" height="500" loading="lazy" decoding="async"><div class="postmark">Blueprint<b>₹699</b></div></div>
+        <div class="art" data-photo="goa"><img src="img/trip-goa-800.webp" srcset="img/trip-goa-480.webp 480w, img/trip-goa-800.webp 800w" sizes="(max-width:700px) 100vw, 360px" alt="View over a sandy beach and calm sea from a hilltop" width="800" height="500" loading="lazy" decoding="async"><div class="postmark">Blueprint<b>PDF</b></div></div>
         <div class="body"><h3>Goa hidden gems &amp; classics trip from Pune</h3>
           <div class="meta"><span>4 DAYS / 3 NIGHTS</span><span>EX-PUNE</span><span>6–16 PEOPLE</span></div>
           <ul class="hl"><li>North Goa sundowners, Arambol sweet water lake</li><li>South Goa Cola Lagoon &amp; Butterfly Beach</li><li>Fontainhas Latin Quarter walk</li><li>Curated shack &amp; cafe list</li></ul>
           <p class="intel"><b>Ground-tested</b>South Goa drives run longer than maps suggest, so every transfer carries a buffer.</p>
-          <p class="price"><b>Blueprint ₹699</b> | Group Package from ₹8,499/person</p>
-          <div class="acts"><button class="btn btn-primary" data-trip="goa">Plan this trip</button><button class="btn btn-ghost" data-route="goa">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="goa">Just want the PDF? Get the blueprint · ₹699</button></div></article>
+          <p class="price"><b>Blueprint PDF available</b> | Quoted around your budget</p>
+          <div class="acts"><button class="btn btn-primary" data-trip="goa">Plan this trip</button><button class="btn btn-ghost" data-route="goa">Route &amp; inclusions</button></div><button class="linkbtn" data-bp="goa">Just want the PDF? Get the blueprint</button></div></article>
     </div>
     <p class="note" id="no-trips" hidden style="margin-top:20px">Only one North India route is live so far. More are on the way. <a href="#planner">Tell us where you want to go</a>.</p>
   </div>
@@ -770,18 +769,16 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
       <li>A "before you book anything" checklist and a printable driver card</li>
     </ul>
   </div>
-  <p class="wrap note" style="margin-top:6px;max-width:none">Pages from our Rajasthan and Kerala plans, with contact details removed. Tap a page to enlarge it.</p>
+  <p class="wrap note" style="margin-top:6px;max-width:none">Pages from our Rajasthan plan, with contact details removed. Tap a page to enlarge it.</p>
   <div class="reel" tabindex="0" role="region" aria-label="Real pages from our trip plans. Scroll sideways to see more.">
     <figure class="snap"><button class="zoomable" data-zoom="img/real-rajasthan-cover.webp" data-cap="Rajasthan: trains confirmed on IRCTC" aria-label="Enlarge: Rajasthan: trains confirmed on IRCTC"><img src="img/real-rajasthan-cover.webp" alt="Cover page of the Rajasthan plan, with each train leg confirmed on IRCTC and a note on how a day was re-sequenced to fit real operating hours" width="800" height="1130" loading="lazy" decoding="async"></button><figcaption>Rajasthan: trains confirmed on IRCTC</figcaption></figure>
-    <figure class="snap"><button class="zoomable" data-zoom="img/real-kerala-day.webp" data-cap="Kerala: a day with ratings, costs and tips" aria-label="Enlarge: Kerala: a day with ratings, costs and tips"><img src="img/real-kerala-day.webp" alt="A day from the Kerala plan: drive distances, ratings, costs, tips and a warning about jeep cancellations in heavy rain" width="800" height="607" loading="lazy" decoding="async"></button><figcaption>Kerala: a day with ratings, costs and tips</figcaption></figure>
     <figure class="snap"><button class="zoomable" data-zoom="img/real-rajasthan-checklist.webp" data-cap="Rajasthan: before you book anything" aria-label="Enlarge: Rajasthan: before you book anything"><img src="img/real-rajasthan-checklist.webp" alt="The Rajasthan checklist of what to book first and why: trains, vehicles, the zip-line slot and the camp" width="800" height="608" loading="lazy" decoding="async"></button><figcaption>Rajasthan: before you book anything</figcaption></figure>
-    <figure class="snap"><button class="zoomable" data-zoom="img/real-kerala-cost.webp" data-cap="Kerala: cost per person, and for the group of 11" aria-label="Enlarge: Kerala: cost per person, and for the group of 11"><img src="img/real-kerala-cost.webp" alt="Kerala cost summary: flights, Tempo Traveller, stay, jeeps, show, entries, food and buffer, per person and for the whole group" width="800" height="406" loading="lazy" decoding="async"></button><figcaption>Kerala: cost per person, and for the group of 11</figcaption></figure>
   </div>
   <div class="wrap logs reveal">
     <h3>Plans we've designed recently</h3>
     <div class="logcards">
       <article class="log"><span class="meta">24–29 OCT · 10 FRIENDS</span><b>Mumbai → Jaipur → Jaisalmer → Jodhpur → Pune</b><p>2 Tempo Travellers and 3 train legs confirmed on IRCTC. One afternoon was re-sequenced after checking real operating hours.</p></article>
-      <article class="log"><span class="meta">12–14 JUN · 11 FRIENDS</span><b>Kochi → Munnar → Thekkady → Alleppey → Kochi</b><p>About 557 km in a 12-seater AC Tempo Traveller, with a per-person budget of about ₹17,900 including flights.</p></article>
+      <article class="log"><span class="meta">12–14 JUN · 11 FRIENDS</span><b>Kochi → Munnar → Thekkady → Alleppey → Kochi</b><p>About 557 km in a 12-seater AC Tempo Traveller, landing at 03:30 and flying home at 23:04.</p></article>
     </div>
   </div>
 </section>
@@ -792,19 +789,19 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
 </dialog>
 
 <!-- ============ PRICING ============ -->
-<section id="pricing" aria-labelledby="pricing-h">
+<section id="services" aria-labelledby="services-h">
   <div class="wrap">
-    <div class="reveal"><span class="kicker">Pricing tiers</span><h2 id="pricing-h">Pay for exactly the help you need.</h2></div>
+    <div class="reveal"><span class="kicker">Ways to work with us</span><h2 id="services-h">Get exactly the help you need.</h2></div>
     <div class="tickets">
       <article class="tk reveal"><div>
         <h3>Ready-Made Proven Blueprint</h3>
-        <div class="amt">₹699 – ₹799<small>ONE-TIME</small></div>
+        <div class="amt">Ready PDF<small>ONE-TIME PURCHASE</small></div>
         <ul><li>PDF sent to your WhatsApp after payment: our tested Rajasthan, Kerala, Goa, or Hampi–Gokarna routes</li><li>Exact train/flight numbers, hotel area recommendations, food master list, packing checklist</li></ul>
         <button class="btn btn-ghost btn-block" data-plan="blueprint">Buy Ready Blueprint</button></div></article>
       <article class="tk pop reveal"><div>
         <span class="seal">MOST POPULAR</span>
         <h3>Custom Day-by-Day Itinerary</h3>
-        <div class="amt">₹2,499<small>PER TRIP</small></div>
+        <div class="amt">Built for you<small>SHAPED BY YOUR BUDGET</small></div>
         <ul><li>Tailored to your exact dates, departure city, group size and budget</li><li>Time-stamped daily schedule, transit connections, custom ‘EAT’ food map, priority cut-list</li><li>Delivered in 24 hours + 1 free revision</li></ul>
         <button class="btn btn-primary btn-block" data-plan="custom">Request Custom Plan</button></div></article>
       <article class="tk reveal"><div>
@@ -853,8 +850,8 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
             <div class="pick" role="radiogroup" aria-label="Group size"><label class="pk"><input type="radio" name="group" value="1-2"><span>1–2</span></label><label class="pk"><input type="radio" name="group" value="3-6"><span>3–6</span></label><label class="pk"><input type="radio" name="group" value="7-12"><span>7–12</span></label><label class="pk"><input type="radio" name="group" value="13+"><span>13+</span></label></div><div class="err" data-for="group"></div>
             <label class="lbl" style="margin-top:18px">What do you need?</label>
             <div class="radios">
-              <label class="radio"><input type="radio" name="service" value="blueprint">Ready Blueprint <span id="bp-lbl">(₹699–₹799)</span></label>
-              <label class="radio"><input type="radio" name="service" value="custom" checked>Custom PDF Plan (₹2,499)</label>
+              <label class="radio"><input type="radio" name="service" value="blueprint">Ready Blueprint <span id="bp-lbl"></span></label>
+              <label class="radio"><input type="radio" name="service" value="custom" checked>Custom PDF Plan</label>
               <label class="radio"><input type="radio" name="service" value="complete">Complete All-Inclusive Package</label></div><div class="err" data-for="service"></div>
             <label class="lbl" style="margin-top:18px">Approximate budget per person</label>
             <div class="pick" role="radiogroup" aria-label="Budget per person"><label class="pk"><input type="radio" name="budget" value="5-10"><span>₹5k–₹10k</span></label><label class="pk"><input type="radio" name="budget" value="10-18"><span>₹10k–₹18k</span></label><label class="pk"><input type="radio" name="budget" value="18+"><span>₹18k+</span></label></div><div class="err" data-for="budget"></div>
@@ -898,10 +895,9 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
       <aside class="bp" aria-live="polite"><div>
         <div class="route"><span id="bp-from">Pune</span><span></span><span id="bp-to">Anywhere</span></div>
         <dl><div><dt>Group</dt><dd id="bp-group">&mdash;</dd></div><div><dt>Service</dt><dd id="bp-svc">Custom plan</dd></div></dl>
-        <div class="big" id="est-main">₹2,499</div>
+        <div class="big" id="est-main">Quote in 24 hours</div>
         <p id="est-sub" style="font-size:.9rem;margin-top:6px"></p>
-        <p id="est-fare" class="fare" hidden></p>
-        <small>Indicative only. Fares, season and group size move real prices. Your quote is the number that counts.</small>
+        <small>Every plan and quote is built around your budget, dates and group.</small>
       </div></aside>
     </div>
   </div>
@@ -925,8 +921,8 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
       <details name="faq"><summary>Can you organise a Tempo Traveller and hotels for a 10–16 person group from Pune?</summary><p>Yes. Pune and PCMC pickups, Tempo Travellers and group-friendly stays are our core use case, with the per-person split shown before you commit.</p></details>
       <details name="faq"><summary>How do payments and advances work for full packages?</summary><p>Full packages run on a 50% advance to lock bookings. The balance schedule and every line item are itemised in your quote, with no hidden agency markups.</p></details>
       <details name="faq"><summary>Do you cover North India destinations like Manali, Kasol, and Rishikesh?</summary><p>Yes. We work with vetted local ground teams across Himachal, Uttarakhand and Rajasthan. Choose “Himachal/Uttarakhand” in the planner and we'll route it.</p></details>
-      <details name="faq"><summary>How much does a group trip from Pune cost?</summary><p>Group packages start from ₹8,499 per person for Goa, ₹10,499 for Gokarna–Hampi and ₹11,499 for Rajasthan. Kerala is quoted for your dates. Final prices depend on dates, group size and stay type, and are confirmed in your quote.</p></details>
-      <details name="faq"><summary>What do I get in the free preview versus the paid Custom Plan?</summary><p>The free preview shows Day 1 of your itinerary in full so you can judge the quality. The ₹2,499 Custom Plan unlocks every day, the food map and the priority cut-lists.</p></details>
+      <details name="faq"><summary>How much does a group trip from Pune cost?</summary><p>Every trip is quoted around your budget and requirements, so there is no fixed price list. Tell us your dates, group size and budget in the planner and we send a firm written quote within 24 hours.</p></details>
+      <details name="faq"><summary>What do I get in the free preview versus the paid Custom Plan?</summary><p>The free preview shows Day 1 of your itinerary in full so you can judge the quality. The paid Custom Plan unlocks every day, the food map and the priority cut-lists.</p></details>
     </div>
   </div>
 </section>
@@ -941,10 +937,10 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
         <p style="margin-top:12px;max-width:42ch">Ground-Tested Trips. Zero Guesswork. Online-first trip planning for group travel from Pune and PCMC, Maharashtra.</p>
         <span class="udyam">UDYAM MSME REGISTERED · [UDYAM_REG_NO]</span>
       </div>
-      <div><h3>Trips from Pune</h3><ul><li><a href="rajasthan-trip-from-pune/">Rajasthan tour from Pune</a></li><li><a href="kerala-trip-from-pune/">Kerala 3-day trip</a></li><li><a href="#routes">Goa trip from Pune</a></li><li><a href="#routes">Gokarna &amp; Hampi trip</a></li><li><a href="#pricing">Pricing</a></li></ul></div>
+      <div><h3>Trips from Pune</h3><ul><li><a href="rajasthan-trip-from-pune/">Rajasthan tour from Pune</a></li><li><a href="kerala-trip-from-pune/">Kerala 3-day trip</a></li><li><a href="#routes">Goa trip from Pune</a></li><li><a href="#routes">Gokarna &amp; Hampi trip</a></li><li><a href="#services">Services</a></li></ul></div>
       <div><h3>Connect</h3><ul><li><a id="ig2" target="_blank" rel="noopener">Instagram @[INSTAGRAM_HANDLE]</a></li><li><a data-wa target="_blank" rel="noopener">WhatsApp us</a></li><li><a href="#faq">FAQ</a></li></ul></div>
     </div>
-    <div class="copy"><span>© <span id="yr"></span> [BRAND_NAME]. Prices are indicative and confirmed in your written quote.</span><button data-open="privacy">Privacy</button></div>
+    <div class="copy"><span>© <span id="yr"></span> [BRAND_NAME]. Every plan and quote is built around your budget and confirmed in writing.</span><button data-open="privacy">Privacy</button></div>
   </div>
 </footer>
 
@@ -965,7 +961,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
 <dialog id="d-dw" class="sheet" aria-labelledby="dw-t">
   <div class="dh"><h3 id="dw-t"></h3><button data-close aria-label="Close"><svg class="i"><use href="#i-x"/></svg></button></div>
   <div class="db">
-    <p><b id="dw-price" style="font:400 2rem var(--serif);color:var(--terra-d)"></b> <span class="note">one-time PDF · sent to your WhatsApp after payment</span></p>
+    <p class="note">One-time PDF · sent to your WhatsApp after payment. The exact amount is shown on the secure payment page before you pay.</p>
     <div id="dw-prev"></div>
     <div><h4 style="font:500 .78rem var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--terra-d);margin-bottom:8px">What's inside</h4><ul id="dw-inc" style="padding-left:18px;display:grid;gap:6px"></ul></div>
     <form id="dwform" novalidate>
@@ -1002,7 +998,7 @@ const CFG = Object.assign({
   pollMs: 4000, pollMax: 45,
   photos: {},                        // optional real photos: { rajasthan: "img/jaipur.jpg", ... }
   siteUrl: "",                       // your public address, used in the share-with-group message (defaults to this page)
-  refundPolicy: "",                  // e.g. "Delivered within 48 hours, or refunded." Shown under pricing only if you set it (decide the terms first)
+  refundPolicy: "",                  // e.g. "Delivered within 48 hours, or refunded." Shown under the services only if you set it (decide the terms first)
   reviews: []                        // real reviews only: [{ quote: "...", name: "Rohan K.", meta: "14-person Rajasthan trip · Pune" }]
 }, window.SITE_CONFIG || {});
 
@@ -1089,7 +1085,7 @@ $$(".daytab").forEach(b => b.onclick = () => { renderDay(+b.dataset.day); track(
 
 // ===== share with your group: one tap gives the group organiser a ready-to-paste pitch =====
 const siteLink = () => (CFG.siteUrl || location.href.split("#")[0]) + "#routes";
-const tripPitch = t => [`*${t.dest} trip from Pune*`, t.title, `${t.people} people · ${t.from ? `group package from ₹${t.from.toLocaleString("en-IN")} per person` : "group package quoted for your dates"}`, `Blueprint PDF ₹${t.price}`, "", siteLink()].join("\n");
+const tripPitch = t => [`*${t.dest} trip from Pune*`, t.title, `${t.people} people · group package quoted around your budget`, "", siteLink()].join("\n");
 const planPitch = v => [`*${v.destination} trip from ${v.departure_city}*`, `${v.travel_dates} · ${v.group_size} people`, `Budget ${BUDGET[v.budget]} per person`, "Planned minute by minute: exact timings, food stops and a cut-list.", "", siteLink()].join("\n");
 async function shareText(text) {
   track("share_click");
@@ -1109,10 +1105,10 @@ $("#late").onclick = e => { const on = e.currentTarget.getAttribute("aria-presse
 const INC = ["PDF sent to your WhatsApp after payment", "Exact train/flight numbers & timings", "Hotel area recommendations", "Food master list ('EAT' tags)", "Packing checklist"];
 const EXE = ["Stays + Tempo Traveller/cab booking", "Verified local ground coordinator", "Final inclusions confirmed in your quote", "50% advance to confirm"];
 const TRIPS = {
-  rajasthan: { title: "Jaipur → Jaisalmer → Jodhpur (6D/5N)", dest: "Rajasthan", people: "8–16", from: 11499, bp: "rajasthan", price: 799, sum: "Blueprint ₹799 · Custom Group Execution from ₹11,499/person", days: ["Day 1: Overnight train 12955, Mumbai Central → Jaipur", "Day 2: Jaipur: Amer Fort and the Sheesh Mahal, Hawa Mahal at night, street-food crawl", "Day 3: Jaipur: City Palace, Jantar Mantar, Nahargarh lunch, then train 12468 to Jaisalmer", "Day 4: Jaisalmer Fort, Patwon ki Haveli, Kuldhara, Sam Sand Dunes camp", "Day 5: Drive to Jodhpur (NH125), Flying Fox at Mehrangarh, Jaswant Thada, then train 20495 to Pune", "Day 6: Arrive Pune Junction, 16:40"] },
-  gokarna: { title: "Gokarna → Murudeshwar → Hampi (5D/4N, Ex-Pune)", dest: "Hampi–Gokarna", people: "10–16", from: 10499, bp: "hampi-gokarna", price: 699, sum: "Blueprint ₹699 · Weekend Group Batch ₹10,499/person", days: ["Day 1: Overnight drive from Pune/PCMC", "Day 2: Gokarna: Kudle & Om Beach trek", "Day 3: Murudeshwar viewpoint → Hampi", "Day 4: Hampi boulder sunrise + coracle ride", "Day 5: Return to Pune"] },
-  kerala: { title: "Kochi → Munnar → Thekkady → Alleppey (3D/2N)", dest: "Kerala", people: "4–12", from: null, bp: "kerala", price: 699, sum: "Blueprint ₹699 · Group package quoted for your dates", days: ["Day 1: Land at Kochi 03:30, drive to Munnar: waterfalls, Tea Museum, Top Station", "Day 2: Kolukkumalai sunrise jeeps, then Thekkady: Sathram safari and a Kalaripayattu show", "Day 3: Alleppey and Kumarakom, then Kochi airport by 18:30 for the 23:04 flight"] },
-  goa: { title: "Goa Hidden Gems & Classics (4D/3N, Ex-Pune)", dest: "Goa", people: "6–16", from: 8499, bp: "goa", price: 699, sum: "Blueprint ₹699 · Group Package from ₹8,499/person", days: ["Day 1: Pune → North Goa, sundowners", "Day 2: Arambol + sweet water lake", "Day 3: South Goa: Cola Lagoon & Butterfly Beach", "Day 4: Fontainhas walk → return"] }
+  rajasthan: { title: "Jaipur → Jaisalmer → Jodhpur (6D/5N)", dest: "Rajasthan", people: "8–16", bp: "rajasthan", sum: "Ready-made blueprint PDF · Group package quoted around your budget", days: ["Day 1: Overnight train 12955, Mumbai Central → Jaipur", "Day 2: Jaipur: Amer Fort and the Sheesh Mahal, Hawa Mahal at night, street-food crawl", "Day 3: Jaipur: City Palace, Jantar Mantar, Nahargarh lunch, then train 12468 to Jaisalmer", "Day 4: Jaisalmer Fort, Patwon ki Haveli, Kuldhara, Sam Sand Dunes camp", "Day 5: Drive to Jodhpur (NH125), Flying Fox at Mehrangarh, Jaswant Thada, then train 20495 to Pune", "Day 6: Arrive Pune Junction, 16:40"] },
+  gokarna: { title: "Gokarna → Murudeshwar → Hampi (5D/4N, Ex-Pune)", dest: "Hampi–Gokarna", people: "10–16", bp: "hampi-gokarna", sum: "Ready-made blueprint PDF · Group package quoted around your budget", days: ["Day 1: Overnight drive from Pune/PCMC", "Day 2: Gokarna: Kudle & Om Beach trek", "Day 3: Murudeshwar viewpoint → Hampi", "Day 4: Hampi boulder sunrise + coracle ride", "Day 5: Return to Pune"] },
+  kerala: { title: "Kochi → Munnar → Thekkady → Alleppey (3D/2N)", dest: "Kerala", people: "4–12", bp: "kerala", sum: "Ready-made blueprint PDF · Group package quoted around your budget", days: ["Day 1: Land at Kochi 03:30, drive to Munnar: waterfalls, Tea Museum, Top Station", "Day 2: Kolukkumalai sunrise jeeps, then Thekkady: Sathram safari and a Kalaripayattu show", "Day 3: Alleppey and Kumarakom, then Kochi airport by 18:30 for the 23:04 flight"] },
+  goa: { title: "Goa Hidden Gems & Classics (4D/3N, Ex-Pune)", dest: "Goa", people: "6–16", bp: "goa", sum: "Ready-made blueprint PDF · Group package quoted around your budget", days: ["Day 1: Pune → North Goa, sundowners", "Day 2: Arambol + sweet water lake", "Day 3: South Goa: Cola Lagoon & Butterfly Beach", "Day 4: Fontainhas walk → return"] }
 };
 const BP_ID = { "Rajasthan": "rajasthan", "Kerala": "kerala", "Goa": "goa", "Hampi–Gokarna": "hampi-gokarna" }; // must match backend BLUEPRINTS keys
 const HAS_KB = new Set(Object.keys(BP_ID));
@@ -1151,10 +1147,8 @@ $$("[data-trip]").forEach(b => b.onclick = () => { track("plan_trip_click", { ro
 $$("[data-bp]").forEach(b => b.onclick = () => { track("blueprint_click", { route: b.dataset.bp }); openBlueprint(b.dataset.bp); });
 $$("[data-dest]").forEach(b => b.onclick = () => plan(null, b.dataset.dest));
 
-const inr = n => "₹" + n.toLocaleString("en-IN");
-const G = { "1-2": [1, 2], "3-6": [3, 6], "7-12": [7, 12], "13+": [13, null] }, B = { "5-10": [5000, 10000], "10-18": [10000, 18000], "18+": [18000, null] };
-const bpPrice = d => Object.values(TRIPS).find(t => t.dest === d)?.price;   // what the backend will charge for that destination's blueprint
-const SVC = { custom: "Custom PDF Plan (₹2,499)", complete: "Complete All-Inclusive Package" };
+const hasBlueprint = d => Object.values(TRIPS).some(t => t.dest === d);   // do we sell a ready-made blueprint for that destination?
+const SVC = { custom: "Custom PDF Plan", complete: "Complete All-Inclusive Package" };
 const BUDGET = { "5-10": "₹5k–₹10k", "10-18": "₹10k–₹18k", "18+": "₹18k+" };
 const TRAVEL = { train: "Train", flight: "Flight", road: "Road trip", flexible: "Not sure, advise me" };
 const GTYPE = { friends: "Friends", family: "Family", colleagues: "Colleagues", other: "Other" };
@@ -1164,44 +1158,21 @@ const INTEREST = { adventure: "Adventure", heritage: "Heritage & culture", natur
 const extraRows = v => [v.trip_length && ["Trip length", v.trip_length + " days"], v.group_type && ["Travelling as", GTYPE[v.group_type]], v.stay_pref && ["Stay", STAY[v.stay_pref]],
   v.interests && ["Interests", v.interests.map(i => INTEREST[i]).join(", ")], v.notes && ["Notes", v.notes]].filter(Boolean);
 let engaged = false;  // becomes true once the visitor touches the planner; then the bar shows their live estimate
-function syncBar() {
-  const est = $("#est-main").textContent.replace(/\s/g, ""), bar = $("#mbar-plan");
-  bar.textContent = engaged ? `${est.startsWith("₹") ? "Est. " + est : "Quote"} · Resume →` : "Plan My Trip";
-}
-// ===== flight fare hint: lowest published fares from fares.json. Silent when the data is stale, missing, or the route is unknown =====
-let FARES = null, faresTried = false;
-function loadFares() {   // lazy: only when someone picks flight; never on file:// (offline copy)
-  if (faresTried || !/^https?:$/.test(location.protocol)) return; faresTried = true;
-  fetch("fares.json").then(r => r.ok ? r.json() : null).then(d => { FARES = d; updateEst(); }).catch(() => {});
-}
-function fareHint() {
-  const v = form.elements, mode = v.travel.value;
-  if ((mode !== "flight" && mode !== "flexible") || v.service.value === "blueprint") return "";
-  loadFares(); if (!FARES) return "";
-  const age = (Date.now() - Date.parse(FARES.as_of)) / 864e5;
-  if (!(age >= 0 && age <= FARES.max_age_days)) return "";   // stale or malformed date: say nothing rather than something wrong
-  const city = v.from.value.toLowerCase(), o = Object.keys(FARES.origins).find(k => city.includes(k)), d = FARES.destinations[v.dest.value];
-  const r = o && d && FARES.routes[FARES.origins[o] + "-" + d]; if (!r) return "";
-  const g = G[v.group.value], when = new Date(FARES.as_of).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
-  return `${mode === "flexible" ? "If you fly: " : "Flights: "}from about ${inr(r.from_inr)} per person round trip${g && g[0] > 2 ? `, ${inr(r.from_inr * g[0])} for ${g[0]}+ people` : ""}. These are the lowest published fares when we checked on ${when}; December and holiday dates usually cost more. Your quote has the exact fare.`;
-}
-function updateEst() { _updateEst(); syncBar(); const f = $("#est-fare"), t = fareHint(); f.textContent = t; f.hidden = !t; }
+function syncBar() { $("#mbar-plan").textContent = engaged ? "Resume your plan →" : "Plan My Trip"; }
+function updateEst() { _updateEst(); syncBar(); }
 function _updateEst() {
-  const v = form.elements, bpp = bpPrice(v.dest.value);
-  $("#bp-lbl").textContent = !v.dest.value ? "(₹699–₹799)" : bpp ? `(₹${bpp})` : "(not available for this destination)";
-  const svc = v.service.value, g = G[v.group.value], b = B[v.budget.value];
+  const v = form.elements, has = hasBlueprint(v.dest.value), svc = v.service.value;
+  $("#bp-lbl").textContent = v.dest.value && !has ? "(not available for this destination)" : "";
   $("#bp-from").textContent = v.from.value.trim().slice(0, 14) || "Pune"; $("#bp-to").textContent = v.dest.value || "Anywhere";
   $("#bp-group").textContent = v.group.value || "—"; $("#bp-svc").textContent = { blueprint: "Blueprint", custom: "Custom plan", complete: "Full package" }[svc];
-  const main = $("#est-main"), sub = $("#est-sub");
+  const main = $("#est-main"), sub = $("#est-sub");   // no amounts: every plan is quoted around the customer's budget and requirements
   if (svc === "blueprint") {
-    const bp = bpPrice(v.dest.value);
-    main.textContent = bp ? "₹" + bp : v.dest.value ? "Not available" : "₹699 – ₹799";
-    sub.textContent = v.dest.value && !bp ? "We have no ready blueprint for this destination yet. Pick Custom PDF Plan and we'll plan it for you."
-      : "One-time PDF of a ready-made route, sent to your WhatsApp after payment. Trip cost is separate and yours to book."; return; }
-  main.textContent = svc === "custom" ? "₹2,499" : "Custom quote";
-  let trip = " Add group size and budget for a trip-cost range.";
-  if (g && b) { const lo = b[0] * g[0], hi = g[1] && b[1] ? b[1] * g[1] : null; trip = ` Indicative trip spend for your group: ${hi ? `${inr(lo)} – ${inr(hi)}` : `${inr(lo)}+`}.`; }
-  sub.textContent = (svc === "custom" ? "Planning fee, delivered in 24 hours with 1 free revision." : "50% advance to confirm bookings.") + trip;
+    main.textContent = v.dest.value && !has ? "Not available" : "Ready-made PDF";
+    sub.textContent = v.dest.value && !has ? "We have no ready blueprint for this destination yet. Pick Custom PDF Plan and we'll plan it for you."
+      : "A ready-made route PDF, sent to your WhatsApp after payment. The exact amount is shown on the secure payment page before you pay."; return; }
+  main.textContent = "Quote in 24 hours";
+  sub.textContent = svc === "custom" ? "See Day 1 free, then get a plan built around your budget and requirements, delivered in 24 hours with 1 free revision."
+    : "A package built around your budget and requirements. 50% advance to confirm bookings.";
 }
 form.addEventListener("input", () => { engaged = true; updateEst(); });
 
@@ -1234,7 +1205,7 @@ function validate() {
   if (!v.travel_dates) e.when = "Add a month or dates.";
   if (!v.travel_mode) e.travel = "Choose how you will travel.";
   if (!v.group_size) e.group = "Select group size.";
-  if (v.service === "blueprint" && v.destination && !bpPrice(v.destination)) e.service = "No ready blueprint for this destination yet. Choose Custom PDF Plan.";
+  if (v.service === "blueprint" && v.destination && !hasBlueprint(v.destination)) e.service = "No ready blueprint for this destination yet. Choose Custom PDF Plan.";
   if (!v.budget) e.budget = "Select a budget band.";
   if (!f.consent.checked) e.consent = "Please tick to continue.";
   return { v, e };
@@ -1267,10 +1238,10 @@ form.addEventListener("submit", async ev => {
     try { leadId = (await api("/api/leads", { ...v, ...ATTR })).lead_id; track("generate_lead", { destination: v.destination, service: v.service }); }
     catch (err) { note = err.status === 429 ? "You've sent a few requests already. WhatsApp us below and we'll pick it up." : "We couldn't reach our planner just now. Your details are in the WhatsApp message below, so nothing is lost."; }
   }
-  const rows = [["Name", v.name], ["WhatsApp", v.phone], ["Destination", v.destination], ["From", v.departure_city], ["Travel by", TRAVEL[v.travel_mode]], ["Travel dates", v.travel_dates], ["Group size", v.group_size], ["Service", v.service === "blueprint" ? `Ready Blueprint (${bpPrice(v.destination) ? "₹" + bpPrice(v.destination) : "not available for this destination"})` : SVC[v.service]], ["Budget / person", BUDGET[v.budget]], ...extraRows(v)];
+  const rows = [["Name", v.name], ["WhatsApp", v.phone], ["Destination", v.destination], ["From", v.departure_city], ["Travel by", TRAVEL[v.travel_mode]], ["Travel dates", v.travel_dates], ["Group size", v.group_size], ["Service", v.service === "blueprint" ? (hasBlueprint(v.destination) ? "Ready Blueprint" : "Ready Blueprint (not available for this destination)") : SVC[v.service]], ["Budget / person", BUDGET[v.budget]], ...extraRows(v)];
   $("#c-name").textContent = v.name.split(" ")[0];
   $("#c-list").replaceChildren(...rows.flatMap(([k, val]) => [Object.assign(document.createElement("dt"), { textContent: k }), Object.assign(document.createElement("dd"), { textContent: val })]));
-  $("#c-wa").href = waLink(["Hi! I'd like a quote for this trip.", "", ...rows.map(([k, val]) => `*${k}:* ${val}`), "", `Rough estimate: ${$("#est-main").textContent}`, leadId ? `Ref: ${leadId.slice(0, 8)}` : ""].join("\n").trim());
+  $("#c-wa").href = waLink(["Hi! I'd like a quote for this trip.", "", ...rows.map(([k, val]) => `*${k}:* ${val}`), "", leadId ? `Ref: ${leadId.slice(0, 8)}` : ""].join("\n").trim());
   buildNext(leadId, v, note);
   form.hidden = true; $("#confirm").hidden = false; $("#confirm").focus(); $("#confirm").scrollIntoView({ block: "center", behavior: reduce ? "auto" : "smooth" });
   btn.disabled = false; btn.textContent = "Get my quote"; busy = false; try { sessionStorage.removeItem("draft"); } catch {}
@@ -1290,7 +1261,7 @@ function buildNext(leadId, v, note) {
   box.hidden = false;
   const pay = (kind, label) => async b => { b.disabled = true; try { const r = await api("/api/create-payment-link", { lead_id: leadId, kind, blueprint_id: BP_ID[v.destination] }); track("begin_checkout", { kind }); goPay(r.payment_url); } catch { b.disabled = false; say("Couldn't open checkout. Please use WhatsApp above."); } };
 
-  if (v.service === "blueprint" && BP_ID[v.destination]) { say("We send the PDF to your WhatsApp after payment."); btn(`Buy ${v.destination} blueprint · ₹${bpPrice(v.destination)}`, "btn-primary", e => pay("blueprint")(e.currentTarget)); return; }
+  if (v.service === "blueprint" && BP_ID[v.destination]) { say("We send the PDF to your WhatsApp after payment. You'll see the exact amount on the secure payment page before you pay."); btn(`Buy ${v.destination} blueprint`, "btn-primary", e => pay("blueprint")(e.currentTarget)); return; }
   if (v.service !== "blueprint" && HAS_KB.has(v.destination)) {
     say("Want to see the quality first? Get a free preview of your itinerary.");
     const go = btn("Generate my free preview", "btn-primary", async () => {
@@ -1302,7 +1273,7 @@ function buildNext(leadId, v, note) {
           let s;
           try { s = await api(`/api/leads/${leadId}/status`); fails = 0; }
           catch (err) { if ((err.status && err.status < 500) || ++fails > 3) throw err; await sleep(CFG.pollMs); continue; }   // retry network blips and 5xx only
-          if (s.preview_url) { say("Your preview is ready."); track("preview_ready"); link("Open preview PDF (Day 1)", s.preview_url); btn("Share with your group", "btn-ghost", () => shareText(planPitch(v))); if (v.service === "custom") btn("Unlock the full plan · ₹2,499", "btn-primary", e => pay("custom_plan")(e.currentTarget)); return; }
+          if (s.preview_url) { say("Your preview is ready."); track("preview_ready"); link("Open preview PDF (Day 1)", s.preview_url); btn("Share with your group", "btn-ghost", () => shareText(planPitch(v))); if (v.service === "custom") btn("Unlock the full plan", "btn-primary", e => pay("custom_plan")(e.currentTarget)); return; }
           if (s.status === "failed" || s.status === "needs_manual") { say("We'll finish this plan by hand and WhatsApp you shortly."); return; }
           await sleep(CFG.pollMs);
         }
@@ -1316,7 +1287,7 @@ function buildNext(leadId, v, note) {
 let dwTrip = null;
 function openBlueprint(id) {
   const t = dwTrip = TRIPS[id];
-  $("#dw-t").textContent = `${t.dest} blueprint`; $("#dw-price").textContent = `₹${t.price}`; $("#dw-pay").textContent = `Pay ₹${t.price} · secure checkout`;
+  $("#dw-t").textContent = `${t.dest} blueprint`; $("#dw-pay").textContent = "Continue to secure checkout";
   $("#dw-inc").replaceChildren(...INC.map(x => Object.assign(document.createElement("li"), { textContent: x }))); $("#dw-status").textContent = "";
   const pv = $("#dw-prev"), im = new Image(); pv.replaceChildren(); im.onload = () => { im.className = "dw-prev"; im.alt = "Blurred page from a real plan"; const c = document.createElement("p"); c.className = "note"; c.textContent = "A page from a real plan, blurred. Your blueprint is the full document."; pv.append(im, c); }; im.src = `img/blueprint-preview-${id}.webp`; // only Rajasthan and Kerala have a real plan to preview so far
   $("#d-dw").showModal(); track("blueprint_open", { route: id });
@@ -1325,7 +1296,7 @@ $("#dwform").addEventListener("submit", async ev => {
   ev.preventDefault(); const t = dwTrip, st = $("#dw-status"), btn = $("#dw-pay"), say = x => { st.textContent = x; };
   const name = clean($("#dw-name").value), m = $("#dw-phone").value.replace(/[\s\-()]/g, "").match(/^(?:\+?91|0)?([6-9]\d{9})$/);
   if (name.length < 2) return say("Please enter your name."); if (!m) return say("Enter a valid 10-digit Indian WhatsApp number."); if (!$("#dw-consent").checked) return say("Please tick to continue.");
-  const phone = "91" + m[1], msg = `Hi! I'd like the ${t.dest} blueprint (₹${t.price}).\n*Name:* ${name}\n*WhatsApp:* ${phone}`;
+  const phone = "91" + m[1], msg = `Hi! I'd like the ${t.dest} blueprint.\n*Name:* ${name}\n*WhatsApp:* ${phone}`;
   if (!CFG.apiBase) { window.open(waLink(msg), "_blank", "noopener"); return; }   // WhatsApp-only mode
   btn.disabled = true; say("Opening secure checkout…");
   try {

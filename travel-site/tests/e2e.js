@@ -49,13 +49,13 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
   // card shortcuts: "Plan this trip" and "Just want the PDF"
   await p.evaluate(() => document.querySelector('[data-trip=goa]').click()); assert.equal(await val(p, 'dest'), 'Goa'); assert.equal(await val(p, 'service'), 'custom');
   await p.evaluate(() => document.querySelector('[data-bp=rajasthan]').click());
-  assert(await p.locator('#d-dw[open]').count(), 'slide-over opens'); assert.equal(await p.textContent('#dw-price'), '₹799');
+  assert(await p.locator('#d-dw[open]').count(), 'slide-over opens'); assert.equal(await p.textContent('#dw-pay'), 'Continue to secure checkout'); assert((await p.textContent('#d-dw')).includes('exact amount is shown on the secure payment page'), 'drawer says where the amount is shown'); assert(!/₹/.test(await p.textContent('#d-dw')), 'no price in the drawer');
   assert.equal(await p.locator('#dw-inc li').count(), 5); await p.waitForSelector('#dw-prev img'); assert((await p.textContent('#dw-prev')).includes('real plan'), 'Rajasthan shows a blurred page from the real plan');
   assert(!(await p.textContent('#dw-inc')).match(/fuel|toll|maps/i), 'only real contents are listed');
   await p.click('#dw-pay'); assert((await p.textContent('#dw-status')).includes('name'));
   await p.fill('#dw-name', 'Asha'); await p.fill('#dw-phone', '98765 43210'); await p.check('#dw-consent');
   await p.context().route('https://wa.me/**', r => r.fulfill({ body: 'ok' }));
-  const [pop] = await Promise.all([p.waitForEvent('popup'), p.click('#dw-pay')]); assert(decodeURIComponent(pop.url()).includes('Rajasthan blueprint (₹799)'), 'offline: WhatsApp order opens'); await pop.close();
+  const [pop] = await Promise.all([p.waitForEvent('popup'), p.click('#dw-pay')]); assert(decodeURIComponent(pop.url()).includes('the Rajasthan blueprint.'), 'offline: WhatsApp order opens'); await pop.close();
   await p.keyboard.press('Escape'); assert.equal(await p.locator('#d-dw[open]').count(), 0);
   // sample day: three trip styles, one late-toggle
   await p.evaluate(() => document.querySelector('#sample').scrollIntoView());
@@ -143,7 +143,7 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
   { const mp = await b.newPage({ viewport: { width: 390, height: 844 } }); await mp.goto(PAGE); await mp.evaluate(() => window.scrollTo(0, 300)); await mp.waitForTimeout(250);
     assert.equal(await mp.evaluate(() => document.querySelector('[data-p]').style.transform), '', 'no scroll parallax on phones');
     assert.equal(await mp.textContent('#mbar-plan'), 'Plan My Trip'); await mp.evaluate(() => window.scrollTo(0, 0)); await mp.click('.chip[data-dest=Goa]'); await mp.waitForTimeout(200);
-    const t = await mp.textContent('#mbar-plan'); assert(/^Est\. ₹[\d,]+ · Resume →$/.test(t), t); await mp.close();
+    const t = await mp.textContent('#mbar-plan'); assert.equal(t, 'Resume your plan →'); await mp.close();
     const dp = await b.newPage({ viewport: { width: 1280, height: 800 } }); await dp.goto(PAGE); await dp.evaluate(() => window.scrollTo(0, 300)); await dp.waitForTimeout(250);
     assert((await dp.evaluate(() => document.querySelector('[data-p]').style.transform)).includes('translateY'), 'parallax on desktop'); await dp.close(); }
   // real reviews appear only when supplied
@@ -168,19 +168,19 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
   { const pg = await b.newPage({ viewport: { width: 1280, height: 900 } });
     await pg.addInitScript(() => { window.__shared = null; navigator.share = async d => { window.__shared = d; }; }); await pg.goto(PAGE);
     await pg.evaluate(() => document.querySelectorAll('img[loading=lazy]').forEach(i => i.loading = 'eager')); await pg.evaluate(() => document.getElementById('peek').scrollIntoView()); await pg.waitForTimeout(900);
-    assert.deepEqual(await pg.evaluate(() => [...document.querySelectorAll('#peek img')].map(i => i.naturalWidth > 0)), [true, true, true, true], 'real plan pages load');
+    assert.deepEqual(await pg.evaluate(() => [...document.querySelectorAll('#peek img')].map(i => i.naturalWidth > 0)), [true, true], 'real plan pages load');
     assert.equal(await pg.locator('.log').count(), 2);
-    await pg.click('#peek .zoomable >> nth=1'); assert(await pg.locator('#d-zoom[open]').count()); assert((await pg.getAttribute('#zm-img', 'src')).endsWith('real-kerala-day.webp')); await pg.keyboard.press('Escape');
+    await pg.click('#peek .zoomable >> nth=1'); assert(await pg.locator('#d-zoom[open]').count()); assert((await pg.getAttribute('#zm-img', 'src')).endsWith('real-rajasthan-checklist.webp')); assert.equal(await pg.locator('#peek img[src*=kerala]').count(), 0, 'no screenshot that shows amounts'); await pg.keyboard.press('Escape');
     const html = await pg.content(); assert(!/(?:\+?91[\s-]?)?[6-9]\d{4}[\s-]?\d{5}\b/.test(html.replace(/91XXXXXXXXXX/g, '')), 'no phone numbers anywhere in the page');
     const fit = await pg.textContent('.fit'); assert(fit.includes('Is this right for you?') && fit.includes('we plan and you book') && fit.includes('we book it too'));
     assert.equal(await pg.locator('.intel').count(), 4); assert.equal(await pg.locator('.assure li:visible').count(), 3, 'refund line hidden unless configured');
     assert(!(await pg.textContent('#peek')).match(/split-expense|mechanic|hospital|offline/i), 'no invented features');
     await pg.evaluate(() => document.querySelector('[data-route=goa]').click()); await pg.click('#dr-share');
-    const sh = await pg.evaluate(() => window.__shared); assert(sh.text.includes('*Goa trip from Pune*') && sh.text.includes('₹8,499') && sh.text.includes('#routes'), sh && sh.text); await pg.close(); }
+    const sh = await pg.evaluate(() => window.__shared); assert(sh.text.includes('*Goa trip from Pune*') && !/₹/.test(sh.text) && sh.text.includes('quoted around your budget') && sh.text.includes('#routes'), sh && sh.text); await pg.close(); }
   { const pg = await b.newPage({ viewport: { width: 1280, height: 900 } }); await pg.context().route('https://wa.me/**', r => r.fulfill({ body: 'ok' })); await pg.goto(PAGE);
     await pg.evaluate(() => document.querySelector('[data-route=rajasthan]').click());
     const [pop] = await Promise.all([pg.waitForEvent('popup'), pg.click('#dr-share')]); const u = decodeURIComponent(pop.url());
-    assert(u.startsWith('https://wa.me/?text=') && u.includes('₹11,499') && u.includes('8–16 people'), u); await pop.close(); await pg.close(); }
+    assert(u.startsWith('https://wa.me/?text=') && !/₹/.test(u) && u.includes('quoted around your budget') && u.includes('8–16 people'), u); await pop.close(); await pg.close(); }
   { const pg = await b.newPage({ viewport: { width: 1280, height: 900 } }); await pg.addInitScript(() => { window.SITE_CONFIG = { refundPolicy: '<b>x</b> Refunded if late.' }; }); await pg.goto(PAGE);
     assert.equal(await pg.locator('#refund').isVisible(), true); assert.equal(await pg.locator('#refund b').count(), 0, 'policy text is not HTML'); await pg.close(); }
   // ---- lead source: campaign tags + referrer HOSTNAME, sanitised, first-touch, both lead forms ----
@@ -211,6 +211,10 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     await p2.evaluate(() => document.querySelector('[data-bp=goa]').click()); await p2.fill('#dw-name', 'Asha'); await p2.fill('#dw-phone', '9876543210'); await p2.check('#dw-consent'); await p2.click('#dw-pay'); await p2.waitForTimeout(400);
     const dl = calls.find(c => c[0] === '/api/leads')[1]; assert.equal(dl.referrer, 'l.instagram.com', 'hostname only: no path, no token'); assert.equal('utm_source' in dl, false, 'untagged visit sends no campaign keys');
     await ctx.close(); await ctx2.close(); }
+  // ---- the site publishes no price anywhere: every plan is quoted around the customer's budget and requirements ----
+  { const fs = require('fs'); const root = path.join(__dirname, '..'); const pages = ['index.html', '404.html', ...JSON.parse(fs.readFileSync(path.join(root, 'tools', 'routes.json'), 'utf8')).map(r => `${r.slug}/index.html`)];
+    for (const f of pages) { const hits = fs.readFileSync(path.join(root, f), 'utf8').match(/₹\s?\d[\d,]*(?![\d,]*k)|\bRs\.?\s?\d|"price(?:Currency)?"\s*:|\bINR\b/g); assert(!hits, `${f} shows a price: ${hits}`); }
+    assert(!fs.existsSync(path.join(root, 'fares.json')), 'the flight-fare data went with the prices'); }
   // ---- route landing pages: for EVERY route, facts match its knowledge base, nothing is broken, campaign + destination reach the planner ----
   for (const R of JSON.parse(require('fs').readFileSync(path.join(__dirname, '..', 'tools', 'routes.json'), 'utf8'))) {
     const fs = require('fs'); const root = path.join(__dirname, '..'); const types = { '.html': 'text/html', '.webp': 'image/webp', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png' };
@@ -229,7 +233,7 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     const kb = fs.readFileSync(path.join(root, '..', 'travel-backend', 'app', 'knowledge_base', R.kb), 'utf8'); const txt = await pg.innerText('main');
     for (const n of new Set(txt.match(/\b\d{5}\b/g) || [])) assert(kb.includes(n), `${R.slug}: ${n} is not in the verified knowledge base`);
     assert(!/(?:\+?91[\s-]?)?[6-9]\d{4}[\s-]?\d{5}\b/.test(txt), 'no phone-like numbers on a public page');
-    if (!R.price) { const whole = await pg.content(); assert(!/₹|\bRs\.?\s?\d|"price"/.test(whole), `${R.slug} publishes no price, so no price may appear anywhere on it (text or structured data)`); }
+    { const whole = await pg.content(); assert(!/₹|\bRs\.?\s?\d|"price(?:Currency)?"\s*:/.test(whole), `${R.slug} publishes no price, so no price may appear anywhere on it (text or structured data)`); }
     // every rupee amount in the day plan and the tables must be one the knowledge base states
     const money = await pg.evaluate(() => [...document.querySelectorAll('.day, .tbl')].map(e => e.innerText).join('\n')); const kbN = kb.replace(/,/g, '');
     for (const m of new Set([...money.matchAll(/₹\s?(\d[\d,]*)/g)].map(x => x[1].replace(/,/g, '')))) assert(new RegExp(`(?<![\\d,])${m}(?!\\d)`).test(kbN), `${R.slug}: ₹${m} is not in the knowledge base`);
@@ -272,35 +276,6 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     const min = calls.find(c => c[0] === '/api/leads')[1]; assert.equal(min.travel_mode, 'flexible');
     for (const k of ['trip_length', 'group_type', 'stay_pref', 'interests', 'notes']) assert.equal(k in min, false, `${k} omitted when skipped`);
     await ctx.close(); }
-  // ---- flight fare hint: data is sane, shown only when it should be, hidden when stale or unknown ----
-  { const fs = require('fs'); const root = path.join(__dirname, '..'); const F = JSON.parse(fs.readFileSync(path.join(root, 'fares.json'), 'utf8'));
-    assert(/^\d{4}-\d{2}-\d{2}$/.test(F.as_of) && !isNaN(Date.parse(F.as_of)), 'as_of is a date'); assert(F.max_age_days >= 7 && F.max_age_days <= 60);
-    const codes = new Set([...Object.values(F.origins), ...Object.values(F.destinations)]);
-    for (const [k, r] of Object.entries(F.routes)) { const [o, d] = k.split('-');
-      assert(Object.values(F.origins).includes(o) && Object.values(F.destinations).includes(d), `${k}: both airports are known`);
-      assert(Number.isInteger(r.from_inr) && r.from_inr >= 1000 && r.from_inr <= 100000 && r.from_inr % 500 === 0, `${k}: sane floor rounded to 500`);
-      assert(r.basis.length > 10 && /^https:\/\//.test(r.source), `${k}: records how it was derived and where`); }
-    for (const o of new Set(Object.values(F.origins))) for (const d of new Set(Object.values(F.destinations))) assert(F.routes[`${o}-${d}`], `route ${o}-${d} exists for every origin x destination`);
-    const age = (Date.now() - Date.parse(F.as_of)) / 864e5; if (age > F.max_age_days) console.warn(`NOTE: fares.json is ${Math.round(age)} days old, the planner now hides flight fares. Refresh it (see LAUNCH.md).`);
-    const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8'); const fresh = Date.parse(F.as_of) + 864e5;
-    const open = async (time, fares = F) => { const ctx = await b.newContext({ viewport: { width: 1280, height: 900 } }); const pg = await ctx.newPage(); const bad = []; pg.on('pageerror', e => bad.push(e.message));
-      await pg.clock.setFixedTime(time);
-      await pg.route('http://site.test/fares.json', r => fares ? r.fulfill({ contentType: 'application/json', body: JSON.stringify(fares) }) : r.fulfill({ status: 404, body: 'nf' }));
-      await pg.route('http://site.test/', r => r.fulfill({ contentType: 'text/html', body: html })); await pg.goto('http://site.test/'); await toPlanner(pg); return { pg, ctx, bad }; };
-    const set = async (pg, o) => { await pg.click(chip('dest', o.dest ?? 'Rajasthan')); await pg.fill('#from', o.from ?? 'Pune'); await pg.fill('#when', 'Dec'); await pg.click(chip('travel', o.travel ?? 'flight')); await pg.click('#submit'); await pg.click(chip('group', o.group ?? '7-12')); await pg.waitForTimeout(150); };
-    const hint = pg => pg.evaluate(() => { const e = document.querySelector('#est-fare'); return e.hidden ? null : e.textContent; });
-    let { pg, ctx, bad } = await open(fresh);
-    await set(pg, {}); await pg.waitForFunction(() => !document.querySelector('#est-fare').hidden);
-    let t = await hint(pg); assert(t.startsWith('Flights: from about ₹12,500 per person round trip, ₹87,500 for 7+ people'), t); assert(t.includes('24 Nov 2026') && t.includes('exact fare'));
-    // step 2 has no travel chips: go back to change the mode
-    await pg.click('#back'); await pg.click(chip('travel', 'flexible')); await pg.waitForTimeout(100); assert((await hint(pg)).startsWith('If you fly: from about ₹12,500'), 'flexible is worded as a maybe');
-    await pg.click(chip('travel', 'train')); await pg.waitForTimeout(100); assert.equal(await hint(pg), null, 'no flight hint for a train trip');
-    await pg.click(chip('travel', 'flight')); await pg.fill('#from', 'Nashik'); await pg.waitForTimeout(100); assert.equal(await hint(pg), null, 'unknown origin: no hint');
-    await pg.fill('#from', 'PUNE, Maharashtra'); await pg.click(chip('dest', 'Hampi–Gokarna')); await pg.waitForTimeout(100); assert.equal(await hint(pg), null, 'no airport mapped: no hint');
-    await pg.click(chip('dest', 'Goa')); await pg.fill('#from', 'Mumbai'); await pg.waitForTimeout(100); assert((await hint(pg)).includes('₹5,000 per person'), 'case-insensitive origin, other route');
-    assert.deepEqual(bad, []); await ctx.close();
-    ({ pg, ctx, bad } = await open(Date.parse(F.as_of) + (F.max_age_days + 1) * 864e5)); await set(pg, {}); await pg.waitForTimeout(400); assert.equal(await hint(pg), null, 'stale data is never shown'); await ctx.close();
-    ({ pg, ctx, bad } = await open(fresh, null)); await set(pg, {}); await pg.waitForTimeout(400); assert.equal(await hint(pg), null, 'missing fares.json: silent'); assert.deepEqual(bad, [], 'and no errors'); await ctx.close(); }
   // ---- pre-launch review regressions: blank tag, honest blueprint pricing, https-only checkout, resilient polling, header fit ----
   { const fs = require('fs'); const root = path.join(__dirname, '..'); const types = { '.html': 'text/html', '.webp': 'image/webp', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.png': 'image/png' };
     const open = async (handler, { w = 1280, url = '/' } = {}) => {
@@ -324,17 +299,19 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
     ({ pg, ctx } = await open(ok())); await toPlanner(pg);
     await pg.click(chip('dest', 'Rajasthan')); await pg.fill('#from', 'Pune'); await pg.fill('#when', 'Dec'); await pg.click(chip('travel', 'train')); await pg.click('#submit');
     await pg.click('label.radio:has(input[value=blueprint])'); await pg.click(chip('group', '3-6')); await pg.click(chip('budget', '5-10'));
-    assert.equal(await pg.textContent('#est-main'), '₹799'); assert.equal(await pg.textContent('#bp-lbl'), '(₹799)');
-    await pg.click('#back'); await pg.click(chip('dest', 'Goa')); await pg.click('#submit'); assert.equal(await pg.textContent('#est-main'), '₹699'); assert.equal(await pg.textContent('#bp-lbl'), '(₹699)');
-    await pg.click('#back'); await pg.click(chip('dest', 'Konkan')); assert.equal(await pg.textContent('#est-main'), 'Not available');
+    assert.equal(await pg.textContent('#est-main'), 'Ready-made PDF'); assert.equal(await pg.textContent('#bp-lbl'), '');
+    await pg.click('#back'); await pg.click(chip('dest', 'Goa')); await pg.click('#submit'); assert.equal(await pg.textContent('#est-main'), 'Ready-made PDF');
+    await pg.click('#back'); await pg.click(chip('dest', 'Konkan')); assert.equal(await pg.textContent('#est-main'), 'Not available'); assert.equal(await pg.textContent('#bp-lbl'), '(not available for this destination)');
     await pg.click('#submit'); await pg.click('#submit');
-    assert((await pg.textContent('.err[data-for=service]')).includes('No ready blueprint') && (await pg.textContent('#step-label')).startsWith('Step 2'), 'blocked on step 2'); await ctx.close();
+    assert((await pg.textContent('.err[data-for=service]')).includes('No ready blueprint') && (await pg.textContent('#step-label')).startsWith('Step 2'), 'blocked on step 2');
+    for (const sv of ['blueprint', 'custom', 'complete']) { await pg.click(`label.radio:has(input[value=${sv}])`); const aside = await pg.textContent('.bp'); assert(!/₹|Rs\.?\s?\d/.test(aside), `no price in the boarding pass (${sv}): ${aside}`); }
+    await ctx.close();
 
     // 3. the page says what really happens after payment, shows the price on the button, and only ever navigates to https
     let pay = 'javascript:window.__x=1';
     ({ pg, ctx, calls } = await open((p, body, n) => ok({ pay })(p, body))); await toPlanner(pg); await fill(pg, { svc: 'blueprint', dest: 'Goa' }); await toConfirm(pg);
-    const nxt = await pg.textContent('#next'); assert(nxt.includes('We send the PDF to your WhatsApp after payment.') && !/instant/i.test(nxt), nxt);
-    await pg.click('#next button:has-text("Buy Goa blueprint · ₹699")'); await pg.waitForFunction(() => document.querySelector('#next').textContent.includes("Couldn't open checkout"));
+    const nxt = await pg.textContent('#next'); assert(nxt.includes('We send the PDF to your WhatsApp after payment.') && nxt.includes('exact amount on the secure payment page') && !/instant|₹/i.test(nxt), nxt);
+    await pg.click('#next button:has-text("Buy Goa blueprint")'); await pg.waitForFunction(() => document.querySelector('#next').textContent.includes("Couldn't open checkout"));
     assert.equal(await pg.evaluate(() => window.__x), undefined, 'javascript: URL never ran'); assert(pg.url().startsWith('http://site.test'), 'did not navigate');
     pay = 'http://evil.test/pay'; await pg.click('#next button:has-text("Buy Goa blueprint")'); await pg.waitForTimeout(300); assert(pg.url().startsWith('http://site.test'), 'plain http is refused too'); await ctx.close();
 

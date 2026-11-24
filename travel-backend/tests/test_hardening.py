@@ -411,13 +411,14 @@ def test_pdf_renderer_refuses_to_fetch_local_files(tmp_path):
 
 
 # ------------------------------------------------------------------ site and backend agree on what is sold
-def test_site_prices_match_the_backend():
+def test_site_sells_what_the_backend_delivers_and_states_no_price_for_it():
     html = Path(__file__).resolve().parents[2] / "travel-site" / "index.html"
     if not html.exists():
         pytest.skip("site not checked out")
     s = html.read_text(encoding="utf-8")
-    site_prices = {m[0]: int(m[1]) for m in re.findall(r'bp: "([\w-]+)", price: (\d+)', s)}
-    assert site_prices == {k: v["price_inr"] for k, v in rag_loader.BLUEPRINTS.items()}
+    assert set(re.findall(r'bp: "([\w-]+)"', s)) == set(rag_loader.BLUEPRINTS)              # same blueprint ids on both sides
     bp_ids = dict(re.findall(r'"([^"]+)": "([\w-]+)"', re.search(r"const BP_ID = \{(.*?)\};", s).group(1)))
     assert {k: v["destination"] for k, v in rag_loader.BLUEPRINTS.items()} == {v: k for k, v in bp_ids.items()}
-    assert Settings.model_fields["custom_plan_price_inr"].default == 2499 and "₹2,499" in s
+    # prices are decided per customer and by the backend: the page must not state them (they appear on the payment page)
+    for price in {f"\u20b9{v['price_inr']:,}" for v in rag_loader.BLUEPRINTS.values()} | {f"\u20b9{Settings.model_fields['custom_plan_price_inr'].default:,}"}:
+        assert price not in s, f"the site states {price}"

@@ -57,9 +57,7 @@ def page(r, css, attr, logo):
     ld_faq = {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
         {"@type": "Question", "name": q, "acceptedAnswer": {"@type": "Answer", "text": a}} for q, a in r["faq"]]}
     ld_trip = {"@context": "https://schema.org", "@type": "TouristTrip", "name": r["title"], "description": r["description"], "touristType": "Group",
-               "url": url}
-    if r.get("price"):  # a route without a published price carries no price anywhere, structured data included
-        ld_trip["offers"] = {"@type": "Offer", "priceCurrency": "INR", "price": str(r["price"]), "url": url}
+               "url": url}   # no offers/price: every trip is quoted
     ld_crumb = {"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [
         {"@type": "ListItem", "position": 1, "name": "Home", "item": "https://YOUR-DOMAIN.com/"},
         {"@type": "ListItem", "position": 2, "name": r["name"], "item": url}]}
@@ -68,7 +66,6 @@ def page(r, css, attr, logo):
     days = "".join(
         f'<article class="day"><p class="kicker">{E(d["d"])}</p><h3>{E(d["t"])}</h3><ul class="tl">'
         + "".join(f"<li><time>{E(t)}</time><span>{E(x)}</span></li>" for t, x in d["items"]) + "</ul></article>" for d in r["days"])
-    blueprint_line = f' Or take the full time-stamped Blueprint PDF for ₹{r["price"]}.' if r.get("price") else ""
     fixed = (f'<section class="rs"><div class="wrap"><h2>{E(r["fixed_title"])}</h2><p>{E(r["fixed"])}</p></div></section>'
              if r.get("fixed") else "")
     tables = "\n\n".join(table(t) for t in r["tables"])
@@ -134,7 +131,7 @@ def page(r, css, attr, logo):
 
 <section class="cta-band"><div class="wrap">
   <h2>Want this fitted to your dates and group?</h2>
-  <p>Free Day 1 preview, a custom quote in 24 hours.{blueprint_line}</p>
+  <p>Free Day 1 preview, a custom quote in 24 hours. Every plan is built around your budget and requirements.</p>
   <div class="cta-row"><a class="btn btn-primary" href="{plan}">Start planning</a><a class="btn btn-wa" href="{wa}" target="_blank" rel="noopener">WhatsApp us</a></div>
 </div></section>
 </main>
@@ -142,10 +139,10 @@ def page(r, css, attr, logo):
   <div class="wrap">
     <div class="f-grid">
       <div><a href="../" class="logo">[BRAND_NAME]</a><p style="margin-top:12px;max-width:42ch">Ground-Tested Trips. Zero Guesswork. Online-first trip planning for group travel from Pune and PCMC, Maharashtra.</p></div>
-      <div><h3>More</h3><ul><li><a href="../#routes">All proven routes</a></li><li><a href="../#pricing">Pricing</a></li><li><a href="../#faq">FAQ</a></li></ul></div>
+      <div><h3>More</h3><ul><li><a href="../#routes">All proven routes</a></li><li><a href="../#services">Services</a></li><li><a href="../#faq">FAQ</a></li></ul></div>
       <div><h3>Connect</h3><ul><li><a href="https://www.instagram.com/[INSTAGRAM_HANDLE]" target="_blank" rel="noopener">Instagram @[INSTAGRAM_HANDLE]</a></li><li><a href="{wa}" target="_blank" rel="noopener">WhatsApp us</a></li></ul></div>
     </div>
-    <div class="copy"><span>© [BRAND_NAME]. Prices are indicative and confirmed in your written quote.</span></div>
+    <div class="copy"><span>© [BRAND_NAME]. Every plan and quote is built around your budget and confirmed in writing.</span></div>
   </div>
 </footer>
 <nav class="mbar" aria-label="Quick actions"><a class="btn btn-wa" href="{wa}" target="_blank" rel="noopener">WhatsApp</a><a class="btn btn-primary" href="{plan}">Plan My Trip</a></nav>

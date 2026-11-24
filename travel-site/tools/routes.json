@@ -31,14 +31,6 @@
       [
         "Trains",
         "3 legs, all daily"
-      ],
-      [
-        "Blueprint PDF",
-        "₹799"
-      ],
-      [
-        "Full group execution",
-        "from ₹11,499 per person"
       ]
     ],
     "days": [
@@ -213,7 +205,6 @@
         "The day structure works for groups of roughly 8 to 16. Vehicles, rooms and the zip-line slot split change with group size, and your quote shows the per-person split before you commit."
       ]
     ],
-    "price": 799,
     "wa": "Hi! I'd like to plan the Rajasthan trip (Jaipur, Jaisalmer, Jodhpur) for our group.",
     "kb": "rajasthan.md",
     "tables": [
