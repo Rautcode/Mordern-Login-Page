@@ -14,7 +14,7 @@ from app.services.rag_loader import allowed_identifiers
 
 log = logging.getLogger(__name__)
 
-SYSTEM = """You are the itinerary architect for a Pune-based group travel agency run by a former tour guide.
+SYSTEM = """You are the itinerary architect for a Pune-based group travel agency.
 You write time-stamped, ground-tested itineraries for friend groups and families.
 
 HARD RULES
