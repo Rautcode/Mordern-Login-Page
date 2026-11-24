@@ -34,12 +34,16 @@ Apply `supabase/schema.sql` once in the Supabase SQL editor. For an existing dat
 
 ## Production notes
 
-- **One worker per container.** The rate limiter is in memory per process. Scale by adding containers, or move the limiter to Redis or the CDN first.
-- **Behind a proxy:** run with `--proxy-headers` and set `FORWARDED_ALLOW_IPS` to the proxy's address, otherwise every visitor shares one IP (and one rate-limit budget).
-- `ENV=production` hides `/docs` and `/openapi.json`.
-- Set `CORS_ORIGINS` to the exact site origin(s). No wildcard.
-- `ADMIN_API_KEY` should be long and random. The admin console is at `/admin` on this service; rotate the key when anyone who knew it leaves.
-- Telegram alerts and the WhatsApp links are click-to-chat, not automated sending. Automated WhatsApp needs the WhatsApp Business API.
+`ENV` defaults to **production** (fail closed: a forgotten setting can never expose `/docs`). Set `ENV=development` on your laptop. In production the app **refuses to start** unless these are set: Telegram token and chat id (a paid-but-failed or underpaid alert must never be dropped silently), `CORS_ORIGINS` (exact origins, never `*`), a real `WHATSAPP_NUMBER`, and an `ADMIN_API_KEY` of 32+ characters with real variety.
+
+- **Rate limits need the real client IP.** Set `FORWARDED_ALLOW_IPS` to your proxy's address or CIDR. Unset behind a load balancer, every visitor shares one bucket (10 leads/hour for the whole site). `*` lets any client spoof `X-Forwarded-For` and bypass every limit, so the app refuses to start with it. After deploying, verify with two requests from different networks (or one with a spoofed header) that they are limited separately.
+- **One worker per container.** Limiters are in memory per process. Scale by adding containers, or move them to Redis or the CDN first.
+- **Abuse limits** (per IP, per phone number, whole site, per lead, per day) bound spam and Gemini cost. They are a backstop, not proof of ownership: anyone can type someone else's phone number. Before paid ads, put Cloudflare Turnstile (or a WhatsApp OTP) in front of `POST /api/leads`.
+- **Webhooks:** point Razorpay at `/api/webhooks/razorpay` and enable `payment_link.paid`, `payment_link.expired` and `payment_link.cancelled`. A link the app replaced is cancelled at Razorpay; if it is paid anyway, the payment is still matched and delivered, and you get an alert.
+- Cap request bodies at the proxy (e.g. 1 MB). The app caps the webhook body but reads it whole.
+- The admin console is at `/admin` on this service. Rotate `ADMIN_API_KEY` when anyone who knew it leaves.
+- Telegram alerts and WhatsApp links are click-to-chat, not automated sending. Automated WhatsApp needs the WhatsApp Business API.
+- Logs: errors may include database row text (names, phone numbers). Treat log storage as personal data.
 
 ## Knowledge base rules
 

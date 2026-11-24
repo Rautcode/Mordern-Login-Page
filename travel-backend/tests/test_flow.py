@@ -7,11 +7,7 @@ import os
 import uuid
 from types import SimpleNamespace
 
-os.environ.update(
-    SUPABASE_URL="https://example.supabase.co", SUPABASE_SERVICE_KEY="x", GEMINI_API_KEY="x",
-    RAZORPAY_KEY_ID="rzp_test_x", RAZORPAY_KEY_SECRET="x", RAZORPAY_WEBHOOK_SECRET="whsec_test",
-    ADMIN_API_KEY="a" * 40, ENV="production",
-)
+# test environment: see tests/conftest.py
 import pytest
 from fastapi.testclient import TestClient
 from postgrest.exceptions import APIError
@@ -74,7 +70,11 @@ class FakeDB:
 
 class FakeHTTP:
     calls = 0
+    urls: list = []
     async def post(self, url, **kw):
+        FakeHTTP.urls.append(url)
+        if url.endswith("/cancel"):  # Razorpay: cancel a payment link
+            return SimpleNamespace(raise_for_status=lambda: None, status_code=200, json=lambda: {})
         FakeHTTP.calls += 1
         return SimpleNamespace(raise_for_status=lambda: None, status_code=200,
                                json=lambda: {"id": f"plink_{FakeHTTP.calls}", "short_url": f"https://rzp.io/i/{FakeHTTP.calls}"})
@@ -85,6 +85,7 @@ def env(monkeypatch):
     fake, alerts = FakeDB(), []
     monkeypatch.setattr(database, "_client", fake)
     monkeypatch.setattr(notifier, "_http", FakeHTTP())
+    FakeHTTP.urls.clear()
     async def alert(t): alerts.append(t)
     monkeypatch.setattr(notifier, "notify_admin", alert)
     async def gen(lead, kb): return _itin("12955"), {"in": 10, "out": 20}
@@ -92,8 +93,10 @@ def env(monkeypatch):
     from app.services import rag_loader
     rag_loader.load_all()
     from app.routers import admin, itineraries, leads, payments
-    for lim in (leads._create_limit, leads._status_limit, itineraries._gen_limit, payments._pay_limit, admin._admin_limit):
-        lim.hits.clear()   # per-IP counters are module state; every test starts with a clean budget
+    for lim in (leads._create_limit, leads._status_limit, leads._phone_limit, leads._global_limit,
+                itineraries._gen_limit, payments._pay_limit, admin._admin_limit):
+        lim.hits.clear()   # limiter counters are module state; every test starts with a clean budget
+    itineraries._attempts.update(day=None, n=0, per_lead={})
     return SimpleNamespace(c=TestClient(app), db=fake, alerts=alerts)
 
 

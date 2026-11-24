@@ -1,4 +1,5 @@
 import logging
+import os
 import time
 from contextlib import asynccontextmanager
 from uuid import uuid4
@@ -11,6 +12,7 @@ from fastapi.responses import JSONResponse
 from app.config import get_settings
 from app.database import close_db, db, init_db
 from app.routers import admin, console, itineraries, leads, payments
+from app.security import check_proxy_trust
 from app.services import notifier, pdf_generator, rag_loader
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s %(message)s")
@@ -19,7 +21,8 @@ log = logging.getLogger("app")
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    get_settings()  # fail fast on missing/invalid env
+    cfg = get_settings()  # fail fast on missing/invalid env
+    check_proxy_trust(os.environ.get("FORWARDED_ALLOW_IPS"), cfg.is_prod)
     rag_loader.load_all()
     await init_db()
     notifier.init(httpx.AsyncClient(timeout=httpx.Timeout(10.0)))
@@ -51,13 +54,17 @@ app.add_middleware(
 @app.middleware("http")
 async def access_log(request: Request, call_next):
     rid, t0 = uuid4().hex[:12], time.perf_counter()
+    raw_path = request.scope.get("raw_path") or request.url.path.encode()  # logged with %r: a %0a in the URL cannot forge log lines
     try:
         response = await call_next(request)
     except Exception:
-        log.exception("unhandled rid=%s %s %s", rid, request.method, request.url.path)
+        log.exception("unhandled rid=%s %s %r", rid, request.method, raw_path)
         return JSONResponse({"detail": "Internal Server Error"}, status_code=500, headers={"X-Request-ID": rid})
     response.headers["X-Request-ID"] = rid
-    log.info("rid=%s %s %s %s %.0fms", rid, request.method, request.url.path, response.status_code,
+    response.headers.setdefault("X-Content-Type-Options", "nosniff")
+    if request.url.path.startswith("/api/"):
+        response.headers.setdefault("Cache-Control", "no-store")  # lead data and signed links must not sit in shared caches
+    log.info("rid=%s %s %r %s %.0fms", rid, request.method, raw_path, response.status_code,
              (time.perf_counter() - t0) * 1000)
     return response
 

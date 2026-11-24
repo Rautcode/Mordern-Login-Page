@@ -1,4 +1,5 @@
 import logging
+from datetime import datetime, timedelta, timezone
 from uuid import UUID, uuid4
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException
@@ -14,12 +15,24 @@ router = APIRouter(prefix="/api", tags=["leads"])
 
 _create_limit = RateLimiter(limit=10, window_s=3600)  # per IP
 _status_limit = RateLimiter(limit=120, window_s=60)  # polling
+_phone_limit = RateLimiter(limit=5, window_s=3600)  # per phone number: nobody's number can be flooded with our messages
+_global_limit = RateLimiter(limit=120, window_s=3600)  # whole site: bounds Telegram alerts however many IPs an attacker rotates
+RETRY_WINDOW = timedelta(seconds=120)
 
 
 @router.post("/leads", response_model=LeadCreated, status_code=201, dependencies=[Depends(_create_limit)])
 async def create_lead(body: LeadCreate, bg: BackgroundTasks):
     if body.website:  # honeypot tripped: pretend success, store nothing
         return LeadCreated(lead_id=uuid4(), whatsapp_url=notifier.agency_wa_link("Hi!"))
+
+    # The same person tapping twice or retrying after a timeout gets their existing lead: no second record, no second alert.
+    recent = (datetime.now(timezone.utc) - RETRY_WINDOW).isoformat()
+    dup = await (db().table("leads").select("id").eq("phone", body.phone).eq("destination", body.destination)
+                 .eq("service", body.service).gte("created_at", recent).limit(1).execute())
+    if dup.data:
+        return LeadCreated(lead_id=dup.data[0]["id"], whatsapp_url=notifier.agency_wa_link("Hi!"))
+    if not _phone_limit.allow(body.phone) or not _global_limit.allow("all"):
+        raise HTTPException(status_code=429, detail="Too many requests right now. Message us on WhatsApp and we'll pick it up.")
 
     row = body.model_dump(exclude={"website"})
     row["interests"] = ", ".join(row["interests"])  # stored as text

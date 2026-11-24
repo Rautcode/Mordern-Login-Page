@@ -42,8 +42,11 @@ async def margin_calc(body: PricingInput):
 @router.post("/leads/{lead_id}/quote", response_model=PricingOutput)
 async def save_quote(lead_id: UUID, body: PricingInput):
     """Compute and store the customer-facing quote; the advance payment link is derived from it."""
-    if not await get_lead(lead_id):
+    lead = await get_lead(lead_id)
+    if not lead:
         raise HTTPException(status_code=404, detail="Not found")
+    if lead["status"] in ("paid", "delivered"):  # saving a quote would flip a paid lead back to 'quoted'
+        raise HTTPException(status_code=409, detail="This lead is already paid; a new quote would overwrite its status")
     s = get_settings()
     out = pricing_engine.calculate(body, s.gst_rate_pct, s.advance_pct)
     await update_lead(lead_id, status="quoted", quote_total_paise=out.total * 100, quote_per_person_paise=out.per_person * 100)
@@ -53,7 +56,7 @@ async def save_quote(lead_id: UUID, body: PricingInput):
 @router.post("/leads/{lead_id}/fulfill", status_code=202)
 async def refulfill(lead_id: UUID, bg: BackgroundTasks):
     """Re-run delivery for paid, non-advance payments (e.g. after a failed PDF render)."""
-    r = await db().table("payments").select("*").eq("lead_id", str(lead_id)).eq("status", "paid").execute()
+    r = await db().table("payments").select("*").eq("lead_id", str(lead_id)).eq("status", "paid").in_("kind", ["blueprint", "custom_plan"]).execute()
     if not r.data:
         raise HTTPException(status_code=404, detail="No paid payment for this lead")
     for p in r.data:

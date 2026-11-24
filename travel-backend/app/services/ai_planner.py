@@ -62,37 +62,74 @@ def _gemini() -> genai.Client:
     return _client
 
 
+_RS = re.compile(r"(?:Rs\.?|INR|₹)\s*(\d[\d,]*)(?:\s*[–-]\s*(\d[\d,]*))?", re.I)   # "Rs. 2,500-3,000" -> 2500 and 3000
+_SHORTHAND = re.compile(r"\b\d+(?:\.\d+)?\s?(?:k|lakhs?|crores?)\b", re.I)          # "1.5k": cannot be matched to the KB, so it must be quoted as the KB writes it
+_FIVE = re.compile(r"(?<![\d,])\d{5}(?![\d,])")
+_FLIGHT = re.compile(r"\b(?:[A-Z][A-Z0-9]|[0-9][A-Z])\s?\d{3,4}\b")  # 6E 123, AI 9999, NH125: a letter in the prefix, so "24 2026" is not a flight
+_PHONE = re.compile(r"(?<![\d,])(?:\+?91[\s-]?)?[6-9]\d{4}[\s-]?\d{5}(?!\d)")
+_TIME = re.compile(r"\b\d{1,2}:\d{2}\b")
+
+
+def _amounts(text: str) -> set[str]:
+    return {g.replace(",", "") for m in _RS.finditer(text) for g in m.groups() if g}
+
+
+def _texts(it: ItineraryJSON) -> list[str]:
+    """Every free-text field the customer will read. The guards must cover all of them, not just the obvious ones."""
+    t = [it.title, it.summary, it.budget_notes, *it.packing, *it.disclaimers, *it.before_you_book,
+         *it.driver_card.route, *it.driver_card.critical_notes]
+    for c in it.cost_summary:
+        t += [c.item, c.per_person]
+    for d in it.days:
+        t += [d.title, *d.cut_list, *d.warnings]
+        for leg in d.transit:
+            t += [leg.origin, leg.destination, leg.notes]
+        for s in d.schedule:
+            t += [s.activity, s.notes, s.cost, s.tip]
+    return [x for x in t if x]
+
+
 def find_unverified(itin: ItineraryJSON, allowed: set[str]) -> list[str]:
-    """Train/flight numbers in the output that are not in the knowledge base (hallucination guard)."""
+    """Train/flight numbers (and phone-like numbers) in the output that the knowledge base does not contain."""
     bad = []
     for day in itin.days:
         for leg in day.transit:
             num = re.sub(r"\s", "", leg.number)
             if leg.mode in ("train", "flight") and num and num not in allowed:
                 bad.append(f"Day {day.day_number}: {leg.mode} {leg.number}")
+    for text in _texts(itin):
+        plain = _RS.sub(" ", text)  # an amount such as 10543 is not a train number
+        bad += [f"train-like number {n} in text" for n in _FIVE.findall(plain) if n not in allowed]
+        bad += [f"flight/route code {m} in text" for m in _FLIGHT.findall(plain) if re.sub(r"\s", "", m) not in allowed]
+        if _PHONE.search(plain):
+            bad.append("phone-like number in text")
     return bad
 
 
-def _numbers(text: str) -> set[str]:
-    return {m.replace(",", "") for m in re.findall(r"\d[\d,]*", text)}
+def find_unverified_times(itin: ItineraryJSON, kb: str) -> list[str]:
+    """Departure/arrival times of transit legs must be times the knowledge base states (or the 'Confirm on ...' placeholder)."""
+    norm = lambda t: t.zfill(5)
+    known = {norm(t) for t in _TIME.findall(kb)}
+    return [f"Day {d.day_number} {leg.mode}: {t}" for d in itin.days for leg in d.transit
+            for f in (leg.depart, leg.arrive) for t in _TIME.findall(f) if norm(t) not in known]
 
 
 def find_unverified_amounts(itin: ItineraryJSON, kb: str) -> list[str]:
-    """Amounts printed on a stop or in the cost summary that the knowledge base never mentions (invented prices)."""
-    known, bad = _numbers(kb), []
-    for day in itin.days:
-        for s in day.schedule:
-            bad += [f"Day {day.day_number} '{s.activity[:30]}': {n}" for n in sorted(_numbers(s.cost) - known)]
-    for c in itin.cost_summary:
-        bad += [f"cost summary '{c.item[:30]}': {n}" for n in sorted(_numbers(c.per_person) - known)]
+    """Prices anywhere in the output that the knowledge base does not state next to a currency marker (invented prices).
+    A bare digit run is NOT enough: '500' appearing in a distance must not vouch for 'Rs. 500'."""
+    known, kb_l, bad = _amounts(kb), kb.lower(), []
+    for text in _texts(itin):
+        bad += [f"'{text[:40]}': Rs {n}" for n in sorted(_amounts(text) - known)]
+        bad += [f"'{text[:40]}': '{m}'" for m in _SHORTHAND.findall(text) if m.lower() not in kb_l]
     return bad
 
 
 def _prompt(lead: dict, kb: str) -> str:
     data = {k: lead[k] for k in ("destination", "departure_city", "travel_dates", "group_size", "budget", "service")}
     data.update({k: lead[k] for k in ("travel_mode", "trip_length", "group_type", "stay_pref", "interests", "notes") if lead.get(k)})
+    safe = json.dumps(data, ensure_ascii=False).replace("<", "\\u003c")  # a literal </lead_data> in free text must not close the untrusted block
     return (
-        f"<lead_data>\n{json.dumps(data, ensure_ascii=False)}\n</lead_data>\n\n"
+        f"<lead_data>\n{safe}\n</lead_data>\n\n"
         f"<verified_knowledge_base>\n{kb}\n</verified_knowledge_base>\n\n"
         "Produce the itinerary JSON."
     )
@@ -123,20 +160,17 @@ async def generate_itinerary(lead: dict, kb: str) -> tuple[ItineraryJSON, dict]:
             itin = ItineraryJSON.model_validate_json(resp.text)
             if not 1 <= len(itin.days) <= 21:
                 raise PlannerError(f"implausible day count {len(itin.days)}")
-            bad = find_unverified(itin, allowed)
-            if bad:
-                last_err = f"unverified identifiers {bad}"
+            problem = next(((what, bad) for what, bad in (
+                ("identifiers", find_unverified(itin, allowed)),
+                ("amounts", find_unverified_amounts(itin, kb)),
+                ("times", find_unverified_times(itin, kb))) if bad), None)
+            if problem:
+                what, bad = problem
+                last_err = f"unverified {what} {bad}"
                 prompt += (
-                    f"\n\nYour previous answer used identifiers not in the knowledge base: {bad}. "
-                    "Regenerate using only identifiers from the knowledge base, else leave number empty."
-                )
-                continue
-            bad = find_unverified_amounts(itin, kb)
-            if bad:
-                last_err = f"unverified amounts {bad}"
-                prompt += (
-                    f"\n\nYour previous answer used amounts not in the knowledge base: {bad}. "
-                    "Regenerate repeating only amounts written in the knowledge base, else leave cost empty."
+                    f"\n\nYour previous answer used {what} that the knowledge base does not state: {bad}. "
+                    "Regenerate using only what the knowledge base states; leave the field empty or write "
+                    "'Confirm on IRCTC/airline' when it is not there."
                 )
                 continue
             u = resp.usage_metadata

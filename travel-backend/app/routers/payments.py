@@ -2,6 +2,7 @@ import hashlib
 import hmac
 import logging
 import time
+from datetime import datetime, timedelta, timezone
 
 from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, Request
 from postgrest.exceptions import APIError
@@ -18,6 +19,7 @@ router = APIRouter(prefix="/api", tags=["payments"])
 RZP_LINKS = "https://api.razorpay.com/v1/payment_links"
 LINK_TTL_S = 7 * 24 * 3600
 MAX_WEBHOOK_BYTES = 1_000_000
+STALE_PENDING = timedelta(minutes=10)  # a row that never got its Razorpay link (crash between insert and call)
 _pay_limit = RateLimiter(limit=10, window_s=3600)
 
 
@@ -41,6 +43,37 @@ def amount_paise(kind: str, lead: dict, blueprint_id: str | None) -> int:
     return lead["quote_total_paise"] * s.advance_pct // 100
 
 
+def _ts(s: str | None) -> datetime | None:
+    try:
+        return datetime.fromisoformat(s.replace("Z", "+00:00")) if s else None
+    except ValueError:
+        return None
+
+
+def _reusable(row: dict, paise: int, blueprint_id: str | None) -> bool:
+    """An open link is handed out again only if it is for exactly this product, at this price, with time left to pay."""
+    exp = _ts(row.get("expire_at"))
+    return (row["amount_paise"] == paise and row.get("blueprint_id") == blueprint_id
+            and (exp is None or exp > datetime.now(timezone.utc) + timedelta(hours=1)))
+
+
+async def _retire(row: dict) -> None:
+    """Close an open payment row so a fresh link can be issued, and cancel it at Razorpay so it is not paid by accident.
+    If it is paid anyway the webhook still matches it (see razorpay_webhook) and the customer still gets what they bought."""
+    await db().table("payments").update({"status": "expired"}).eq("id", row["id"]).in_("status", ["pending", "created"]).execute()
+    if not row.get("rp_link_id"):
+        return
+    s = get_settings()
+    try:
+        r = await notifier.get_http().post(f"{RZP_LINKS}/{row['rp_link_id']}/cancel",
+                                           auth=(s.razorpay_key_id, s.razorpay_key_secret.get_secret_value()))
+        r.raise_for_status()
+    except Exception as e:  # noqa: BLE001
+        log.warning("could not cancel old razorpay link: %s", type(e).__name__)
+        await notifier.notify_admin(f"<b>Could not cancel old payment link</b> {notifier.esc(row['rp_link_id'])}. "
+                                    "Cancel it in the Razorpay dashboard. If it gets paid it will still be matched and delivered.")
+
+
 @router.post("/create-payment-link", response_model=PaymentLinkOut, dependencies=[Depends(_pay_limit)])
 async def create_payment_link(body: PaymentLinkRequest, request: Request):
     if body.kind == "advance":  # custom quotes are agency-approved: admin only
@@ -48,27 +81,44 @@ async def create_payment_link(body: PaymentLinkRequest, request: Request):
     lead = await get_lead(body.lead_id)
     if not lead:
         raise HTTPException(status_code=404, detail="Not found")
-    if body.kind == "custom_plan" and lead["service"] == "blueprint":
-        raise HTTPException(status_code=400, detail="Lead did not request a custom plan")
+    if body.kind == "custom_plan":
+        if lead["service"] == "blueprint":
+            raise HTTPException(status_code=400, detail="Lead did not request a custom plan")
+        has_plan = await db().table("itineraries").select("id").eq("lead_id", str(body.lead_id)).limit(1).execute()
+        if not has_plan.data:  # never take money for a plan that does not exist yet
+            raise HTTPException(status_code=409, detail="Your preview isn't ready yet")
 
     s = get_settings()
     paise = amount_paise(body.kind, lead, body.blueprint_id)
     expire_by = int(time.time()) + LINK_TTL_S
 
-    try:
-        ins = await db().table("payments").insert({
-            "lead_id": str(body.lead_id), "kind": body.kind, "blueprint_id": body.blueprint_id,
-            "amount_paise": paise, "status": "pending",
-        }).execute()
-    except APIError as e:
-        if e.code != "23505":  # unique violation = a live link already exists: return it
-            raise
-        ex = await (db().table("payments").select("short_url,amount_paise").eq("lead_id", str(body.lead_id))
-                    .eq("kind", body.kind).in_("status", ["pending", "created"]).limit(1).execute())
-        row = ex.data[0] if ex.data else None
-        if not row or not row["short_url"]:
-            raise HTTPException(status_code=409, detail="Payment link is being created, retry in a few seconds") from e
-        return PaymentLinkOut(payment_url=row["short_url"], amount_inr=row["amount_paise"] // 100)
+    ins = None
+    for _ in range(3):
+        try:
+            ins = await db().table("payments").insert({
+                "lead_id": str(body.lead_id), "kind": body.kind, "blueprint_id": body.blueprint_id,
+                "amount_paise": paise, "status": "pending",
+            }).execute()
+            break
+        except APIError as e:
+            if e.code != "23505":  # unique violation = an open link already exists for this lead and kind
+                raise
+            ex = await (db().table("payments").select("id,short_url,amount_paise,blueprint_id,expire_at,rp_link_id,created_at")
+                        .eq("lead_id", str(body.lead_id)).eq("kind", body.kind).in_("status", ["pending", "created"]).limit(1).execute())
+            row = ex.data[0] if ex.data else None
+            if row is None:
+                continue  # it closed between our insert and our read: try again
+            if not row["short_url"]:
+                made = _ts(row.get("created_at"))
+                if made and datetime.now(timezone.utc) - made > STALE_PENDING:
+                    await _retire(row)  # a crashed attempt must not block this lead forever
+                    continue
+                raise HTTPException(status_code=409, detail="Payment link is being created, retry in a few seconds") from e
+            if _reusable(row, paise, body.blueprint_id):
+                return PaymentLinkOut(payment_url=row["short_url"], amount_inr=row["amount_paise"] // 100)
+            await _retire(row)  # expired, re-quoted, or a different blueprint: replace it instead of returning the wrong link
+    if ins is None:
+        raise HTTPException(status_code=409, detail="Could not open a payment link, please retry")
     pay_id = ins.data[0]["id"]
 
     payload = {
@@ -143,17 +193,25 @@ async def razorpay_webhook(request: Request, bg: BackgroundTasks):
 
     try:
         event = await request.json()
-        if event.get("event") != "payment_link.paid":
+        if not isinstance(event, dict):
+            raise ValueError("not an object")
+        name = event.get("event")
+        if name in ("payment_link.expired", "payment_link.cancelled"):
+            gone = event["payload"]["payment_link"]["entity"]
+            await db().table("payments").update({"status": "expired"}).eq("rp_link_id", gone["id"]).in_("status", ["pending", "created"]).execute()
+            return {"status": "expired"}
+        if name != "payment_link.paid":
             return {"status": "ignored"}
         link = event["payload"]["payment_link"]["entity"]
         pay = event["payload"].get("payment", {}).get("entity", {})
-    except (ValueError, KeyError, TypeError):
+    except (ValueError, KeyError, TypeError, AttributeError):
         log.warning("webhook: malformed payload")
         return {"status": "ignored"}  # 2xx: retrying a malformed body will never help
 
     r = await db().table("payments").select("*").eq("rp_link_id", link["id"]).limit(1).execute()
     if not r.data:
         log.warning("webhook: unknown link %s", link["id"])
+        await notifier.notify_admin(f"<b>Payment for an unknown link</b> {notifier.esc(link['id'])}. Check the Razorpay dashboard: money may be received but unmatched.")
         return {"status": "unknown_link"}
     payment = r.data[0]
 
@@ -163,11 +221,20 @@ async def razorpay_webhook(request: Request, bg: BackgroundTasks):
         return {"status": "underpaid"}
 
     # Atomic CAS = idempotency: Razorpay retries / duplicate deliveries flip the row only once.
+    # 'expired' is allowed: a link we replaced or that expired can still be paid, and that payment is real money.
+    was_expired = payment["status"] == "expired"
     won = await (db().table("payments").update({"status": "paid", "rp_payment_id": pay.get("id"), "paid_at": now_iso()})
-                 .eq("id", payment["id"]).in_("status", ["pending", "created"]).execute())
+                 .eq("id", payment["id"]).in_("status", ["pending", "created", "expired"]).execute())
     if not won.data:
         return {"status": "duplicate"}
 
-    await update_lead(payment["lead_id"], status="paid")
-    bg.add_task(fulfill, payment)  # respond fast; heavy PDF work happens after the 200
+    bg.add_task(fulfill, payment)  # queue delivery FIRST: if the status write below fails the customer still gets what they paid for
+    if was_expired:
+        await notifier.notify_admin(f"<b>Paid on a replaced or expired link</b> {notifier.esc(link['id'])} (lead <code>{notifier.esc(payment['lead_id'])}</code>). "
+                                    "Delivery is queued; reconcile the amount in Razorpay.")
+    try:
+        await update_lead(payment["lead_id"], status="paid")
+    except Exception:  # noqa: BLE001 - a DB blip must not make Razorpay's retry look like a duplicate with nothing done
+        log.exception("could not mark lead paid lead=%s", payment["lead_id"])
+        await notifier.notify_admin(f"<b>Paid, but the lead status update failed</b> lead <code>{notifier.esc(payment['lead_id'])}</code>. Delivery is queued; set the status manually.")
     return {"status": "ok"}

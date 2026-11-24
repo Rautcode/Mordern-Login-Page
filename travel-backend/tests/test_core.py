@@ -5,11 +5,7 @@ import hashlib
 import hmac
 import os
 
-os.environ.update(
-    SUPABASE_URL="https://example.supabase.co", SUPABASE_SERVICE_KEY="x", GEMINI_API_KEY="x",
-    RAZORPAY_KEY_ID="rzp_test_x", RAZORPAY_KEY_SECRET="x", RAZORPAY_WEBHOOK_SECRET="whsec_test",
-    ADMIN_API_KEY="a" * 40, ENV="production",
-)
+# test environment: see tests/conftest.py
 
 import pytest
 from fastapi.testclient import TestClient

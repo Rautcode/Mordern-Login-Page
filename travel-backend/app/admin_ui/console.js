@@ -26,8 +26,9 @@ const summarize = rows => {
 };
 const MODE = { train: "train", flight: "flight", road: "road trip", flexible: "mode: advise me" };
 const brief = l => [MODE[l.travel_mode], l.trip_length && l.trip_length + " days", l.group_type, l.stay_pref && "stay: " + l.stay_pref, l.interests && "likes " + l.interests].filter(Boolean).join(" · ");
+const roundingOf = o => o.total - o.subtotal - o.gst;   // the per-person split is rounded up, so the lines can sum to a little less than the total
 const matches = (l, q) => !q || [l.name, l.phone, l.destination].some(v => String(v || "").toLowerCase().includes(q.toLowerCase()));
-window.__console = { sourceOf, waLink, summarize, matches, brief };   // test hook; read-only helpers, no secrets
+window.__console = { sourceOf, waLink, summarize, matches, brief, roundingOf };   // test hook; read-only helpers, no secrets
 
 // ---- state + DOM ----
 const $ = s => document.querySelector(s);
@@ -118,7 +119,7 @@ function showResult(o) {
   const out = $("#quote-out"), dl = el("dl");
   const line = (k, v, cls) => { dl.append(el("dt", { textContent: k }), el("dd", { textContent: v, className: cls || "" })); };
   for (const [k, v] of Object.entries(o.breakdown)) line(k, rupees(v));
-  line("Cost before buffer", rupees(o.base_cost)); line("Buffer", rupees(o.buffer)); line(`Markup (${o.margin_on_price_pct}% of price)`, rupees(o.markup)); line("GST", rupees(o.gst));
+  line("Cost before buffer", rupees(o.base_cost)); line("Buffer", rupees(o.buffer)); line(`Markup (${o.margin_on_price_pct}% of price)`, rupees(o.markup)); line("GST", rupees(o.gst)); if (roundingOf(o)) line("Rounding (even per-person split)", rupees(roundingOf(o)));
   line("Customer total", rupees(o.total), "total"); line("Per person", rupees(o.per_person), "total"); line("Advance link would charge", rupees(o.advance));
   out.replaceChildren(dl);
 }

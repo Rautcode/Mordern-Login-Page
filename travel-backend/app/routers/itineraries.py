@@ -15,6 +15,37 @@ router = APIRouter(prefix="/api", tags=["itineraries"])
 
 _gen_limit = RateLimiter(limit=5, window_s=3600)  # per IP; each call can cost real Gemini money
 STALE_AFTER = timedelta(minutes=10)
+MAX_ATTEMPTS_PER_LEAD = 3
+_attempts: dict = {"day": None, "n": 0, "per_lead": {}}
+
+
+def _reserve_attempt(lead_id) -> str | None:
+    """Count every Gemini run, failures included (each can make several paid calls). Synchronous, so atomic on the event loop.
+    Returns None if reserved, else 'cap' (daily budget spent) or 'lead' (this request keeps failing).
+    ponytail: per process and reset on restart; the DB-backed success count in _daily_cap_reached covers restarts."""
+    today = datetime.now(timezone.utc).date()
+    if _attempts["day"] != today:
+        _attempts.update(day=today, n=0, per_lead={})
+    key = str(lead_id)
+    if _attempts["n"] >= get_settings().max_daily_generations:
+        return "cap"
+    if _attempts["per_lead"].get(key, 0) >= MAX_ATTEMPTS_PER_LEAD:
+        return "lead"
+    _attempts["n"] += 1
+    _attempts["per_lead"][key] = _attempts["per_lead"].get(key, 0) + 1
+    return None
+
+
+def _refund_attempt(lead_id) -> None:
+    _attempts["n"] = max(0, _attempts["n"] - 1)
+    _attempts["per_lead"][str(lead_id)] = max(0, _attempts["per_lead"].get(str(lead_id), 1) - 1)
+
+
+async def _finish(lead_id, **fields) -> None:
+    """The background job may only move a lead that is still 'generating': a payment or manual change that landed
+    meanwhile must not be overwritten (it used to flip a paid lead back to preview_ready)."""
+    fields["updated_at"] = now_iso()
+    await db().table("leads").update(fields).eq("id", str(lead_id)).eq("status", "generating").execute()
 
 
 @router.get("/blueprints")
@@ -52,11 +83,11 @@ async def _run_generation(lead: dict) -> None:
         ).execute()
         pdf = await pdf_generator.render_pdf(itin, lead, preview=True)
         path = await pdf_generator.store_pdf(lead_id, "preview", pdf)
-        await update_lead(lead_id, status="preview_ready", preview_pdf_path=path)
+        await _finish(lead_id, status="preview_ready", preview_pdf_path=path)
         await notifier.notify_admin(f"<b>Preview ready</b> for lead <code>{notifier.esc(lead_id)}</code>")
     except Exception as e:  # noqa: BLE001 - background task: record, alert, never crash silently
         log.exception("generation failed lead=%s", lead_id)
-        await update_lead(lead_id, status="failed")
+        await _finish(lead_id, status="failed")
         await notifier.notify_admin(
             f"<b>Generation FAILED</b> lead <code>{notifier.esc(lead_id)}</code>: {notifier.esc(type(e).__name__)}. Plan manually or retry."
         )
@@ -71,6 +102,8 @@ async def generate_preview(body: GeneratePreviewRequest, bg: BackgroundTasks):
         raise HTTPException(status_code=400, detail="Blueprints are purchased, not generated")
     if lead["status"] in ("preview_ready", "paid", "delivered"):
         return {"status": lead["status"]}  # idempotent
+    if lead["status"] in ("needs_manual", "quoted", "lost"):
+        return {"status": lead["status"]}  # nothing to generate; don't make the site poll for a plan that is not coming
 
     if rag_loader.get_context(lead["destination"]) is None:
         # No verified data = no AI freestyle. A human plans these.
@@ -84,7 +117,16 @@ async def generate_preview(body: GeneratePreviewRequest, bg: BackgroundTasks):
         log.error("daily generation cap reached")
         raise HTTPException(status_code=503, detail="Busy right now, we'll WhatsApp you your plan.")
 
+    verdict = _reserve_attempt(body.lead_id)
+    if verdict == "cap":
+        log.error("daily generation cap reached (attempts)")
+        raise HTTPException(status_code=503, detail="Busy right now, we'll WhatsApp you your plan.")
+    if verdict == "lead":
+        await update_lead(lead["id"], status="needs_manual")
+        await notifier.notify_admin(f"<b>Manual plan needed</b>: generation keeps failing for lead <code>{notifier.esc(lead['id'])}</code>")
+        return {"status": "needs_manual"}
     if not await _claim(body.lead_id):
+        _refund_attempt(body.lead_id)
         return {"status": "generating"}
     # ponytail: FastAPI BackgroundTasks run in-process; a restart loses the job (the stale-claim
     # recovery above makes it retryable). Move to a real queue (arq / Cloud Tasks) at volume.

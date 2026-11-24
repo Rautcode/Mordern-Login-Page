@@ -5,6 +5,7 @@ we hand the admin a pre-filled wa.me link to tap. ponytail: swap `customer_wa_li
 """
 import html
 import logging
+import re
 from urllib.parse import quote
 
 import httpx
@@ -48,10 +49,12 @@ async def notify_admin(text_html: str) -> None:
         log.info("telegram not configured; alert dropped")
         return
     try:
+        url = f"https://api.telegram.org/bot{s.telegram_bot_token.get_secret_value()}/sendMessage"
         r = await get_http().post(
-            f"https://api.telegram.org/bot{s.telegram_bot_token.get_secret_value()}/sendMessage",
-            json={"chat_id": s.telegram_chat_id, "text": text_html[:4000], "parse_mode": "HTML", "disable_web_page_preview": True},
-        )
+            url, json={"chat_id": s.telegram_chat_id, "text": text_html[:4000], "parse_mode": "HTML", "disable_web_page_preview": True})
+        if r.status_code == 400:  # usually our own HTML cut mid-tag at 4000 chars: send it as plain text rather than lose the alert
+            plain = html.unescape(re.sub(r"<[^>]+>", "", text_html))[:4000]
+            r = await get_http().post(url, json={"chat_id": s.telegram_chat_id, "text": plain, "disable_web_page_preview": True})
         if r.status_code != 200:
             log.warning("telegram returned %s", r.status_code)
     except httpx.HTTPError as e:

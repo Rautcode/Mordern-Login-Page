@@ -59,7 +59,16 @@ class LeadCreate(BaseModel):
     @field_validator("name", "departure_city", "travel_dates", "utm_source", "utm_medium", "utm_campaign", "referrer")
     @classmethod
     def _no_control_chars(cls, v: str | None) -> str | None:
-        return _CTRL.sub(" ", v).strip() if v else v
+        out = _CTRL.sub(" ", v).strip() if v else v
+        if v and not out:
+            raise ValueError("must not be blank")
+        return out
+
+    @field_validator("utm_source", "utm_medium", "utm_campaign", "referrer", mode="before")
+    @classmethod
+    def _blank_tag_is_absent(cls, v):
+        # a tag that is only spaces or control characters means "no tag", not "reject the whole lead"
+        return None if isinstance(v, str) and not _CTRL.sub(" ", v).strip() else v
 
     @field_validator("notes")
     @classmethod
@@ -74,7 +83,7 @@ class LeadCreate(BaseModel):
     @field_validator("phone")
     @classmethod
     def _normalise_phone(cls, v: str) -> str:
-        m = re.fullmatch(r"(?:\+?91|0)?([6-9]\d{9})", re.sub(r"[\s\-()]", "", v))
+        m = re.fullmatch(r"(?:\+?91|0)?([6-9][0-9]{9})", re.sub(r"[\s\-()]", "", v), flags=re.ASCII)  # ASCII only: \d would accept Devanagari digits
         if not m:
             raise ValueError("Enter a valid 10-digit Indian mobile number")
         return "91" + m.group(1)
