@@ -8,7 +8,7 @@ What it does: fills every placeholder, refuses to finish if any placeholder is l
 and builds a strict Content-Security-Policy whose script allow-list is the SHA-256 of your own inline scripts
 (so nothing injected can run). Standard library only.
 """
-import argparse, base64, datetime, hashlib, json, re, shutil, sys
+import argparse, base64, datetime, hashlib, json, os, re, shutil, sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -23,10 +23,14 @@ def die(msg):
 
 
 def load(path, allow_example):
+    # On a host like Vercel the private brand.json is not in git: the same JSON can come from the BRAND_JSON environment variable.
     try:
-        b = json.loads(Path(path).read_text(encoding="utf-8"))
+        if not Path(path).exists() and os.environ.get("BRAND_JSON"):
+            b = json.loads(os.environ["BRAND_JSON"])
+        else:
+            b = json.loads(Path(path).read_text(encoding="utf-8"))
     except (OSError, ValueError) as e:
-        die(f"cannot read {path} as JSON ({e})")
+        die(f"cannot read {path} (or BRAND_JSON) as JSON ({e})")
     if not isinstance(b, dict):
         die(f"{path} must contain a JSON object")
     need = ["brand", "domain", "whatsapp", "instagram", "founder", "legal_name", "email", "address"]
@@ -121,11 +125,41 @@ def inline_script_hashes(html):
     return out
 
 
+def parse_headers(text):
+    """The Cloudflare/Netlify `_headers` format -> [(path pattern, {header: value})]."""
+    blocks, cur = [], None
+    for line in text.splitlines():
+        if not line.strip() or line.lstrip().startswith("#"):
+            continue
+        if not line[0].isspace():
+            cur = (line.strip(), {}); blocks.append(cur)
+        else:
+            k, _, v = line.strip().partition(":")
+            cur[1][k.strip()] = v.strip()
+    return blocks
+
+
+def write_vercel(out, dest):
+    """Vercel ignores `_headers`, so write the Build Output API: the static site plus a config.json carrying the same headers.
+    The CSP lists the hash of every inline script, so it has to be generated here, after the site is built."""
+    if dest.exists():
+        shutil.rmtree(dest)
+    shutil.copytree(out, dest / "static", ignore=shutil.ignore_patterns(MARKER, "_headers"))
+    routes = [{"src": "^" + re.escape(pat).replace(r"\*", "(.*)") + "$", "headers": h, "continue": True} for pat, h in parse_headers((out / "_headers").read_text(encoding="utf-8"))]
+    slugs = [n.split("/")[0] for n in COPY if n.endswith("/index.html")]
+    routes += [{"src": "^/(" + "|".join(slugs) + ")$", "status": 308, "headers": {"Location": "/$1/"}},   # /terms -> /terms/
+               {"handle": "filesystem"}, {"src": "/(.*)", "status": 404, "dest": "/404.html"}]
+    (dest / "config.json").write_text(json.dumps({"version": 3, "routes": routes}, indent=1), encoding="utf-8")
+    print(f"ok: wrote Vercel output {dest} ({len(routes)} routes)")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("brand_json")
     ap.add_argument("--out", default=str(ROOT / "dist"))
     ap.add_argument("--allow-example", action="store_true", help="for tests only")
+    ap.add_argument("--vercel", action="store_true", help="also write the Vercel Build Output (.vercel/output): the site plus its security headers")
+    ap.add_argument("--vercel-out", default=str(ROOT / ".vercel" / "output"), help=argparse.SUPPRESS)
     a = ap.parse_args()
     b = load(a.brand_json, a.allow_example)
     out = Path(a.out).resolve()
@@ -176,6 +210,8 @@ def main():
             left += [f"{f.relative_to(out)}: {m}" for m in re.findall(r"\[[A-Z][A-Z_]{3,}\]|YOUR-DOMAIN|91XXXXXXXXXX|yourdomain\.com", t)]
     if left and not a.allow_example:
         die("placeholders still present:\n  " + "\n  ".join(sorted(set(left))))
+    if a.vercel:
+        write_vercel(out, Path(a.vercel_out))
     print(f"ok: wrote {out}  ({len(set(hashes))} inline script hashes in the CSP)")
     print("next: upload this folder as a static site, then add https://" + b["domain"] + " to the backend's CORS_ORIGINS")
 

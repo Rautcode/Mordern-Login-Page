@@ -16,7 +16,7 @@ WhatsApp order message. You take payment yourself (UPI or bank transfer to your 
    every promise: the 24-hour delivery, the 50% advance, the refund rules, the 5-7 working day refund time. They are drafts written from what the
    software does. When you agree with every line, set `"legal_reviewed": true` in `brand.json`. The build refuses to run until you do. When you can,
    have a lawyer or CA read them, especially the refund and liability parts.
-3. **Build and publish.** `npm run build`, then upload `dist/` to Cloudflare Pages (direct upload) or Netlify. Both read the generated `_headers`
+3. **Build and publish.** (On Vercel instead? Follow `DEPLOY-VERCEL.md`: the repo is already set up for it.) `npm run build`, then upload `dist/` to Cloudflare Pages (direct upload) or Netlify. Both read the generated `_headers`
    (security and cache headers) and `404.html`. The build refuses to finish if any placeholder is left, hides the Udyam badge if you have no number
    yet, and builds a strict Content-Security-Policy that only allows your own scripts.
    The link-preview picture shown on WhatsApp and Instagram is `og-image.png`. It carries no brand name (the build cannot edit a picture), so it stays valid

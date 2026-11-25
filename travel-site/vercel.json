@@ -1,0 +1,6 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "installCommand": "echo no dependencies to install",
+  "buildCommand": "python3 tools/build_routes.py && python3 tools/personalize.py brand.json --vercel"
+}

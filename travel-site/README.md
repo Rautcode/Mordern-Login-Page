@@ -19,6 +19,7 @@ python3 -m http.server 8000      # then open http://localhost:8000
 | `LAUNCH.md` | Launch checklist, console notes |
 | `brand/` | GhumoCo logo files (SVG, plus PNGs for Instagram and WhatsApp profile pictures). Regenerate with `python3 tools/make_logo.py` and `node tools/export_logo.js` |
 | `npm run preview` | Builds a preview with the brand name from `tools/brand.example.json` (GhumoCo) and placeholder contact details, and serves it at http://localhost:8080 |
+| `DEPLOY-VERCEL.md` | Step-by-step Vercel deploy, with your own domain and a post-launch check list |
 | `PILOT.md` | Pilot trip kit: supplier checks, WhatsApp templates, incident protocol |
 
 ## Launch in three commands

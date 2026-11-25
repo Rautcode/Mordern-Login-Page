@@ -24,6 +24,22 @@ assert(inline.length >= 2 && inline.every(h => csp.includes(h)), 'CSP lists the 
 assert(csp.includes('script-src \'self\'') && csp.includes('https://static.cloudflareinsights.com') && csp.includes('https://cloudflareinsights.com'), 'the CSP allows exactly the analytics hosts');
 assert(csp.includes("frame-ancestors 'none'") && /script-src 'self' 'sha256-/.test(csp) && !/script-src[^;]*unsafe-inline/.test(csp), 'script-src has no unsafe-inline');
 
+// 1b. Vercel: the brand can come from the BRAND_JSON env var (brand.json is private and not in git), and the build writes the Build Output API
+{ const vo = path.join(tmp, 'vercel-out'), vd = path.join(tmp, 'vercel-dist');
+  const r2 = spawnSync('python3', [path.join(ROOT, 'tools', 'personalize.py'), path.join(tmp, 'no-such-brand.json'), '--out', vd, '--vercel', '--vercel-out', vo], { encoding: 'utf8', env: { ...process.env, BRAND_JSON: JSON.stringify(brand) } });
+  assert.equal(r2.status, 0, r2.stderr + r2.stdout);
+  assert.notEqual(spawnSync('python3', [path.join(ROOT, 'tools', 'personalize.py'), path.join(tmp, 'no-such-brand.json'), '--out', path.join(tmp, 'x')], { encoding: 'utf8', env: { ...process.env, BRAND_JSON: '' } }).status, 0, 'no brand file and no BRAND_JSON is an error');
+  const cfg = JSON.parse(fs.readFileSync(path.join(vo, 'config.json'), 'utf8')); assert.equal(cfg.version, 3);
+  const all = cfg.routes.find(r => r.src === '^/(.*)$'); assert(all && all.continue, 'security headers apply to every path');
+  const vcsp = all.headers['Content-Security-Policy'], vhtml = fs.readFileSync(path.join(vo, 'static', 'index.html'), 'utf8');
+  const vin = [...vhtml.matchAll(/<script(?![^>]*(?:src=|json))[^>]*>([\s\S]*?)<\/script>/g)].map(m => "'sha256-" + crypto.createHash('sha256').update(m[1]).digest('base64') + "'");
+  assert(vin.length >= 2 && vin.every(h => vcsp.includes(h)), 'the Vercel CSP lists the hash of every inline script in the page it serves'); assert(vcsp.includes('connect-src \'self\' https://api.example.org') && /frame-ancestors 'none'/.test(vcsp));
+  assert(all.headers['Strict-Transport-Security'] && all.headers['X-Content-Type-Options'] === 'nosniff');
+  assert(cfg.routes.some(r => r.src === '^/fonts/(.*)$' && /immutable/.test(r.headers['Cache-Control'])), 'fonts are cached for a year');
+  assert(cfg.routes.some(r => r.status === 308 && /terms/.test(r.src) && r.headers.Location === '/$1/'), '/terms redirects to /terms/');
+  const fsIdx = cfg.routes.findIndex(r => r.handle === 'filesystem'); assert(fsIdx > 0 && cfg.routes[fsIdx + 1].status === 404 && cfg.routes[fsIdx + 1].dest === '/404.html', 'unknown paths get the 404 page');
+  for (const f of ['index.html', '404.html', 'robots.txt', 'terms/index.html', 'img/hero-range.svg']) assert(fs.existsSync(path.join(vo, 'static', f)), f + ' is in the Vercel output');
+  assert(!fs.existsSync(path.join(vo, 'static', '_headers')) && !fs.existsSync(path.join(vo, 'static', 'brand')) && !fs.existsSync(path.join(vo, 'static', 'tests')), 'no private or build files are published'); }
 // 2. personaliser refuses bad input
 const bad = (patch, why) => { const f = path.join(tmp, 'bad.json'); fs.writeFileSync(f, JSON.stringify({ ...brand, ...patch })); const x = run(f, '--out', path.join(tmp, 'bad-out')); assert.notEqual(x.status, 0, why); };
 bad({ domain: 'https://x.com/' }, 'scheme in domain'); bad({ analytics_token: 'not a token!' }, 'bad analytics token'); bad({ reviews: [{ quote: 'Great trip indeed', name: 'Ann', consent: false }] }, 'no consent'); bad({ reviews: [{ quote: 'Great trip indeed', name: 'Ann' }] }, 'consent missing'); bad({ reviews: 'x' }, 'reviews must be a list'); bad({ reviews: [{ quote: 'ok', name: 'A', consent: true }] }, 'review too short'); bad({ legal_reviewed: false }, 'legal pages must be reviewed'); bad({ legal_reviewed: undefined }, 'review flag missing'); bad({ email: 'not-an-email' }, 'bad email'); bad({ address: '' }, 'missing address'); bad({ whatsapp: '+91 98765' }, 'bad whatsapp'); bad({ founder: '' }, 'missing founder'); bad({ api_base: 'http://insecure.example' }, 'http api'); bad({ udyam: 'nope' }, 'bad udyam');
