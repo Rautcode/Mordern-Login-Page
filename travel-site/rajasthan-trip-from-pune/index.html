@@ -96,7 +96,11 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 
 /* hero: words on the left, our own trip photos on the right */
 .hero{padding:0;overflow:hidden;background:linear-gradient(#F8E3BF,#F2B98A 80%,#EFA877);isolation:isolate}
-.hero-in{padding:120px 0 72px;position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:32px;align-items:center}
+.hero{position:relative}
+.hero{--rng:clamp(110px,15vw,230px)}
+.hero-range{position:absolute;left:0;right:0;bottom:0;height:var(--rng);background:url(img/hero-range.svg) repeat-x center bottom/auto 100%;z-index:0;pointer-events:none}   /* a seamless mountain tile: full peaks at any width */
+.hero-sun{position:absolute;right:13%;bottom:calc(var(--rng)*.42);width:calc(var(--rng)*.4);aspect-ratio:1;border-radius:50%;background:var(--terra);z-index:0;pointer-events:none}
+.hero-in{padding:120px 0 clamp(150px,17vw,250px);z-index:1;position:relative;display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:32px;align-items:center}
 .hero-photos{position:relative;min-height:590px}
 .hpic{position:absolute;margin:0;background:#fff;padding:10px 10px 14px;box-shadow:0 16px 32px -12px rgba(31,36,33,.5);width:min(250px,52%)}
 .hpic::before{content:"";position:absolute;top:-11px;left:50%;width:78px;height:22px;margin-left:-39px;background:rgba(212,163,89,.55);transform:rotate(-3deg)}
@@ -114,7 +118,7 @@ svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stro
 .proof{display:flex;flex-wrap:wrap;gap:6px 20px;margin-top:18px;font:500 .78rem var(--mono);letter-spacing:.04em;color:var(--forest)}.proof b{color:var(--terra-d)}
 
 @media(max-width:900px){
-  .hero-in{grid-template-columns:1fr;padding:132px 0 36px;gap:18px}
+  .hero-in{grid-template-columns:1fr;padding:132px 0 clamp(110px,24vw,150px);gap:18px}
   .hero-photos{min-height:300px;max-width:440px;width:100%;margin:0 auto}
   .hpic{width:min(210px,54%)}.hpic.a{top:0}.hpic.b{top:60px}.hpic.c{display:none}
 }
@@ -170,7 +174,7 @@ dialog.zoom .db{padding:12px}#zm-img{width:100%;height:auto;display:block}
 .snap:nth-child(odd){transform:rotate(-1.4deg)}.snap:nth-child(even){transform:rotate(1.2deg)}
 .snap::before{content:"";position:absolute;top:-11px;left:50%;width:70px;height:22px;margin-left:-35px;background:rgba(212,163,89,.55);transform:rotate(-2deg);z-index:1}
 .snap img,.snap video{display:block;height:340px;width:auto;background:#ddd}
-.snap video.l{aspect-ratio:4/3}.snap video.p{aspect-ratio:3/4}
+.snap video.l{aspect-ratio:4/3}.snap video.p{aspect-ratio:3/4}.snap video.w{aspect-ratio:16/9}.snap video.t{aspect-ratio:9/16}
 .snap figcaption{font:600 1.2rem var(--hand);text-align:center;margin-top:8px;color:var(--ink);width:0;min-width:100%}
 @media(max-width:560px){.snap img,.snap video{height:300px}}
 /* sample day ticket */

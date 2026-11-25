@@ -208,7 +208,7 @@ dialog.zoom .db{padding:12px}#zm-img{width:100%;height:auto;display:block}
 .snap:nth-child(odd){transform:rotate(-1.4deg)}.snap:nth-child(even){transform:rotate(1.2deg)}
 .snap::before{content:"";position:absolute;top:-11px;left:50%;width:70px;height:22px;margin-left:-35px;background:rgba(212,163,89,.55);transform:rotate(-2deg);z-index:1}
 .snap img,.snap video{display:block;height:340px;width:auto;background:#ddd}
-.snap video.l{aspect-ratio:4/3}.snap video.p{aspect-ratio:3/4}
+.snap video.l{aspect-ratio:4/3}.snap video.p{aspect-ratio:3/4}.snap video.w{aspect-ratio:16/9}.snap video.t{aspect-ratio:9/16}
 .snap figcaption{font:600 1.2rem var(--hand);text-align:center;margin-top:8px;color:var(--ink);width:0;min-width:100%}
 @media(max-width:560px){.snap img,.snap video{height:300px}}
 /* sample day ticket */
@@ -575,6 +575,17 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
     <figure class="snap"><img src="img/reel-sea-520.webp" alt="The sun low over a glittering sea" width="520" height="693" loading="lazy" decoding="async"><figcaption>Sea light</figcaption></figure>
     <figure class="snap"><img src="img/reel-plane-520.webp" alt="An aircraft on the tarmac at night beside boarding stairs" width="520" height="693" loading="lazy" decoding="async"><figcaption>Night flight, boarding</figcaption></figure>
     <figure class="snap"><video class="p" muted loop playsinline preload="none" poster="img/poster-mist.webp" width="480" height="640" aria-label="Clip: mist rolling over forested hills"><source src="video/mist.webm" type="video/webm"><source src="video/mist.mp4" type="video/mp4"></video><figcaption>Mist over the hills</figcaption></figure>
+    <figure class="snap"><img src="img/reel-hawa-mahal-520.webp" alt="Hawa Mahal in Jaipur, its honeycomb of windows lit up against a dark night sky" width="520" height="693" loading="lazy" decoding="async"><figcaption>Hawa Mahal after dark</figcaption></figure>
+    <figure class="snap"><video class="t" muted loop playsinline preload="none" poster="img/poster-train-door.webp" width="360" height="640" aria-label="Clip: railway tracks rushing past an open train door"><source src="video/train-door.webm" type="video/webm"><source src="video/train-door.mp4" type="video/mp4"></video><figcaption>Open door, tracks rushing by</figcaption></figure>
+    <figure class="snap"><img src="img/reel-crew-rooftop-760.webp" alt="A group of friends standing in a row on a terrace, with a lit palace and hills behind them at dusk" width="760" height="428" loading="lazy" decoding="async"><figcaption>The crew, rooftop at dusk</figcaption></figure>
+    <figure class="snap"><video class="w" muted loop playsinline preload="none" poster="img/poster-palace-dusk.webp" width="640" height="360" aria-label="Clip: a hilltop palace lighting up at dusk"><source src="video/palace-dusk.webm" type="video/webm"><source src="video/palace-dusk.mp4" type="video/mp4"></video><figcaption>Palace lights coming on</figcaption></figure>
+    <figure class="snap"><img src="img/reel-arch-520.webp" alt="Friends seen from behind, looking through a carved white arch at a lit palace garden at night" width="520" height="693" loading="lazy" decoding="async"><figcaption>The view through the arch</figcaption></figure>
+    <figure class="snap"><img src="img/reel-thali-520.webp" alt="A thali on a copper tray with small bowls of curries, rice and flatbread" width="520" height="693" loading="lazy" decoding="async"><figcaption>Thali time</figcaption></figure>
+    <figure class="snap"><video class="w" muted loop playsinline preload="none" poster="img/poster-fort-pigeons.webp" width="640" height="360" aria-label="Clip: a flock of pigeons circling above an old sandstone fort building"><source src="video/fort-pigeons.webm" type="video/webm"><source src="video/fort-pigeons.mp4" type="video/mp4"></video><figcaption>Pigeons over the fort</figcaption></figure>
+    <figure class="snap"><img src="img/reel-courtyard-520.webp" alt="A wide sandstone courtyard with arched doorways under a blue sky" width="520" height="693" loading="lazy" decoding="async"><figcaption>Sandstone courtyard, midday</figcaption></figure>
+    <figure class="snap"><img src="img/reel-crew-cannon-640.webp" alt="A group of friends standing in front of a very large old cannon under a tin-roofed shelter" width="640" height="480" loading="lazy" decoding="async"><figcaption>The crew, with the giant cannon</figcaption></figure>
+    <figure class="snap"><img src="img/reel-moon-garden-520.webp" alt="A lit palace courtyard with clipped hedges and the moon glowing behind clouds" width="520" height="693" loading="lazy" decoding="async"><figcaption>Moonlight over the palace garden</figcaption></figure>
+    <figure class="snap"><video class="w" muted loop playsinline preload="none" poster="img/poster-train-banter.webp" width="640" height="360" aria-label="Clip: friends talking and laughing inside a train compartment"><source src="video/train-banter.webm" type="video/webm"><source src="video/train-banter.mp4" type="video/mp4"></video><figcaption>Sleeper-train banter</figcaption></figure>
   </div>
   <div class="wrap ig reveal"><span class="hand">See more on Instagram →</span><a class="btn btn-ghost" id="ig" target="_blank" rel="noopener"><svg class="i"><use href="#i-insta"/></svg>@[INSTAGRAM_HANDLE]</a></div>
 </section>
@@ -650,7 +661,7 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
     </div>
     <div class="cards" id="trips" role="tabpanel">
       <article class="card reveal" data-id="rajasthan" data-cats="multi north">
-        <div class="art" data-photo="rajasthan"><svg viewBox="0 0 400 260" preserveAspectRatio="xMidYMid slice" role="img" aria-label="Illustration: Rajasthan fort above golden dunes at dusk"><use href="#s-raj"/></svg><div class="postmark">Blueprint<b>PDF</b></div></div>
+        <div class="art" data-photo="rajasthan"><img src="img/trip-rajasthan-800.webp" srcset="img/trip-rajasthan-480.webp 480w, img/trip-rajasthan-800.webp 800w" sizes="(max-width:700px) 100vw, 360px" alt="Hawa Mahal in Jaipur, its honeycomb of windows lit up at night" width="800" height="500" loading="lazy" decoding="async"><div class="postmark">Blueprint<b>PDF</b></div></div>
         <div class="body"><h3>Rajasthan tour from Pune: Jaipur → Jaisalmer → Jodhpur</h3>
           <div class="meta"><span>6 DAYS / 5 NIGHTS</span><span>8–16 PEOPLE</span></div>
           <ul class="hl"><li>3 chained overnight/intercity train legs + Tempo Traveller desert circuit</li><li>Amer &amp; Mehrangarh closing-time strategy</li><li>Sam Sand Dunes sunset</li><li>15+ local food stops</li></ul>

@@ -30,8 +30,8 @@ const toPlanner = p => p.evaluate(() => document.querySelector('#planner').scrol
   // ---- real media: all images decode, clips play only when visible, reduced-motion gets controls ----
   await p.evaluate(() => document.querySelectorAll('img[loading=lazy]').forEach(i => i.loading = 'eager'));
   await p.evaluate(() => document.getElementById('road').scrollIntoView()); await p.waitForTimeout(1800);
-  assert.equal(await p.locator('#road .snap').count(), 8); assert.equal(await p.locator('.snap video').count(), 4);
-  assert.equal(await p.locator('.snap video[poster]').count(), 4, 'every clip has a poster');
+  assert((await p.locator('#road .snap').count()) >= 8, 'the reel has our trip photos and clips'); const nv = await p.locator('.snap video').count(); assert(nv >= 4);
+  assert.equal(await p.locator('.snap video[poster]').count(), nv, 'every clip has a poster'); assert.equal(await p.locator('.snap video:not([aria-label])').count(), 0, 'every clip is described'); assert.equal(await p.locator('.snap img:not([alt]), .snap img[alt=""]').count(), 0, 'every reel photo has alt text');
   assert((await p.evaluate(() => [...document.querySelectorAll('.snap video')].filter(v => !v.paused).length)) >= 1, 'in-view clip plays');
   await p.evaluate(() => document.getElementById('top').scrollIntoView()); await p.waitForTimeout(600);
   assert.equal(await p.evaluate(() => [...document.querySelectorAll('.snap video')].filter(v => !v.paused).length), 0, 'clips pause when off-screen');
