@@ -48,6 +48,16 @@ Real reviews and real faces are the biggest trust gap on the site. They have to 
   `python3 tools/add_route_photo.py rajasthan path/to/photo.jpg --alt "what the photo shows"`. It crops to the right shape, makes both sizes, removes camera
   and GPS data, and swaps the card. Use only photos you took or have permission to use, and ask the people in them.
 
+## Adding more of your own photos and clips
+Put your originals (not WhatsApp copies, which are too small) in one folder, then:
+```
+pip install pillow          # clips also need ffmpeg installed
+python3 tools/prep_media.py photo my-photo.jpg reel-temple            # makes img/reel-temple-520.webp
+python3 tools/prep_media.py clip my-clip.mp4 temple --start 3 --dur 6 # makes video/temple.webm, .mp4 and a poster image
+```
+Both re-encode the file, so camera and GPS data are removed, and clips lose their sound and stay under 8 seconds and a small size
+(the home page loads about 0.5 MB before anyone scrolls; each clip only downloads when it scrolls into view). Use only media you own, and only people who have said yes.
+
 ## What the site does and does not offer today
 - **Blueprint PDFs are sold for Rajasthan and Kerala only**, because those are the routes with a finished, real plan. To sell another route: add it to
   `BLUEPRINTS` in `travel-backend/app/services/rag_loader.py`, upload its PDF to the `blueprints` bucket, add it to `BP_ID` and give its card a
