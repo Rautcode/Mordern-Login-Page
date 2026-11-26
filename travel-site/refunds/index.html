@@ -47,7 +47,7 @@ p{max-width:62ch}
 section{position:relative;padding:88px 0}
 .mono{font-family:var(--mono);font-weight:500}
 .hand{font-family:var(--hand);font-weight:600;color:var(--terra-d);font-size:1.45rem;line-height:1.1}
-.kicker{font:500 .78rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--terra-d)}
+.kicker{font:500 .78rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#A33516}
 .lead{color:var(--muted);margin-top:14px}
 svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.2em}
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:4px}
@@ -410,7 +410,7 @@ h3{font-size:1.2rem;letter-spacing:-.015em}
 h1 em,h2 em{font-family:var(--hand);font-style:italic;font-weight:500;letter-spacing:0;color:var(--terra)}
 .hand{font-family:var(--hand);font-style:italic;font-weight:500;font-size:1.5rem;color:var(--terra)}
 .btn{font-family:var(--sans);font-weight:600;border-width:1.5px;letter-spacing:0}
-.btn-primary{background:var(--terra);box-shadow:none}.btn-primary:hover{background:var(--terra-d)}
+.btn-primary{background:var(--terra-d);box-shadow:none}.btn-primary:hover{background:#A33516}  /* #BF3E1B: white text passes WCAG AA (the lighter --terra did not) */
 .btn-ghost{border-color:var(--ink);color:var(--ink)}.btn-ghost:hover{background:var(--ink);color:#fff}
 .logo{font-family:var(--serif);font-weight:800;letter-spacing:-.02em}
 /* header: transparent over the dark hero, solid after scroll */
@@ -424,9 +424,16 @@ h1 em,h2 em{font-family:var(--hand);font-style:italic;font-weight:500;letter-spa
 .hero{background:#0A0B0D;color:#fff}
 .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
 .hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(10,11,13,.55),rgba(10,11,13,.35) 40%,rgba(10,11,13,.85))}
-.hero-sun,.hero-range,.hero-photos{display:none}
-.hero-in{grid-template-columns:minmax(0,1fr);padding:150px 0 clamp(80px,10vw,130px)}
-.hero h1{color:#fff;font-size:clamp(2.6rem,6.2vw,5.4rem);max-width:15ch;margin:20px 0 22px}
+.hero-sun,.hero-range{display:none}
+.hero-in{padding:140px 0 clamp(80px,10vw,130px);gap:40px}
+@media(min-width:901px){.hero-in{grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr)}}
+.hero h1{color:#fff;font-size:clamp(2.1rem,4.9vw,4.4rem);max-width:14ch;margin:20px 0 22px}
+@media(max-width:900px){.hero h1{font-size:clamp(1.95rem,8.6vw,2.7rem)}.hero-in{padding-top:118px}.hero p.sub{font-size:1rem}.cta-row{margin-top:18px}}
+/* real trip photos stay in the hero, as clean framed prints over the film */
+.hpic{padding:6px 6px 10px;border-radius:14px;box-shadow:0 26px 50px -22px rgba(0,0,0,.7)}
+.hpic::before{display:none}.hpic img{border-radius:9px}
+.hpic figcaption{font:italic 500 1.2rem var(--hand);color:var(--ink)}
+.hpic.a{transform:rotate(-2.5deg)}.hpic.b{transform:rotate(2.5deg)}.hpic.c{transform:rotate(-1.2deg)}
 .hero p.sub{color:rgba(255,255,255,.82);font-size:1.12rem;max-width:54ch}
 .stamp-line{color:#fff;border:1px solid rgba(255,255,255,.35);border-style:solid;background:rgba(255,255,255,.08);backdrop-filter:blur(6px)}
 .hero .btn-ghost{border-color:rgba(255,255,255,.7);color:#fff}.hero .btn-ghost:hover{background:#fff;color:var(--ink)}
@@ -446,6 +453,7 @@ h1 em,h2 em{font-family:var(--hand);font-style:italic;font-weight:500;letter-spa
 .fit,.log{border-radius:14px}
 .intel{background:#E9F1EE;border-left-color:var(--forest-2)}
 .kicker,.stat b{font-family:var(--mono)}
+.kicker{color:#A33516}
 .stat b{font-family:var(--serif);font-weight:800}
 
 .rp{padding:132px 0 56px}.rp h1{font-size:clamp(2rem,4.4vw,3.3rem);max-width:24ch;margin:14px 0}.rp .grid{display:grid;grid-template-columns:1fr minmax(240px,340px);gap:44px;align-items:start}
