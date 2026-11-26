@@ -84,7 +84,7 @@ p{max-width:62ch}
 section{position:relative;padding:88px 0}
 .mono{font-family:var(--mono);font-weight:500}
 .hand{font-family:var(--hand);font-weight:600;color:var(--terra-d);font-size:1.45rem;line-height:1.1}
-.kicker{font:500 .78rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--terra-d)}
+.kicker{font:500 .78rem var(--mono);letter-spacing:.14em;text-transform:uppercase;color:#A33516}
 .lead{color:var(--muted);margin-top:14px}
 svg.i{width:1.2em;height:1.2em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none;vertical-align:-.2em}
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:4px}
@@ -426,6 +426,72 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
   html{scroll-behavior:auto}.js .reveal{opacity:1;transform:none;transition:none}
   .fab a,.spin{animation:none}.btn,.chip,.card{transition:none}
 }
+@font-face{font-family:'Cormorant Garamond';font-style:italic;font-weight:500;font-display:swap;src:url(fonts/cormorant-garamond-italic-500-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;src:url(fonts/inter-normal-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/inter-normal-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:600;font-display:swap;src:url(fonts/inter-normal-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Inter';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/inter-normal-400-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'JetBrains Mono';font-style:normal;font-weight:500;font-display:swap;src:url(fonts/jetbrains-mono-normal-500-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Syne';font-style:normal;font-weight:700;font-display:swap;src:url(fonts/syne-normal-700-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+@font-face{font-family:'Syne';font-style:normal;font-weight:800;font-display:swap;src:url(fonts/syne-normal-700-latin.woff2) format('woff2');unicode-range:U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD}
+/* ===== Raut Expeditions look: dark editorial hero, Syne display, Cormorant italic accents ===== */
+:root{
+  --paper:#F6F4EF; --paper-2:#ECE8DF; --card:#FFFFFF; --ink:#111315; --muted:#5F656C;
+  --forest:#111315; --forest-2:#1F4E43; --terra:#D94E28; --terra-d:#BF3E1B; --gold:#E3B15B; --line:rgba(17,19,21,.12);
+  --serif:'Syne',system-ui,sans-serif; --sans:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,Menlo,monospace; --hand:'Cormorant Garamond',Georgia,serif;
+}
+body{background-image:none;font-size:16.5px}
+h1,h2,h3{font-family:var(--serif);font-weight:800;letter-spacing:-.025em;line-height:1.05}
+h3{font-size:1.2rem;letter-spacing:-.015em}
+h1 em,h2 em{font-family:var(--hand);font-style:italic;font-weight:500;letter-spacing:0;color:var(--terra)}
+.hand{font-family:var(--hand);font-style:italic;font-weight:500;font-size:1.5rem;color:var(--terra)}
+.btn{font-family:var(--sans);font-weight:600;border-width:1.5px;letter-spacing:0}
+.btn-primary{background:var(--terra-d);box-shadow:none}.btn-primary:hover{background:#A33516}  /* #BF3E1B: white text passes WCAG AA (the lighter --terra did not) */
+.btn-ghost{border-color:var(--ink);color:var(--ink)}.btn-ghost:hover{background:var(--ink);color:#fff}
+.logo{font-family:var(--serif);font-weight:800;letter-spacing:-.02em}
+/* header: transparent over the dark hero, solid after scroll */
+.ann{background:var(--ink);color:#F4F2ED}
+.hdr:not(.solid) .logo,.hdr:not(.solid) .links a,.hdr:not(.solid) .tel{color:#fff}
+.hdr:not(.solid) .links a:hover{color:var(--gold)}
+.hdr:not(.solid) .icon-btn{border-color:rgba(255,255,255,.4);color:#fff}
+.hdr.solid{background:rgba(246,244,239,.92)}
+.links a{font-weight:500;font-size:.86rem}
+/* hero */
+.hero{background:#0A0B0D;color:#fff}
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,rgba(10,11,13,.55),rgba(10,11,13,.35) 40%,rgba(10,11,13,.85))}
+.hero-sun,.hero-range{display:none}
+.hero-in{padding:140px 0 clamp(80px,10vw,130px);gap:40px}
+@media(min-width:901px){.hero-in{grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr)}}
+.hero h1{color:#fff;font-size:clamp(2.1rem,4.9vw,4.4rem);max-width:14ch;margin:20px 0 22px}
+@media(max-width:900px){.hero h1{font-size:clamp(1.95rem,8.6vw,2.7rem)}.hero-in{padding-top:118px}.hero p.sub{font-size:1rem}.cta-row{margin-top:18px}}
+/* real trip photos stay in the hero, as clean framed prints over the film */
+.hpic{padding:6px 6px 10px;border-radius:14px;box-shadow:0 26px 50px -22px rgba(0,0,0,.7)}
+.hpic::before{display:none}.hpic img{border-radius:9px}
+.hpic figcaption{font:italic 500 1.2rem var(--hand);color:var(--ink)}
+.hpic.a{transform:rotate(-2.5deg)}.hpic.b{transform:rotate(2.5deg)}.hpic.c{transform:rotate(-1.2deg)}
+.hero p.sub{color:rgba(255,255,255,.82);font-size:1.12rem;max-width:54ch}
+.stamp-line{color:#fff;border:1px solid rgba(255,255,255,.35);border-style:solid;background:rgba(255,255,255,.08);backdrop-filter:blur(6px)}
+.hero .btn-ghost{border-color:rgba(255,255,255,.7);color:#fff}.hero .btn-ghost:hover{background:#fff;color:var(--ink)}
+.hero .hand{color:var(--gold)}
+.hero h1 em{color:#FF9A70}
+.chip{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.35);color:#fff;font-weight:500;backdrop-filter:blur(6px)}
+.chip:hover{background:var(--terra);border-color:var(--terra);color:#fff;transform:translateY(-2px)}
+.proof{color:rgba(255,255,255,.8)}.proof b{color:var(--gold)}
+@media(prefers-reduced-motion:reduce){.hero-bg{display:none}.hero{background:#0A0B0D url(img/poster-waterfall.webp) center/cover}}
+/* trust strip + cards: crisp, no scrapbook tilt */
+.strip{background:var(--ink)}.strip .i{color:var(--terra)}
+.card,.card:nth-child(odd),.card:nth-child(even){transform:none;border-radius:16px;box-shadow:none;border:1px solid var(--line)}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 36px -22px rgba(17,19,21,.4)}
+.card .art img,.card .art svg{border-radius:10px}
+.snap::before,.pola::before{display:none}
+.sample{background:var(--paper-2)}
+.fit,.log{border-radius:14px}
+.intel{background:#E9F1EE;border-left-color:var(--forest-2)}
+.kicker,.stat b{font-family:var(--mono)}
+.kicker{color:#A33516}
+.stat b{font-family:var(--serif);font-weight:800}
 </style>
 </head>
 
@@ -532,10 +598,11 @@ dialog::backdrop{background:rgba(10,20,15,.68)}
 <main id="main">
 <!-- ============ HERO ============ -->
 <section class="hero" id="top" aria-labelledby="h1">
+  <video class="hero-bg" autoplay muted loop playsinline preload="metadata" poster="img/poster-waterfall.webp" aria-hidden="true"><source src="video/waterfall.webm" type="video/webm"><source src="video/waterfall.mp4" type="video/mp4"></video>
   <div class="wrap hero-in">
    <div class="hero-copy">
     <span class="stamp-line">Custom trip planner · All India</span>
-    <h1 id="h1">Your India trip, planned minute by minute around your budget.</h1>
+    <h1 id="h1">Your India trip, planned <em>minute by minute</em> around your budget.</h1>
     <p class="sub">Time-stamped itineraries with exact train &amp; flight connections, stays and food stops, built around your budget. We can book it all too.</p>
     <div class="cta-row">
       <a href="#planner" class="btn btn-primary">Get a Custom Itinerary</a>

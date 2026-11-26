@@ -191,7 +191,7 @@ def main():
             if name == "sitemap.xml":
                 text = re.sub(r"<lastmod>.*?</lastmod>", f"<lastmod>{datetime.date.today().isoformat()}</lastmod>", text)
             (out / name).parent.mkdir(parents=True, exist_ok=True)
-            (out / name).write_text(text, encoding="utf-8")
+            (out / name).write_bytes(text.encode("utf-8"))   # bytes: on Windows write_text would emit CRLF and break the CSP script hashes
             if src.suffix == ".html":
                 hashes += inline_script_hashes(text)
         elif name != "_headers.template":
@@ -201,7 +201,7 @@ def main():
     connect = "'self'" + (" " + b["api_base"] if b["api_base"] else "") + (" https://cloudflareinsights.com" if b["analytics_token"] else "") + cf
     script_extra = (" https://static.cloudflareinsights.com" if b["analytics_token"] else "") + cf
     tpl = (ROOT / "_headers.template").read_text(encoding="utf-8")
-    (out / "_headers").write_text(tpl.replace("{{SCRIPT_HASHES}}", " ".join(sorted(set(hashes)))).replace("{{SCRIPT_EXTRA}}", script_extra).replace("{{CONNECT_SRC}}", connect).replace("{{FRAME_SRC}}", "'self'" + cf), encoding="utf-8")
+    (out / "_headers").write_bytes((tpl.replace("{{SCRIPT_HASHES}}", " ".join(sorted(set(hashes)))).replace("{{SCRIPT_EXTRA}}", script_extra).replace("{{CONNECT_SRC}}", connect).replace("{{FRAME_SRC}}", "'self'" + cf)).encode("utf-8"))
 
     left = []
     for f in out.rglob("*"):
